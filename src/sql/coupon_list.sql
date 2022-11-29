@@ -18,7 +18,6 @@ create table coupon_list(
     coupon_down_ea number(11) default '0' not null,
     coupon_use_ea number(11) default '0' not null,
     coupon_date date default sysdate
-
 );
 
 comment on column coupon_list.coupon_no is '쿠폰 번호';

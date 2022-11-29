@@ -3,12 +3,42 @@
 /////////////////////////////////////////////////////
 (function($){
     $(window).on("load", function(){
-        $("#ajax-loader").fadeOut("slow");
-        $("html").removeClass("noscroll");
+        $("#preloader").fadeOut("slow");
     });
+
+    var angle = 0;
+    setInterval(function(){
+        $("#preloader img")
+            .css('-webkit-transform', 'rotate(' + angle + 'deg)')
+            .css('-moz-transform', 'rotate(' + angle + 'deg)')
+            .css('-ms-transform', 'rotate(' + angle + 'deg)');
+        angle++;
+        angle++;
+        angle++;
+    }, 10);
 })(jQuery);
 
 
+
+/////////////////////////////////////////////////////
+// 신규알림 클릭
+/////////////////////////////////////////////////////
+$(document).ready(function(){
+    $("#header button.h-ico").on("click", function(e){
+        if($(this).parent().hasClass("open")){
+            $(this).parent().removeClass("open");
+        }else{
+            $("#header ul.d-flex li.open").removeClass("open");
+            $(this).parent().addClass("open");
+        }
+        e.preventDefault();
+    });
+
+    $("#header .new-pop .np-title button").on("click", function(e){
+        $("#header ul.d-flex li.open").removeClass("open");
+        e.preventDefault();
+    });
+});
 
 
 
@@ -20,34 +50,6 @@ popWindow = function(ps_url, ps_width, ps_height){
     var setLeft = ($(window).width() - ps_width) / 2;
     var setTop = ($(window).height() - ps_height) / 2;
     window.open(ps_url, "", "location=no,directories=no,resizable=no,status=no,toolbar=no,scrollbars=no,width="+ps_width+",height="+ps_height+",top="+setTop+",left="+setLeft)
-}
-
-
-
-
-//////////////////////////////////////////////////////////////////////////
-// 위로이동
-//////////////////////////////////////////////////////////////////////////
-function gotoTop(){
-    $("html, body").stop().animate({ scrollTop : 0 }, 50, "swing", function(){});
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-// 아래로이동
-//////////////////////////////////////////////////////////////////////////
-function gotoDown(){
-    $("html, body").stop().animate({ scrollTop : $(document).height() }, 50, "swing", function(){});
-}
-
-
-
-//////////////////////////////////////////////////////////////////////////
-// 페이지 위치 이동
-//////////////////////////////////////////////////////////////////////////
-function gotoPos(kind){
-    var gopos = $("#"+kind).offset().top - 65;
-    $("html, body").stop().animate({ scrollTop : gopos }, 50, "swing", function(){});
 }
 
 
@@ -94,6 +96,7 @@ function EmailInput(el){
 
 
 
+
 /////////////////////////////////////////////////////
 // 천단위 콤마 추가
 /////////////////////////////////////////////////////
@@ -114,7 +117,6 @@ function RemoveComma(str){
 
 
 
-
 /////////////////////////////////////////////////////
 // jQuery UI 달력
 /////////////////////////////////////////////////////
@@ -131,6 +133,8 @@ $(document).ready(function(){
         buttonImageOnly: false, //이미지표시
         yearRange: '2021:2040' //2021년부터 2040년까지,
     };
+    $("#startDate").datepicker(clareCalendar);
+    $("#endDate").datepicker(clareCalendar);
     $("#datePick1").datepicker(clareCalendar);
     $("#datePick2").datepicker(clareCalendar);
     $("#datePick3").datepicker(clareCalendar);
@@ -144,10 +148,6 @@ $(document).ready(function(){
     $("img.ui-datepicker-trigger").attr("style","margin-left:5px; vertical-align:middle; cursor:pointer;"); //이미지버튼 style적용
     $("#ui-datepicker-div").hide(); //자동으로 생성되는 div객체 숨김  
 });
-
-
-
-
 
 
 
