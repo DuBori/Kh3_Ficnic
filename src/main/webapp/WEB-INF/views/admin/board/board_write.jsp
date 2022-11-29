@@ -11,14 +11,17 @@
 <body>
 	<c:set var="m" value="${modify}"/>
 	<c:if test="${!empty m }">
-		<c:set var="tag" value="/config_board_modify.do"/>
+		<c:set var="tag" value="/board_modify.do"/>
 		<c:set var="conid" value="${Cont.getBoard_id() }"/>
 		<c:set var="conname" value="${Cont.getBoard_name() }"/>
 		<c:set var="conskin" value="${Cont.getBoard_skin() }"/>
+		<c:set var="conLnum" value="${Cont.getBoard_list_num() }"/>
+		<c:set var="conPnum" value="${Cont.getBoard_page_num() }"/>
+		<c:set var="con_use_cate" value="${Cont.getBoard_use_category() }"/>
 	</c:if>
 	
 	<c:if test="${empty m }">
-		<c:set var="tag" value="/config_board_write.do"></c:set>
+		<c:set var="tag" value="/board_write.do"></c:set>
 	</c:if>
 	
 	<form action="<%=request.getContextPath() %>/${tag}" method="post">
@@ -32,6 +35,7 @@
 			<label for="name">게시판 이름</label>
 			<input name="board_name" id="name" value="${conname }"><br>
 		
+			<!-- 스킨부분 처리파트 어떻게  -->
 			<label for="skin">게시판 스킨</label>
 			<select name="board_skin" id="skin" >
 				<option value="basic">1</option>
@@ -40,14 +44,16 @@
 			</select><br>
 				
 			<label for="list_num">페이지 목록 갯수</label>
-			<input  name="board_list_num" id="list_num" value=""><br>
+			<input  name="board_list_num" id="list_num" value="${conLnum}"><br>
 			
 			
 			<label for="page_num">페이지 구분 갯수</label>
-			<input  name="board_page_num" id="page_num"><br>
+			<input  name="board_page_num" id="page_num" value="${conPnum}"><br>
+		
 			
 			<h5>기능 설정</h5>
 			<label>글보기시 목록표시
+				
 				<input type="radio" value="Y" name="board_use_category" >O
 				<input type="radio" value="N" name="board_use_category" checked="checked" >X
 			</label><br>
@@ -148,7 +154,7 @@
 	</div>
 	<div>
 		<input type="submit" value="등록하기">
-		<input type="button" value="목록보기" onclick="location.href='admin_board.do'">
+		<input type="button" value="목록보기" onclick="location.href='board_list.do'">
 	</div>
 		
 	</form>

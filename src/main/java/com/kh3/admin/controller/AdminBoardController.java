@@ -30,7 +30,7 @@ public class AdminBoardController {
 	
 	
 	// 환경설정_게시판 설정 페이지
-	@RequestMapping("admin_board.do")
+	@RequestMapping("board_list.do")
 	public String admin_board(Model model) {
 		
 		// 테이블 이름을 통해서 해당 테이블리스트를 넣어서 가져올 수 있나요?
@@ -39,14 +39,14 @@ public class AdminBoardController {
 	}
 	
 	// 환경설정_게시판설정_게시판추가 페이지
-	@RequestMapping("config_board_write.do")
+	@RequestMapping("board_write.do")
 	public String admin_board_write() {
 		
 		return "/admin/board/board_write";
 	}
 	
 	// 환경설정_게시판설정_게시판추가 받은 데이터 처리
-	@RequestMapping("config_board_write_Ok.do")
+	@RequestMapping("board_write_ok.do")
 	public void admin_board_writeOk(BoardConfDTO confdto, HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=utf-8");
@@ -55,7 +55,7 @@ public class AdminBoardController {
 		if(this.board_ConfDao.writeBoard(confdto)>0) {
 			out.println("<script>");
 			out.println("alert('게시판 생성 완료')");
-			out.println("location.href='admin_board.do'");
+			out.println("location.href='board_list.do'");
 			out.println("</script>");
 		}else {
 			out.println("<script>");
@@ -64,13 +64,15 @@ public class AdminBoardController {
 			out.println("</script>");	
 		}	
 	}
-	@RequestMapping("config_board_content.do")
-	public String admin_board_content(@RequestParam("board_no") int board_no, Model model) {
-		
-		model.addAttribute("Cont", this.board_ConfDao.getCont(board_no));
-		model.addAttribute("modify", "m");
-		return "/admin/board/board_write";
-	}
+	
+	
+	 @RequestMapping("board_content.do") 
+	 public String admin_board_content(@RequestParam("board_no") int board_no, Model model) {
+	  
+	  model.addAttribute("Cont", this.board_ConfDao.getCont(board_no));
+	  model.addAttribute("modify", "m"); return "/admin/board/board_write"; 
+	 }
+	 
 	
 	
 	
