@@ -9,11 +9,21 @@
 
     <!-- 회원 목록 -->
     <select id="adminMemberList" resultType="memberDTO">
+    	select * from member_list order by member_joindate desc
     </select>
 
-
-
-
+    <!-- 회원 상세 내역 -->
+  <select id="adminMemberView" parameterType="int" resultType="memberDTO">
+		select * from member_list where member_no = #{member_no} 
+  </select>
+	
+    <!-- 회원 추가 -->
+	<insert id="writeOk" parameterType="memberDTO">
+		<selectKey resultType="int" keyProperty="member_no" order="BEFORE">
+			select max(member_no) from member_list
+		</selectKey>
+		insert into member_list values(#{member_no} + 1, #{member_type}, #{member_id}, #{member_pw}, #{member_name}, #{member_email}, #{member_phone}, 1000, sysdate)
+    </insert>
 
 
 </mapper>
