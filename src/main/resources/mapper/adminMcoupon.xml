@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 관리자 : 회원보유 쿠폰 관련 -->
+<mapper namespace="mcouponDAO">
+
+    <!-- 보유 쿠폰 목록 -->
+    <select id="adminMcouponList" resultType="mcouponDTO">
+    </select>
+
+
+
+
+
+
+</mapper>

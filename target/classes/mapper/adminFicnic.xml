@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 관리자 : 피크닉 관련 -->
+<mapper namespace="ficnicDAO">
+
+    <!-- 피크닉 목록 -->
+    <select id="adminFicnicList" resultType="ficnicDTO">
+    </select>
+
+
+
+
+
+
+</mapper>
