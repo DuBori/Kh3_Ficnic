@@ -1,4 +1,4 @@
-# StayKey Java Semi Project
+# Ficnic Java Final Project
 
 <br/>
 
