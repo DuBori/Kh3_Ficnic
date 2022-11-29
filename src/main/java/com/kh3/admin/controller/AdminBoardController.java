@@ -31,7 +31,7 @@ public class AdminBoardController {
 	
 	// 환경설정_게시판 설정 페이지
 	@RequestMapping("board_list.do")
-	public String admin_board(Model model) {
+	public String board_list(Model model) {
 		
 		// 테이블 이름을 통해서 해당 테이블리스트를 넣어서 가져올 수 있나요?
 		model.addAttribute("List",this.board_ConfDao.getConfBoardList());
@@ -40,14 +40,14 @@ public class AdminBoardController {
 	
 	// 환경설정_게시판설정_게시판추가 페이지
 	@RequestMapping("board_write.do")
-	public String admin_board_write() {
+	public String board_write() {
 		
 		return "/admin/board/board_write";
 	}
 	
 	// 환경설정_게시판설정_게시판추가 받은 데이터 처리
 	@RequestMapping("board_write_ok.do")
-	public void admin_board_writeOk(BoardConfDTO confdto, HttpServletResponse response) throws IOException {
+	public void board_writeOk(BoardConfDTO confdto, HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out=response.getWriter();
@@ -66,11 +66,33 @@ public class AdminBoardController {
 	}
 	
 	
-	 @RequestMapping("board_content.do") 
-	 public String admin_board_content(@RequestParam("board_no") int board_no, Model model) {
+	 @RequestMapping("board_modify.do") 
+	 public String board_content(@RequestParam("board_no") int board_no, Model model) {
 	  
-	  model.addAttribute("Cont", this.board_ConfDao.getCont(board_no));
-	  model.addAttribute("modify", "m"); return "/admin/board/board_write"; 
+		  model.addAttribute("Cont", this.board_ConfDao.getCont(board_no));
+		  model.addAttribute("modify", "m"); 
+		  
+		  return "/admin/board/board_write"; 
+	 }
+	 
+	 @RequestMapping("board_modify_ok.do")
+	 public void board_modify_ok(BoardConfDTO dto, HttpServletResponse response) throws IOException {
+		 
+		 response.setContentType("text/html; charset=utf-8");
+		 PrintWriter out=response.getWriter();
+		 
+			if(this.board_ConfDao.updateBoard(dto)>0 ) {
+				out.println("<script>");
+				out.println("alert('게시판 수정 완료')");
+				out.println("location.href='board_list.do'");
+				out.println("</script>");
+			}else {
+				out.println("<script>");
+				out.println("alert('게시판 수정 실패')");
+				out.println("history.back()");
+				out.println("</script>");	
+			}	
+		 
 	 }
 	 
 	

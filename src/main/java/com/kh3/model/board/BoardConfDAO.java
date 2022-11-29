@@ -9,4 +9,6 @@ public interface BoardConfDAO {
 	List<BoardConfDTO> getConfBoardList();
 	
 	BoardConfDTO getCont(int board_no);
+
+	int updateBoard(BoardConfDTO dto);
 }

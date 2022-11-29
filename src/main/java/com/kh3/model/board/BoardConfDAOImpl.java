@@ -39,6 +39,11 @@ public class BoardConfDAOImpl implements BoardConfDAO {
 		
 	}
 
+	@Override
+	public int updateBoard(BoardConfDTO dto) {
+		return sqlSession.update("adminBoardUpdate", dto);
+	}
+
 
 
 

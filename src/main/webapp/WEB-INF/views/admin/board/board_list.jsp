@@ -25,12 +25,12 @@
 					<c:forEach items="${List }" var="dto">
 						<tr>
 							<td>${dto.getBoard_no()}</td>
-							<td><a href="<%=request.getContextPath()%>/board_content.do?board_no=${dto.getBoard_no()}">${dto.getBoard_name()}</a></td>
+							<td><a href="<%=request.getContextPath()%>/board_modify.do?board_no=${dto.getBoard_no()}">${dto.getBoard_name()}</a></td>
 							<td>${dto.getBoard_id()}</td>
 							<td>${dto.getBoard_level_list()} ${dto.getBoard_level_view()} ${dto.getBoard_level_write()}</td>
 							<td><input type="button" value="게시판 보기"></td>
 							<td>
-								<input type="button" value="수정">
+								<input type="button" value="수정" onclick="location.href='board_modify.do?board_no=${dto.getBoard_no()}'">
 								<input type="button" value="삭제">
 							
 							</td>
