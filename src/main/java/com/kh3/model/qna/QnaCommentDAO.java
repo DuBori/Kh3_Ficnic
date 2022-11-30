@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface QnaCommentDAO {
 
-
-	QnaCommentDTO qnaCommentView(int no);
+	
+	int qnaReply (QnaCommentDTO dto);
 
     int qnaCommentDelete(int no);
 
