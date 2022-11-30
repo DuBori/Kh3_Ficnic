@@ -21,6 +21,7 @@ public class AdminQnaController {
 
 	@Inject
     private QnaDAO dao;
+	@Inject
 	private QnaCommentDAO cdao;
 	
 	
@@ -39,13 +40,13 @@ public class AdminQnaController {
 	
 
 	@RequestMapping("admin/qna/qna_view.do")
-	public String view(Model model ,@RequestParam("no") int no) {
+	public String view(Model model,  @RequestParam("no") int no) {
 		
 		QnaDTO dto = this.dao.qnaView(no);
-		QnaCommentDTO cdto = this.cdao.qnaCommentView(no);
+		List<QnaCommentDTO> list = this.cdao.getQnaCommentList(no);
 		
 		model.addAttribute("dto", dto);
-		model.addAttribute("cdto", cdto);
+		model.addAttribute("cdto", list);
 		
 		return "admin/qna/qna_view";
 	

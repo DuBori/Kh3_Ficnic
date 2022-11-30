@@ -17,9 +17,7 @@
 		select * from qna_list where qna_no = #{qna_no}
 	</select>
 
-	<!-- 코멘트 상세 보기 -->
-	<select id="adminQnaCommentView" parameterType="int" resultType="qnacommentDTO">
-		select * from qna_comment where qna_no = #{qna_no}
-	</select>
 
-</mapper>
+
+</mapper> 
+

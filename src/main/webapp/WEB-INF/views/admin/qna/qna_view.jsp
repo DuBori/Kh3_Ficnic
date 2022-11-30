@@ -15,7 +15,6 @@
     </div>
 </div>
 
-
 <div class="page-cont">
 
 
@@ -27,18 +26,27 @@
         <br />
 
         <table class="table table-bordered">
-            <c:if test="${!empty dto}">
-
-			<h2>문의글 상세 정보</h2>
 			
-            <tr>
+<%--             <c:if test="${!empty dto}">
+			<h4>문의글 상세 정보</h4>
+			 <tr>
                 <th>작성일</th>
                 <td align="left">${dto.qna_date}</td>
-            </tr>
-            <tr>
+            </tr> 
+            </c:if>  --%>
+
+ 			<c:forEach items="${cdto }" var="cdto">
+			${cdto.comment_content }
+			</c:forEach>
+			</table></div></div> 
+			
+           <%--  <tr>
                 <th>이름</th>
-                <td align="left">${dto.review_point}점</td>
+                <td align="left">${cdto.comment_writer_name}</td>
             </tr>
+            
+            
+            
             <tr>
                 <th>아이디</th>
                 <td align="left">
@@ -96,6 +104,7 @@
             <td><input type="button" onclick="<%=request.getContextPath() %>/admin/qna/qna_reply_ok.do " />쓰기</td>
             
             </tr>
+            
         </table>
 
 
@@ -113,9 +122,7 @@
 
 <%@ include file="../layout/layout_footer.jsp" %>
 
-
-
-
+ --%>
 
 </body>
 </html>
