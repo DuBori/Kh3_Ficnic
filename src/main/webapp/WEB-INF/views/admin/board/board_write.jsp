@@ -57,9 +57,8 @@
 			<!-- 스킨부분 처리파트 어떻게  -->
 			<label for="skin">게시판 스킨</label>
 			<select name="board_skin" id="skin" >
-				<option value="basic" <c:if test="${cnskin == 'basic'}">selected</c:if> >1</option>
-				<option value="basic2"<c:if test="${cnskin == 'basic'}">selected</c:if> >2</option>
-				<option value="basic3"<c:if test="${cnskin == 'basic'}">selected</c:if> >3</option>
+				<option value="basic" <c:if test="${cnskin == 'basic'}">selected</c:if> >basic</option>
+				<option value="test"<c:if test="${cnskin == 'test'}">selected</c:if> >test</option>
 			</select><br>
 				
 			<label for="list_num">페이지 목록 갯수</label>
@@ -174,6 +173,7 @@
 	<div>
 		<c:choose>
 			<c:when test="${!empty m }">
+				<input type="button" value="삭제하기" onclick="if(confirm('정말로 삭제하시겠습니까? 삭제시, 돌이키실 수 없습니다.')){location.href='<%=request.getContextPath()%>/admin/board/board_delete.do?board_no=${Cont.getBoard_no()}';}else{return;}">
 				<input type="submit" value="수정하기">
 			</c:when>
 			<c:otherwise>

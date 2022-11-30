@@ -18,12 +18,28 @@
   </select>
 	
     <!-- 회원 추가 -->
-	<insert id="writeOk" parameterType="memberDTO">
+	<insert id="adminMemberwriteOk" parameterType="memberDTO">
 		<selectKey resultType="int" keyProperty="member_no" order="BEFORE">
 			select max(member_no) from member_list
 		</selectKey>
 		insert into member_list values(#{member_no} + 1, #{member_type}, #{member_id}, #{member_pw}, #{member_name}, #{member_email}, #{member_phone}, 1000, sysdate)
     </insert>
 
+    <!-- 회원 아이디 중복 체크 -->
+	<select id="checkId" resultType="int">
+		select count(*) from member_list where member_id like '%' || #{member_id} || '%'
+	</select>
+
+    <!-- 회원 삭제 -->
+    <delete id="adminMemberdelete" parameterType="int">
+		delete from member_list where member_no = #{member_no }
+	</delete>
+    
+    <!-- 회원 삭제 후 글번호 재작업 -->
+	<update id="adminMemberSequence">
+		<![CDATA[update member_list set member_no = member_no - 1 where member_no > #{member_no}]]>
+	</update>
+    
+    
 
 </mapper>

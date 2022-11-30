@@ -27,15 +27,43 @@ public class MemberDAOImpl implements MemberDAO {
 	
 		return this.sqlSession.selectOne("adminMemberView", no);
 	}
-
+	
+	// 회원 아이디 중복 체크
+	@Override
+	public int checkId(MemberDTO dto) {
+		
+		return this.sqlSession.selectOne("checkId", dto);
+	}
 
 	// 회원 등록하기
 	@Override
 	public int writeOkMember(MemberDTO dto) {
 		
-		return this.sqlSession.insert("writeOk", dto);
+		return this.sqlSession.insert("adminMemberwriteOk", dto);
 	}
-    
+
+	// 회원 삭제
+	@Override
+	public int deleteMember(int no) {
+		
+		return this.sqlSession.delete("adminMemberdelete", no);
+	}
+
+	// 회원 삭제 후 글번호 재작업
+	@Override
+	public void updateSequence(int no) {
+		
+		this.sqlSession.update("adminMemberSequence", no);
+	}
+
+	// 회원 정보 수정
+	@Override
+	public int modifyOk(MemberDTO dto, String member_pw) {
+		
+		return 0;
+	}
+
+
    
 
 

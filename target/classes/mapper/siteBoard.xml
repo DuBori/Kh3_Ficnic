@@ -9,6 +9,7 @@
 
     <!-- 게시판 목록 -->
     <select id="siteBoardList" resultType="boardDTO">
+    	select * from board_data_${value}
     </select>
 
 
