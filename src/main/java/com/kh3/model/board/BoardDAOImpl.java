@@ -40,6 +40,13 @@ public class BoardDAOImpl implements BoardDAO {
 		return this.sqlSession.selectList("SiteBoardList", map);
 	}
 
+	@Override
+	public int insertBoardCont(BoardDTO dto) {
+		
+		
+		return 0;
+	}
+
 
 
 
