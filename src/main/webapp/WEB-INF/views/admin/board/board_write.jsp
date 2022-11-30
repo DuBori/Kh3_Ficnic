@@ -1,188 +1,321 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-   
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<c:set var="m" value="${modify}"/>
-	<c:if test="${!empty m }">
-		<c:set var="tag" value="/admin/board/board_modify_ok.do"/>
-		<c:set var="conid" value="${Cont.getBoard_id() }"/>
-		<c:set var="conname" value="${Cont.getBoard_name() }"/>
-		<c:set var="conskin" value="${Cont.getBoard_skin() }"/>
-		<c:set var="conLnum" value="${Cont.getBoard_list_num() }"/>
-		<c:set var="conPnum" value="${Cont.getBoard_page_num() }"/>
-		<c:set var="con_use_cate" value="${Cont.getBoard_use_category() }"/>
-		<c:set var="con_use_comm" value="${Cont.getBoard_use_comment() }"/>
-		<c:set var="con_use_sec"  value="${Cont.getBoard_use_secret() }"/>
-		<c:set var="con_use_only_sec" value="${Cont.getBoard_use_only_secret() }"/>
-		<c:set var="con_link1" value="${Cont.getBoard_use_link1() }"/>
-		<c:set var="con_link2" value="${Cont.getBoard_use_link2() }"/>
-		<c:set var="con_file1" value="${Cont.getBoard_use_file1() }"/>
-		<c:set var="con_file2" value="${Cont.getBoard_use_file2() }"/>
-		<c:set var="con_file3" value="${Cont.getBoard_use_file3() }"/>
-		<c:set var="con_file4" value="${Cont.getBoard_use_file4() }"/>
-		<c:set var="con_lv_list" value="${Cont.getBoard_level_list() }"/>
-		<c:set var="con_lv_view" value="${Cont.getBoard_level_view() }"/>
-		<c:set var="con_lv_write" value="${Cont.getBoard_level_write() }"/>
-		<c:set var="con_lv_comm" value="${Cont.getBoard_level_comment() }"/>
-		<c:set var="con_lv_not" value="${Cont.getBoard_level_notice() }"/>
-		<c:set var="con_lv_mod" value="${Cont.getBoard_level_modify() }"/>
-		<c:set var="con_lv_del" value="${Cont.getBoard_level_delete() }"/>
-	</c:if>
-	
-	<c:if test="${empty m }">
-		<c:set var="tag" value="/admin/board/board_write_ok.do"></c:set>
-	</c:if>
-	
-	<form action="<%=request.getContextPath() %>${tag}" method="post">
-	<c:if test="${!empty m }">
-		<input type="hidden" value="${Cont.getBoard_no() }" name="board_no">
-	</c:if>
-	<div>
-		<h3>게시판 설정</h3>
-		<div>
-			<h5>기본 설정</h5>
-			<label for="id">게시판 아이디</label>
-			<input name="board_id" id="id" value="${conid}"><br>
-			
-			<label for="name">게시판 이름</label>
-			<input name="board_name" id="name" value="${conname }"><br>
-		
-			<!-- 스킨부분 처리파트 어떻게  -->
-			<label for="skin">게시판 스킨</label>
-			<select name="board_skin" id="skin" >
-				<option value="basic" <c:if test="${cnskin == 'basic'}">selected</c:if> >basic</option>
-				<option value="test"<c:if test="${cnskin == 'test'}">selected</c:if> >test</option>
-			</select><br>
-				
-			<label for="list_num">페이지 목록 갯수</label>
-			<input  name="board_list_num" id="list_num" value="${conLnum}"><br>
-			
-			
-			<label for="page_num">페이지 구분 갯수</label>
-			<input  name="board_page_num" id="page_num" value="${conPnum}"><br>
-		
-			
-			<h5>기능 설정</h5>
-			<label>글보기시 목록표시
-				
-				<input type="radio" value="Y" name="board_use_category" <c:if test="${!empty con_use_cate and con_use_cate == 'Y'}">checked</c:if>  >O
-				<input type="radio" value="N" name="board_use_category" <c:if test="${empty con_use_cate or con_use_cate == 'N'}">checked</c:if> >X
-			</label><br>
-			
-			<label>댓글 기능
-				<input type="radio" value="Y" name="board_use_comment" <c:if test="${!empty con_use_comm and con_use_comm == 'Y'}">checked</c:if>  >O
-				<input type="radio" value="N" name="board_use_comment" <c:if test="${empty con_use_comm or con_use_comm == 'N'}">checked</c:if> >X
-			</label><br>
-			
-			<label >비밀글 기능
-				<input type="radio" value="Y" name="board_use_secret" <c:if test="${!empty con_use_sec and con_use_sec == 'Y'}">checked</c:if>  >O
-				<input type="radio" value="N" name="board_use_secret"  <c:if test="${empty con_use_sec or con_use_sec == 'N'}">checked</c:if>  >X
-			</label><br>
-			
-			<label>비밀글 전용
-				<input type="radio" value="Y" name="board_use_only_secret" <c:if test="${!empty con_use_only_sec and con_use_only_sec == 'Y'}">checked</c:if> >O
-				<input type="radio" value="N" name="board_use_only_secret" <c:if test="${empty con_use_only_sec or con_use_only_sec == 'N'}">checked</c:if>  >X
-			</label><br>
-			
-			<label>관련 사이트 링크#1
-				<input type="radio" value="Y" name="board_use_link1" <c:if test="${!empty con_link1 and con_link1 == 'Y' }">checked</c:if> >O
-				<input type="radio" value="N" name="board_use_link1" <c:if test="${empty con_link1 or con_link1 == 'N'}">checked</c:if> >X
-			</label><br>
-			
-			<label>관련 사이트 링크#2
-				<input type="radio" value="Y" name="board_use_link2"  <c:if test="${!empty con_link2 and con_link2 == 'Y' }">checked</c:if>  >O
-				<input type="radio" value="N" name="board_use_link2"<c:if test="${empty con_link2 or con_link2 == 'N'}">checked</c:if>  >X
-			</label><br>
-			
-			<label>첨부파일 #1
-				<input type="radio" value="Y" name="board_use_file1"  <c:if test="${!empty con_file1 and con_file1 == 'Y' }">checked</c:if>  >O
-				<input type="radio" value="N" name="board_use_file1" <c:if test="${empty con_file1 or con_file1 == 'N' }">checked</c:if>  >X
-			</label><br>
-			<label>첨부파일 #2
-				<input type="radio" value="Y" name="board_use_file2" <c:if test="${!empty con_file2 and con_file2 == 'Y' }">checked</c:if> >O
-				<input type="radio" value="N" name="board_use_file2" <c:if test="${empty con_file2 or con_file2 == 'N' }">checked</c:if>  >X
-			</label><br>
-			<label>첨부파일 #3
-				<input type="radio" value="Y" name="board_use_file3" <c:if test="${!empty con_file3 and con_file3 == 'Y' }">checked</c:if> >O
-				<input type="radio" value="N" name="board_use_file3" <c:if test="${empty con_file3 or con_file3 == 'N' }">checked</c:if> >X
-			</label><br>
-			<label>첨부파일 #4
-				<input type="radio" value="Y" name="board_use_file4" <c:if test="${!empty con_file4 and con_file4 == 'Y' }">checked</c:if> >O
-				<input type="radio" value="N" name="board_use_file4" <c:if test="${empty con_file4 or con_file4 == 'N' }">checked</c:if> >X
-			</label><br>
-			
-			<h5>권한설정</h5>
-			
-			<label for="level_list">목록 보기 권한</label>
-			<select id="level_list" name="board_level_list">
-				<option value="null" <c:if test="${con_lv_list =='null'}">selected</c:if> >[0]모든사람</option>
-				<option value="user" <c:if test="${con_lv_list =='user'}">selected</c:if> >[1]회원</option>
-				<option value="admin" <c:if test="${con_lv_list =='admin'}">selected</c:if> >[2]관리자</option>
-			</select><br>
-			
-			<label for="level_view">게시물 보기 권한</label>
-			<select id="level_view" name="board_level_view">
-				<option value="null" <c:if test="${con_lv_view =='null'}">selected</c:if> >[0]모든사람</option>
-				<option value="user" <c:if test="${con_lv_view =='user'}">selected</c:if> >[1]회원</option>
-				<option value="admin"<c:if test="${con_lv_view =='admin'}">selected</c:if> >[2]관리자</option>
-			</select><br>
-			
-			<label for="level_write">목록 작성 권한</label>
-			<select id="level_write" name="board_level_write">
-				<option value="null" <c:if test="${con_lv_write =='null'}">selected</c:if> >[0]모든사람</option>
-				<option value="user" <c:if test="${con_lv_write =='user'}">selected</c:if> >[1]회원</option>
-				<option value="admin" <c:if test="${con_lv_write =='admin'}">selected</c:if> >[2]관리자</option>
-			</select><br>
-			
-			<label for="level_comment">댓글 작성 권한</label>
-			<select id="level_comment" name="board_level_comment">
-				<option value="null" <c:if test="${con_lv_comm =='null'}">selected</c:if> >[0]모든사람</option>
-				<option value="user" <c:if test="${con_lv_comm =='usesr'}">selected</c:if> >[1]회원</option>
-				<option value="admin" <c:if test="${con_lv_comm =='amdin'}">selected</c:if> >[2]관리자</option>
-			</select><br>
-			
-			<label for="level_notice">공지사항 작성 권한</label>
-			<select id="level_notice" name="board_level_notice">
-				<option value="null" <c:if test="${con_lv_not =='null'}">selected</c:if> >[0]모든사람</option>
-				<option value="user" <c:if test="${con_lv_not =='user'}">selected</c:if> >[1]회원</option>
-				<option value="admin" <c:if test="${con_lv_not =='admin'}">selected</c:if> >[2]관리자</option>
-			</select><br>
-			
-			<label for="level_modify">게시물 수정 권한</label>
-			<select id="level_modify" name="board_level_modify">
-				<option value="null" <c:if test="${con_lv_mod =='null'}">selected</c:if> >[0]모든사람</option>
-				<option value="user" <c:if test="${con_lv_mod =='user'}">selected</c:if> >[1]회원</option>
-				<option value="admin" <c:if test="${con_lv_mod =='admin'}">selected</c:if> >[2]관리자</option>
-			</select><br>
-			
-			<label for="level_delete">게시물 삭제 권한</label>
-			<select id="level_delete" name="board_level_delete">
-				<option value="null" <c:if test="${con_lv_del =='null'}">selected</c:if> >[0]모든사람</option>
-				<option value="user" <c:if test="${con_lv_del =='user'}">selected</c:if> >[1]회원</option>
-				<option value="admin" <c:if test="${con_lv_del =='admin'}">selected</c:if> >[2]관리자</option>
-			</select><br>
-		</div>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="../layout/layout_header.jsp" %>
+
+
+<c:set var="m" value="${modify}" />
+<c:if test="${!empty m}">
+	<c:set var="tag" value="/admin/board/board_modify_ok.do" />
+	<c:set var="conid" value="${Cont.getBoard_id()}" />
+	<c:set var="conname" value="${Cont.getBoard_name()}" />
+	<c:set var="conskin" value="${Cont.getBoard_skin()}" />
+	<c:set var="conLnum" value="${Cont.getBoard_list_num()}" />
+	<c:set var="conPnum" value="${Cont.getBoard_page_num()}" />
+	<c:set var="con_use_cate" value="${Cont.getBoard_use_category()}" />
+	<c:set var="con_use_comm" value="${Cont.getBoard_use_comment()}" />
+	<c:set var="con_use_sec" value="${Cont.getBoard_use_secret()}" />
+	<c:set var="con_use_only_sec" value="${Cont.getBoard_use_only_secret()}" />
+	<c:set var="con_link1" value="${Cont.getBoard_use_link1()}" />
+	<c:set var="con_link2" value="${Cont.getBoard_use_link2()}" />
+	<c:set var="con_file1" value="${Cont.getBoard_use_file1()}" />
+	<c:set var="con_file2" value="${Cont.getBoard_use_file2()}" />
+	<c:set var="con_file3" value="${Cont.getBoard_use_file3()}" />
+	<c:set var="con_file4" value="${Cont.getBoard_use_file4()}" />
+	<c:set var="con_lv_list" value="${Cont.getBoard_level_list()}" />
+	<c:set var="con_lv_view" value="${Cont.getBoard_level_view()}" />
+	<c:set var="con_lv_write" value="${Cont.getBoard_level_write()}" />
+	<c:set var="con_lv_comm" value="${Cont.getBoard_level_comment()}" />
+	<c:set var="con_lv_not" value="${Cont.getBoard_level_notice()}" />
+	<c:set var="con_lv_mod" value="${Cont.getBoard_level_modify()}" />
+	<c:set var="con_lv_del" value="${Cont.getBoard_level_delete()}" />
+</c:if>
+
+<c:if test="${empty m }">
+	<c:set var="tag" value="/admin/board/board_write_ok.do"></c:set>
+	<c:set var="conLnum" value="10" />
+	<c:set var="conPnum" value="3" />
+	<c:set var="con_lv_not" value="admin" />
+	<c:set var="con_lv_mod" value="admin" />
+	<c:set var="con_lv_del" value="admin" />
+</c:if>
+
+
+
+<div class="page-info row mb-3">
+    <div class="d-flex align-items-center justify-content-between">
+        <h2>게시판 <c:choose><c:when test="${!empty m}">수정</c:when><c:otherwise>등록</c:otherwise></c:choose></h2>
+        <ol class="m-0 p-2">
+        	<li>게시판 관리</li>
+            <li><b>게시판 <c:choose><c:when test="${!empty m}">수정</c:when><c:otherwise>등록</c:otherwise></c:choose></b></li>
+        </ol>
+    </div>
+</div>
+
+
+
+<form name="form_input" method="post" action="<%=request.getContextPath() %>${tag}">
+<c:if test="${!empty m }"><input type="hidden" value="${Cont.getBoard_no() }" name="board_no" /></c:if>
+<div class="page-cont">
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card input-form">
+                <div class="card-body p-4">
+                    <h4>기본 설정</h4>
+                    <div class="row form">
+                        <div class="form-group col">
+                            <label for="board_id" style="padding: 9px 0;"><span>*</span> 게시판 아이디<br />(영문, 숫자)</label>
+                            <input type="text" name="board_id" id="board_id" value="${conid}" maxlength="30" class="form-control<c:if test="${!empty m}">-plaintext</c:if> w-30" onkeydown="EngNumInput(this);"<c:if test="${!empty m}"> readonly="readonly"</c:if> required="required" />
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col mb-2">
+                            <label for="board_name"><span>*</span> 게시판 이름</label>
+                            <input type="text" name="board_name" id="board_name" value="${conname}" maxlength="30" class="form-control w-30" required="required" />
+                        </div>
+                        <div class="w-100 border-bottom"></div>
+                        <div class="form-group col mb-2">
+                            <label for="board_skin">게시판 스킨</label>
+                            <select id="board_skin" name="board_skin" class="custom-select w-30">
+								<option value="basic"<c:if test="${cnskin eq 'basic'}"> selected="selected"</c:if>>basic</option>
+								<option value="test"<c:if test="${cnskin eq 'test'}"> selected="selected"</c:if>>test</option>
+                            </select>
+                        </div>
+                        <div class="w-100 border-bottom"></div>
+                        <div class="form-group col">
+                            <label for="board_list_num" style="padding: 9px 0;">페이지 목록 갯수<br />(숫자만 입력)</label>
+                            <input type="text" name="board_list_num" id="board_list_num" value="${conLnum}" maxlength="2" class="form-control text-center w-20" onkeydown="NumberInput(this);" required="required" /> 개
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col">
+                            <label for="board_page_num" style="padding: 9px 0;">페이지 구분 갯수<br />(숫자만 입력)</label>
+                            <input type="text" name="board_page_num" id="board_page_num" maxlength="1" value="${conPnum}" class="form-control text-center w-20" onkeydown="NumberInput(this);" required="required" /> 개
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-lg-6 mb-4">
+            <div class="card input-form">
+                <div class="card-body p-4">
+                    <h4>기능 설정</h4>
+                    <div class="row form">
+                        <div class="form-group col-sm">
+                            <label>카테고리 기능</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary<c:if test="${!empty con_use_cate and con_use_cate eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="board_use_category" value="Y"<c:if test="${!empty con_use_cate and con_use_cate eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                </label>
+                                <label class="btn btn-outline-secondary<c:if test="${empty con_use_cate or con_use_cate eq 'N'}"> active</c:if>">
+                                    <input type="radio" name="board_use_category" value="N"<c:if test="${empty con_use_cate or con_use_cate eq 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>댓글 기능</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary<c:if test="${!empty con_use_comm and con_use_comm eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="board_use_comment" value="Y"<c:if test="${!empty con_use_comm and con_use_comm eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                </label>
+                                <label class="btn btn-outline-secondary<c:if test="${empty con_use_comm or con_use_comm eq 'N'}"> active</c:if>">
+                                    <input type="radio" name="board_use_comment" value="N"<c:if test="${empty con_use_comm or con_use_comm eq 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                </label>
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col-sm mb-2">
+                            <label>비밀글 기능</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary<c:if test="${!empty con_use_sec and con_use_sec eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="board_use_secret" value="Y"<c:if test="${!empty con_use_sec and con_use_sec eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                </label>
+                                <label class="btn btn-outline-secondary<c:if test="${empty con_use_sec or con_use_sec eq 'N'}"> active</c:if>">
+                                    <input type="radio" name="board_use_secret" value="N"<c:if test="${empty con_use_sec or con_use_sec eq 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm mb-2">
+                            <label>비밀글 전용</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary<c:if test="${!empty con_use_only_sec and con_use_only_sec eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="board_use_only_secret" value="Y"<c:if test="${!empty con_use_only_sec and con_use_only_sec eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                </label>
+                                <label class="btn btn-outline-secondary<c:if test="${empty con_use_only_sec or con_use_only_sec eq 'N'}"> active</c:if>">
+                                    <input type="radio" name="board_use_only_secret" value="N"<c:if test="${empty con_use_only_sec or con_use_only_sec eq 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                </label>
+                            </div>
+                        </div>
+                        <div class="w-100 border-bottom"></div>
+                        <div class="form-group col-sm mb-2">
+                            <label style="padding: 9px 0;">관련사이트<br />링크 #1</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary<c:if test="${!empty con_link1 and con_link1 eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="board_use_link1" value="Y"<c:if test="${!empty con_link1 and con_link1 eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                </label>
+                                <label class="btn btn-outline-secondary<c:if test="${empty con_link1 or con_link1 eq 'N'}"> active</c:if>">
+                                    <input type="radio" name="board_use_link1" value="N"<c:if test="${empty con_link1 or con_link1 eq 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm mb-2">
+                            <label style="padding: 9px 0;">관련사이트<br />링크 #2</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary<c:if test="${!empty con_link2 and con_link2 eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="board_use_link2" value="Y"<c:if test="${!empty con_link2 and con_link2 eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                </label>
+                                <label class="btn btn-outline-secondary<c:if test="${empty con_link2 or con_link2 eq 'N'}"> active</c:if>">
+                                    <input type="radio" name="board_use_link2" value="N"<c:if test="${empty con_link2 or con_link2 eq 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                </label>
+                            </div>
+                        </div>
+                        <div class="w-100 border-bottom"></div>
+                        <div class="form-group col-sm">
+                            <label>첨부파일 #1</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary<c:if test="${!empty con_file1 and con_file1 eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="board_use_file1" value="Y"<c:if test="${!empty con_file1 and con_file1 eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                </label>
+                                <label class="btn btn-outline-secondary<c:if test="${empty con_file1 or con_file1 eq 'N'}"> active</c:if>">
+                                    <input type="radio" name="board_use_file1" value="N"<c:if test="${empty con_file1 or con_file1 eq 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>첨부파일 #2</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary<c:if test="${!empty con_file1 and con_file2 eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="board_use_file2" value="Y"<c:if test="${!empty con_file2 and con_file2 eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                </label>
+                                <label class="btn btn-outline-secondary<c:if test="${empty con_file2 or con_file2 eq 'N'}"> active</c:if>">
+                                    <input type="radio" name="board_use_file2" value="N"<c:if test="${empty con_file2 or con_file2 eq 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                </label>
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col-sm">
+                            <label>첨부파일 #3</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary<c:if test="${!empty con_file1 and con_file3 eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="board_use_file3" value="Y"<c:if test="${!empty con_file3 and con_file3 eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                </label>
+                                <label class="btn btn-outline-secondary<c:if test="${empty con_file3 or con_file3 eq 'N'}"> active</c:if>">
+                                    <input type="radio" name="board_use_file3" value="N"<c:if test="${empty con_file3 or con_file3 eq 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>첨부파일 #4</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary<c:if test="${!empty con_file1 and con_file4 eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="board_use_file4" value="Y"<c:if test="${!empty con_file4 and con_file4 eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                </label>
+                                <label class="btn btn-outline-secondary<c:if test="${empty con_file4 or con_file4 eq 'N'}"> active</c:if>">
+                                    <input type="radio" name="board_use_file4" value="N"<c:if test="${empty con_file4 or con_file4 eq 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="page-cont">
+    <div class="row">
+        <div class="col-lg mb-4">
+            <div class="card input-form">
+                <div class="card-body p-4">
+                    <h4>권한 설정</h4>
+                    <div class="row form">
+                        <div class="form-group col-sm">
+                            <label for="board_level_list">목록보기</label>
+                            <select id="board_level_list" name="board_level_list" class="custom-select w-40">
+								<option value="null"<c:if test="${con_lv_list eq 'null'}"> selected="selected"</c:if>>모든사람</option>
+								<option value="user"<c:if test="${con_lv_list eq 'user'}"> selected="selected"</c:if>>회원</option>
+								<option value="admin"<c:if test="${con_lv_list eq 'admin'}"> selected="selected"</c:if>>관리자</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="board_level_view">글보기</label>
+                            <select id="board_level_view" name="board_level_view" class="custom-select w-40">
+								<option value="null"<c:if test="${con_lv_view eq 'null'}"> selected="selected"</c:if>>모든사람</option>
+								<option value="user"<c:if test="${con_lv_view eq 'user'}"> selected="selected"</c:if>>회원</option>
+								<option value="admin"<c:if test="${con_lv_view eq 'admin'}"> selected="selected"</c:if>>관리자</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="board_level_write">글쓰기</label>
+                            <select id="board_level_write" name="board_level_write" class="custom-select w-40">
+								<option value="null"<c:if test="${con_lv_write eq 'null'}"> selected="selected"</c:if>>모든사람</option>
+								<option value="user"<c:if test="${con_lv_write eq 'user'}"> selected="selected"</c:if>>회원</option>
+								<option value="admin"<c:if test="${con_lv_write eq 'admin'}"> selected="selected"</c:if>>관리자</option>
+                            </select>
+                        </div>
+
+                        <div class="w-100"></div>
+
+                        <div class="form-group col-sm">
+                            <label for="board_level_notice">공지사항 쓰기</label>
+                            <select id="board_level_notice" name="board_level_notice" class="custom-select w-40">
+								<option value="null"<c:if test="${con_lv_not eq 'null'}"> selected="selected"</c:if>>모든사람</option>
+								<option value="user"<c:if test="${con_lv_not eq 'user'}"> selected="selected"</c:if>>회원</option>
+								<option value="admin"<c:if test="${con_lv_not eq 'admin'}"> selected="selected"</c:if>>관리자</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="board_level_comment">댓글쓰기</label>
+                            <select id="board_level_comment" name="board_level_comment" class="custom-select w-40">
+								<option value="null"<c:if test="${con_lv_comm eq 'null'}"> selected="selected"</c:if>>모든사람</option>
+								<option value="user"<c:if test="${con_lv_comm eq 'usesr'}"> selected="selected"</c:if>>회원</option>
+								<option value="admin"<c:if test="${con_lv_comm eq 'amdin'}"> selected="selected"</c:if>>관리자</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm"></div>
+
+                        <div class="w-100"></div>
+
+                        <div class="form-group col-sm">
+                            <label for="board_level_modify" style="padding: 9px 0;">모든 글 수정<br />가능 권한</label>
+                            <select id="board_level_modify" name="board_level_modify" class="custom-select w-40">
+								<option value="null"<c:if test="${con_lv_mod eq 'null'}"> selected="selected"</c:if>>모든사람</option>
+								<option value="user"<c:if test="${con_lv_mod eq 'user'}"> selected="selected"</c:if>>회원</option>
+								<option value="admin"<c:if test="${con_lv_mod eq 'admin'}"> selected="selected"</c:if>>관리자</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="board_level_delete" style="padding: 9px 0;">모든 글 삭제<br />가능 권한</label>
+                            <select id="board_level_delete" name="board_level_delete" class="custom-select w-40">
+								<option value="null"<c:if test="${con_lv_del eq 'null'}">selected</c:if>>모든사람</option>
+								<option value="user"<c:if test="${con_lv_del eq 'user'}">selected</c:if>>회원</option>
+								<option value="admin"<c:if test="${con_lv_del eq 'admin'}">selected</c:if>>관리자</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="d-flex mt-2 input-form-button">
+	<div class="col-lg text-center">
+		<c:if test="${!empty m }"><a href="<%=request.getContextPath()%>/admin/board/board_delete.do?board_no=${Cont.getBoard_no()}" class="btn btn-danger btn-lg m-2" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a></c:if>
+		<a href="<%=request.getContextPath()%>/admin/board/board_list.do?keyword=${param.keyword}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
+		<button type="submit" class="btn btn-primary btn-lg m-2"><c:choose><c:when test="${!empty m}"><i class="fa fa-save"></i> 수정하기</c:when><c:otherwise><i class="fa fa-pencil"></i> 등록하기</c:otherwise></c:choose></button>
 	</div>
-	<div>
-		<c:choose>
-			<c:when test="${!empty m }">
-				<input type="button" value="삭제하기" onclick="if(confirm('정말로 삭제하시겠습니까? 삭제시, 돌이키실 수 없습니다.')){location.href='<%=request.getContextPath()%>/admin/board/board_delete.do?board_no=${Cont.getBoard_no()}';}else{return;}">
-				<input type="submit" value="수정하기">
-			</c:when>
-			<c:otherwise>
-				<input type="submit" value="등록하기">
-			</c:otherwise>
-		</c:choose>
-		<input type="button" value="목록보기" onclick="location.href='board_list.do'">
-	</div>
-		
-	</form>
-</body>
-</html>
+</div>
+</form>
+
+
+
+<%@ include file="../layout/layout_footer.jsp" %>
