@@ -25,10 +25,10 @@
 					<c:forEach items="${List }" var="dto">
 						<tr>
 							<td>${dto.getBoard_no()}</td>
-							<td><a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBoard_name()}</a></td>
 							<td>${dto.getBoard_id()}</td>
+							<td><a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBoard_name()}</a></td>
 							<td>${dto.getBoard_level_list()} ${dto.getBoard_level_view()} ${dto.getBoard_level_write()}</td>
-							<td><input type="button" value="게시판 보기"></td>
+							<td><input type="button" value="게시판 보기" onclick="location.href='<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${dto.getBoard_id()}'"></td>
 							<td>
 								<input type="button" value="수정" onclick="location.href='<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}'">
 								<input type="button" value="삭제" onclick="if(confirm('정말로 삭제하시겠습니까? 돌이키실 수 없습니다.')){location.href='<%=request.getContextPath()%>/admin/board/board_delete.do?board_no=${dto.getBoard_no()}';}else{return;}">
