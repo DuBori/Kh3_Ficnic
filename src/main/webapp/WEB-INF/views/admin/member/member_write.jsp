@@ -20,7 +20,7 @@
 
 
 <div class="pb100">
-    <form name="write_form" method="post" action="<%=request.getContextPath() %>/memberWriteOk.do" onsubmit="return join_check();">
+    <form name="write_form" method="post" action="<%=request.getContextPath() %>/admin/member/memberWriteOk.do" onsubmit="return join_check();">
     <table class="table-form mt-3">
         <colgroup>
             <col width="16%" />
