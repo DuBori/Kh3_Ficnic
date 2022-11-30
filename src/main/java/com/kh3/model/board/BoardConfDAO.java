@@ -11,4 +11,6 @@ public interface BoardConfDAO {
 	BoardConfDTO getCont(int board_no);
 
 	int updateBoard(BoardConfDTO dto);
+	
+	int deleteBoard(int board_no);
 }

@@ -44,6 +44,19 @@ public class BoardConfDAOImpl implements BoardConfDAO {
 		return sqlSession.update("adminBoardUpdate", dto);
 	}
 
+	@Override
+	public int deleteBoard(int board_no) {
+		
+		BoardConfDTO dto= sqlSession.selectOne("adminBoardConfCon",board_no);
+		
+		sqlSession.update("adminBoardConfdelCategory",dto);
+		sqlSession.update("adminBoardConfdelComment",dto);
+		sqlSession.update("adminBoardConfdelData",dto);
+		
+		
+		return sqlSession.delete("adminBoardConfdel", board_no);
+	}
+
 
 
 

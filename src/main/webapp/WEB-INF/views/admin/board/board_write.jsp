@@ -11,7 +11,7 @@
 <body>
 	<c:set var="m" value="${modify}"/>
 	<c:if test="${!empty m }">
-		<c:set var="tag" value="/board_modify_ok.do"/>
+		<c:set var="tag" value="/admin/board/board_modify_ok.do"/>
 		<c:set var="conid" value="${Cont.getBoard_id() }"/>
 		<c:set var="conname" value="${Cont.getBoard_name() }"/>
 		<c:set var="conskin" value="${Cont.getBoard_skin() }"/>
@@ -37,10 +37,10 @@
 	</c:if>
 	
 	<c:if test="${empty m }">
-		<c:set var="tag" value="/board_write.do"></c:set>
+		<c:set var="tag" value="/admin/board/board_write_ok.do"></c:set>
 	</c:if>
 	
-	<form action="<%=request.getContextPath() %>/${tag}" method="post">
+	<form action="<%=request.getContextPath() %>${tag}" method="post">
 	<c:if test="${!empty m }">
 		<input type="hidden" value="${Cont.getBoard_no() }" name="board_no">
 	</c:if>

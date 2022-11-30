@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -28,9 +29,9 @@ public class AdminBoardController {
 	@Inject
 	private BoardConfDAO board_ConfDao; 
 	
-	
+	private String path="admin/board/";
 	// 환경설정_게시판 설정 페이지
-	@RequestMapping("board_list.do")
+	@RequestMapping("admin/board/board_list.do")
 	public String board_list(Model model) {
 		
 		// 테이블 이름을 통해서 해당 테이블리스트를 넣어서 가져올 수 있나요?
@@ -39,14 +40,14 @@ public class AdminBoardController {
 	}
 	
 	// 환경설정_게시판설정_게시판추가 페이지
-	@RequestMapping("board_write.do")
+	@RequestMapping("admin/board/board_write.do")
 	public String board_write() {
 		
 		return "/admin/board/board_write";
 	}
 	
 	// 환경설정_게시판설정_게시판추가 받은 데이터 처리
-	@RequestMapping("board_write_ok.do")
+	@RequestMapping("admin/board/board_write_ok.do")
 	public void board_writeOk(BoardConfDTO confdto, HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=utf-8");
@@ -66,7 +67,7 @@ public class AdminBoardController {
 	}
 	
 	
-	 @RequestMapping("board_modify.do") 
+	 @RequestMapping("admin/board/board_modify.do") 
 	 public String board_content(@RequestParam("board_no") int board_no, Model model) {
 	  
 		  model.addAttribute("Cont", this.board_ConfDao.getCont(board_no));
@@ -75,7 +76,7 @@ public class AdminBoardController {
 		  return "/admin/board/board_write"; 
 	 }
 	 
-	 @RequestMapping("board_modify_ok.do")
+	 @RequestMapping("admin/board/board_modify_ok.do")
 	 public void board_modify_ok(BoardConfDTO dto, HttpServletResponse response) throws IOException {
 		 
 		 response.setContentType("text/html; charset=utf-8");
@@ -84,7 +85,7 @@ public class AdminBoardController {
 			if(this.board_ConfDao.updateBoard(dto)>0 ) {
 				out.println("<script>");
 				out.println("alert('게시판 수정 완료')");
-				out.println("location.href='board_list.do'");
+				out.println("location.href='admin/board/board_list.do'");
 				out.println("</script>");
 			}else {
 				out.println("<script>");
@@ -93,6 +94,25 @@ public class AdminBoardController {
 				out.println("</script>");	
 			}	
 		 
+	 }
+	 
+	 @RequestMapping("admin/board/board_delete.do")
+	 public void board_delete(@RequestParam("board_no") int board_no,HttpServletRequest request ,HttpServletResponse response) throws IOException {
+		 
+		 response.setContentType("text/html; charset=utf-8");
+		 PrintWriter out=response.getWriter();
+		 
+			if(this.board_ConfDao.deleteBoard(board_no)>0 ) {
+				out.println("<script>");
+				out.println("alert('게시판 삭제 완료')");
+				out.println("location.href='"+request.getContextPath()+"/admin/board/board_list.do'");
+				out.println("</script>");
+			}else {
+				out.println("<script>");
+				out.println("alert('게시판 삭제 실패')");
+				out.println("history.back()");
+				out.println("</script>");	
+			}	
 	 }
 	 
 	
