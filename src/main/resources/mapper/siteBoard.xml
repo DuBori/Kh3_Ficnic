@@ -61,7 +61,14 @@
         </choose>
     </select>
 
+	<update id="SiteBoardUpdateHit" parameterType="map" >
+		update board_data_${bbs_id} set bdata_hit=bdata_hit+1 where bdata_no=#{board_no}
+	</update>
 
+	<!-- 해당 게시판 해당 게시글 불러오기 -->
+	<select id="BoardList" parameterType="map" resultType="boardDTO">
+		select * from board_data_${bbs_id} where bdata_no = #{board_no} 
+	</select>
 
 
 
