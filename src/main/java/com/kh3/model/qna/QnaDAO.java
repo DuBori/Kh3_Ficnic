@@ -6,14 +6,14 @@ import java.util.List;
 public interface QnaDAO {
 
 	
-	List<QnaDTO> getReviewList();
+	List<QnaDTO> getQnaList();
 
-	QnaDTO reviewView(int no);
+	QnaDTO qnaView(int no);
 
-    int reviewModify(QnaDTO dto);
+    int qnaModify(QnaDTO dto);
 
-    int reviewDelete(int no);
+    int qnaDelete(int no);
 
-    void updateSeq(int no);
+    void qnaUpdateSeq(int no);
     
 }
