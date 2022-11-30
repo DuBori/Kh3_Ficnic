@@ -6,7 +6,6 @@ public interface BoardConfDAO {
 
     int getBoardConfCount(String keyword);
 
-    BoardConfDTO getBoardCont(String bbs_id);
     
     List<BoardConfDTO> getConfBoardList(int startNo, int endNo, String keyword);
 
@@ -17,6 +16,8 @@ public interface BoardConfDAO {
     int updateBoard(BoardConfDTO dto);
 
     int deleteBoard(int board_no);
+
+	BoardConfDTO getBoardConfCont(String bbs_id);
     
 
 }

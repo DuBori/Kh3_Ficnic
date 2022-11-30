@@ -47,6 +47,19 @@ public class BoardDAOImpl implements BoardDAO {
 		return 0;
 	}
 
+	@Override
+	public void updateBoardHit(Map<String, Object> map) {
+		
+		this.sqlSession.update("SiteBoardUpdateHit", map);
+	}
+	
+	@Override
+	public BoardDTO getBoardCont(Map<String, Object> map) {
+		
+		return sqlSession.selectOne("BoardList",map);
+	}
+
+
 
 
 

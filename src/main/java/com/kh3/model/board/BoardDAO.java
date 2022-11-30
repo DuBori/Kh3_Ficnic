@@ -14,4 +14,8 @@ public interface BoardDAO {
 
 	int insertBoardCont(BoardDTO dto);
 
+
+	void updateBoardHit(Map<String, Object> map);
+
+    BoardDTO getBoardCont(Map<String, Object> map);
 }

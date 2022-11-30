@@ -74,10 +74,12 @@ public class BoardConfDAOImpl implements BoardConfDAO {
     }
 
 
+
+
 	@Override
-	public BoardConfDTO getBoardCont(String bbs_id) {
+	public BoardConfDTO getBoardConfCont(String bbs_id) {
 		
-		return sqlSession.selectOne("adminBoardConfRowCount", bbs_id);
+		return sqlSession.selectOne("BoardConfCont", bbs_id);
 	}
 
 }
