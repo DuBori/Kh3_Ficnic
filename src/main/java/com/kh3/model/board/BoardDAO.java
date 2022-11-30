@@ -11,4 +11,7 @@ public interface BoardDAO {
 	int getListCount(String field,String keyword,String bbs_id);
 	
 	List<BoardDTO> getBoardList(int startNo, int endNo,Map<String, Object> map);
+
+	int insertBoardCont(BoardDTO dto);
+
 }
