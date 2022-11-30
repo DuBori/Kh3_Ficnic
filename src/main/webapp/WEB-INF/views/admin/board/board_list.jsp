@@ -25,7 +25,7 @@
 					<c:forEach items="${List }" var="dto">
 						<tr>
 							<td>${dto.getBoard_no()}</td>
-							<td><a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}">${dto.getBoard_name()}</a></td>
+							<td><a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBoard_name()}</a></td>
 							<td>${dto.getBoard_id()}</td>
 							<td>${dto.getBoard_level_list()} ${dto.getBoard_level_view()} ${dto.getBoard_level_write()}</td>
 							<td><input type="button" value="게시판 보기"></td>
@@ -47,11 +47,19 @@
 				</c:otherwise>
 			</c:choose>
 		</table>
-		<form action="<%=request.getContextPath()%>/hi.do" method="post">
-			<div>
+		<c:if test="${!empty paging}">
+            <div class="row list-bottom-util">
+                <div class="col text-center">
+                    ${pagingWrite}
+                </div>
+            </div>
+        </c:if>
+		
+		<form action="<%=request.getContextPath()%>/admin/board/board_list.do">
 				<div>
 					<label for="searchbtn">게시판 이름</label>	
-					<input name="searchbtn" placeholder="게시판 이름">
+					<input type="hidden" value="board_name" name="field">
+					<input name="keyword" placeholder="게시판 이름" id="searchbtn">
 					<input type="submit" value="검색">
 				</div>
 		</form>
@@ -59,10 +67,16 @@
 					<input type="button" value="게시판 추가" onclick="location.href='<%=request.getContextPath()%>/admin/board/board_write.do'" >
 				</div>
 				
-			</div>
+				<div class="col-6 text-right mt-3">
+                    <c:choose>
+                    <c:when test="${!empty field}"><a href="<%=request.getContextPath()%>/admin/board/board_list.do" class="btn btn-outline-secondary"><i class="fa fa-list mr-1"></i> 게시물 전체목록</a></c:when>
+                    <c:otherwise><a href="<%=request.getContextPath()%>/admin/board//board_write.do" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 새로운 글쓰기</a></c:otherwise>
+                    </c:choose>
+                </div>
+				
+	</div>
 	
 		
-		
-	</div>
+	
 </body>
 </html>

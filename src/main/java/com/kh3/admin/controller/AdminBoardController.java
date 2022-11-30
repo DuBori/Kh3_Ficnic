@@ -16,6 +16,9 @@ import com.kh3.model.board.BoardCategoryDAO;
 import com.kh3.model.board.BoardConfDAO;
 import com.kh3.model.board.BoardConfDTO;
 import com.kh3.model.board.BoardDAO;
+import com.kh3.util.PageDTO;
+import com.kh3.util.Paging;
+
 
 @Controller
 public class AdminBoardController {
@@ -29,13 +32,52 @@ public class AdminBoardController {
 	@Inject
 	private BoardConfDAO board_ConfDao; 
 	
+    // 한 페이지당 보여질 게시물의 수
+    private final int rowsize = 3;
+
+    // 전체 게시물의 수
+    private int totalRecord = 0;
+
+	
 	private String path="admin/board/";
+	
 	// 환경설정_게시판 설정 페이지
 	@RequestMapping("admin/board/board_list.do")
-	public String board_list(Model model) {
+	public String board_list(Model model, HttpServletRequest request) {
+		
+        String field = request.getParameter("field");
+        String keyword = request.getParameter("keyword");
+        if(field == null) field = "";
+        if(keyword == null) keyword = "";
+
+
+        // 페이징 처리
+        int page; // 현재 페이지 변수
+        if(request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }else{
+            page = 1;
+        }
+        totalRecord = this.board_ConfDao.getListCount(field, keyword);
+        
+        PageDTO dto = new PageDTO(page, rowsize, totalRecord, field, keyword);
+        
+        // 페이지 이동 URL
+        String pageUrl = request.getContextPath()+"admin/board/board_list.do?field="+field+"&keyword="+keyword;
+
+		
 		
 		// 테이블 이름을 통해서 해당 테이블리스트를 넣어서 가져올 수 있나요?
 		model.addAttribute("List",this.board_ConfDao.getConfBoardList());
+		
+		model.addAttribute("totalCount", totalRecord);
+        model.addAttribute("paging", dto);
+        model.addAttribute("field", field);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
+
+		
+		
 		return "/admin/board/board_list";
 	}
 	

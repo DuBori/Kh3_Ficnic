@@ -88,7 +88,36 @@
 		drop table board_data_${board_id}
 	</update>
 	
+	
+	<!-- 페이징 처리 -->
+	    <select id="bbsTotal" parameterType="java.util.Map" resultType="int">
+        select count(*) from board_config
+        <choose>
+            <when test="field.equals('board_name') and keyword != ''"> where board_name like '%' || #{keyword} || '%'</when>
+        </choose>
+    </select>
 
+
+    <select id="bbsList" parameterType="java.util.Map" resultType="boardConfDTO">
+        <choose>
+            <when test="field.equals('board_name') and keyword != ''">
+		        <![CDATA[
+		            select * from
+		                (select row_number() over(order by board_no desc) rnum, b.* from board_config b where board_name like '%' || #{keyword} || '%')
+		                where rnum >= #{startNo} and rnum <= #{endNo}
+		        ]]>
+            </when>
+
+
+            <otherwise>
+                <![CDATA[
+                    select * from
+                        (select row_number() over(order by board_no desc) rnum, b.* from board_config b)
+                        where rnum >= #{startNo} and rnum <= #{endNo}
+                ]]>
+            </otherwise>
+        </choose>
+    </select>
 
 
 
