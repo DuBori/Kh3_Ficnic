@@ -1,12 +1,15 @@
 package com.kh3.model.review;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReviewDAO {
 
-	List<ReviewDTO> getReviewList();
+    int getReviewCount(Map<String, Object> map);
 
-	ReviewDTO reviewView(int no);
+    List<ReviewDTO> getReviewList(int startNo, int endNo, Map<String, Object> map);
+
+    ReviewDTO reviewView(int no);
 
     int reviewModify(ReviewDTO dto);
 
@@ -14,5 +17,4 @@ public interface ReviewDAO {
 
     void updateSeq(int no);
 
- 
 }
