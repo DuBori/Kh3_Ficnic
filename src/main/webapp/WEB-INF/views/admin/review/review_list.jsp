@@ -3,6 +3,14 @@
 <%@ include file="../layout/layout_header.jsp" %>
 
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
 <div class="page-info row mb-3">
     <div class="d-flex align-items-center justify-content-between">
         <h2>리뷰 목록</h2>
@@ -60,7 +68,6 @@
             </div>
         </div>
     </div>
-
 
 
     <div class="row">
