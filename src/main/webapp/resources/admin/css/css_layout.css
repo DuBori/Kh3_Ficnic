@@ -1327,7 +1327,7 @@ main .table-list tbody .eng,
 main .card .col a.eng {
     font-family: 'verdana';
     font-weight: 500;
-    letter-spacing: -1px;
+    letter-spacing: 0;
 }
 main .table-list tfoot td {
     padding: 10px 0;

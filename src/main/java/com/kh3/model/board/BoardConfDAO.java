@@ -7,7 +7,7 @@ public interface BoardConfDAO {
 
 	int writeBoard(BoardConfDTO dto);
 	
-	List<BoardConfDTO> getConfBoardList();
+	List<BoardConfDTO> getConfBoardList(int startNo, int endNo, String keyword);
 	
 	BoardConfDTO getCont(int board_no);
 
@@ -16,8 +16,6 @@ public interface BoardConfDAO {
 	int deleteBoard(int board_no);
 	
 	//페이징 처리
-	int getListCount(String field, String keyword);
-	
-	List<BoardDTO> getBoardList(int startNo, int endNo, String field, String keyword);
+	int getListCount(String keyword);
 
 }
