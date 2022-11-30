@@ -19,7 +19,15 @@
 		</selectKey>
 		insert into member_point values(#{point_no} + 1, '', '',#{member_id}, default, 1000, '회원가입 축하 적립금 지급', sysdate)
     </insert>
+    
+    <!-- 관리자 적립금 수정 -->
+	<insert id="modifyPoint" parameterType="pointDTO">
+		<selectKey resultType="int" keyProperty="point_no" order="BEFORE">
+			select max(point_no) from member_point
+		</selectKey>
+		insert into member_point values(#{point_no} + 1, '', '',#{member_id}, #{point_type}, #{point_add}, '적립금 관리자 수정', sysdate)
+    </insert>
 
-
+	
 
 </mapper>

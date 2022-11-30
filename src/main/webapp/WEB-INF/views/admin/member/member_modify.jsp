@@ -1,26 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-</head>
+<%@ include file="../layout/layout_header.jsp" %>
+
 <c:set var="dto" value="${member}" />
-<body>
-<div class="d-flex justify-content flex-wrap flex-md-nowrap align-items-center pt-4 pb-2 mb-4 border-bottom">
-    <h2>회원 수정</h2>
-    <small>회원/관리자의 정보를 수정 할 수 있습니다.</small>
+
+<div class="page-info row mb-3">
+    <div class="d-flex align-items-center justify-content-between">
+        <h2>회원 수정</h2>
+        <ol class="m-0 p-2">
+            <li>회원 관리</li>
+            <li><b>회원 수정</b></li>
+        </ol>
+    </div>
 </div>
+
+<div class="page-cont">
 
 
 
 
 <div class="pb100">
-    <form name="write_form" method="post" enctype="multipart/form-data" action="<%=request.getContextPath() %>/admin/member/memberModifyOk.do" onsubmit="return join_check();">
+    <form name="write_form" method="post" action="<%=request.getContextPath() %>/admin/member/member_modifyOk.do?no=${dto.getMember_no()}" onsubmit="return join_check();">
     <input type="hidden" name="member_pw" value="${dto.getMember_pw()}" />
+    <input type="hidden" name="member_point" value="${dto.getMember_point()}" />
     <table class="table-form mt-3">
         <colgroup>
             <col width="16%" />
@@ -52,7 +55,7 @@
         </tr>
         <tr>
             <th>비밀번호 변경</th>
-            <td><input type="password" name="member_pw_chg" maxlength="50" class="form-control w-80" /></td>
+            <td><input type="password" name="pw" maxlength="50" class="form-control w-80" /></td>
             <th>비밀번호 변경 확인</th>
             <td><input type="password" name="member_pw_chg_re" maxlength="50" class="form-control w-80" /></td>
         </tr>
@@ -104,5 +107,7 @@
 
 
 
-</body>
-</html>
+</div>
+
+
+<%@ include file="../layout/layout_footer.jsp" %>

@@ -1,25 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="dto" value="${dto}" />
 <c:set var="deptList" value="${deptList}" />
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>회원 상세 내역</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div style="width: 600px; margin: 50px auto; text-align: center;">
-        <hr color="green" />
-        <h3>회원 상세 내역 정보 보기</h3>
-        <hr color="green" />
 
-        <br />
+<%@ include file="../layout/layout_header.jsp" %>
 
+
+<div class="page-info row mb-3">
+    <div class="d-flex align-items-center justify-content-between">
+        <h2>게시판 목록</h2>
+        <ol class="m-0 p-2">
+            <li>게시판 관리</li>
+            <li><b>게시판 목록</b></li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="page-cont">
         <table class="table table-bordered">
             <c:if test="${!empty dto}">
             <tr>
@@ -73,9 +73,9 @@
             </c:if>
         </table>
 
-    </div>
 
      
-    
-</body>
-</html>
+</div>
+
+
+<%@ include file="../layout/layout_footer.jsp" %>
