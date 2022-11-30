@@ -25,7 +25,7 @@
                     <table class="table-list mb-2">
                         <thead>
                             <tr>
-                                <th style="width: 70px;" class="table-list-hide">No.</th>
+                                <th style="width: 80px;" class="table-list-hide">게시판 No.</th>
                                 <th style="width: 130px;" class="table-list-hide-mob">게시판 아이디</th>
                                 <th style="width: 130px;">게시판 이름</th>
                                 <th class="table-list-hide">게시판 권한</th>
@@ -64,11 +64,10 @@
                                         <div class="col-auto my-1"><b>글쓰기 </b>(${level_write})</div>
                                     </div>
                                 </td>
-                                <td><a href="<%=request.getContextPath()%>/board/board_list.do?bbs_id=${dto.getBoard_id()}" class="btn btn-outline-info btn-sm"><i class="fa fa-link"></i> 게시판 보기</a></td>
+                                <td><a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${dto.getBoard_id()}" class="btn btn-outline-info btn-sm"><i class="fa fa-link"></i> 게시판 보기</a></td>
                                 <td>
-                                    <a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&keyword=${keyword}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
-                                    <a href="<%=request.getContextPath()%>/admin/board/board_delete.do?board_no=${dto.getBoard_no()}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
-                                    <c:if test="${dto.getBoard_use_category() eq 'Y'}"><button type="button" class="btn btn-outline-primary btn-sm">카테고리 관리</button></c:if>
+                                    <a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}" class="btn btn-outline-success btn-sm mr-1">수정</a>
+                                    <a href="<%=request.getContextPath()%>/admin/board/board_delete.do?board_no=${dto.getBoard_no()}" class="btn btn-outline-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
                                 </td>
                             </tr>
                         	</c:forEach>
@@ -94,11 +93,14 @@
 <div class="row mt-2 list-bottom-util">
     <div class="col-md-4 mt-3">
         <form name="search_form" method="get" action="<%=request.getContextPath()%>/admin/board/board_list.do">
-        <div class="input-group list-search-form w-70">
-            <input type="text" name="keyword" value="${keyword}" placeholder="게시판 이름" class="form-control rounded-right" />
+        <div class="input-group list-search-form w-80">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="keyword">게시판 이름</label>
+            </div>
+            <input type="text" id="keyword" name="keyword" value="${keyword}" class="form-control rounded-right" />
             <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i> 검색</button>
-        </div>
         </form>
+        </div>
     </div>
 
     <div class="col-md-4 text-center mt-3">
@@ -108,7 +110,7 @@
     <div class="col-md-4 text-right mt-3">
         <c:choose>
         <c:when test="${!empty keyword}"><a href="<%=request.getContextPath()%>/admin/board/board_list.do" class="btn btn-outline-secondary"><i class="fa fa-list"></i> 게시판 목록</a></c:when>
-        <c:otherwise><a href="<%=request.getContextPath()%>/admin/board/board_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 게시판 등록</a></c:otherwise>
+        <c:otherwise><a href="<%=request.getContextPath()%>/admin/board/board_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 게시판 추가</a></c:otherwise>
         </c:choose>
     </div>
 </div>
