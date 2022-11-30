@@ -82,7 +82,7 @@
         <tr>
             <th>적립금</th>
             <td colspan="3">
-                <input type="number" name="member_point" value="${dto.getMember_point()}" maxlength="30" class="form-control-plaintext d-inline w-30" required />
+                <input type="number" name="point" value="${dto.getMember_point()}" maxlength="30" class="form-control-plaintext d-inline w-30" required />
             </td>
         </tr>
 

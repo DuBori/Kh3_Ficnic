@@ -123,7 +123,7 @@ public class AdminMemberController {
 	
 	// 회원 정보 수정하는 메핑
 	@RequestMapping("admin/member/member_modifyOk.do")
-	public void modifyOk(MemberDTO dto, PointDTO pdto, @RequestParam("pw") String member_pw, @RequestParam("member_point") int member_point, HttpServletResponse response) throws IOException {
+	public void modifyOk(MemberDTO dto, PointDTO pdto, @RequestParam("pw") String member_pw, @RequestParam("point") int member_point, HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -131,23 +131,23 @@ public class AdminMemberController {
 		int point_add = 0;
 		String point_type = "plus";
 		
-		// 적립금 추가
+		// 적립금 빼기
 		if(dto.getMember_point() > member_point) {
 			point_add = dto.getMember_point() - member_point;
-		// 적립금 빼기	
+			point_type = "minus";
+		// 적립금 더하기	
 		}else if(dto.getMember_point() < member_point) {
 			point_add = member_point - dto.getMember_point();
-			point_type = "minus";
 		}
 		
 		// pointDTO에 저장
 		pdto.setPoint_add(point_add);
 		pdto.setPoint_type(point_type);
-		System.out.println("기존비번"+dto.getMember_pw());
-		System.out.println("금액"+point_add);
-		System.out.println("타입"+point_type);
+		// memberDTO에 저장
+		dto.setMember_point(member_point);
+		
 		// 새로운 비밀번호로 수정
-		if(member_pw.equals(null)) {
+		if(member_pw.length() > 0) {
 			dto.setMember_pw(member_pw);
 			int check = this.dao.modifyOk(dto);
 			
@@ -163,7 +163,7 @@ public class AdminMemberController {
 			}
 		// 기존 비밀번호로 수정
 		}else {
-			
+			dto.getMember_pw();
 			int check = this.dao.modifyOk(dto);
 			
 			if(check > 0) {
