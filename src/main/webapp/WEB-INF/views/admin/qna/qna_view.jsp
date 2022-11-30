@@ -3,7 +3,6 @@
 <%@ include file="../layout/layout_header.jsp" %>
 
 <c:set var="dto" value="${dto}" />
-<c:set var="cdto" value="${cdto}" />
 
 <div class="page-info row mb-3">
     <div class="d-flex align-items-center justify-content-between">
@@ -14,7 +13,6 @@
         </ol>
     </div>
 </div>
-
 
 <div class="page-cont">
 
@@ -27,76 +25,111 @@
         <br />
 
         <table class="table table-bordered">
-            <c:if test="${!empty dto}">
-
-			<h2>문의글 상세 정보</h2>
+        
+ 
+<%-- 			<input type="hidden" name="comment_writer_id" value="${login_id}" />
+			<input type="hidden" name="comment_writer_pw" value="${login_pw}" /> --%>
 			
-            <tr>
+             <c:if test="${!empty dto}">
+			<h3>문의글 상세 정보</h3>
+			 <tr>
                 <th>작성일</th>
                 <td align="left">${dto.qna_date}</td>
-            </tr>
-            <tr>
+            </tr> 
+
+             <tr>
                 <th>이름</th>
-                <td align="left">${dto.review_point}점</td>
+                <td align="left">${dto.qna_name}</td>
             </tr>
+            
             <tr>
                 <th>아이디</th>
-                <td align="left">
-                	${dto.review_photo1}
-                </td>
+                <td align="left">${dto.member_id}  </td>
             </tr>
             <tr>
                 <th>문의 제목</th>
                 <td align="left">
-                	${dto.review_photo2}
+                	${dto.qna_title}
                 </td>
             </tr>
             <tr>
                 <th>문의 내용</th>
                 <td align="left">
-                	${dto.review_photo2}
+                	${dto.qna_cont}
                 </td>
             </tr>
          
-           
             </c:if>
+            
 
             <c:if test="${empty dto}">
             <tr>
                 <td colspan="2" align="center">
-                    <h3>존재하지 않는 리뷰입니다...</h3>
+                    <h3>존재하지 않는 문의글입니다...</h3>
                 </td>
             </tr>
             </c:if>
+            </table>
+            	
+            	
+         <form method="post" action="<%=request.getContextPath() %>/admin/qna/qna_reply_ok.do?no=${dto.qna_no}">
+                    <input type="hidden" name="comment_writer_name" value="${comment_writer_name}" />
+                    
+		 <table border="1" cellspacing="0" cellpadding="4px" width="600px">
+         
+         
+            <colgroup>
+                <col width="20%" />
+                <col />
+                <col width="20%" />
+                <col width="20%" />
+            </colgroup>
+             <thead>
+				<tr>
+					<th> 작성자 </th>
+					<th> 내용 </th>
+					<th> 작성일 </th>
+					<th> 기능 </th>
+				</tr>
+			</thead>
+			
+			 <tbody>
+			
+			<c:set var="cdto" value="${cdto}" />
+			<c:if test="${!empty cdto }">
+				<c:forEach items="${cdto }" var="cdto">
+					<tr>
+ 					<td> ${cdto.comment_writer_name } </td>
+					<td> ${cdto.comment_content } </td>
+					<td> ${cdto.comment_date } </td>
+						<td>
+                    <a href="<%=request.getContextPath()%>/admin/qna/qnaComment_delete.do?no=${dto.qna_no}" class="btn btn-sm btn-outline-danger m-1" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+              			</td> 
+					</tr>
+				</c:forEach>
+			</c:if>
+			
+			<c:if test="${empty cdto }">
+				<tr>
+					<td colspan="4" align="center">
+						<h3> 댓글이 없습니다. </h3>
+					</td>
+
+				</tr>
+			</c:if>
+			</tbody>
             
+    		  <tr> 
+		        <th>댓글 내용</th>										
+				<td> 
+					<textarea name="comment_content" cols="20" rows="3" class="form-control" required></textarea></td>
+	                        <td class="text-center">
+	                        <button type="submit" class="btn btn-lg btn-primary w-100 h-100"><i class="fa fa-pencil"></i> 쓰기</button>
+	             </td>
+		    	</tr>
             
-            <c:if test="${!empty cdto}">
-              <tr>
-                <th>작성자</th>
-                <td align="left">${dto.review_name}</td>
-            </tr>
-              <tr>
-                <th>내용</th>
-                <td align="left">${dto.review_name}</td>
-            </tr>
-              <tr>
-                <th>작성일</th>
-                <td align="left">${dto.review_name}</td>
-            </tr>
-              <tr>
-                <th>기능</th>
-                <td align="left">${dto.review_name}</td>
-            </tr>
-            </c:if>
-            
-            <tr>
-                <th>댓글 내용</th>
-                <td align="left"><input type="text" name="comment_cont"></td>
-            
-            <td><input type="button" onclick="<%=request.getContextPath() %>/admin/qna/qna_reply_ok.do " />쓰기</td>
-            
-            </tr>
         </table>
+		    	</form>
 
 
 <!-- 버튼 //START -->
@@ -113,9 +146,7 @@
 
 <%@ include file="../layout/layout_footer.jsp" %>
 
-
-
-
+ 
 
 </body>
 </html>

@@ -34,6 +34,8 @@
         <!-- 문의 관련 -->
         <typeAlias type="com.kh3.model.qna.QnaDTO" alias="qnaDTO" />
         <typeAlias type="com.kh3.model.qna.QnaDAO" alias="qnaDAO" />
+        <typeAlias type="com.kh3.model.qna.QnaCommentDTO" alias="qnacommentDTO" />
+        <typeAlias type="com.kh3.model.qna.QnaCommentDAO" alias="qnacommentDAO" />
 
         <!-- 리뷰 관련 -->
         <typeAlias type="com.kh3.model.review.ReviewDTO" alias="reviewDTO" />

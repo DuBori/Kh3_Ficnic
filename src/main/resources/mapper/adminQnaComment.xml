@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 관리자 : 1:1문의 관련 -->
+<mapper namespace="qnacommentDAO">
+
+
+	<!-- 코멘트 상세 보기 -->
+    <select id="adminQnaCommentList" parameterType="int" resultType="qnacommentDTO">
+   	 	select * from qna_comment where qna_no = #{qna_no}
+    </select>
+
+
+     <insert id="adminQnaCommentReply" parameterType="qnacommentDTO">
+      <!--  <selectKey resultType="int" keyProperty="comment_no" order="BEFORE">
+           select max(comment_no) from qna_comment
+       </selectKey> -->
+       insert into qna_comment values(#{comment_no} + 1, #{qna_no}, #{comment_content}, #{comment_writer_name}, #{member_id}, #{comment_writer_pw}, sysdate)
+   </insert> 
+		  
+           
+</mapper> 
+
