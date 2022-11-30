@@ -1,15 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
 <div class="page-info row mb-3">
     <div class="d-flex align-items-center justify-content-between">
@@ -81,8 +74,8 @@
                             <tr>
 								<th style="width: 4.5%; min-width: 50px;" class="table-list-hide">No.</th>
 								<th style="width: 9%; min-width: 100px;">리뷰 사진</th>
-								<th style="width: 12%; min-width: 130px;" class="table-list-hide">피크닉</th>
-								<th style="width: 5%; min-width: 55px;">평점</th>
+								<th style="width: 18%; min-width: 200px;" class="table-list-hide">피크닉</th>
+								<th style="width: 6%; min-width: 70px;">평점</th>
 								<th>리뷰 내용</th>
 								<th style="width: 10%; min-width: 110px;" class="table-list-hide">작성자<br />아이디</th>
 								<th style="width: 11%; min-width: 120px;" class="table-list-hide-mob">작성일</th>
@@ -104,7 +97,7 @@
 				                    <c:otherwise><span class="noimg">no img</span></c:otherwise>
 				                    </c:choose>
 								</td>
-								<td ${showLink} class="table-list-hide">${dto.ficnic_no}</td>
+								<td ${showLink} class="table-list-hide">${dto.ficnic_name}</td>
 								<td ${showLink} class="eng">${dto.review_point}</td>
 								<td ${showLink}>${dto.review_cont}</td>
 								<td ${showLink} class="table-list-hide">

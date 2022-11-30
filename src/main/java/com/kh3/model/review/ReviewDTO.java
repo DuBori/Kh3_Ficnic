@@ -14,6 +14,7 @@ public class ReviewDTO {
 	private String member_id;
 	private String review_pw;
 	private String review_name;
-	private String review_date; 
+	private String review_date;
+	private String ficnic_name;
 
 }
