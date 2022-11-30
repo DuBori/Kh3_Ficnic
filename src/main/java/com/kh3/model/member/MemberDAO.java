@@ -24,7 +24,7 @@ public interface MemberDAO {
 	void updateSequence(int no);
 	
 	// 회원 정보 수정
-	int modifyOk(MemberDTO dto, String member_pw);
+	int modifyOk(MemberDTO dto);
 	
 
 	

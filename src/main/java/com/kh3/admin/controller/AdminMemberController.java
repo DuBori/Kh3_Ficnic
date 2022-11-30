@@ -16,7 +16,6 @@ import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
 import com.kh3.model.member.PointDAO;
 import com.kh3.model.member.PointDTO;
-import com.mybatis.model.BoardDTO;
 
 @Controller
 public class AdminMemberController {
@@ -75,16 +74,13 @@ public class AdminMemberController {
 		
 		// 아이디 중복 체크
 		if(checkId > 0) {
-			
 			out.println("<script>alert('중복된 아이디입니다. 다른 아이디로 입력해주세요.'); history.back();</script>");
 		}else {
-		
 			if(check > 0) {
 				// 회원 가입 포인트 적립
 				this.pdao.joinPoint(pdto);
 	            out.println("<script>alert('회원 등록 되었습니다.'); location.href='member_list.do';</script>");
 			} else {
-	
 				out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
 			}
 		}
@@ -103,10 +99,8 @@ public class AdminMemberController {
 			this.dao.updateSequence(no);
 				
 			if(check > 0) {
-
 				out.println("<script>alert('회원 정보가 삭제되었습니다.'); location.href='member_list.do';</script>");
 			}else {
-
 				out.println("<script>alert('회원 정보 삭제 중 에러가 발생하였습니다.'); history.back();</script>");
 			}
 
@@ -129,26 +123,59 @@ public class AdminMemberController {
 	
 	// 회원 정보 수정하는 메핑
 	@RequestMapping("admin/member/member_modifyOk.do")
-	public void modifyOk(MemberDTO dto,@RequestParam("member_pw") String member_pw, HttpServletResponse response) throws IOException {
+	public void modifyOk(MemberDTO dto, PointDTO pdto, @RequestParam("pw") String member_pw, @RequestParam("member_point") int member_point, HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-
-		if(dto.getMember_pw().equals(null)) {
+		
+		int point_add = 0;
+		String point_type = "plus";
+		
+		// 적립금 추가
+		if(dto.getMember_point() > member_point) {
+			point_add = dto.getMember_point() - member_point;
+		// 적립금 빼기	
+		}else if(dto.getMember_point() < member_point) {
+			point_add = member_point - dto.getMember_point();
+			point_type = "minus";
+		}
+		
+		// pointDTO에 저장
+		pdto.setPoint_add(point_add);
+		pdto.setPoint_type(point_type);
+		System.out.println("기존비번"+dto.getMember_pw());
+		System.out.println("금액"+point_add);
+		System.out.println("타입"+point_type);
+		// 새로운 비밀번호로 수정
+		if(member_pw.equals(null)) {
+			dto.setMember_pw(member_pw);
+			int check = this.dao.modifyOk(dto);
 			
-			int check = this.dao.modifyOk(dto, member_pw);
 			if(check > 0) {
+				// 적립금이 바뀌면 실행
+				if(pdto.getPoint_add() > 0) {
+					// 관리자 수정 포인트 적립
+					this.pdao.modifyPoint(pdto);
+				}
 				out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='member_list.do';</script>");
-
 			}else {
 				out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
-
 			}
-		}else {	// 비밀번호가 틀린 경우
-			out.println("<script>");
-			out.println("alert('비밀번호를 다시 확인해주세요.')");
-			out.println("history.back()");
-			out.println("</script>");
+		// 기존 비밀번호로 수정
+		}else {
+			
+			int check = this.dao.modifyOk(dto);
+			
+			if(check > 0) {
+				// 적립금이 바뀌면 실행
+				if(pdto.getPoint_add() > 0) {
+					// 관리자 수정 포인트 적립
+					this.pdao.modifyPoint(pdto);
+				}
+				out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='member_list.do';</script>");
+			}else {
+				out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
+			}
 		}
 		
 	}
