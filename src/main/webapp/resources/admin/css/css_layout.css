@@ -43,10 +43,11 @@ body {
 #header .h-logo {}
 #header .h-logo a {
     display: block;
-    padding: 4px 15px;
-    font-size: 20px;
-    line-height: 20px;
-    font-weight: 500;
+    padding: 4px;
+    font-family: 'Raleway';
+    font-size: 34px;
+    line-height: 34px;
+    font-weight: 700;
     color: #444;
     text-align: left;
 }
@@ -55,7 +56,7 @@ body {
 }
 #header .h-logo a img {
     height: 40px;
-    margin-right: 2px;
+    margin-top: -5px;
 }
 
 
@@ -92,7 +93,7 @@ body {
     font-weight: bold;
     color: #fff;
 }
-#header #alarm-btn-order {
+#header #alarm-btn-reserv {
     padding-top: 10px;
     font-size: 24px;
     line-height: 24px;
@@ -113,7 +114,7 @@ body {
 
 #header .new-pop {
     position: absolute;
-    width: 350px;
+    width: 300px;
     height: auto;
     margin: 0 -8px 0 0;
     padding: 10px 0 0 0;
@@ -163,36 +164,32 @@ body {
 }
 #header .new-pop .np-title button {
     position: absolute;
-    top: 3px;
+    top: -3px;
     right: 3px;
     padding: 10px;
     background: transparent;
 }
 
-#header .new-pop.order .np-title {
+#header .new-pop.reserv .np-title {
     color: #0d6efd;
     border-bottom: 3px solid #0d6efd;
 }
-#header #alarm-btn-order:hover,
-#header .new-pop.order .np-title button:hover {
+#header #alarm-btn-reserv:hover,
+#header .new-pop.reserv .np-title button:hover {
     color: #0d6efd;
 }
 
-#header .new-pop.cs {
-    width: 300px;
-}
-#header .new-pop.cs .np-title {
+#header .new-pop.qna {}
+#header .new-pop.qna .np-title {
     color: #dc3545;
     border-bottom: 3px solid #dc3545;
 }
 #header #alarm-btn-cs:hover,
-#header .new-pop.cs .np-title button:hover {
+#header .new-pop.qna .np-title button:hover {
     color: #dc3545;
 }
 
-#header .new-pop.member {
-    width: 230px;
-}
+#header .new-pop.member {}
 #header .new-pop.member .np-title {
     color: #198754;
     border-bottom: 3px solid #198754;
@@ -260,7 +257,7 @@ body {
     vertical-align: middle;
 }
 #header .new-pop .np-list li .npl-info .subject {
-    width: 100%;
+    width: 175px;
     font-size: 14px;
     font-weight: 500;
     color: #495057;
@@ -286,18 +283,6 @@ body {
     color: #74788d;
 }
 
-#header .new-pop.order .np-list li .npl-info,
-#header .new-pop.order .np-list li .npl-info .subject {
-    width: 246px;
-}
-#header .new-pop.cs .np-list li .npl-info,
-#header .new-pop.cs .np-list li .npl-info .subject {
-    width: 196px;
-}
-#header .new-pop.member .np-list li .npl-info,
-#header .new-pop.member .np-list li .npl-info .subject {
-    width: 126px;
-}
 
 
 
@@ -1513,18 +1498,18 @@ main .table-list.hover > tbody > tr:hover > td {
     font-size: 1rem !important;
 }
 
-#toast-wrap .toast .toast-header.order {
+#toast-wrap .toast .toast-header.reserv {
     color: #0d6efd;
     background: #dcebfe;
 }
-#toast-wrap .toast .toast-header.order .rounded.mr-1:before {
+#toast-wrap .toast .toast-header.reserv .rounded.mr-1:before {
     content: "\f0ea";
 }
-#toast-wrap .toast .toast-header.cs {
+#toast-wrap .toast .toast-header.qna {
     color: #dc3545;
     background: #f8e3e3;
 }
-#toast-wrap .toast .toast-header.cs .rounded.mr-1:before {
+#toast-wrap .toast .toast-header.qna .rounded.mr-1:before {
     content: "\f0e6";
 }
 #toast-wrap .toast .toast-header.member {

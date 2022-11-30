@@ -73,23 +73,20 @@
     <header id="header">
         <div class="navbar-header w1150">
             <div class="d-flex">
-                <h1 class="h-logo"><a href="${path}/admin/main.do"><img src="${path}/resources/admin/images/admin_logo.png" alt="Ficnic" /> 관리자 모드</a></h1>
+                <h1 class="h-logo"><a href="${path}/admin/main.do"><img src="${path}/resources/admin/images/admin_logo.png" alt="Ficnic" /> Ficnic</a></h1>
                 <button type="button" class="btn btn-lg px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-toggle="collapse" data-target="#topnav-menu-content"><i class="fa fa-fw fa-bars"></i></button>
             </div>
 
             <ul class="d-flex">
-                <!-- 발주 알림창//START -->
+                <!-- 예약 알림창//START -->
                 <li>
-                    <button type="button" id="alarm-btn-order" class="h-ico" title="발주 알림창"><span class="badge bg-primary">2</span><i class="fa fa-clipboard"></i></button>
-                    <div class="new-pop order">
-                        <div class="np-title">신규 발주목록 <button type="button"><i class="fa fa-times"></i></button></div>
+                    <button type="button" id="alarm-btn-reserv" class="h-ico" title="예약 알림창"><span class="badge bg-primary">2</span><i class="fa fa-clipboard"></i></button>
+                    <div class="new-pop reserv">
+                        <div class="np-title">신규 예약 <button type="button"><i class="fa fa-times"></i></button></div>
                         <ul class="np-list">
                             <li>
                                 <a href="#">
-                                    <div class="npl-kind">
-                                        <i class="fa fa-lightbulb-o"></i>
-                                        <p>일반결제</p>
-                                    </div>
+                                    <div class="npl-kind"><i class="fa fa-laptop"></i></div>
                                     <div class="npl-info">
                                         <p class="subject">예쁜언니 KF94 대형 화이트 마스크 50매 외 2개의 상품</p>
                                         <p class="writer">법인며엉1</p>
@@ -97,56 +94,56 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="nodata">확인하지 않은 발주 목록이 없습니다.</li>
+                            <li class="nodata">최근 3일간 신규 예약 목록이 없습니다.</li>
                         </ul>
                     </div>
                 </li>
-                <!-- 발주 알림창//END -->
+                <!-- 예약 알림창//END -->
 
 
-                <!-- CS 알림창//START -->
+                <!-- 문의 알림창//START -->
                 <li>
-                    <button type="button" id="alarm-btn-cs" class="h-ico" title="CS 알림창"><span class="badge bg-danger">0</span><i class="fa fa-comments-o"></i></button>
-                    <div class="new-pop cs">
-                        <div class="np-title">신규 CS목록 <button type="button"><i class="fa fa-times"></i></button></div>
+                    <button type="button" id="alarm-btn-qna" class="h-ico" title="문의 알림창"><span class="badge bg-danger">0</span><i class="fa fa-comments-o"></i></button>
+                    <div class="new-pop qna">
+                        <div class="np-title">신규 1:1 문의 <button type="button"><i class="fa fa-times"></i></button></div>
                         <ul class="np-list">
                             <li>
                                 <a href="#">
-                                    <div class="npl-kind"><?=$cs_list["alarm_cate"]?></div>
+                                    <div class="npl-kind"><i class="fa fa-comment-o"></i></div>
                                     <div class="npl-info">
-                                        <p class="subject"><?=$cs_list["alarm_subject"]?></p>
-                                        <p class="writer"><?=$cs_list["alarm_writer"]?></p>
-                                        <p class="date"><?=$cs_list["alarm_date"]?></p>
+                                        <p class="subject">문의 사항 있습니다.</p>
+                                        <p class="writer">테스트회원1</p>
+                                        <p class="date">2022.04.17 22:57:17</p>
                                     </div>
                                 </a>
                             </li>
-                            <li class="nodata">확인하지 않은 CS 목록이 없습니다.</li>
+                            <li class="nodata">최근 3일간 신규 문의 목록이 없습니다.</li>
                         </ul>
                     </div>
                 </li>
-                <!-- CS 알림창//END -->
+                <!-- 문의 알림창//END -->
 
 
-                <!-- 미승인회원 알림창//START -->
+                <!-- 신규 회원가입 알림창//START -->
                 <li>
-                    <button type="button" id="alarm-btn-member" class="h-ico" title="미승인회원 알림창"><span class="badge bg-success">0</span><i class="fa fa-user"></i></button>
+                    <button type="button" id="alarm-btn-member" class="h-ico" title="신규 회원가입 알림창"><span class="badge bg-success">0</span><i class="fa fa-user"></i></button>
                     <div class="new-pop member">
                         <div class="np-title">회원 알림 <button type="button"><i class="fa fa-times"></i></button></div>
                         <ul class="np-list">
                             <li>
                                 <a href="#">
-                                    <div class="npl-kind"><?=$member_list["alarm_cate"]?></div>
+                                    <div class="npl-kind"><i class="fa fa-user"></i></div>
                                     <div class="npl-info">
-                                        <p class="subject"><?=$member_list["alarm_writer"]?></p>
-                                        <p class="date"><?=$member_list["alarm_date"]?></p>
+                                        <p class="subject">회원이름 (najwndawd)</p>
+                                        <p class="date">2022.04.17 22:57:17</p>
                                     </div>
                                 </a>
                             </li>
-                            <li class="nodata">확인하지 않은 회원 알림 목록이 없습니다.</li>
+                            <li class="nodata">최근 3일간 신규 회원 목록이 없습니다.</li>
                         </ul>
                     </div>
                 </li>
-                <!-- 미승인회원 알림창//END -->
+                <!-- 신규 회원가입 알림창//END -->
 
                 <li>
                     <button type="button" class="h-ico" title="로그아웃" data-toggle="modal" data-target="#logoutModal"><i class="fa fa-power-off"></i></button>
