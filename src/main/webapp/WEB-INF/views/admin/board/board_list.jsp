@@ -94,7 +94,6 @@
     <div class="col-md-4 mt-3">
         <form name="search_form" method="get" action="<%=request.getContextPath()%>/admin/board/board_list.do">
         <div class="input-group list-search-form w-80">
-            <input type="hidden" name="field" value="board_name" />
             <div class="input-group-prepend">
                 <label class="input-group-text" for="keyword">게시판 이름</label>
             </div>
