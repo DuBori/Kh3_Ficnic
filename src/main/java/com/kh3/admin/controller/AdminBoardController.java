@@ -2,6 +2,8 @@ package com.kh3.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh3.model.board.BoardCategoryDAO;
 import com.kh3.model.board.BoardConfDAO;
 import com.kh3.model.board.BoardConfDTO;
-import com.kh3.model.board.BoardDAO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
 
@@ -23,25 +23,19 @@ import com.kh3.util.Paging;
 public class AdminBoardController {
 
     @Inject
-    private BoardDAO board_Dao;
-
-    @Inject
-    private BoardCategoryDAO board_CategoryDao;
-
-    @Inject
     private BoardConfDAO board_ConfDao;
 
 
 
     // 한 페이지당 보여질 게시물의 수
-    private final int rowsize = 3;
+    private final int rowsize = 10;
 
     // 전체 게시물의 수
     private int totalRecord = 0;
 
 
 
-    // 환경설정_게시판 설정 페이지
+    // 게시판 설정 목록 페이지
     @RequestMapping("admin/board/board_list.do")
     public String board_list(Model model, HttpServletRequest request) {
         // 검색 처리
@@ -55,14 +49,17 @@ public class AdminBoardController {
         } else {
             page = 1;
         }
-        totalRecord = this.board_ConfDao.getListCount(keyword);
+        totalRecord = this.board_ConfDao.getBoardConfCount(keyword);
 
-        PageDTO dto = new PageDTO(page, rowsize, totalRecord, null, keyword);
+        // 페이징 DTO
+        Map<String, Object> searchMap = new HashMap<String, Object>();
+        searchMap.put("keyword", keyword);
+        PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
         // 페이지 이동 URL
         String pageUrl = request.getContextPath() + "/admin/board/board_list.do?keyword=" + keyword;
 
-        // 테이블 이름을 통해서 해당 테이블 리스트를 넣어서 가져올 수 있나요?
+
         model.addAttribute("List", this.board_ConfDao.getConfBoardList(dto.getStartNo(), dto.getEndNo(), keyword));
 
         model.addAttribute("totalCount", totalRecord);

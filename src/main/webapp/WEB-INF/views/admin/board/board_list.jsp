@@ -56,7 +56,7 @@
                             <tr>
                                 <td class="py-4 table-list-hide">${dto.getBoard_no()}</td>
                                 <td class="eng table-list-hide-mob">${dto.getBoard_id()}</td>
-                                <td><a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBoard_name()}</a></td>
+                                <td><a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBoard_name()}</a></td>
                                 <td class="text-center table-list-hide">
                                     <div class="d-flex flex-wrap justify-content-center">
                                         <div class="col-auto my-1"><b>목록보기 </b>(${level_list})</div>
@@ -109,7 +109,7 @@
 
     <div class="col-md-4 text-right mt-3">
         <c:choose>
-        <c:when test="${!empty field}"><a href="<%=request.getContextPath()%>/admin/board/board_list.do" class="btn btn-outline-secondary"><i class="fa fa-list"></i> 게시판 목록</a></c:when>
+        <c:when test="${!empty keyword}"><a href="<%=request.getContextPath()%>/admin/board/board_list.do" class="btn btn-outline-secondary"><i class="fa fa-list"></i> 게시판 목록</a></c:when>
         <c:otherwise><a href="<%=request.getContextPath()%>/admin/board/board_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 게시판 추가</a></c:otherwise>
         </c:choose>
     </div>
