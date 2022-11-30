@@ -27,7 +27,11 @@
 		</selectKey>
 		insert into member_point values(#{point_no} + 1, '', '',#{member_id}, #{point_type}, #{point_add}, '적립금 관리자 수정', sysdate)
     </insert>
-
+	
+	<!-- 회원 포인트 상세내역 -->
+	<select id="pointView" parameterType="String" resultType="pointDTO">
+		select * from member_point where member_id = #{member_id}
+	</select>
 	
 
 </mapper>

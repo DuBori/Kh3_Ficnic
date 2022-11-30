@@ -15,9 +15,9 @@
 
 
      <insert id="adminQnaCommentReply" parameterType="qnacommentDTO">
-      <!--  <selectKey resultType="int" keyProperty="comment_no" order="BEFORE">
+       <selectKey resultType="int" keyProperty="comment_no" order="BEFORE">
            select max(comment_no) from qna_comment
-       </selectKey> -->
+       </selectKey>
        insert into qna_comment values(#{comment_no} + 1, #{qna_no}, #{comment_content}, #{comment_writer_name}, #{member_id}, #{comment_writer_pw}, sysdate)
    </insert> 
 		  
