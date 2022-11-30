@@ -25,7 +25,7 @@
 		<br>
 		
 
-        <table border="1" cellspacing="0" cellpadding="4px" width="1300px">
+        <table border="1" cellspacing="0" cellpadding="4px" width="1150px">
             <colgroup>
                 <col width="10%" />
                 <col width="10%" />
