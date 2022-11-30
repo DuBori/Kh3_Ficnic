@@ -71,7 +71,7 @@
 
     <!-- #header // START -->
     <header id="header">
-        <div class="navbar-header w1280">
+        <div class="navbar-header w1150">
             <div class="d-flex">
                 <h1 class="h-logo"><a href="${path}/admin/main.do"><img src="${path}/resources/admin/images/admin_logo.png" alt="Ficnic" /> 관리자 모드</a></h1>
                 <button type="button" class="btn btn-lg px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-toggle="collapse" data-target="#topnav-menu-content"><i class="fa fa-fw fa-bars"></i></button>
@@ -156,16 +156,53 @@
 
 
 
-        <nav class="navbar navbar-expand-lg w1280">
+        <nav class="navbar navbar-expand-lg w1150">
             <div id="topnav-menu-content" class="navbar-collapse collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link" id="order_menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-laptop"></i> 발주관리<div class="arrow-down"></div></a>
-                        <div class="dropdown-menu" aria-labelledby="order_menu">
-                            <a href="#" class="dropdown-item"><div class="arrow-right"></div> 발주 목록</a>
+                        <a href="${path}/admin/ficnic/ficnic_list.do" class="nav-link" id="ficnic_menu" data-toggle="dropdown"><i class="fa fa-gift"></i> 피크닉 관리<div class="arrow-down"></div></a>
+                        <div class="dropdown-menu" aria-labelledby="ficnic_menu">
+                            <a href="${path}/admin/ficnic/ficnic_list.do" class="dropdown-item"><div class="arrow-right"></div> 피크닉 목록</a>
+                            <a href="${path}/admin/ficnic/ficnic_write.do" class="dropdown-item"><div class="arrow-right"></div> 피크닉 등록</a>
+                            <a href="${path}/admin/ficnic/category_list.do" class="dropdown-item"><div class="arrow-right"></div> 카테고리 목록</a>
                         </div>
                     </li>
 
+                    <li class="nav-item dropdown">
+                        <a href="${path}/admin/reserv/reserv_list.do" class="nav-link" aria-haspopup="true" aria-expanded="false"><i class="fa fa-laptop"></i> 예약 관리</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="${path}/admin/member/member_list.do" class="nav-link" id="member_menu" data-toggle="dropdown"><i class="fa fa-user"></i> 회원 관리<div class="arrow-down"></div></a>
+                        <div class="dropdown-menu" aria-labelledby="member_menu">
+                            <a href="${path}/admin/member/member_list.do" class="dropdown-item"><div class="arrow-right"></div> 회원 목록</a>
+                            <a href="${path}/admin/member/member_write.do" class="dropdown-item"><div class="arrow-right"></div> 회원 등록</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="${path}/admin/coupon/coupon_list.do" class="nav-link" id="coupon_menu" data-toggle="dropdown"><i class="fa fa-ticket"></i> 쿠폰 관리<div class="arrow-down"></div></a>
+                        <div class="dropdown-menu" aria-labelledby="coupon_menu">
+                            <a href="${path}/admin/coupon/coupon_list.do" class="dropdown-item"><div class="arrow-right"></div> 쿠폰 목록</a>
+                            <a href="${path}/admin/coupon/coupon_write.do" class="dropdown-item"><div class="arrow-right"></div> 쿠폰 등록</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="${path}/admin/qna/qna_list.do" class="nav-link" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comment-o"></i> 문의 관리</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="${path}/admin/review/review_list.do" class="nav-link" aria-haspopup="true" aria-expanded="false"><i class="fa fa-star-o"></i> 리뷰 관리</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="${path}/admin/board/board_list.do" class="nav-link" id="board_menu" data-toggle="dropdown"><i class="fa fa-pencil-square-o"></i> 게시판 관리<div class="arrow-down"></div></a>
+                        <div class="dropdown-menu" aria-labelledby="board_menu">
+                            <a href="${path}/admin/board/board_list.do" class="dropdown-item"><div class="arrow-right"></div> 게시판 목록</a>
+                            <a href="${path}/admin/board/board_write.do" class="dropdown-item"><div class="arrow-right"></div> 게시판 등록</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -176,4 +213,4 @@
 
     <!-- #container // START -->
     <main id="container">
-        <div class="w1280">
+        <div class="w1150">

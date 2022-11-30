@@ -2,9 +2,9 @@ body {
     background: #f5f6f8;
 }
 
-.w1280 {
+.w1150 {
     width: 100%;
-    max-width: 1280px;
+    max-width: 1150px;
     margin: 0 auto;
 }
 
@@ -305,7 +305,7 @@ body {
     margin-top: 12px;
     margin-bottom: -28px;
     padding: 0 1.2rem;
-    background: #5b73e8;
+    background: #333;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -317,15 +317,16 @@ body {
 #header .navbar .nav-link {
     position: relative;
     padding: 1rem 1.9rem;
-    font-size: 15.5px;
-    color: hsla(0,0%,100%,.6);
+    font-size: 16px;
+    color: hsla(0,0%,100%,.75);
+    letter-spacing: -0.5px;
 }
 #header .navbar .nav-link:hover,
 #header .navbar .nav-item.active .nav-link {
     color: hsla(0,0%,100%,1);
 }
 #header .navbar .nav-link i {
-    width: 20px;
+    width: 16px;
     font-size: 16px;
 }
 #header .navbar .arrow-right {
