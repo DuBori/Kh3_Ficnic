@@ -45,6 +45,6 @@ public class QnaDAOImpl implements QnaDAO {
 		// TODO Auto-generated method stub
 		
 	}
-   
+
 
 }

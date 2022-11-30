@@ -1,19 +1,22 @@
 package com.kh3.model.qna;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class QnaCommentDAOImpl implements QnaCommentDAO{
 
-    @Inject
-    private SqlSessionTemplate sqlSession;
-    
+public class QnaCommentDAOImpl implements QnaCommentDAO {
+	@Inject
+	private SqlSessionTemplate sqlSession;
+
 	@Override
 	public QnaCommentDTO qnaCommentView(int no) {
-		return this.sqlSession.selectOne("adminQnaCommentView", no);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -28,4 +31,11 @@ public class QnaCommentDAOImpl implements QnaCommentDAO{
 		
 	}
 
-}
+
+	@Override
+	public List<QnaCommentDTO> getQnaCommentList(int no) {
+
+		return this.sqlSession.selectList("adminQnaCommentList", no);
+	}
+
+	}
