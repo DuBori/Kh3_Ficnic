@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java,macos,windows
 
 자료/
+target/
 
 ### Eclipse ###
 .metadata

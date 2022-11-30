@@ -18,19 +18,32 @@ public class BoardConfDAOImpl implements BoardConfDAO {
 
 
     @Override
+    public int getBoardConfCount(String keyword) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("keyword", keyword);
+
+        return this.sqlSession.selectOne("adminBoardConfTotal", map);
+    }
+
+
+    @Override
+    public List<BoardConfDTO> getConfBoardList(int startNo, int endNo, String keyword) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("startNo", startNo);
+        map.put("endNo", endNo);
+        map.put("keyword", keyword);
+
+        return this.sqlSession.selectList("adminBoardConfList", map);
+    }
+
+
+    @Override
     public int writeBoard(BoardConfDTO dto) {
         sqlSession.insert("adminBoardConfCategory", dto);
         sqlSession.insert("adminBoardConfComment", dto);
         sqlSession.insert("adminBoardConfData", dto);
 
-        return sqlSession.insert("adminBoardConfCount", dto);
-    }
-
-
-
-    @Override
-    public List<BoardConfDTO> getConfBoardList(int startNo, int endNo, String keyword) {
-        return sqlSession.selectList("adminBoardConfList");
+        return sqlSession.insert("adminBoardConfWrite", dto);
     }
 
 
@@ -58,16 +71,6 @@ public class BoardConfDAOImpl implements BoardConfDAO {
         sqlSession.update("adminBoardConfdelData", dto);
 
         return sqlSession.delete("adminBoardConfdel", board_no);
-    }
-
-
-
-    @Override
-    public int getListCount(String keyword) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("keyword", keyword);
-
-        return this.sqlSession.selectOne("bbsTotal", map);
     }
 
 }

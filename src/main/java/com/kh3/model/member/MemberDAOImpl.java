@@ -58,9 +58,9 @@ public class MemberDAOImpl implements MemberDAO {
 
 	// 회원 정보 수정
 	@Override
-	public int modifyOk(MemberDTO dto, String member_pw) {
-		
-		return 0;
+	public int modifyOk(MemberDTO dto) {
+
+		return this.sqlSession.update("adminMemberModifyOk", dto);
 	}
 
 

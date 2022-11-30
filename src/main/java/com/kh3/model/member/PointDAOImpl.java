@@ -17,6 +17,14 @@ public class PointDAOImpl implements PointDAO {
 		
 		this.sqlSession.insert("joinPoint", pdto);
 	}
+	
+	// 관리자 적립금 수정
+	@Override
+	public void modifyPoint(PointDTO pdto) {
+		
+		this.sqlSession.insert("modifyPoint", pdto);
+	}
+
 
 
 

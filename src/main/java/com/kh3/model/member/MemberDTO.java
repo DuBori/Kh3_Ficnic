@@ -15,4 +15,5 @@ public class MemberDTO {
 	private int member_point;
 	private String member_joindate;
 	
+	
 }

@@ -13,6 +13,7 @@ public class QnaDAOImpl implements QnaDAO {
     @Inject
     private SqlSessionTemplate sqlSession;
 
+
 	@Override
 	public List<QnaDTO> getQnaList() {
 		
@@ -44,6 +45,36 @@ public class QnaDAOImpl implements QnaDAO {
 		// TODO Auto-generated method stub
 		
 	}
+=======
+    @Override
+    public List<QnaDTO> getReviewList() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public QnaDTO reviewView(int no) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int reviewModify(QnaDTO dto) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int reviewDelete(int no) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void updateSeq(int no) {
+        // TODO Auto-generated method stub
+        
+    }
 
 
 
