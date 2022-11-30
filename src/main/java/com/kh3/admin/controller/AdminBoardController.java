@@ -34,7 +34,7 @@ public class AdminBoardController {
 	@RequestMapping("admin/board/board_list.do")
 	public String board_list(Model model) {
 		
-		// 테이블 이름을 통해서 해당 테이블리스트를 넣어서 가져올 수 있나요?
+		// 테이블 이름을 통해서 해당 테이블 리스트를 넣어서 가져올 수 있나요?
 		model.addAttribute("List",this.board_ConfDao.getConfBoardList());
 		return "/admin/board/board_list";
 	}
