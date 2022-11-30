@@ -58,7 +58,6 @@ public class AdminQnaController {
 	@RequestMapping("admin/qna/qna_reply_ok.do")
 	public void reply(QnaCommentDTO dto, HttpServletResponse response) throws Exception {
 		
-
 		int check = this.cdao.qnaReply(dto);
 		
 		response.setContentType("text/html; charset=UTF-8");
@@ -66,14 +65,13 @@ public class AdminQnaController {
 		PrintWriter out = response.getWriter();
 		
 		if(check > 0) {
-			out.println("location.href='admin/qna/qna_view.do?no="+dto.getComment_no()+"'");
+			out.println("location.href='qna_view.do?no="+dto.getQna_no()+"'");
 		} else {
 			out.println("<script>");
 			out.println("alert('댓글 등록 실패.')");
 			out.println("history.back()");
 			out.println("</script>");
 		}
-		
 		
 		
 	}
