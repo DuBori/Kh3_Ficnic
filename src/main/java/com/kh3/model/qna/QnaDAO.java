@@ -15,5 +15,6 @@ public interface QnaDAO {
     int qnaDelete(int no);
 
     void qnaUpdateSeq(int no);
+
     
 }
