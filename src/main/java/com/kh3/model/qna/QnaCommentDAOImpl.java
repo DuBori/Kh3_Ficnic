@@ -13,12 +13,23 @@ public class QnaCommentDAOImpl implements QnaCommentDAO {
 	@Inject
 	private SqlSessionTemplate sqlSession;
 
+
+	
 	@Override
-	public QnaCommentDTO qnaCommentView(int no) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<QnaCommentDTO> getQnaCommentList(int no) {
+		
+		return this.sqlSession.selectList("adminQnaCommentList", no);
+	}
+	
+	
+	@Override
+	public int qnaReply(QnaCommentDTO dto) {
+		
+		return this.sqlSession.insert("adminQnaCommentReply", dto);
+		
 	}
 
+	
 	@Override
 	public int qnaCommentDelete(int no) {
 		// TODO Auto-generated method stub
@@ -31,11 +42,5 @@ public class QnaCommentDAOImpl implements QnaCommentDAO {
 		
 	}
 
-
-	@Override
-	public List<QnaCommentDTO> getQnaCommentList(int no) {
-
-		return this.sqlSession.selectList("adminQnaCommentList", no);
-	}
 
 	}

@@ -25,6 +25,10 @@
         <br />
 
         <table class="table table-bordered">
+        
+ 
+<%-- 			<input type="hidden" name="comment_writer_id" value="${login_id}" />
+			<input type="hidden" name="comment_writer_pw" value="${login_pw}" /> --%>
 			
              <c:if test="${!empty dto}">
 			<h3>문의글 상세 정보</h3>
@@ -67,8 +71,10 @@
             </c:if>
             </table>
             	
-         <form method="post" action="<%=request.getContextPath() %>/admin/qna/qna_reply_ok.do?no=${dto.qna_no}">
             	
+         <form method="post" action="<%=request.getContextPath() %>/admin/qna/qna_reply_ok.do?no=${dto.qna_no}">
+                    <input type="hidden" name="comment_writer_name" value="${comment_writer_name}" />
+                    
 		 <table border="1" cellspacing="0" cellpadding="4px" width="600px">
          
          
@@ -122,7 +128,7 @@
 	             </td>
 		    	</tr>
             
-     		   </table>
+        </table>
 		    	</form>
 
 
