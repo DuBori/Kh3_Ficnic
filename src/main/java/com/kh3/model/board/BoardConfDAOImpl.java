@@ -57,6 +57,27 @@ public class BoardConfDAOImpl implements BoardConfDAO {
 		return sqlSession.delete("adminBoardConfdel", board_no);
 	}
 
+	@Override
+	public int getListCount(String field, String keyword) {
+		 Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("field", field);
+	        map.put("keyword", keyword);
+
+	        return this.sqlSession.selectOne("bbsTotal", map);
+	
+	}
+
+	@Override
+	public List<BoardDTO> getBoardList(int startNo, int endNo, String field, String keyword) {
+	    Map<String, Object> map = new HashMap<String, Object>();
+        map.put("startNo", startNo);
+        map.put("endNo", endNo);
+        map.put("field", field);
+        map.put("keyword", keyword);
+
+        return this.sqlSession.selectList("bbsList", map);
+	}
+
 
 
 
