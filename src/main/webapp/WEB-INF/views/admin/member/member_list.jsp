@@ -50,15 +50,15 @@
                     <td>${dto.getMember_no()}</td>
                     <td>${dto.getMember_type()}</td>
                     <td>
-                    	<a href="<%=request.getContextPath()%>/member_view.do?no=${dto.getMember_no()}">${dto.getMember_id()}<br>${dto.getMember_name()}</a>
+                    	<a href="<%=request.getContextPath()%>/admin/member/member_view.do?no=${dto.getMember_no()}">${dto.getMember_id()}<br>${dto.getMember_name()}</a>
                     </td>
                     <td>${dto.getMember_email()}</td>
                     <td>${dto.getMember_phone()}</td>
                     <td><fmt:formatNumber value="${dto.getMember_point()}" /></td>
                     <td>${dto.getMember_joindate().substring(0,10)}</td>
                 	<td>
-	                    <a href="<%=request.getContextPath()%>/member_modify.do?no=${dto.getMember_no()}" class="btn btn-sm btn-outline-primary m-1">수정</a>
-	                    <a href="<%=request.getContextPath()%>/member_delete.do?no=${dto.getMember_no()}" class="btn btn-sm btn-outline-danger m-1" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+	                    <a href="<%=request.getContextPath()%>/admin/member/member_modify.do?no=${dto.getMember_no()}" class="btn btn-sm btn-outline-primary m-1">수정</a>
+	                    <a href="<%=request.getContextPath()%>/admin/member/member_delete.do?no=${dto.getMember_no()}" class="btn btn-sm btn-outline-danger m-1" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
                     </td>
                 </tr>
                 </c:forEach>
@@ -78,7 +78,7 @@
                     <td colspan="8" class="border-0 px-0 pt-3">
                         <div class="row mx-0 justify-content-between">
                             <div class="col-8 px-0 d-flex justify-content-end">
-                                <a href="<%=request.getContextPath()%>/member_write.do" class="btn btn-primary">회원등록</a>
+                                <a href="<%=request.getContextPath()%>/admin/member/member_write.do" class="btn btn-primary">회원등록</a>
                             </div>
                         </div>
                     </td>
