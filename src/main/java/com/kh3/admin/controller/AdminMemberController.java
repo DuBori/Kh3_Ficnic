@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh3.model.member.McouponDAO;
+import com.kh3.model.member.McouponDTO;
 import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
 import com.kh3.model.member.PointDAO;
@@ -22,10 +24,10 @@ public class AdminMemberController {
 
     @Autowired
     private MemberDAO dao;
-
     @Autowired
     private PointDAO pdao;
-
+    @Autowired
+    private McouponDAO cdao;
 
 
     // 회원의 전체리스트 메핑
@@ -41,10 +43,18 @@ public class AdminMemberController {
 
     // 회원 상세내역 메핑
     @RequestMapping("admin/member/member_view.do")
-    public String view(Model model, @RequestParam("no") int no) {
+    public String view(Model model, @RequestParam("no") int no, @RequestParam("id") String id) {
         MemberDTO dto = this.dao.getMemberView(no);
+        List<McouponDTO> cdto = this.cdao.getCouponView(id);
+        List<PointDTO> pdto = this.pdao.getPointView(id);
+        
+        System.out.println("cdto+++  "+cdto);
+        System.out.println("pdto+++  "+pdto);
+        
         model.addAttribute("dto", dto);
-
+        model.addAttribute("cdto", cdto);
+        model.addAttribute("pdto", pdto);
+        
         return "admin/member/member_view";
     }
 

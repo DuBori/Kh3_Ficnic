@@ -49,7 +49,7 @@
                     <td>${dto.getMember_no()}</td>
                     <td>${dto.getMember_type()}</td>
                     <td>
-                    	<a href="<%=request.getContextPath()%>/admin/member/member_view.do?no=${dto.getMember_no()}">${dto.getMember_id()}<br>${dto.getMember_name()}</a>
+                    	<a href="<%=request.getContextPath()%>/admin/member/member_view.do?no=${dto.getMember_no()}&&id=${dto.getMember_id()}">${dto.getMember_id()}<br>${dto.getMember_name()}</a>
                     </td>
                     <td>${dto.getMember_email()}</td>
                     <td>${dto.getMember_phone()}</td>
