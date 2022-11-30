@@ -3,7 +3,8 @@
 <%@ include file="../layout/layout_header.jsp" %>
 
 <c:set var="dto" value="${dto}" />
-
+<c:set var="cdto" value="${cdto}" />
+			
 <div class="page-info row mb-3">
     <div class="d-flex align-items-center justify-content-between">
         <h2>게시판 목록</h2>
@@ -27,8 +28,6 @@
         <table class="table table-bordered">
         
  
-<%-- 			<input type="hidden" name="comment_writer_id" value="${login_id}" />
-			<input type="hidden" name="comment_writer_pw" value="${login_pw}" /> --%>
 			
              <c:if test="${!empty dto}">
 			<h3>문의글 상세 정보</h3>
@@ -73,7 +72,12 @@
             	
             	
          <form method="post" action="<%=request.getContextPath() %>/admin/qna/qna_reply_ok.do?no=${dto.qna_no}">
-                    <input type="hidden" name="comment_writer_name" value="${comment_writer_name}" />
+                   	<!-- 나중에 세션 생기면 입력하기 -->
+                    <input type="hidden" name="qna_no" value="${cdto[0].qna_no}" />
+                    <input type="hidden" name="comment_no" value="${cdto[0].comment_no}" />
+                    <input type="hidden" name="member_id" value="${cdto[0].member_id}" />
+                    <input type="hidden" name="comment_writer_name" value="${cdto[0].comment_writer_name}" />
+                    <input type="hidden" name="comment_writer_pw" value="${cdto[0].comment_writer_pw}" />
                     
 		 <table border="1" cellspacing="0" cellpadding="4px" width="600px">
          
@@ -95,7 +99,6 @@
 			
 			 <tbody>
 			
-			<c:set var="cdto" value="${cdto}" />
 			<c:if test="${!empty cdto }">
 				<c:forEach items="${cdto }" var="cdto">
 					<tr>
