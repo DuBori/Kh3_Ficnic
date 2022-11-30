@@ -22,9 +22,16 @@ public class HomeController {
     }
 
 
-    // 관리자 메인
+    // 관리자
     @RequestMapping("admin/")
     public String admin() {
+        return "admin/index";
+    }
+
+
+    // 관리자 메인
+    @RequestMapping("admin/main.do")
+    public String admin_main() {
         return "admin/main";
     }
 

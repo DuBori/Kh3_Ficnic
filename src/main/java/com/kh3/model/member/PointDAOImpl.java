@@ -10,6 +10,13 @@ public class PointDAOImpl implements PointDAO {
 
     @Inject
     private SqlSessionTemplate sqlSession;
+    
+    // 회원 가입 포인트 적립
+	@Override
+	public void joinPoint(PointDTO pdto) {
+		
+		this.sqlSession.insert("joinPoint", pdto);
+	}
 
 
 
