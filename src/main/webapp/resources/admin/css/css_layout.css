@@ -1361,6 +1361,17 @@ main .table-list.hover > tbody > tr:hover > td {
 }
 
 
+main .list-bottom-util > div:nth-child(1) {
+    order: 2;
+}
+main .list-bottom-util > div:nth-child(2) {
+    order: 1;
+}
+main .list-bottom-util > div:nth-child(3) {
+    order: 3;
+}
+
+
 main .list-search-form .input-group-prepend .input-group-text {
     border-top-left-radius: .25rem!important;
     border-bottom-left-radius: .25rem!important;
@@ -1384,6 +1395,13 @@ main .list-search-form .input-group-prepend .input-group-text {
 }
 
 @media (min-width: 576px) {
+    main .list-bottom-util > div:nth-child(1) {
+        order: 1;
+    }
+    main .list-bottom-util > div:nth-child(2) {
+        order: 2;
+    }
+
     main .list-bottom-util > div > a.btn,
     main .list-bottom-util > div > button.btn {
         width: auto;

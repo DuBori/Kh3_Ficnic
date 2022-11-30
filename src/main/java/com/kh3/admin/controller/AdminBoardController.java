@@ -44,7 +44,7 @@ public class AdminBoardController {
 
         // 페이징 처리
         int page; // 현재 페이지 변수
-        if (request.getParameter("page") != null) {
+        if (request.getParameter("page") != null && request.getParameter("page") != "") {
             page = Integer.parseInt(request.getParameter("page"));
         } else {
             page = 1;
@@ -89,21 +89,21 @@ public class AdminBoardController {
         if (this.board_ConfDao.writeBoard(confdto) > 0) {
             out.println("<script>alert('게시판 생성 완료'); location.href='board_list.do';</script>");
         } else {
-            out.println("<script>");
-            out.println("alert('게시판 생성 실패')");
-            out.println("history.back()");
-            out.println("</script>");
+            out.println("<script>alert('게시판 생성 실패'); history.back();</script>");
         }
     }
 
+
+
     @RequestMapping("admin/board/board_modify.do")
     public String board_content(@RequestParam("board_no") int board_no, Model model) {
-
         model.addAttribute("Cont", this.board_ConfDao.getCont(board_no));
         model.addAttribute("modify", "m");
 
         return "/admin/board/board_write";
     }
+
+
 
     @RequestMapping("admin/board/board_modify_ok.do")
     public void board_modify_ok(BoardConfDTO dto, HttpServletResponse response) throws IOException {
@@ -112,36 +112,25 @@ public class AdminBoardController {
         PrintWriter out = response.getWriter();
 
         if (this.board_ConfDao.updateBoard(dto) > 0) {
-            out.println("<script>");
-            out.println("alert('게시판 수정 완료')");
-            out.println("location.href='admin/board/board_list.do'");
-            out.println("</script>");
+            out.println("<script>alert('게시판 수정 완료'); location.href='board_list.do';</script>");
         } else {
-            out.println("<script>");
-            out.println("alert('게시판 수정 실패')");
-            out.println("history.back()");
-            out.println("</script>");
+            out.println("<script>alert('게시판 수정 실패'); history.back();</script>");
         }
 
     }
 
+
+
     @RequestMapping("admin/board/board_delete.do")
-    public void board_delete(@RequestParam("board_no") int board_no, HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
+    public void board_delete(@RequestParam("board_no") int board_no, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
 
         if (this.board_ConfDao.deleteBoard(board_no) > 0) {
-            out.println("<script>");
-            out.println("alert('게시판 삭제 완료')");
-            out.println("location.href='" + request.getContextPath() + "/admin/board/board_list.do'");
-            out.println("</script>");
+            out.println("<script>alert('게시판 삭제 완료'); location.href='board_list.do';</script>");
         } else {
-            out.println("<script>");
-            out.println("alert('게시판 삭제 실패')");
-            out.println("history.back()");
-            out.println("</script>");
+            out.println("<script>alert('게시판 삭제 실패'); history.back();</script>");
         }
     }
 
