@@ -9,6 +9,21 @@ body {
 }
 
 
+span.noimg {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    padding-top: 25px;
+    box-sizing: border-box;
+    background: #f6f6f6;
+    font-family: 'Raleway';
+    font-size: 12px;
+    font-weight: 500;
+    color: #aaa;
+    letter-spacing: 0;
+    text-align: center;
+}
+
 
 
 /*************************/
@@ -1105,7 +1120,7 @@ main .card.view-form .log-list .writer {
 
     main .search-form-button a.btn,
     main .search-form-button button.btn {
-        width: 100% !important;
+        /*width: 100% !important;*/
     }
 }
 
@@ -1323,6 +1338,15 @@ main .table-list tbody td {
     border-bottom: 1px solid #f1f1f1;
     padding: 8px 0;
 }
+main .table-list tbody tr:nth-of-type(even) {
+    background: #fcfcfc;
+}
+main .table-list.hover > tbody > tr:hover > td {
+    background: #f5f9fd;
+    cursor: pointer;
+    color: #000;
+}
+
 main .table-list tbody .eng,
 main .card .col a.eng {
     font-family: 'verdana';
