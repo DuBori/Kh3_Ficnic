@@ -46,4 +46,5 @@ public class QnaDAOImpl implements QnaDAO {
 		
 	}
 
+
 }

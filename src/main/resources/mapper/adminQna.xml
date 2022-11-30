@@ -7,17 +7,21 @@
 <!-- 관리자 : 1:1문의 관련 -->
 <mapper namespace="qnaDAO">
 
-    <!-- 1:1 문의 목록 -->
+<!--     1:1 문의 목록
     <select id="adminQnaList" resultType="qnaDTO">
    	 	select * from qna_list order by qna_no
     </select>
 
-	<!-- 문의 상세 보기 -->
+	문의 상세 보기
 	<select id="adminQnaView" parameterType="int" resultType="qnaDTO">
 		select * from qna_list where qna_no = #{qna_no}
 	</select>
 
 
-
-</mapper> 
+	코멘트 상세 보기
+	<select id="adminQnaCommentView" parameterType="int" resultType="qnacommentDTO">
+		select * from qna_comment where qna_no = #{qna_no}
+	</select>
+ -->
+</mapper>
 
