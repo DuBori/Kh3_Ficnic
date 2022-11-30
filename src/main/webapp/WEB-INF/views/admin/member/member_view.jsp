@@ -3,7 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="dto" value="${dto}" />
-<c:set var="deptList" value="${deptList}" />
+<c:set var="cdto" value="${cdto}" />
+<c:set var="pdto" value="${pdto}" />
 
 <%@ include file="../layout/layout_header.jsp" %>
 
@@ -20,6 +21,7 @@
 
 
 <div class="page-cont">
+
         <table class="table table-bordered">
             <c:if test="${!empty dto}">
             <tr>
@@ -72,8 +74,116 @@
             </tr>
             </c:if>
         </table>
+        
+    <!-- 쿠폰 정보 //START -->
+    <div class="row vf-body">
+        <div class="col-lg mb-4">
+            <h4>쿠폰 정보</h4>
 
+            <table class="table-form w-100">
+            <c:if test="${!empty cdto}">
+            <c:forEach items="${cdto}" var="cdto">
+                <colgroup>
+                    <col width="17%" />
+                    <col width="32%" />
+                    <col width="17%" />
+                    <col />
+                </colgroup>
 
+                <tbody>
+                    <tr>
+                        <th>쿠폰번호</th>
+                        <td class="eng">${cdto.coupon_no}</td>
+                    </tr>
+                    <tr>
+                        <th>예약번호</th>
+                        <td class="eng">${cdto.reserv_sess}</td>
+                    </tr>
+                    <tr>
+                    	<th>쿠폰 사용 금액</th>
+                    	<td colspan="3">${cdto.mcoupon_use_price }</td>
+                    </tr>
+                    
+                    <tr>
+                    	<th>사용 시작 기간</th>
+                    	<td colspan="3">${cdto.mcoupon_start_date.substring(0,10) }</td>
+                    </tr>
+                    
+                    <tr>
+                    	<th>사용 종료 기간</th>
+                    	<td colspan="3">${cdto.mcoupon_end_date.substring(0,10) }</td>
+                    </tr>
+                    
+                    <tr>
+                    	<th>쿠폰 사용 일자</th>
+                    	<td colspan="3">${cdto.mcoupon_use_date.substring(0,10) }</td>
+                    </tr>
+                    
+                    <tr>
+                    	<th>쿠폰 발급 일자</th>
+                    	<td colspan="3">${cdto.mcoupon_date.substring(0,10) }</td>
+                    </tr>
+                    
+                </tbody>
+                </c:forEach>
+               </c:if> 
+            </table>
+        </div>
+    </div>
+    <!-- 쿠폰 정보 //END -->
+ 
+    <!-- 적립금 정보 //START -->
+    <div class="row vf-body">
+        <div class="col-lg mb-4">
+            <h4>적립금 정보</h4>
+
+            <table class="table-form w-100">
+            <c:if test="${!empty pdto}">
+            <c:forEach items="${pdto}" var="pdto">
+                <colgroup>
+                    <col width="17%" />
+                    <col width="32%" />
+                    <col width="17%" />
+                    <col />
+                </colgroup>
+
+                <tbody>
+                    <tr>
+                        <th>예약 번호</th>
+                        <td class="eng">${pdto.reserv_sess}</td>
+                    </tr>
+                    <tr>
+                        <th>리뷰 번호</th>
+                        <td class="eng">${pdto.review_no}</td>
+                    </tr>
+                    <tr>
+                    	<th>적립금 구분</th>
+                    	<td colspan="3">${pdto.point_type }</td>
+                    </tr>
+                    
+                    <tr>
+                    	<th>적립금 금액</th>
+                    	<td colspan="3">${pdto.point_add}</td>
+                    </tr>
+                    
+                    <tr>
+                    	<th>적립 이유</th>
+                    	<td colspan="3">${pdto.point_reason}</td>
+                    </tr>
+                    
+                    <tr>
+                    	<th>적립 일자</th>
+                    	<td colspan="3">${pdto.point_date.substring(0,10) }</td>
+                    </tr>
+                    
+                </tbody>
+                </c:forEach>
+               </c:if> 
+            </table>
+        </div>
+    </div>
+    <!-- 쿠폰 정보 //END -->
+    
      
 </div>
 

@@ -1,5 +1,7 @@
 package com.kh3.model.member;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -23,6 +25,12 @@ public class PointDAOImpl implements PointDAO {
 	public void modifyPoint(PointDTO pdto) {
 		
 		this.sqlSession.insert("modifyPoint", pdto);
+	}
+	
+	// 적립금 내역 보여주기
+	@Override
+	public List<PointDTO> getPointView(String id) {
+		return this.sqlSession.selectList("pointView", id);
 	}
 
 
