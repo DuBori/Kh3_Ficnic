@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../layout/layout_header.jsp" %>
+<c:set var="no" value="${no }"/>
 <script type="text/javascript">
 $("#header .navbar .nav-item:nth-child(3)").addClass("active");
 
 
 $(function(){
     $("input[name='member_id']").keyup(function(){
-        let userId = $(this).val();
+        let userId = $("#member_id").val();
 
         if($.trim(userId).length < 4){
             $("#idchk-txt").html("<span class=\"text-danger\">* 아이디는 4글자 이상이어야 합니다.</span>");
@@ -17,16 +18,18 @@ $(function(){
         // 아이디 중복여부 확인
         $.ajax({
             type : "post",
-            url : "<%=request.getContextPath()%>/memberIdCheck.do",
-            data : { paramId : userId },
-            datatype : "html",
+            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+            url : "<%=request.getContextPath()%>/admin/member/memberIdCheck.do",
+            data : { paramId : $("#member_id").val() },
+            datatype : "text",
 
             success : function(data){
                 console.log(data);
                 let ajaxTxt = "";
-                if(data.trim() > 0){
+                if(data != null ){
                     ajaxTxt = "<span class=\"text-danger\">* 이미 사용중인 아이디입니다.</span>";
                     $("input[name='idchk']").val("N");
+                    alert(data);
                 }else{
                     ajaxTxt = "<span class=\"text-primary\">* 사용 할 수 있는 아이디입니다.</span>";
                     $("input[name='idchk']").val("Y");
@@ -39,8 +42,8 @@ $(function(){
                 $("input[name='idchk']").val("N");
             }
         });
-    });
-});
+
+
 
 
 join_check = function(){
@@ -77,6 +80,8 @@ join_check = function(){
 
     form.submit();
 };
+});
+});
 </script>
 
 
@@ -117,7 +122,6 @@ join_check = function(){
                             </div>
                         </div>
                         <div class="w-100 border-bottom"></div>
-
                         <div class="form-group col">
                             <label for="member_id">아이디</label>
                             <input type="text" name="member_id" id="member_id" class="form-control d-inline w-30" required />

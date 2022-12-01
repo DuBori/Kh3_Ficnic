@@ -14,7 +14,7 @@ public interface MemberDAO {
     MemberDTO getMemberView(int no);
 
     // 회원 아이디 중복 체크
-    int checkId(MemberDTO dto);
+    int checkId(String userId);
 
     // 회원 추가
     int writeOkMember(MemberDTO dto);
