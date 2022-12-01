@@ -5,10 +5,10 @@
 
 <div class="page-info row mb-3">
     <div class="d-flex align-items-center justify-content-between">
-        <h2>${board.getBoard_name()}</h2>
+        <h2>${boardConfig.getBoard_name()}</h2>
         <ol class="m-0 p-2">
         	<li>게시판</li>
-            <li><b>${board.getBoard_name()}</b></li>
+            <li><b>${boardConfig.getBoard_name()}</b></li>
         </ol>
     </div>
 </div>
@@ -17,7 +17,7 @@
 <div class="page-cont" align="center">
 	
 	<div>
-		${board.getBoard_id()} &nbsp; >${board.getBoard_id()}<br>
+		${boardConfig.getBoard_id()} &nbsp; >${boardConfig.getBoard_id()}<br>
 	</div>
 
 	<!-- 해당 게시글 리스트 출력부  -->
@@ -35,9 +35,9 @@
 		<c:forEach items="${List}" var="dto">
 			<tr>
 				<td>${dto.getBdata_no() }</td>
-				<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&board_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a></td>
+				<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a></td>
 				<td>${dto.getBdata_writer_name() }</td>
-				<td>${dto.getBdata_date() }</td>
+				<td>${dto.getBdata_date().substring(0,10) }</td>
 				<td>${dto.getBdata_hit() }</td>
 			
 			</tr>
@@ -81,10 +81,10 @@
 		<div class="col-6 text-right mt-3">
 	             <c:choose>
 		             <c:when test="${!empty field}">
-		             	<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${board.getBoard_id()}" class="btn btn-outline-secondary"><i class="fa fa-list mr-1"></i> 게시물 전체목록</a>
+		             	<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-outline-secondary"><i class="fa fa-list mr-1"></i> 게시물 전체목록</a>
 		             </c:when>
 		             <c:otherwise>
-		             	<a href="<%=request.getContextPath()%>/site/board/${board.getBoard_skin() }/board_write.do?bbs_id=${board.getBoard_id()}" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 새로운 글쓰기</a>
+		             	<a href="<%=request.getContextPath()%>/site/board/${boardConfig.getBoard_skin() }/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 새로운 글쓰기</a>
 		             </c:otherwise>
 	             </c:choose>
 		</div>	

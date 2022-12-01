@@ -20,7 +20,6 @@
        </selectKey>
        insert into qna_comment values(#{comment_no} + 1, #{qna_no}, #{comment_content}, #{comment_writer_name}, #{member_id}, #{comment_writer_pw}, sysdate)
    	</insert>
-	
 		  
 	<!-- 글 삭제 시 댓글도 전체 삭제  -->
 		<delete id="adminQnaCommentAllDelete" parameterType="int">

@@ -4,7 +4,59 @@
 
 <c:set var="dto" value="${dto}" />
 <c:set var="cdto" value="${cdto}" />
-			
+		
+		
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
+   <script>
+
+   
+   $(function() {
+	   
+	    $("#replyBtn").on("click", function() {
+	         $.ajax({
+	             type : "post",
+	             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	             url : "<%=request.getContextPath()%>/admin/qna/qna_reply_ok.do",
+	             data : { qna_no :$("#qna_no").val(),
+	            	 comment_content : $("#comment_content").val(),
+	            	 comment_date : $("#comment_date").val(),
+	            	 comment_no : $("#comment_no").val(),
+	            	 comment_writer_name : $("#comment_writer_name").val(),
+	            	 comment_writer_pw : $("#comment_writer_pw").val(),
+	            	 member_id : $("#member_id").val()
+	            	 
+	            	 },
+	             datatype : "text",
+	             success : function(data) {
+	            	 if(data>0){
+	            		 location.href="<%=request.getContextPath()%>/admin/qna/qna_view.do?no="+$("#qna_no").val();
+	            	 }else{
+	            		 alert("실패");
+	            	 }
+	            	
+	        
+	             },
+	             error : function(data) {
+	                 alert("에러발생");
+	             }
+	         });
+
+	     }
+	    
+	 );
+	})
+   
+
+   
+	</script>
+</head>
+<body>
+	
 <div class="page-info row mb-3">
     <div class="d-flex align-items-center justify-content-between">
         <h2>게시판 목록</h2>
@@ -71,13 +123,7 @@
             </table>
             	
             	
-         <form method="post" action="<%=request.getContextPath() %>/admin/qna/qna_reply_ok.do?no=${dto.qna_no}">
-                   	<!-- 나중에 세션 생기면 입력하기 -->
-                    <input type="hidden" name="qna_no" value="${cdto[0].qna_no}" />
-                    <input type="hidden" name="comment_no" value="${cdto[0].comment_no}" />
-                    <input type="hidden" name="member_id" value="${cdto[0].member_id}" />
-                    <input type="hidden" name="comment_writer_name" value="${cdto[0].comment_writer_name}" />
-                    <input type="hidden" name="comment_writer_pw" value="${cdto[0].comment_writer_pw}" />
+
                     
 		 <table border="1" cellspacing="0" cellpadding="4px" width="600px">
          
@@ -98,16 +144,23 @@
 			</thead>
 			
 			 <tbody>
+			 
+    
 			
 			<c:if test="${!empty cdto }">
 				<c:forEach items="${cdto }" var="cdto">
 					<tr>
  					<td> ${cdto.comment_writer_name } </td>
-					<td> ${cdto.comment_content } </td>
+					<td class="msg"> ${cdto.comment_content } </td>
 					<td> ${cdto.comment_date } </td>
 						<td>
-                    <a href="<%=request.getContextPath()%>/admin/qna/qnaComment_delete.do?no=${cdto.comment_no}" class="btn btn-sm btn-outline-danger m-1" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
-              			</td> 
+						<!--주소지 삭제 버튼-->
+	<button class="btn btn-danger btn-xs delete-address-item" data-index="<?=$row['address_srl']?>">
+		<span class="glyphicon glyphicon-trash" style=" vertical-align: middle;">
+		</span>
+	</button>
+                  <%--   <a href="<%=request.getContextPath()%>/admin/qna/qnaComment_delete.do?no=${cdto.comment_no}" class="btn btn-sm btn-outline-danger m-1" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+ --%>              			</td> 
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -121,18 +174,61 @@
 				</tr>
 			</c:if>
 			</tbody>
-            
+
+			       	
+			        
+			       <%--  <form method="post" action="<%=request.getContextPath() %>/admin/qna/qna_reply_ok.do">
+			       	<!-- 나중에 세션 생기면 입력하기 --> --%>
+			        <input type="hidden" id="qna_no" name="qna_no" value="${param.no}" />
+			        <input type="hidden" id="member_id" name="member_id" value="test1" />
+			        <input type="hidden" id="comment_writer_name" name="comment_writer_name" value="테스트회원1" />
+			        <input type="hidden" id="comment_writer_pw" name="comment_writer_pw" value="1234" />
+
+
+	
+	
     		  <tr> 
 		        <th>댓글 내용</th>										
 				<td> 
-					<textarea name="comment_content" cols="20" rows="3" class="form-control" required></textarea></td>
+					<textarea name="comment_content" id="comment_content" cols="20" rows="3" class="form-control" required></textarea></td>
 	                        <td class="text-center">
-	                        <button type="submit" class="btn btn-lg btn-primary w-100 h-100"><i class="fa fa-pencil"></i> 쓰기</button>
+	                        <button type="submit" class="btn btn-lg btn-primary w-100 h-100"  id="replyBtn">
+	                        <i class="fa fa-pencil"></i> 쓰기</button>
+	                
 	             </td>
 		    	</tr>
+		    	<!-- </form> -->
             
         </table>
-		    	</form>
+        
+ 
+
+        
+        
+        <script>
+        
+        <%-- 	// 댓글 작성 버튼을 클릭했을 때 DB에 추가로 저장.
+			$(function() {
+		$("#replyBtn").on("click", function() {
+			let No = $(this).val().trim();
+               
+			$.ajax({
+	            type : "post",
+	            url : "<%=request.getContextPath()%>/admin/qna/qna_reply_ok.do",
+	            data : { param : "hi" },
+	            datatype : "text",
+	            success : function(data) {
+	                $(".msg").append(data);
+	            },
+	            error : function(data) {
+	                alert("에러 발생");
+	            }
+	        });
+
+	    } --%>
+	 
+
+		</script>
 
 
 <!-- 버튼 //START -->
@@ -150,6 +246,5 @@
 <%@ include file="../layout/layout_footer.jsp" %>
 
  
-
 </body>
 </html>

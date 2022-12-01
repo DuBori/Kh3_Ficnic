@@ -18,4 +18,6 @@ public interface BoardDAO {
 	void updateBoardHit(Map<String, Object> map);
 
     BoardDTO getBoardCont(Map<String, Object> map);
+
+
 }
