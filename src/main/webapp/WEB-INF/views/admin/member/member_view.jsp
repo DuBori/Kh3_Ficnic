@@ -118,7 +118,7 @@
 
                 <c:if test="${empty cdto}">
                 <tr>
-                    <td colspan="6">
+                    <td colspan="7">
                         <h3 class="my-5">쿠폰 목록이 없습니다.</h3>
                     </td>
                 </tr>
@@ -168,7 +168,7 @@
                     <td>
                     <c:choose>
 	                    <c:when test="${pdto.getPoint_type() == 'plus'}"><span class="text-primary">+ <fmt:formatNumber value="${pdto.getPoint_add()}" /></span></c:when>
-	                    <c:when test="${pdto.getPoint_kind() == 'minus'}"><span class="text-danger">- <fmt:formatNumber value="${pdto.getPoint_add()}" /></span></c:when>
+	                    <c:when test="${pdto.getPoint_type() == 'minus'}"><span class="text-danger">- <fmt:formatNumber value="${pdto.getPoint_add()}" /></span></c:when>
                     </c:choose>
                     </td>
                     <td>${pdto.getPoint_reason()}</td>
