@@ -1,7 +1,89 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../layout/layout_header.jsp" %>
-<script type="text/javascript">$("#header .navbar .nav-item:nth-child(3)").addClass("active");</script>
+<c:set var="no" value="${no }"/>
+<script type="text/javascript">
+$("#header .navbar .nav-item:nth-child(3)").addClass("active");
+
+
+$(function(){
+    $("input[name='member_id']").keyup(function(){
+        let userId = $("#member_id").val();
+
+        if($.trim(userId).length < 4){
+            $("#idchk-txt").html("<span class=\"text-danger\">* 아이디는 4글자 이상이어야 합니다.</span>");
+            return false;
+        }
+
+        // 아이디 중복여부 확인
+        $.ajax({
+            type : "post",
+            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+            url : "<%=request.getContextPath()%>/admin/member/memberIdCheck.do",
+            data : { paramId : $("#member_id").val() },
+            datatype : "text",
+
+            success : function(data){
+                console.log(data);
+                let ajaxTxt = "";
+                if(data != null ){
+                    ajaxTxt = "<span class=\"text-danger\">* 이미 사용중인 아이디입니다.</span>";
+                    $("input[name='idchk']").val("N");
+                    alert(data);
+                }else{
+                    ajaxTxt = "<span class=\"text-primary\">* 사용 할 수 있는 아이디입니다.</span>";
+                    $("input[name='idchk']").val("Y");
+                }
+                $("#idchk-txt").html(ajaxTxt);
+            },
+
+            error : function(e){
+                alert("Error : " + e.status);
+                $("input[name='idchk']").val("N");
+            }
+        });
+
+
+
+
+join_check = function(){
+    var form = document.write_form;
+
+    if(form.idchk.value == "N"){
+        alert("이미 사용중인 [아이디]입니다.\n다른 아이디를 입력해주세요.");
+        form.member_id.focus();
+        return false;
+    }
+
+    if(form.member_pw.value.length > 0 && form.member_pw_re.value.length > 0){
+        if(form.member_pw.value != form.member_pw_re.value){
+            alert("[비밀번호]가 일치하지 않습니다.");
+            form.member_pw.focus();
+            return false;
+        }
+    }
+
+    if(form.member_email.value == ""){
+        alert("[이메일]을 입력해 주세요.");
+        form.member_email.focus();
+        return false;
+    }
+
+    // 이메일 형식 체크
+    var TEmailChk = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    if(form.member_email.value.match(TEmailChk) != null){
+    }else{
+        alert("잘못된 이메일 형식입니다.\n[이메일]을 다시 입력해 주세요.");
+        form.member_email.focus();
+        return false;
+    }
+
+    form.submit();
+};
+});
+});
+</script>
+
 
 
 <div class="page-info row mb-3">
@@ -15,85 +97,82 @@
 </div>
 
 
+
+
+
+<form name="form_input" method="post" action="<%=request.getContextPath() %>/admin/member/memberWriteOk.do" onsubmit="return join_check();">
 <div class="page-cont">
+    <div class="row">
+        <div class="col-lg mb-4">
+            <div class="card input-form">
+                <div class="card-body p-4">
+                    <div class="row form my-4 view-limit">
+                        <div class="form-group col mb-2">
+                            <label>회원 유형</label>
+                            <div class="btn-group mt-2" role="group" data-toggle="buttons">
+                                <label class="btn btn-outline-secondary active">
+                                    <input type="radio" name="member_type" value="user" checked="checked" /> 일반회원
+                                </label>
+                                <label class="btn btn-outline-secondary">
+                                    <input type="radio" name="member_type" value="admin" /> 관리자
+                                </label>
+                                <label class="btn btn-outline-secondary">
+                                    <input type="radio" name="member_type" value="exit" /> 탈퇴회원
+                                </label>
+                            </div>
+                        </div>
+                        <div class="w-100 border-bottom"></div>
+                        <div class="form-group col">
+                            <label for="member_id">아이디</label>
+                            <input type="text" name="member_id" id="member_id" class="form-control d-inline w-30" required />
+                            <div id="idchk-txt" class="d-inline ml-2"></div>
+                            <input type="hidden" name="idchk" value="N" />
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col mb-2">
+                            <label for="member_pw">비밀번호</label>
+                            <input type="password" name="member_pw" id="member_pw" class="form-control w-50" required />
+                        </div>
+                        <div class="form-group col mb-2">
+                            <label for="member_pw_re">비밀번호 확인</label>
+                            <input type="password" name="member_pw_re" id="member_pw_re" class="form-control w-50" required />
+                        </div>
 
+                        <div class="w-100 border-bottom"></div>
 
-
-<div class="pb100">
-    <form name="write_form" method="post" action="<%=request.getContextPath() %>/admin/member/memberWriteOk.do" onsubmit="return join_check();">
-    <table class="table-form mt-3">
-        <colgroup>
-            <col width="16%" />
-            <col width="34%" />
-            <col width="16%" />
-            <col />
-        </colgroup>
-        <tr>
-            <th>회원 유형</th>
-            <td colspan="3">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label"><input type="radio" name="member_type" value="user" class="form-check-input" checked="checked" /> 일반회원</label>
+                        <div class="form-group col">
+                            <label for="member_name">이름</label>
+                            <input type="text" name="member_name" id="member_name" class="form-control w-30" required />
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col">
+                            <label for="member_email">이메일</label>
+                            <input type="text" name="member_email" id="member_email" class="form-control" required />
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col">
+                            <label for="member_phone">연락처</label>
+                            <input type="text" name="member_phone" id="member_phone" maxlength="15" class="form-control w-30" required />
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label"><input type="radio" name="member_type" value="admin" class="form-check-input" /> 관리자</label>
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="4" class="space" nowrap="nowrap"></td>
-        </tr>
-
-        <tr>
-            <th>아이디</th>
-            <td colspan="3">
-                <input type="text" name="member_id" value="" maxlength="30" class="form-control d-inline w-30" required />
-                <div id="idchk-txt" class="d-inline ml-2"></div>
-                <input type="hidden" name="idchk" value="N" />
-            </td>
-        </tr>
-        <tr>
-            <th>비밀번호</th>
-            <td><input type="password" name="member_pw" value="" maxlength="50" class="form-control w-80" required /></td>
-            <th>비밀번호 확인</th>
-            <td><input type="password" name="member_pw_re" value="" maxlength="50" class="form-control w-80" required /></td>
-        </tr>
-
-        <tr>
-            <td colspan="4" class="space" nowrap="nowrap"></td>
-        </tr>
-
-        <tr>
-            <th>이름</th>
-            <td colspan="3"><input type="text" name="member_name" value="" maxlength="50" class="form-control w-30" required /></td>
-        </tr>
-        <tr>
-            <th>이메일</th>
-            <td><input type="text" name="member_email" value="" maxlength="100" class="form-control" required /></td>
-            <th>연락처</th>
-            <td><input type="text" name="member_phone" value="" maxlength="15" class="form-control" required /></td>
-        </tr>
-
-    </table>
-
-
-
-    <div class="gw-button">
-        <div class="gwb-wrap">
-            <div class="gwb-left"></div>
-
-            <div class="gwb-center">
-                <button type="button" class="btn btn-lg btn-outline-secondary mx-1" onclick="history.back();"><i class="fa fa-bars"></i> 목록보기</button>
-                <button type="submit" class="btn btn-lg btn-primary mx-1"><i class="fa fa-pencil"></i> 등록하기</button>
             </div>
-
-            <div class="gwb-right"></div>
         </div>
     </div>
-    </form>
 </div>
 
+
+
+
+<div class="d-flex mt-2 input-form-button">
+    <div class="col-lg text-center">
+        <a href="<%=request.getContextPath()%>/admin/member/member_list.do?search_type=${search_type}&search_name=${search_name}&search_id=${search_id}&search_email=${search_email}&search_phone=${search_phone}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
+        <button type="submit" class="btn btn-primary btn-lg m-2"><i class="fa fa-pencil"></i> 등록하기</button>
+    </div>
 </div>
+</form>
+
+
 
 
 <%@ include file="../layout/layout_footer.jsp" %>
