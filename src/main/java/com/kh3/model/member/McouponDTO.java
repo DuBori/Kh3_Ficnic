@@ -14,5 +14,5 @@ public class McouponDTO {
 	private String mcoupon_end_date;
 	private String mcoupon_use_date;
 	private String mcoupon_date;
-	
+	private String coupon_name;
 }

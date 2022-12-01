@@ -46,10 +46,7 @@ public class AdminMemberController {
     public String view(Model model, @RequestParam("no") int no, @RequestParam("id") String id) {
         MemberDTO dto = this.dao.getMemberView(no);
         List<McouponDTO> cdto = this.cdao.getCouponView(id);
-        List<PointDTO> pdto = this.pdao.getPointView(id);
-        
-        System.out.println("cdto+++  "+cdto);
-        System.out.println("pdto+++  "+pdto);
+        List<PointDTO> pdto = this.pdao.getPointView(id); 
         
         model.addAttribute("dto", dto);
         model.addAttribute("cdto", cdto);
