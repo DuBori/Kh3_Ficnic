@@ -2,6 +2,8 @@ package com.kh3.model.qna;
 
 import java.util.List;
 
+import com.kh3.model.review.ReviewDTO;
+
 
 public interface QnaDAO {
 
@@ -10,11 +12,9 @@ public interface QnaDAO {
 
 	QnaDTO qnaView(int no);
 
-    int qnaModify(QnaDTO dto);
-
     int qnaDelete(int no);
 
-    void qnaUpdateSeq(int no);
+    int qnaModify(QnaDTO dto);
 
     
 }
