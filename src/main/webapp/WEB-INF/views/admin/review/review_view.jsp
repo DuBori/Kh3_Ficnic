@@ -4,90 +4,90 @@
 <%@ include file="../layout/layout_header.jsp" %>
 
 <c:set var="dto" value="${dto}" />
+<c:if test="${empty dto}"><script type="text/javascript">alert('존재하지 않는 데이터입니다.'); window.close();</script></c:if>
+<% pageContext.setAttribute("newLine", "\n"); %>
 
-<div class="page-info row mb-3">
-    <div class="d-flex align-items-center justify-content-between">
-        <h2>게시판 목록</h2>
-        <ol class="m-0 p-2">
-            <li>게시판 관리</li>
-            <li><b>게시판 목록</b></li>
-        </ol>
-    </div>
-</div>
+
+<h2>리뷰 내용 보기</h2>
 
 
 <div class="page-cont">
 
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card view-form">
+                <div class="card-body p-4">
+                    <div class="row form">
+                        <div class="form-group join-form">
+                            <label>작성자</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2"><b>${dto.review_name}</b> <span class="engnum">(${dto.member_id})</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group join-form mb-2">
+                            <label>작성일</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2">${dto.review_date}</div>
+                                </div>
+                            </div>
+                        </div>
 
- <div style="width: 600px; margin: 50px auto; text-align: center;">
-        <hr color="green" />
-        <h3>리뷰 상세 정보</h3>
-        <hr color="green" />
+                        <div class="w-100 border-bottom"></div>
 
-        <br />
+                        <div class="form-group col d-flex align-items-center">
+                            <label>리뷰 평점</label>
+                            <div class="px-3">${dto.review_point}점</div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group join-form mb-2">
+                            <label>리뷰 내용</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2">${dto.review_cont.replace(newLine, "<br />")}</div>
+                                </div>
+                            </div>
+                        </div>
 
-        <table class="table table-bordered">
-            <c:if test="${!empty dto}">
-            <tr>
-                <th>작성자</th>
-                <td align="left">${dto.review_name}</td>
-            </tr>
-            <tr>
-                <th>작성일</th>
-                <td align="left">${dto.review_date}</td>
-            </tr>
-            <tr>
-                <th>리뷰 평점</th>
-                <td align="left">${dto.review_point}점</td>
-            </tr>
-            <tr>
-                <th>리뷰 사진1</th>
-                <td align="left">
-                	${dto.review_photo1}
-                </td>
-            </tr>
-            <tr>
-                <th>리뷰 사진2</th>
-                <td align="left">
-                	${dto.review_photo2}
-                </td>
-            </tr>
-            <tr>
-                <th>리뷰 내용</th>
-                <td align="left">
-               	<textarea rows="7" cols="25">${dto.review_cont}</textarea>
-                </td>
-            </tr>
-           
-            </c:if>
+                        <c:if test="${!empty dto.review_photo1 or !empty dto.review_photo2}"><div class="w-100 border-bottom"></div></c:if>
+                        <c:if test="${!empty dto.review_photo1}">
+                        <div class="form-group join-form">
+                            <label>리뷰 사진 1</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2"><img src="<%=request.getContextPath()%>${dto.review_photo1}" style="max-width: 100%;" alt="" /></div>
+                                </div>
+                            </div>
+                        </div>
+                        </c:if>
 
-            <c:if test="${empty dto}">
-            <tr>
-                <td colspan="2" align="center">
-                    <h3>존재하지 않는 리뷰입니다...</h3>
-                </td>
-            </tr>
-            </c:if>
-        </table>
-
-
-<!-- 버튼 //START -->
-    <div class="d-flex justify-content-center mb-4">
-        <button type="button" class="btn btn-outline-secondary" onclick="window.print();"><i class="fa fa-print"></i> 인쇄하기</button>
-        <button type="button" class="btn btn-secondary ml-2" onclick="window.close();"><i class="fa fa-times"></i> 창닫기</button>
-    </div>
-    <!-- 버튼 //END -->
-    
+                        <c:if test="${!empty dto.review_photo2}">
+                        <div class="form-group join-form">
+                            <label>리뷰 사진 2</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2"><img src="<%=request.getContextPath()%>${dto.review_photo2}" style="max-width: 100%;" alt="" /></div>
+                                </div>
+                            </div>
+                        </div>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
 
 
+
+<div class="my-2 text-center">
+    <button type="button" class="btn btn-outline-secondary" onclick="window.print();"><i class="fa fa-print"></i> 인쇄하기</button>
+        <button type="button" class="btn btn-secondary ml-2" onclick="window.close();"><i class="fa fa-times"></i> 창닫기</button>
+</div>
+
+
+
 <%@ include file="../layout/layout_footer.jsp" %>
-
-
-
-
-
-</body>
-</html>

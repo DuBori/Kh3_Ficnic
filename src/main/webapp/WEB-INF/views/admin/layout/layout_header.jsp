@@ -3,10 +3,10 @@
 <c:set var="time" value="<%=System.currentTimeMillis()%>" />
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html class="noscroll">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>관리자</title>
+    <title>관리자 모드 :: Ficnic (Friend & Picnic)</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
