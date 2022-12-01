@@ -26,8 +26,11 @@
 	<div class="page-cont">
 		
 		<h5>게시물 등록하기</h5>
-		<form action="<%=request.getContextPath()%>/site/board/board_write_ok.do" method="get" enctype="multipart/form-data">
+		<form action="<%=request.getContextPath()%>/site/board/board_write_ok.do" method="post" enctype="multipart/form-data" >
+			<input type="hidden" value="${bbs_id }" name="board_id">
+			<input type="hidden" value="${bbs_id }" name="board_id">
 		<table border="1" cellspacing="0">
+		
 			<tr>
 				<th>열람구분</th>
 				<td>
@@ -72,15 +75,15 @@
 			<tr>
 				<th>첨부파일#1</th>
 				<td>
-					<input type="file" name="bdata_file1">
-					 <input type="radio" name="bdata_file1_use" value="Y">o
+					<input type="file" name="bdata_file1" >
+					 <input type="radio" name="bdata_file1_use" value="Y" >o
 					 <input type="radio" name="bdata_file1_use" value="N">x
 				</td>
 			</tr>
 			<tr>
 				<th>첨부파일#2</th>
 				<td>
-					<input type="file" name="bdata_file2">
+					<input type="file" name="bdata_file2" >
 					<input type="radio" name="bdata_file2_use" value="Y">o
 					<input type="radio" name="bdata_file2_use" value="N">x
 				</td>

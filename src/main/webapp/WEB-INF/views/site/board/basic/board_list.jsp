@@ -84,7 +84,7 @@
 		             	<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-outline-secondary"><i class="fa fa-list mr-1"></i> 게시물 전체목록</a>
 		             </c:when>
 		             <c:otherwise>
-		             	<a href="<%=request.getContextPath()%>/site/board/${boardConfig.getBoard_skin() }/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 새로운 글쓰기</a>
+		             	<a href="<%=request.getContextPath()%>/site/board/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 새로운 글쓰기</a>
 		             </c:otherwise>
 	             </c:choose>
 		</div>	

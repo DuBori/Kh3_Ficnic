@@ -1,5 +1,6 @@
 package com.kh3.admin.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -77,16 +78,23 @@ public class AdminBoardController {
     public String board_write() {
         return "/admin/board/board_write";
     }
+    
 
 
 
     // 환경설정_게시판설정_게시판추가 받은 데이터 처리
     @RequestMapping("admin/board/board_write_ok.do")
-    public void board_writeOk(BoardConfDTO confdto, HttpServletResponse response) throws IOException {
+    public void board_writeOk(BoardConfDTO confdto ,HttpServletRequest request ,HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
-
+        
+		/* 데이터 폴더 경로설정  */
+        String homedir = request.getSession().getServletContext().getRealPath("/")+"resources\\data\\board\\"+confdto.getBoard_id();
+       
+        File path = new File(homedir);
+       
         if (this.board_ConfDao.writeBoard(confdto) > 0) {
+     		path.mkdirs();
             out.println("<script>alert('게시판 생성 완료'); location.href='board_list.do';</script>");
         } else {
             out.println("<script>alert('게시판 생성 실패'); history.back();</script>");
@@ -126,8 +134,16 @@ public class AdminBoardController {
 
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
+        
+        String config_id = request.getParameter("bbs_id");
+        
+        /* 데이터 폴더 경로설정  */
+        String homedir = request.getSession().getServletContext().getRealPath("/")+"resources\\data\\board\\"+config_id;
+       
+        File path = new File(homedir);
 
         if (this.board_ConfDao.deleteBoard(board_no) > 0) {
+        	path.delete();
             out.println("<script>alert('게시판 삭제 완료'); location.href='board_list.do';</script>");
         } else {
             out.println("<script>alert('게시판 삭제 실패'); history.back();</script>");

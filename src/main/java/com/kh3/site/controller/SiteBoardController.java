@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.kh3.model.board.BoardCategoryDAO;
 import com.kh3.model.board.BoardCommentDAO;
 import com.kh3.model.board.BoardCommentDTO;
 import com.kh3.model.board.BoardConfDAO;
 import com.kh3.model.board.BoardConfDTO;
 import com.kh3.model.board.BoardDAO;
 import com.kh3.model.board.BoardDTO;
-import com.kh3.model.member.MemberDAO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
 
@@ -105,7 +103,7 @@ public class SiteBoardController {
 	}
 
 	/* 해당 게시판 게시글 작성 폼 페이지 이동 메서드 */
-	@RequestMapping("/site/board/*/board_write.do")
+	@RequestMapping("/site/board/board_write.do")
 	public String board_write(HttpServletRequest request, Model model) {
 
 		String bbs_id = request.getParameter("bbs_id");
@@ -119,7 +117,7 @@ public class SiteBoardController {
 		return "/site/board/" + board_skin + "/board_write";
 	}
 	/* 해당 게시판 게시글 수정 폼 페이지 이동 */
-	@RequestMapping("/site/board/*/board_modify.do")
+	@RequestMapping("/site/board/board_modify.do")
 	public String board_modify(HttpServletRequest request, Model model) {
 		
 		String bbs_id = request.getParameter("bbs_id");
@@ -130,68 +128,47 @@ public class SiteBoardController {
 	
 	/* 해당 게시판 게시글 작성 완료 메서드 */
 	@RequestMapping("/site/board/board_write_ok.do")
-	public boolean board_write_ok(MultipartHttpServletRequest request, HttpServletResponse response,
-			BoardDTO boardDTO) {
+	public void board_write_ok(MultipartHttpServletRequest mrequest, HttpServletResponse response, BoardDTO dto) {
 
-		boolean isUpload = false;
 
-		String uploadPath = "";
+		//config 테이블 id
+		String bbs_id=mrequest.getParameter("board_id");
+		
+		System.out.println(mrequest.getFile("bdata_file1"));
+		System.out.println(mrequest.getFile("bdata_file2"));
+		
+		
+		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/")+"resources\\data\\board\\"+bbs_id+"\\";
 
-		Calendar cal = Calendar.getInstance();
+		System.out.println(uploadPath);
 
-		int year = cal.get(Calendar.YEAR);
-
-		int month = cal.get(Calendar.MONTH) + 1;
-
-		int day = cal.get(Calendar.DAY_OF_MONTH);
-
-		// 해당 데이터 내용 db에 업로드
-		if (board_Dao.insertBoardCont(boardDTO) > 0) {
-			// 업로드된 파일들의 이름 목록을 제공하는 메서드.
-			Iterator<String> iterator = request.getFileNames();
-
-			while (iterator.hasNext()) {
-				String uploadFileName = iterator.next();
-
-				MultipartFile mFlie = request.getFile(uploadFileName);
-
-				String FullFileName = mFlie.getOriginalFilename();
-
-				// 실제 폴더를 만들어 보자
-				// .........\\ resources\\upload\\2022-11-25
-
-				// 날짜별 파일 생성
-				String homedir = uploadPath + year + "-" + month + "-" + day;
-
-				File path1 = new File(homedir);
-				if (!path1.exists()) {
-					path1.mkdirs();
-				}
-
-				// 실제 파일을 만들어 보자
-
-				String saveFileName = FullFileName;
-
-				if (!saveFileName.equals("")) {
-
-					saveFileName = System.currentTimeMillis() + "_" + saveFileName;
-					try {
-						File origin = new File(homedir + "/" + saveFileName);
-
-						// 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 --> 그냥 경로 설정
-						mFlie.transferTo(origin);
-
-						isUpload = true;
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-
-		}
-		return isUpload;
+		Iterator<String> iterator =mrequest.getFileNames();
+		  
+		while(iterator.hasNext()) { 
+		 
+		  String uploadFileName = iterator.next();
+		  
+		  MultipartFile mFlie = mrequest.getFile(uploadFileName);
+		  
+		  
+		  
+		  String FullFileName = bbs_id+"_"+System.currentTimeMillis()+"_"+mFlie.getOriginalFilename();
+		  System.out.println("FullFilename >>> "+FullFileName); 	  
+		  try { 
+			  File origin = new File(uploadPath+"/"+FullFileName);
+			  // 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 -->  경로 설정임.
+			  mFlie.transferTo(origin);
+			  
+		  } catch (Exception e) { // TODO Auto-generated catch block
+			  e.printStackTrace(); 
+			  } 
+		  
+		  }
+		  
+			  
+			  
 	}
+
 
 	/* 게시글 눌렀을 때 이동 메서드 */
 	@RequestMapping("/site/board/board_view.do")

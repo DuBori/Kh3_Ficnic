@@ -71,7 +71,7 @@
                                 <td>
 
                                     <a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&keyword=${keyword}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
-                                    <a href="<%=request.getContextPath()%>/admin/board/board_delete.do?board_no=${dto.getBoard_no()}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
+                                    <a href="<%=request.getContextPath()%>/admin/board/board_delete.do?board_no=${dto.getBoard_no()}&bbs_id=${dto.getBoard_id()}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
                                     <c:if test="${dto.getBoard_use_category() eq 'Y'}"><p><button type="button" class="btn btn-outline-primary btn-sm">카테고리 관리</button></p></c:if>
                                 </td>
                             </tr>
