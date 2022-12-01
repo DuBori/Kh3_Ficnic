@@ -51,7 +51,7 @@ public class SiteBoardController {
 //	
 	/* 해당 게시판 리스트 조회 메서드 */
 	@RequestMapping("/site/board/board_list.do")
-	public String board_list(HttpServletRequest request,Model model) {
+	public String board_list(HttpServletRequest request, Model model) {
 		
 		// skin 처리 미완성
 		String board_skin = "basic";
