@@ -20,6 +20,7 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectList("siteBoardList", bbs_id);	
 	}
 
+	/* 해당 게시판 테이블 개수 카운트 */
 	@Override
 	public int getListCount(String field, String keyword,String bbs_id) {
 		 Map<String, Object> map = new HashMap<String, Object>();
@@ -31,6 +32,7 @@ public class BoardDAOImpl implements BoardDAO {
 		
 	}
 
+	/* 해당 게시판 리스트 */
 	@Override
 	public List<BoardDTO> getBoardList(int startNo, int endNo, Map<String, Object> map) {
 		
@@ -46,21 +48,20 @@ public class BoardDAOImpl implements BoardDAO {
 		
 		return 0;
 	}
-
+	
+	/* 해당 게시판 > 해당 게시글 조회수 증가 */
 	@Override
 	public void updateBoardHit(Map<String, Object> map) {
 		
 		this.sqlSession.update("SiteBoardUpdateHit", map);
 	}
 	
+	/* 해당 게시판 > 해당 게시글 출력 */
 	@Override
 	public BoardDTO getBoardCont(Map<String, Object> map) {
 		
-		return sqlSession.selectOne("BoardList",map);
+		return sqlSession.selectOne("SiteBoardDto",map);
 	}
-
-
-
 
 
 
