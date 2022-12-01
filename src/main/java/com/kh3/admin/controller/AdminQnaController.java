@@ -1,9 +1,11 @@
 package com.kh3.admin.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,37 +59,40 @@ public class AdminQnaController {
 		return "admin/qna/qna_view";
 	
 	}
-	@RequestMapping("admin/qna/test.do")
-	public void test(HttpServletRequest request) {
-		
-		System.out.println(request.getParameter("param"));
-		
-	}
+	/*
+	 * @RequestMapping("admin/qna/test.do") public void test(HttpServletRequest
+	 * request,HttpServletResponse response, QnaCommentDTO cdto) throws IOException
+	 * {
+	 * 
+	 * System.out.println(request.getParameter("qna_no")); PrintWriter out =
+	 * response.getWriter();
+	 * 
+	 * out.println("ddd"); }
+	 */
 	
 
-	 @RequestMapping("admin/qna/qna_reply_ok.do") 
-	 public void reply(QnaCommentDTO cdto, HttpServletResponse response) throws Exception { 
-		 
-		 
-		 
-		 int check = this.cdao.qnaReply(cdto);
-	 
-	 response.setContentType("text/html; charset=UTF-8");
-	 
-	 PrintWriter out = response.getWriter();
-	 
-	 if(check > 0) {
-	 
-	 out.println("<script>");
-	 out.println("location.href='qna_view.do?no="+cdto.getQna_no()+"'");
-	 out.println("</script>"); } 
-	 else { out.println("<script>");
-	 out.println("alert('댓글 등록 실패.')"); out.println("history.back()");
-	 out.println("</script>"); 
-	 
-	 }
-
-	 }
+	
+	  @RequestMapping("admin/qna/qna_reply_ok.do") public void reply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	  
+	  QnaCommentDTO cdto = new QnaCommentDTO();
+	  
+		
+		  cdto.setComment_content(request.getParameter("comment_content"));
+		  cdto.setComment_writer_name(request.getParameter("comment_writer_name"));
+		  cdto.setComment_writer_pw(request.getParameter("comment_writer_pw"));
+		  cdto.setMember_id(request.getParameter("member_id"));
+		  cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
+	  
+		  int check = this.cdao.qnaReply(cdto);
+		  
+		  response.setContentType("text/html; charset=UTF-8");
+		  
+		  PrintWriter out = response.getWriter();
+	  
+		
+	  	  out.println(check);
+	  }
+	
 
 		
 		
