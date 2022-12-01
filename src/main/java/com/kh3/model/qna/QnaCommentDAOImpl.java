@@ -32,13 +32,17 @@ public class QnaCommentDAOImpl implements QnaCommentDAO {
 	
 	@Override
 	public int qnaCommentDelete(int no) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return this.sqlSession.delete("adminQnaCommentDelete", no);
+		
 	}
 
+
+
 	@Override
-	public void qnaCommentUpdateSeq(int no) {
-		// TODO Auto-generated method stub
+	public int qnaCommentAllDelete(int no) {
+		
+		return this.sqlSession.delete("adminQnaCommentAllDelete", no);
 		
 	}
 
