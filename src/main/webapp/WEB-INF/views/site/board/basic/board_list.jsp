@@ -35,7 +35,7 @@
 		<c:forEach items="${List}" var="dto">
 			<tr>
 				<td>${dto.getBdata_no() }</td>
-				<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a></td>
+				<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&board_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a></td>
 				<td>${dto.getBdata_writer_name() }</td>
 				<td>${dto.getBdata_date() }</td>
 				<td>${dto.getBdata_hit() }</td>

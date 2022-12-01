@@ -1,7 +1,6 @@
 package com.kh3.site.controller;
 
 import java.io.File;
-import java.net.http.HttpResponse;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,6 +23,7 @@ import com.kh3.model.board.BoardDAO;
 import com.kh3.model.board.BoardDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
+
 
 
 @Controller
@@ -61,7 +61,7 @@ public class SiteBoardController {
         String keyword = request.getParameter("keyword");
         String bbs_id = request.getParameter("bbs_id");
         
-        BoardConfDTO BoardConfdto = board_ConfDao.getBoardCont(bbs_id);
+        BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
     	
         //해당 게시물 설정값 가져오기
         // 한 페이지당 보여질 게시물의 수 -> 해당 게시물 설정값 가져와야한다.
@@ -113,7 +113,7 @@ public class SiteBoardController {
 		String bbs_id = request.getParameter("bbs_id");
 		if(bbs_id == null) bbs_id ="";
 		
-		BoardConfDTO BoardConfdto = board_ConfDao.getBoardCont(bbs_id);
+		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
 		
 		model.addAttribute("board", BoardConfdto);
 		
@@ -190,53 +190,32 @@ public class SiteBoardController {
 		
 		
 		String bbs_id = request.getParameter("bbs_id");
-		BoardConfDTO BoardConfdto = board_ConfDao.getBoardCont(bbs_id);
 		
-		// 페이징 및 검색 처리
-		String field = request.getParameter("field");
-        String keyword = request.getParameter("keyword");
-      
-
-        //해당 게시물 설정값 가져오기
-        // 한 페이지당 보여질 게시물의 수 -> 해당 게시물 설정값 가져와야한다.
-        int rowsize = BoardConfdto.getBoard_list_num();
-        
-        
-        if(field == null) field = "";
-        if(keyword == null) keyword = "";
-        
-        // 페이징 처리
-        int page; // 현재 페이지 변수
-        if(request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }else{
-            page = 1;
-        }
-        
-        totalRecord = this.board_Dao.getListCount(field, keyword,bbs_id);
-        
-        // 페이징 DTO
-        
-        Map<String, Object> searchMap = new HashMap<String, Object>();
-        searchMap.put("field", field);
-        searchMap.put("keyword", keyword);
-        searchMap.put("bbs_id", bbs_id);
-        
-        PageDTO dto = new PageDTO(page, rowsize, totalRecord,searchMap);
-        
-        // 페이지 이동 URL
-        String pageUrl = request.getContextPath()+"site/board/board_list.do?field="+field+"&keyword="+keyword;
-        
-		model.addAttribute("field", field);
-		model.addAttribute("keyword", keyword);
+		int board_no=0;
+		if(request.getParameter("board_no")!= null) {
+			board_no=Integer.parseInt(request.getParameter("board_no"));
+		}
 		
-		model.addAttribute("board", BoardConfdto);
-    	model.addAttribute("totalCount", totalRecord);
-        model.addAttribute("paging", dto);
-        model.addAttribute("field", field);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
+		
+		/* 게시글 리스트 출력 */
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bbs_id", bbs_id);
+		map.put("board_no", board_no);
+		
+		
+		/* 조회수 증가 */
+		board_Dao.updateBoardHit(map);
+		
+		
+		// 해당 게시판 해당 겟기ㅡㄹ 가져오기
+		BoardDTO BoardDto = board_Dao.getBoardCont(map);
+		/* 게시글 설정값 DTO*/
+		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
         
+		
+		model.addAttribute("BoardDto", BoardDto);
+		model.addAttribute("boardConf", BoardConfdto);
+    	
 		return "/site/board/"+BoardConfdto.getBoard_skin()+"/board_view";
 	}
 	
