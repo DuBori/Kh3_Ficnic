@@ -12,6 +12,10 @@
     </select>
 
 
+	<!-- 회원 쿠폰 상세내역 -->
+	<select id="couponView" parameterType="String" resultType="mcouponDTO">
+		select * from member_mcoupon m join coupon_list c on m.coupon_no = c.coupon_no where m.member_id = #{member_id}
+	</select>
 
 
 
