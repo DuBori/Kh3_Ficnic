@@ -3,7 +3,6 @@ package com.kh3.site.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -129,43 +128,51 @@ public class SiteBoardController {
 	/* 해당 게시판 게시글 작성 완료 메서드 */
 	@RequestMapping("/site/board/board_write_ok.do")
 	public void board_write_ok(MultipartHttpServletRequest mrequest, HttpServletResponse response, BoardDTO dto) {
-
-
+		int cnt=1;
 		//config 테이블 id
 		String bbs_id=mrequest.getParameter("board_id");
-		
-		System.out.println(mrequest.getFile("bdata_file1"));
-		System.out.println(mrequest.getFile("bdata_file2"));
-		
-		
 		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/")+"resources\\data\\board\\"+bbs_id+"\\";
 
-		System.out.println(uploadPath);
-
+		
 		Iterator<String> iterator =mrequest.getFileNames();
-		  
+		
 		while(iterator.hasNext()) { 
 		 
 		  String uploadFileName = iterator.next();
 		  
 		  MultipartFile mFlie = mrequest.getFile(uploadFileName);
 		  
-		  
-		  
 		  String FullFileName = bbs_id+"_"+System.currentTimeMillis()+"_"+mFlie.getOriginalFilename();
-		  System.out.println("FullFilename >>> "+FullFileName); 	  
-		  try { 
-			  File origin = new File(uploadPath+"/"+FullFileName);
-			  // 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 -->  경로 설정임.
-			  mFlie.transferTo(origin);
-			  
-		  } catch (Exception e) { // TODO Auto-generated catch block
-			  e.printStackTrace(); 
-			  } 
+		  System.out.println("FullFilename >>> "+FullFileName); 
+		  switch (cnt) { 	
+			  case 1:
+				dto.setBdata_file1(FullFileName);
+				break;
+			  case 2:
+				dto.setBdata_file2(FullFileName);  
+				break;
+			  case 3:
+				dto.setBdata_file3(FullFileName);    
+				break;
+
+			  default:
+				dto.setBdata_file4(FullFileName);  
+				break;
+		    }
 		  
+			 try { 
+				  File origin = new File(uploadPath+"/"+FullFileName);
+				  // 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 -->  경로 설정임.
+				  mFlie.transferTo(origin);
+				  
+			 }catch (Exception e) { // TODO Auto-generated catch block
+				  e.printStackTrace(); 
+			 } 
+		  	 cnt++;
 		  }
+		
 		  
-			  
+		
 			  
 	}
 
