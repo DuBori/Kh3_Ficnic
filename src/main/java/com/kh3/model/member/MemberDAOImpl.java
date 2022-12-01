@@ -49,8 +49,8 @@ public class MemberDAOImpl implements MemberDAO {
 
     // 회원 아이디 중복 체크
     @Override
-    public int checkId(MemberDTO dto) {
-        return this.sqlSession.selectOne("checkId", dto);
+    public int checkId(String userId) {
+        return this.sqlSession.selectOne("checkId", userId);
     }
 
 

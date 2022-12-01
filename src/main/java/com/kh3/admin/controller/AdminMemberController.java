@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestAttributes;
 
 import com.kh3.model.member.McouponDAO;
 import com.kh3.model.member.McouponDTO;
@@ -125,23 +126,27 @@ public class AdminMemberController {
     public String write() {
         return "admin/member/member_write";
     }
-
-
-
+    
+    // 아이디 중복 체크
+    @RequestMapping("admin/member/memberIdCheck.do")
+    public String checkId(@RequestParam("paramId") String paramId, Model model) {
+    	System.out.println("값 === "+paramId);
+    	int no = this.dao.checkId(paramId);
+    	System.out.println(no);
+    	model.addAttribute("no", no);
+    	return "admin/member/member_write";
+    }
+    
+    
     // 회원 등록 하는 메핑
     @RequestMapping("admin/member/memberWriteOk.do")
     public void writeOk(MemberDTO dto, PointDTO pdto, HttpServletResponse response) throws IOException {
-        // 아이디 중복 체크
-        int checkId = this.dao.checkId(dto);
         int check = this.dao.writeOkMember(dto);
 
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        // 아이디 중복 체크
-        if (checkId > 0) {
-            out.println("<script>alert('중복된 아이디입니다. 다른 아이디로 입력해주세요.'); history.back();</script>");
-        } else {
+
             if (check > 0) {
                 // 회원 가입 포인트 적립
                 this.pdao.joinPoint(pdto);
@@ -149,7 +154,7 @@ public class AdminMemberController {
             } else {
                 out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
             }
-        }
+        
     }
 
 
