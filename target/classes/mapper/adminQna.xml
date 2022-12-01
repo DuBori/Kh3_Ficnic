@@ -17,5 +17,10 @@
 		select * from qna_list where qna_no = #{qna_no}
 	</select>
 
+	<delete id="adminQnaDelete" parameterType="int">
+		delete from qna_list where qna_no = #{qna_no}
+	</delete>
+	
+	
 
 </mapper>

@@ -106,7 +106,7 @@
 					<td> ${cdto.comment_content } </td>
 					<td> ${cdto.comment_date } </td>
 						<td>
-                    <a href="<%=request.getContextPath()%>/admin/qna/qnaComment_delete.do?no=${dto.qna_no}" class="btn btn-sm btn-outline-danger m-1" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+                    <a href="<%=request.getContextPath()%>/admin/qna/qnaComment_delete.do?no=${cdto.comment_no}" class="btn btn-sm btn-outline-danger m-1" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
               			</td> 
 					</tr>
 				</c:forEach>
