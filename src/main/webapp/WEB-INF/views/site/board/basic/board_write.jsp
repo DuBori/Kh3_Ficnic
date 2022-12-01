@@ -36,11 +36,12 @@
 				<td>
 					<select name="board_level_view">
 						<option value="null">전체회원</option>
-						<option value="user">전체회원</option>
+						<option value="user">회원</option>
 						<option value="admin">관리자</option>
 					</select>
 				</td>
 			</tr>
+			<!-- 관리자일때 지정하는 옵션  -->
 			<tr>
 				<th>글작성 옵션</th>
 				 <td>
@@ -75,7 +76,7 @@
 			<tr>
 				<th>첨부파일#1</th>
 				<td>
-					<input type="file" name="bdata_file1" >
+					<input type="file" name="file1" >
 					 <input type="radio" name="bdata_file1_use" value="Y" >o
 					 <input type="radio" name="bdata_file1_use" value="N">x
 				</td>
@@ -83,7 +84,7 @@
 			<tr>
 				<th>첨부파일#2</th>
 				<td>
-					<input type="file" name="bdata_file2" >
+					<input type="file" name="file2" >
 					<input type="radio" name="bdata_file2_use" value="Y">o
 					<input type="radio" name="bdata_file2_use" value="N">x
 				</td>
