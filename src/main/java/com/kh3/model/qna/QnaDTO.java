@@ -15,6 +15,6 @@ public class QnaDTO {
 	private String qna_pw;
 	private String qna_name;
 	private String qna_date;
-	
+	private String ficnic_name;
 
 }
