@@ -1,212 +1,183 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="layout_none" value="Y" />
+<%@ include file="../layout/layout_header.jsp" %>
 
 <c:set var="dto" value="${dto}" />
 <c:set var="cdto" value="${cdto}" />
 <c:set var="pdto" value="${pdto}" />
+<c:if test="${empty dto}"><script type="text/javascript">alert('존재하지 않는 데이터입니다.'); window.close();</script></c:if>
 
-<%@ include file="../layout/layout_header.jsp" %>
 
-
-<div class="page-info row mb-3">
-    <div class="d-flex align-items-center justify-content-between">
-        <h2>게시판 목록</h2>
-        <ol class="m-0 p-2">
-            <li>게시판 관리</li>
-            <li><b>게시판 목록</b></li>
-        </ol>
-    </div>
-</div>
+<h2>회원 정보 보기</h2>
 
 
 <div class="page-cont">
 
-    <!-- 회원 정보 //START -->
-        <table class="table table-bordered">
-            <c:if test="${!empty dto}">
-            <tr>
-                <th>회원 유형</th>
-                <td align="left">
-                ${dto.getMember_type()}
-                </td>
-            </tr>
-            <tr>
-                <th>아이디</th>
-                <td align="left">${dto.getMember_id()}</td>
-            </tr>
-            <tr>
-                <th>이름</th>
-                <td align="left">${dto.getMember_name()}</td>
-            </tr>
-            <tr>
-                <th>이메일</th>
-                <td align="left">${dto.getMember_email()}</td>
-            </tr>
-            <tr>
-                <th>연락처</th>
-                <td align="left">${dto.getMember_phone()}</td>
-            </tr>
-            <tr>
-                <th>적립금</th>
-                <td align="left"><fmt:formatNumber value="${dto.getMember_point()}" /></td>
-            </tr>
-            <tr>
-                <th>가입일자</th>
-                <td align="left">${dto.getMember_joindate().substring(0, 10)}</td>
-            </tr>
-		    
-            </c:if>
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card view-form">
+                <div class="card-body p-4">
+                    <h4>회원 정보</h4>
+                    <div class="row form">
+                        <div class="form-group col d-flex align-items-center mb-2">
+                            <label>회원 유형</label>
+                            <div class="px-3">
+                                <c:choose>
+                                <c:when test="${dto.getMember_type() eq 'admin'}">관리자</c:when>
+                                <c:when test="${dto.getMember_type() eq 'exit'}">탈퇴회원</c:when>
+                                <c:otherwise>회원</c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
 
-            <c:if test="${empty dto}">
-            <tr>
-                <td colspan="2" align="center">
-                    <h3>검색된 회원의 정보가 없습니다.</h3>
-                </td>
-            </tr>
-            </c:if>
-        </table>
-	<!-- 회원 정보 //END -->   
- 
- 
-    <!-- 쿠폰 정보 //START -->
-         <table class="table table-striped border-top align-middle">
-            <colgroup>
-                <col width="10%" />
-                <col width="10%" />
-                <col width="17%" />
-                <col />
-                <col width="17%" />
-                <col width="10%" />
-                <col width="15%" />
-            </colgroup>
+                        <div class="w-100 border-bottom"></div>
 
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>쿠폰 이름</th>
-                    <th>사용여부/사용날짜</th>
-                    <th>사용 가능 기간</th>
-                    <th>쿠폰 금액</th>
-                    <th>링크</th>
-                    <th>쿠폰 발급 일자</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <c:set var="cdto" value="${cdto}" />
-                <c:if test="${!empty cdto}">
-                <c:forEach items="${cdto}" var="cdto">
-                <tr>
-                    <td>${cdto.getCoupon_no()}</td>
-                    <td>${cdto.getCoupon_name()}</td>
-                    <td>
-                    <c:choose>
-	                    <c:when test="${cdto.getMcoupon_use_date() == null}"><span class="text-primary">미사용</span></c:when>
-	                    <c:otherwise><span class="text-danger">사용</span><br>${cdto.getMcoupon_use_date().substring(0,10)}</c:otherwise>
-                    </c:choose>
-                    </td>
-                    <td>${cdto.getMcoupon_start_date().substring(0,10)}~${cdto.getMcoupon_end_date().substring(0,10)}</td>
-                    <td><fmt:formatNumber value="${cdto.getMcoupon_use_price()}" /></td>
-                    <td>                    
-	                    <a href="<%= request.getContextPath() %>/admin/reserv/reserv_list.do?search_ficnic=&search_review=&search_writer=${cdto.getReserv_sess()}">${cdto.getReserv_sess()}</a>
-                    </td>
-                    <td>${cdto.getMcoupon_date().substring(0,10)}</td>
-                </tr>
-                </c:forEach>
-                </c:if>
-
-                <c:if test="${empty cdto}">
-                <tr>
-                    <td colspan="7">
-                        <h3 class="my-5">쿠폰 목록이 없습니다.</h3>
-                    </td>
-                </tr>
-                            
-                </c:if>
-            </tbody>
-        </table>
-    <!-- 쿠폰 정보 //END -->
+                        <div class="form-group col d-flex align-items-center">
+                            <label>아이디</label>
+                            <div class="px-3 engnum">${dto.getMember_id()}</div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col d-flex align-items-center">
+                            <label>이름</label>
+                            <div class="px-3">${dto.getMember_name()}</div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col d-flex align-items-center">
+                            <label>이메일</label>
+                            <div class="px-3 engnum">${dto.getMember_email()}</div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col d-flex align-items-center">
+                            <label>연락처</label>
+                            <div class="px-3 engnum">${dto.getMember_phone()}</div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col d-flex align-items-center">
+                            <label>적립금</label>
+                            <div class="px-3 engnum"><fmt:formatNumber value="${dto.getMember_point()}" /></div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="form-group col d-flex align-items-center">
+                            <label>가입일자</label>
+                            <div class="px-3 engnum">${dto.getMember_joindate()}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-    <!-- 적립금 정보 //START -->
-         <table class="table table-striped border-top align-middle">
-            <colgroup>
-                <col width="10%" />
-                <col width="10%" />
-                <col width="15%" />
-                <col />
-                <col width="15%" />
-                <col width="20%" />
-            </colgroup>
 
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>구분</th>
-                    <th>적립금 금액</th>
-                    <th>적립 이유</th>
-                    <th>링크</th>
-                    <th>적립 일자</th>
-                </tr>
-            </thead>
+    <c:set var="cdto" value="${cdto}" />
+    <c:if test="${!empty cdto}">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card view-form">
+                <div class="card-body p-4">
+                    <h4>보유 쿠폰</h4>
 
-            <tbody>
-                <c:set var="pdto" value="${pdto}" />
-                <c:if test="${!empty pdto}">
-                <c:forEach items="${pdto}" var="pdto">
-                <tr>
-                    <td>${pdto.getPoint_no()}</td>
-                    <td>
-                    <c:choose>
-	                    <c:when test="${pdto.getPoint_kind() == 'join'}">회원가입</c:when>
-	                    <c:when test="${pdto.getPoint_kind() == 'review'}">리뷰</c:when>
-	                    <c:when test="${pdto.getPoint_kind() == 'admin'}">관리자</c:when>
-	                    <c:when test="${pdto.getPoint_kind() == 'reserv'}">예약하기</c:when>
-                    </c:choose>
-                    </td>
-                    <td>
-                    <c:choose>
-	                    <c:when test="${pdto.getPoint_type() == 'plus'}"><span class="text-primary">+ <fmt:formatNumber value="${pdto.getPoint_add()}" /></span></c:when>
-	                    <c:when test="${pdto.getPoint_type() == 'minus'}"><span class="text-danger">- <fmt:formatNumber value="${pdto.getPoint_add()}" /></span></c:when>
-                    </c:choose>
-                    </td>
-                    <td>${pdto.getPoint_reason()}</td>
-                    <td>
-                    <c:choose>
-	                    <c:when test="${pdto.getPoint_kind() == 'review'}"><a href="<%= request.getContextPath() %>/admin/review/review_list.do?search_ficnic=&search_review=&search_writer=${pdto.getMember_id()}">${pdto.getMember_id()}</a></c:when>
-	                    <c:when test="${pdto.getPoint_kind() == 'reserv'}"><a href="<%= request.getContextPath() %>/admin/reserv/reserv_list.do?search_ficnic=&search_review=&search_writer=${pdto.getMember_id()}">${pdto.getMember_id()}</a></c:when>
-                    	<c:otherwise></c:otherwise>
-                    </c:choose>
-                    </td>
-                    <td>${pdto.getPoint_date().substring(0,10)}</td>
-                </tr>
-                </c:forEach>
-                </c:if>
+                    <table class="table-list">
+                        <thead>
+                            <tr>
+                                <th style="width: 7%;">No.</th>
+                                <th>쿠폰 이름</th>
+                                <th style="width: 17%;">사용여부/사용날짜</th>
+                                <th style="width: 20%;">사용 가능 기간</th>
+                                <th style="width: 17%;">쿠폰 금액</th>
+                                <th style="width: 15%;">쿠폰 발급 일자</th>
+                            </tr>
+                        </thead>
 
-                <c:if test="${empty pdto}">
-                <tr>
-                    <td colspan="6">
-                        <h3 class="my-5">포인트 목록이 없습니다.</h3>
-                    </td>
-                </tr>
-            
-	            <!-- 버튼 //START -->
-			    <tr>
-			    	<td colspan="2">
-				        <button type="button" class="btn btn-outline-secondary"><i class="fa fa-print"></i> 인쇄하기</button>
-				        <button type="button" class="btn btn-secondary ml-2"><i class="fa fa-times"></i> 창닫기</button>
-			    	</td>
-			    </tr>
-			    <!-- 버튼 //END -->
-                
-                </c:if>
-            </tbody>
-        </table>
-    <!-- 적립금 정보 //END -->
-    
-     
+                        <tbody>
+                            <c:forEach items="${cdto}" var="cdto">
+                            <tr>
+                                <td class="eng">${cdto.getCoupon_no()}</td>
+                                <td>${cdto.getCoupon_name()}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${cdto.getMcoupon_use_date() == null}"><p class="text-primary">미사용</p></c:when>
+                                        <c:otherwise><p class="text-danger">사용</p><p class="eng">${cdto.getMcoupon_use_date().substring(0,10)}</p></c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td class="eng">
+                                    <p>${cdto.getMcoupon_start_date().substring(0,10)}</p>
+                                    <p> ~ ${cdto.getMcoupon_end_date().substring(0,10)}</p>
+                                </td>
+                                <td class="eng"><fmt:formatNumber value="${cdto.getMcoupon_use_price()}" />원</td>
+                                <td class="eng">${cdto.getMcoupon_date().substring(0,10)}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </c:if>
+
+
+
+    <c:set var="pdto" value="${pdto}" />
+    <c:if test="${!empty pdto}">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card view-form">
+                <div class="card-body p-4">
+                    <h4>적립금 내역</h4>
+
+                    <table class="table-list sub-list">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;">No.</th>
+                                <th style="width: 14%;">구분</th>
+                                <th style="width: 18%;">적립 금액</th>
+                                <th>적립 이유</th>
+                                <th style="width: 20%;">적립 일자</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <c:forEach items="${pdto}" var="pdto">
+                            <tr>
+                                <td class="eng">${pdto.getPoint_no()}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${pdto.getPoint_kind() eq 'join'}">회원가입</c:when>
+                                        <c:when test="${pdto.getPoint_kind() eq 'review'}">리뷰</c:when>
+                                        <c:when test="${pdto.getPoint_kind() eq 'admin'}">관리자</c:when>
+                                        <c:when test="${pdto.getPoint_kind() eq 'reserv'}">예약하기</c:when>
+                                    </c:choose>
+                                </td>
+                                <td class="eng">
+                                    <c:choose>
+                                        <c:when test="${pdto.getPoint_type() eq 'plus'}"><span class="text-primary">+<fmt:formatNumber value="${pdto.getPoint_add()}" /></span></c:when>
+                                        <c:when test="${pdto.getPoint_type() eq 'minus'}"><span class="text-danger">-<fmt:formatNumber value="${pdto.getPoint_add()}" /></span></c:when>
+                                    </c:choose>
+                                </td>
+                                <td>${pdto.getPoint_reason()}</td>
+                                <td class="eng">${pdto.getPoint_date().substring(0,10)}</td>
+                            </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </c:if>
+
 </div>
+
+
+
+<div class="my-2 text-center">
+    <button type="button" class="btn btn-outline-secondary" onclick="window.print();"><i class="fa fa-print"></i> 인쇄하기</button>
+        <button type="button" class="btn btn-secondary ml-2" onclick="window.close();"><i class="fa fa-times"></i> 창닫기</button>
+</div>
+
 
 
 <%@ include file="../layout/layout_footer.jsp" %>

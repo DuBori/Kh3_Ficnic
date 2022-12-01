@@ -1393,6 +1393,9 @@ main .table-list tbody td {
     border-bottom: 1px solid #f1f1f1;
     padding: 8px 0;
 }
+main .table-list.sub-list tbody td {
+    height: 42px;
+}
 main .table-list tbody tr:nth-of-type(even) {
     background: #fcfcfc;
 }
