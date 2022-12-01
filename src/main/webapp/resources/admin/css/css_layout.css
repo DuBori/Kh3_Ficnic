@@ -1402,6 +1402,11 @@ main .table-list.hover > tbody > tr:hover > td {
     color: #000;
 }
 
+main .table-list tbody td span.search {
+    background: #fffc00;
+    color: #ff0000;
+}
+
 main .table-list tbody .eng,
 main .card .col a.eng {
     font-family: 'verdana';

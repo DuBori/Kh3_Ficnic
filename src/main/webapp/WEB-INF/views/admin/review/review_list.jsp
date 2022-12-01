@@ -90,6 +90,9 @@
 							<c:when test="${!empty List}">
 							<c:forEach items="${list}" var="dto">
 							<c:set var="showLink" value="onclick=\"popWindow('review_view.do?no=${dto.getReview_no()}', '700', '900');\"" />
+							<c:set var="result_ficnic" value="<span class=\"search\">${search_ficnic}</span>"></c:set>
+							<c:set var="result_review" value="<span class=\"search\">${search_review}</span>"></c:set>
+							<c:set var="result_writer" value="<span class=\"search\">${search_writer}</span>"></c:set>
                             <tr>
                                 <td ${showLink} class="py-4 table-list-hide">${dto.getReview_no()}</td>
 								<td ${showLink}>
@@ -98,12 +101,12 @@
 				                    <c:otherwise><span class="noimg">no img</span></c:otherwise>
 				                    </c:choose>
 								</td>
-								<td ${showLink} class="px-3 table-list-hide">${dto.ficnic_name}</td>
+								<td ${showLink} class="px-3 table-list-hide"><c:choose><c:when test="${search_ficnic != ''}">${dto.getFicnic_name().replace(search_ficnic, result_ficnic)}</c:when><c:otherwise>${dto.getFicnic_name()}</c:otherwise></c:choose></td>
 								<td ${showLink} class="eng">${dto.review_point}</td>
 								<td ${showLink}><c:choose><c:when test="${dto.review_cont.length() > 32}">${dto.review_cont.substring(0,32)} ...</c:when><c:otherwise>${dto.review_cont}</c:otherwise></c:choose></td>
 								<td ${showLink} class="table-list-hide">
-                                    <p><b>${dto.review_name}</b></p>
-                                    <p class="eng">${dto.member_id}</p>
+                                    <p><b><c:choose><c:when test="${search_writer != ''}">${dto.getReview_name().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getReview_name()}</c:otherwise></c:choose></b></p>
+                                    <p class="eng"><c:choose><c:when test="${search_writer != ''}">${dto.getMember_id().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getMember_id()}</c:otherwise></c:choose></p>
                                 </td>
 								<td ${showLink} class="table-list-hide-mob eng">${dto.review_date.substring(0,10)}<br />${dto.review_date.substring(11)}</td>
                                 <td class="table-list-hide-mob">

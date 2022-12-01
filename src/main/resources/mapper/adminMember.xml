@@ -7,9 +7,35 @@
 <!-- 관리자 : 회원 관련 -->
 <mapper namespace="memberDAO">
 
+    <!-- 회원 목록 총 갯수 -->
+    <select id="adminMemberCount" parameterType="java.util.Map" resultType="int">
+        select count(*) from member_list where member_no > 0
+        <if test="search_type != ''"> and member_type = #{search_type}</if>
+        <if test="search_name != ''"> and member_name like '%' || #{search_name} || '%'</if>
+        <if test="search_id != ''"> and member_id like '%' || #{search_id} || '%'</if>
+        <if test="search_email != ''"> and member_email like '%' || #{search_email} || '%'</if>
+        <if test="search_phone != ''"> and member_phone like '%' || #{search_phone} || '%'</if>
+    </select>
+
+
 	<!-- 회원 목록 -->
 	<select id="adminMemberList" resultType="memberDTO">
-		select * from member_list order by member_joindate desc
+            select * from(
+                select
+                    row_number() over(order by member_joindate desc) rnum,
+                    b.*
+                from (
+                    select * from member_list where member_no > 0
+                    <if test="search_type != ''"> and member_type = #{search_type}</if>
+                    <if test="search_name != ''"> and member_name like '%' || #{search_name} || '%'</if>
+                    <if test="search_id != ''"> and member_id like '%' || #{search_id} || '%'</if>
+                    <if test="search_email != ''"> and member_email like '%' || #{search_email} || '%'</if>
+                    <if test="search_phone != ''"> and member_phone like '%' || #{search_phone} || '%'</if>
+                ) b
+            )
+        <![CDATA[
+            where rnum >= #{startNo} and rnum <= #{endNo}
+        ]]>
 	</select>
 
 
