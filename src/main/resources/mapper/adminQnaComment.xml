@@ -10,17 +10,26 @@
 
 	<!-- 코멘트 상세 보기 -->
     <select id="adminQnaCommentList" parameterType="int" resultType="qnacommentDTO">
-   	 	select * from qna_comment where qna_no = #{qna_no}
+   	 	select * from qna_comment where qna_no = #{qna_no} order by #{comment_date}
     </select>
 
-
+	<!-- 댓글 추가 -->
      <insert id="adminQnaCommentReply" parameterType="qnacommentDTO">
        <selectKey resultType="int" keyProperty="comment_no" order="BEFORE">
            select max(comment_no) from qna_comment
        </selectKey>
        insert into qna_comment values(#{comment_no} + 1, #{qna_no}, #{comment_content}, #{comment_writer_name}, #{member_id}, #{comment_writer_pw}, sysdate)
-   </insert> 
+   	</insert>
 		  
+	<!-- 글 삭제 시 댓글도 전체 삭제  -->
+		<delete id="adminQnaCommentAllDelete" parameterType="int">
+		delete from qna_comment where qna_no = #{qna_no}
+	</delete>
+     
+     <!-- 댓글만 삭제  -->
+		<delete id="adminQnaCommentDelete" parameterType="int">
+		delete from qna_comment where comment_no = #{comment_no} 
+	</delete>
            
 </mapper> 
 

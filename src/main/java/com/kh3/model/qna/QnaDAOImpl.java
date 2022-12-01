@@ -28,22 +28,16 @@ public class QnaDAOImpl implements QnaDAO {
 		
 	}
 
-	@Override
-	public int qnaModify(QnaDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int qnaDelete(int no) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.sqlSession.delete("adminQnaDelete", no);
+
 	}
 
 	@Override
-	public void qnaUpdateSeq(int no) {
-		// TODO Auto-generated method stub
-		
+	public int qnaModify(QnaDTO dto) {
+		return 0;
 	}
 
 

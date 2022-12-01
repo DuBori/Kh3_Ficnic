@@ -1,11 +1,14 @@
 package com.kh3.model.member;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MemberDAO {
 
+    int getMemberCount(Map<String, Object> map);
+
     // 회원 전체 리스트
-    List<MemberDTO> getMemberList();
+    List<MemberDTO> getMemberList(int startNo, int endNo, Map<String, Object> map);
 
     // 회원 상세 내역
     MemberDTO getMemberView(int no);

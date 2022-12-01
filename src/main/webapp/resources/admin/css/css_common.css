@@ -19,6 +19,10 @@ html {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    overflow-y: auto;
+}
+html.noscroll {
+    overflow: hidden !important;
 }
 body {
     height: 100%;
@@ -57,6 +61,7 @@ textarea {
     font-family: 'Noto Sans KR', '맑은 고딕', 'Malgun Gothic', 'verdana', '굴림', 'Gulim', 'AppleGothic', 'sans-serif';
     color: #333;
     vertical-align: middle;
+    resize: none;
 }
 
 

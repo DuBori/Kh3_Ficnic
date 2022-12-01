@@ -2,8 +2,11 @@ package com.kh3.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +21,83 @@ import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
 import com.kh3.model.member.PointDAO;
 import com.kh3.model.member.PointDTO;
+import com.kh3.util.PageDTO;
+import com.kh3.util.Paging;
 
 @Controller
 public class AdminMemberController {
 
     @Autowired
     private MemberDAO dao;
+
     @Autowired
     private PointDAO pdao;
+
     @Autowired
     private McouponDAO cdao;
 
 
+    // 한 페이지당 보여질 게시물의 수
+    private final int rowsize = 10;
+
+    // 전체 게시물의 수
+    private int totalRecord = 0;
+
+
+
     // 회원의 전체리스트 메핑
     @RequestMapping("admin/member/member_list.do")
-    public String list(Model model) {
-        List<MemberDTO> list = this.dao.getMemberList();
+    public String list(HttpServletRequest request, Model model) {
+        // 검색 처리
+        String search_type = request.getParameter("search_type");
+        if (search_type == null) search_type = "";
+
+        String search_name = request.getParameter("search_name");
+        if (search_name == null) search_name = "";
+
+        String search_id = request.getParameter("search_id");
+        if (search_id == null) search_id = "";
+
+        String search_email = request.getParameter("search_email");
+        if (search_email == null) search_email = "";
+
+        String search_phone = request.getParameter("search_phone");
+        if (search_phone == null) search_phone = "";
+
+        Map<String, Object> searchMap = new HashMap<String, Object>();
+        searchMap.put("search_type", search_type);
+        searchMap.put("search_name", search_name);
+        searchMap.put("search_id", search_id);
+        searchMap.put("search_email", search_email);
+        searchMap.put("search_phone", search_phone);
+
+
+        // 페이징 처리
+        int page; // 현재 페이지 변수
+        if (request.getParameter("page") != null && request.getParameter("page") != "") {
+            page = Integer.parseInt(request.getParameter("page"));
+        } else {
+            page = 1;
+        }
+        totalRecord = this.dao.getMemberCount(searchMap);
+
+        // 페이징 DTO
+        PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
+
+        // 페이지 이동 URL
+        String pageUrl = request.getContextPath() + "/admin/member/member_list.do?search_type="+search_type+"&search_name="+search_name+"&search_id="+search_id+"&search_email="+search_email+"&search_phone="+search_phone;
+
+        List<MemberDTO> list = this.dao.getMemberList(dto.getStartNo(), dto.getEndNo(), searchMap);
         model.addAttribute("List", list);
+
+        model.addAttribute("totalCount", totalRecord);
+        model.addAttribute("paging", dto);
+        model.addAttribute("search_type", search_type);
+        model.addAttribute("search_name", search_name);
+        model.addAttribute("search_id", search_id);
+        model.addAttribute("search_email", search_email);
+        model.addAttribute("search_phone", search_phone);
+        model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 
         return "admin/member/member_list";
     }
@@ -46,15 +109,12 @@ public class AdminMemberController {
     public String view(Model model, @RequestParam("no") int no, @RequestParam("id") String id) {
         MemberDTO dto = this.dao.getMemberView(no);
         List<McouponDTO> cdto = this.cdao.getCouponView(id);
-        List<PointDTO> pdto = this.pdao.getPointView(id);
-        
-        System.out.println("cdto+++  "+cdto);
-        System.out.println("pdto+++  "+pdto);
-        
+        List<PointDTO> pdto = this.pdao.getPointView(id); 
+
         model.addAttribute("dto", dto);
         model.addAttribute("cdto", cdto);
         model.addAttribute("pdto", pdto);
-        
+
         return "admin/member/member_view";
     }
 

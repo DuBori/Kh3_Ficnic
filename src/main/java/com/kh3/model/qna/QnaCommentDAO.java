@@ -9,7 +9,7 @@ public interface QnaCommentDAO {
 
     int qnaCommentDelete(int no);
 
-    void qnaCommentUpdateSeq(int no);
+    int qnaCommentAllDelete(int no);
 
 	List<QnaCommentDTO> getQnaCommentList(int no);
 

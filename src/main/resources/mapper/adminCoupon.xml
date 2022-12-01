@@ -5,16 +5,12 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 관리자 : 쿠폰 관련 -->
-<mapper namespace="mcouponDAO">
+<mapper namespace="couponDAO">
 
     <!-- 쿠폰 목록 -->
-    <select id="adminCouponList" resultType="mcouponDTO">
+    <select id="adminCouponList" resultType="couponDTO">
     </select>
 
-	<!-- 회원 쿠폰 상세내역 -->
-	<select id="couponView" parameterType="String" resultType="mcouponDTO">
-		select * from member_mcoupon where member_id = #{member_id}
-	</select>
 
 
 

@@ -1,6 +1,8 @@
 package com.kh3.model.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -14,11 +16,25 @@ public class MemberDAOImpl implements MemberDAO {
     private SqlSessionTemplate sqlSession;
 
 
+    @Override
+    public int getMemberCount(Map<String, Object> searchMap) {
+        return this.sqlSession.selectOne("adminMemberCount", searchMap);
+    }
+
 
     // 회원 전체 리스트 가져오기
     @Override
-    public List<MemberDTO> getMemberList() {
-        return this.sqlSession.selectList("adminMemberList");
+    public List<MemberDTO> getMemberList(int startNo, int endNo, Map<String, Object> searchMap) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("startNo", startNo);
+        map.put("endNo", endNo);
+        map.put("search_type", searchMap.get("search_type"));
+        map.put("search_name", searchMap.get("search_name"));
+        map.put("search_id", searchMap.get("search_id"));
+        map.put("search_email", searchMap.get("search_email"));
+        map.put("search_phone", searchMap.get("search_phone"));
+
+        return this.sqlSession.selectList("adminMemberList", map);
     }
 
 
