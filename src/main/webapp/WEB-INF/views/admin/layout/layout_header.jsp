@@ -52,6 +52,7 @@
     <!-- #preloader //END -->
 
 
+    <c:if test="${layout_none != 'Y'}">
     <!-- 로그아웃 Modal // START -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -157,7 +158,7 @@
             <div id="topnav-menu-content" class="navbar-collapse collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <a href="${path}/admin/ficnic/ficnic_list.do" class="nav-link" id="ficnic_menu" data-toggle="dropdown"><i class="fa fa-gift"></i> 피크닉 관리<div class="arrow-down"></div></a>
+                        <a href="${path}/admin/ficnic/ficnic_list.do" class="nav-link" id="ficnic_menu" data-toggle="dropdown"><i class="fa fa-gift"></i> 피크닉 관리<span class="line-now"></span></a>
                         <div class="dropdown-menu" aria-labelledby="ficnic_menu">
                             <a href="${path}/admin/ficnic/ficnic_list.do" class="dropdown-item"><div class="arrow-right"></div> 피크닉 목록</a>
                             <a href="${path}/admin/ficnic/ficnic_write.do" class="dropdown-item"><div class="arrow-right"></div> 피크닉 등록</a>
@@ -166,11 +167,11 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a href="${path}/admin/reserv/reserv_list.do" class="nav-link" aria-haspopup="true" aria-expanded="false"><i class="fa fa-laptop"></i> 예약 관리</a>
+                        <a href="${path}/admin/reserv/reserv_list.do" class="nav-link" aria-haspopup="true" aria-expanded="false"><i class="fa fa-laptop"></i> 예약 관리<span class="line-now"></span></a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a href="${path}/admin/member/member_list.do" class="nav-link" id="member_menu" data-toggle="dropdown"><i class="fa fa-user"></i> 회원 관리<div class="arrow-down"></div></a>
+                        <a href="${path}/admin/member/member_list.do" class="nav-link" id="member_menu" data-toggle="dropdown"><i class="fa fa-user"></i> 회원 관리<span class="line-now"></span></a>
                         <div class="dropdown-menu" aria-labelledby="member_menu">
                             <a href="${path}/admin/member/member_list.do" class="dropdown-item"><div class="arrow-right"></div> 회원 목록</a>
                             <a href="${path}/admin/member/member_write.do" class="dropdown-item"><div class="arrow-right"></div> 회원 등록</a>
@@ -178,7 +179,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a href="${path}/admin/coupon/coupon_list.do" class="nav-link" id="coupon_menu" data-toggle="dropdown"><i class="fa fa-ticket"></i> 쿠폰 관리<div class="arrow-down"></div></a>
+                        <a href="${path}/admin/coupon/coupon_list.do" class="nav-link" id="coupon_menu" data-toggle="dropdown"><i class="fa fa-ticket"></i> 쿠폰 관리<span class="line-now"></span></a>
                         <div class="dropdown-menu" aria-labelledby="coupon_menu">
                             <a href="${path}/admin/coupon/coupon_list.do" class="dropdown-item"><div class="arrow-right"></div> 쿠폰 목록</a>
                             <a href="${path}/admin/coupon/coupon_write.do" class="dropdown-item"><div class="arrow-right"></div> 쿠폰 등록</a>
@@ -186,15 +187,15 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a href="${path}/admin/qna/qna_list.do" class="nav-link" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comment-o"></i> 문의 관리</a>
+                        <a href="${path}/admin/qna/qna_list.do" class="nav-link" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comment-o"></i> 문의 관리<span class="line-now"></span></a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a href="${path}/admin/review/review_list.do" class="nav-link" aria-haspopup="true" aria-expanded="false"><i class="fa fa-star-o"></i> 리뷰 관리</a>
+                        <a href="${path}/admin/review/review_list.do" class="nav-link" aria-haspopup="true" aria-expanded="false"><i class="fa fa-star-o"></i> 리뷰 관리<span class="line-now"></span></a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a href="${path}/admin/board/board_list.do" class="nav-link" id="board_menu" data-toggle="dropdown"><i class="fa fa-pencil-square-o"></i> 게시판 관리<div class="arrow-down"></div></a>
+                        <a href="${path}/admin/board/board_list.do" class="nav-link" id="board_menu" data-toggle="dropdown"><i class="fa fa-pencil-square-o"></i> 게시판 관리<span class="line-now"></span></a>
                         <div class="dropdown-menu" aria-labelledby="board_menu">
                             <a href="${path}/admin/board/board_list.do" class="dropdown-item"><div class="arrow-right"></div> 게시판 목록</a>
                             <a href="${path}/admin/board/board_write.do" class="dropdown-item"><div class="arrow-right"></div> 게시판 등록</a>
@@ -205,9 +206,10 @@
         </nav>
     </header>
     <!-- #header // END -->
+    </c:if>
 
 
 
     <!-- #container // START -->
-    <main id="container">
+    <main id="container"<c:if test="${layout_none eq 'Y'}"> class="view-popup"</c:if>>
         <div class="w1150">

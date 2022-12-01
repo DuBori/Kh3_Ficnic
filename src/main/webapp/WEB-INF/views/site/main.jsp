@@ -51,6 +51,8 @@
 
     <div align="center">
         <h2>메인페이지</h2>
+        <br /><br /><br />
+        <a href="<%=request.getContextPath()%>/admin/">관리자 모드</a>
     </div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../layout/layout_header.jsp" %>
+<script type="text/javascript">$("#header .navbar .nav-item:nth-child(3)").addClass("active");</script>
 
 
 <div class="page-info row mb-3">
