@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
+<script type="text/javascript">$("#header .navbar .nav-item:nth-child(7)").addClass("active");</script>
 
 
 <div class="page-info row mb-3">

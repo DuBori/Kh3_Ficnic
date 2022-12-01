@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
+<script type="text/javascript">$("#header .navbar .nav-item:nth-child(3)").addClass("active");</script>
 
 <c:set var="dto" value="${member}" />
 

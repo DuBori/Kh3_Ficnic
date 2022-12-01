@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
+<script type="text/javascript">$("#header .navbar .nav-item:nth-child(6)").addClass("active");</script>
 
 
 <div class="page-info row mb-3">
@@ -21,7 +22,7 @@
         <div class="col-lg">
             <div class="card">
                 <div class="card-body px-5 pt-4 pb-3">
-                    <form name="search_form" post="<%=request.getContextPath()%>/admin/review/review_list.do" method="post" class="row py-2 px-3">
+                    <form name="search_form" method="get" action="<%=request.getContextPath()%>/admin/review/review_list.do" class="row py-2 px-3">
                     <div class="row justify-content-center">
                     	<div class="col-lg-9">
                     		<div class="row justify-content-center">
@@ -73,7 +74,7 @@
                         <thead>
                             <tr>
 								<th style="width: 4.5%; min-width: 50px;" class="table-list-hide">No.</th>
-								<th style="width: 9%; min-width: 100px;">리뷰 사진</th>
+								<th style="width: 10%; min-width: 120px;">리뷰 사진</th>
 								<th style="width: 18%; min-width: 200px;" class="table-list-hide">피크닉</th>
 								<th style="width: 6%; min-width: 70px;">평점</th>
 								<th>리뷰 내용</th>
@@ -97,17 +98,17 @@
 				                    <c:otherwise><span class="noimg">no img</span></c:otherwise>
 				                    </c:choose>
 								</td>
-								<td ${showLink} class="table-list-hide">${dto.ficnic_name}</td>
+								<td ${showLink} class="px-3 table-list-hide">${dto.ficnic_name}</td>
 								<td ${showLink} class="eng">${dto.review_point}</td>
-								<td ${showLink}>${dto.review_cont}</td>
+								<td ${showLink}><c:choose><c:when test="${dto.review_cont.length() > 32}">${dto.review_cont.substring(0,32)} ...</c:when><c:otherwise>${dto.review_cont}</c:otherwise></c:choose></td>
 								<td ${showLink} class="table-list-hide">
                                     <p><b>${dto.review_name}</b></p>
-                                    <p>${dto.member_id}</p>
+                                    <p class="eng">${dto.member_id}</p>
                                 </td>
 								<td ${showLink} class="table-list-hide-mob eng">${dto.review_date.substring(0,10)}<br />${dto.review_date.substring(11)}</td>
                                 <td class="table-list-hide-mob">
-                                    <a href="<%=request.getContextPath()%>/admin/review/review_modify.do?no=${dto.getReview_no()}&keyword=${keyword}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
-                                    <a href="<%=request.getContextPath()%>/admin/review/review_delete.do?no=${dto.getReview_no()}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
+                                    <a href="<%=request.getContextPath()%>/admin/review/review_modify.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
+                                    <a href="<%=request.getContextPath()%>/admin/review/review_delete.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
                                 </td>
                             </tr>
                         	</c:forEach>
