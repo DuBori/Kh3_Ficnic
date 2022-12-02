@@ -41,12 +41,12 @@ public class BoardDAOImpl implements BoardDAO {
 	   
 		return this.sqlSession.selectList("SiteBoardList", map);
 	}
-
+	/* 해당 게시판 > 게시글 작성 */
 	@Override
-	public int insertBoardCont(BoardDTO dto) {
+	public int insertBoardCont(Map<String, Object> map) {
 		
 		
-		return 0;
+		return this.sqlSession.insert("SiteBoardInsert",map);
 	}
 	
 	/* 해당 게시판 > 해당 게시글 조회수 증가 */
@@ -61,6 +61,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public BoardDTO getBoardCont(Map<String, Object> map) {
 		
 		return sqlSession.selectOne("SiteBoardDto",map);
+	}
+
+	/* 해당 게시판 - > 해당 게시글 수정 작업 */
+	@Override
+	public int modifyBoard(Map<String, Object> map) {
+		return this.sqlSession.update("SiteBoardUpdate", map);
 	}
 
 
