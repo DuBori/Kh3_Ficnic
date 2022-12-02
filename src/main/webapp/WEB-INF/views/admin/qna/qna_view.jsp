@@ -46,41 +46,9 @@
 	             }
 	         });
 	     });
-
- 	    $("#deleteBtn").on("click", function() {
-	    	alert("클릭");
-	         $.ajax({
-	             type : "post",
-	             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-	             url : "<%=request.getContextPath()%>/admin/qna/qnaComment_delete.do",
-	             data : { 
-		             qna_no :$("#qna_no").val(),
-	            	 comment_content : $("#comment_content").val(),
-	            	 comment_date : $("#comment_date").val(),
-	            	 comment_no : $("#comment_no").val(),
-	            	 comment_writer_name : $("#comment_writer_name").val(),
-	            	 comment_writer_pw : $("#comment_writer_pw").val(),
-	            	 member_id : $("#member_id").val()
-	            	 
-	            	 },
-	             datatype : "text",
-	             success : function(data) {
-	            	 if(data>0){
-	            		 alert(data);
-	            		 $(data).parent().parent().remove();
-	            		 location.href="<%=request.getContextPath()%>/admin/qna/qna_view.do?no="+$("#qna_no").val();
-	            	 }else{
-	            		 alert("실패");
-	            	 }
-	             },
-	             error : function(data) {
-            		 alert($("#member_id").val());
-	                 alert("에러발생");
-	             }
-	         }); 
-
-	     });
-	}) 
+	})
+   
+   
 	
 	// 댓글 삭제 에이젝스****************************
 	//***********************************
