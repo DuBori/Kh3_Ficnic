@@ -94,11 +94,11 @@ join_check = function(){
                             <input type="text" name="member_id" id="member_id" value="${dto.getMember_id()}" class="form-control-plaintext d-inline w-30" readonly="readonly" />
                         </div>
                         <div class="w-100"></div>
-                        <div class="form-group col mb-2">
+                        <div class="form-group col-sm mb-2">
                             <label for="pw">비밀번호 변경</label>
                             <input type="password" name="pw" id="pw" class="form-control w-50" />
                         </div>
-                        <div class="form-group col mb-2">
+                        <div class="form-group col-sm mb-2">
                             <label for="member_pw_chg_re">비밀번호 변경 확인</label>
                             <input type="password" name="member_pw_chg_re" id="member_pw_chg_re" class="form-control w-50" />
                         </div>

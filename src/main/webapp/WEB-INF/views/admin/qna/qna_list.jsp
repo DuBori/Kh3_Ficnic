@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
 <script type="text/javascript">$("#header .navbar .nav-item:nth-child(5)").addClass("active");</script>
 
@@ -37,7 +38,7 @@
 		                        <div class="col-md-4 mb-2">
 		                            <div class="input-group">
 		                                <div class="input-group-prepend">
-		                                    <label class="input-group-text" for="search_qna">문의내용</label>
+		                                    <label class="input-group-text" for="search_qna">문의제목</label>
 		                                </div>
 		                                <input type="text" id="search_qna" name="search_qna" value="${search_qna}" class="form-control">
 		                            </div>
@@ -73,12 +74,12 @@
                     <table class="table-list hover mb-2">
                         <thead>
                             <tr>
-								<th style="width: 4.5%; min-width: 50px;" class="table-list-hide">No.</th>
+								<th style="width: 4.5%; min-width: 50px;">No.</th>
 								<th style="width: 18%; min-width: 200px;" class="table-list-hide">피크닉</th>
 								<th>제목</th>
-								<th style="width: 10%; min-width: 110px;" class="table-list-hide">작성자<br />아이디</th>
+								<th style="width: 10%; min-width: 110px;" class="table-list-hide-mob">작성자<br />아이디</th>
 								<th style="width: 11%; min-width: 120px;" class="table-list-hide-mob">작성일</th>
-								<th style="width: 7%; min-width: 70px;" class="table-list-hide-mob">기능</th>
+								<th style="width: 7%; min-width: 70px;">기능</th>
                             </tr>
                         </thead>
 
@@ -88,16 +89,19 @@
 							<c:when test="${!empty list}">
 							<c:forEach items="${list}" var="dto">
 							<c:set var="showLink" value="onclick=\"popWindow('qna_view.do?no=${dto.getQna_no()}', '700', '900');\"" />
+							<c:set var="result_ficnic" value="<span class=\"search\">${search_ficnic}</span>"></c:set>
+							<c:set var="result_qna" value="<span class=\"search\">${search_qna}</span>"></c:set>
+							<c:set var="result_writer" value="<span class=\"search\">${search_writer}</span>"></c:set>
                             <tr>
-                                <td ${showLink} class="py-4 table-list-hide">${dto.getQna_no()}</td>
-                                <td ${showLink} class="px-3 table-list-hide">${dto.getFicnic_name()}</td>
-								<td ${showLink}>${dto.getQna_title()}</td>
-								<td ${showLink}>
-									<p><b>${dto.getQna_name()}</b></p>
-									<p class="eng">${dto.getMember_id()}</p>
+                                <td ${showLink} class="py-4">${dto.getQna_no()}</td>
+                                <td ${showLink} class="px-3 table-list-hide"><c:choose><c:when test="${search_ficnic != ''}">${dto.getFicnic_name().replace(search_ficnic, result_ficnic)}</c:when><c:otherwise>${dto.getFicnic_name()}</c:otherwise></c:choose></td>
+								<td ${showLink}><c:choose><c:when test="${search_qna != ''}">${dto.getQna_title().replace(search_qna, result_qna)}</c:when><c:otherwise>${dto.getQna_title()}</c:otherwise></c:choose></td>
+								<td ${showLink} class="table-list-hide-mob">
+									<p><b><c:choose><c:when test="${search_writer != ''}">${dto.getQna_name().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getQna_name()}</c:otherwise></c:choose></b></p>
+									<p class="eng"><c:choose><c:when test="${search_writer != ''}">${dto.getMember_id().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getMember_id()}</c:otherwise></c:choose></p>
 								</td>
 								<td ${showLink} class="table-list-hide-mob eng">${dto.qna_date.substring(0,10)}<br />${dto.qna_date.substring(11)}</td>
-                                <td class="table-list-hide-mob">
+                                <td>
                                     <a href="<%=request.getContextPath()%>/admin/qna/qna_delete.do?no=${dto.qna_no}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
                                 </td>
                             </tr>
