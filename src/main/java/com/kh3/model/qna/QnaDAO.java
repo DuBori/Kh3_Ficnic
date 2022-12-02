@@ -1,20 +1,17 @@
 package com.kh3.model.qna;
 
 import java.util.List;
-
-import com.kh3.model.review.ReviewDTO;
+import java.util.Map;
 
 
 public interface QnaDAO {
 
-	
-	List<QnaDTO> getQnaList();
+    int getQnaCount(Map<String, Object> map);
 
-	QnaDTO qnaView(int no);
+    List<QnaDTO> getQnaList(int startNo, int endNo, Map<String, Object> map);
+
+    QnaDTO qnaView(int no);
 
     int qnaDelete(int no);
 
-    int qnaModify(QnaDTO dto);
-
-    
 }

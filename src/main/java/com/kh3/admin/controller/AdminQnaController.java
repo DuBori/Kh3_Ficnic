@@ -2,133 +2,145 @@ package com.kh3.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh3.model.qna.QnaCommentDAO;
 import com.kh3.model.qna.QnaCommentDTO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
+import com.kh3.util.PageDTO;
+import com.kh3.util.Paging;
 
 @Controller
 public class AdminQnaController {
 
-	@Inject
-	private QnaDAO dao;
-	@Inject
-	private QnaCommentDAO cdao;
+    @Inject
+    private QnaDAO dao;
 
-	@RequestMapping("admin/qna/qna_list.do")
-	public String list(Model model) {
-
-		List<QnaDTO> list = this.dao.getQnaList();
-
-		model.addAttribute("List", list);
-
-		return "admin/qna/qna_list";
-
-	}
-
-	@RequestMapping("admin/qna/qna_view.do")
-	public String view(Model model, @RequestParam("no") int no) {
-
-		QnaDTO dto = this.dao.qnaView(no);
-		List<QnaCommentDTO> list = this.cdao.getQnaCommentList(no);
-
-		model.addAttribute("dto", dto);
-		model.addAttribute("cdto", list);
-
-		return "admin/qna/qna_view";
-
-	}
+    @Inject
+    private QnaCommentDAO cdao;
 
 
-	@RequestMapping("admin/qna/qna_reply_ok.do")
-	public void reply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    // 한 페이지당 보여질 게시물의 수
+    private final int rowsize = 10;
 
-		QnaCommentDTO cdto = new QnaCommentDTO();
+    // 전체 게시물의 수
+    private int totalRecord = 0;
 
-		cdto.setComment_content(request.getParameter("comment_content"));
-		cdto.setComment_writer_name(request.getParameter("comment_writer_name"));
-		cdto.setComment_writer_pw(request.getParameter("comment_writer_pw"));
-		cdto.setMember_id(request.getParameter("member_id"));
-		cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
 
-		int check = this.cdao.qnaReply(cdto);
 
-		response.setContentType("text/html; charset=UTF-8");
+    @RequestMapping("admin/qna/qna_list.do")
+    public String list(Model model, HttpServletRequest request) {
+        // 검색 처리
+        String search_ficnic = request.getParameter("search_ficnic");
+        if (search_ficnic == null) search_ficnic = "";
 
-		PrintWriter out = response.getWriter();
+        String search_qna = request.getParameter("search_qna");
+        if (search_qna == null) search_qna = "";
 
-		out.println(check);
-	}
+        String search_writer = request.getParameter("search_writer");
+        if (search_writer == null) search_writer = "";
 
-	@RequestMapping("/admin/qna/qna_delete.do")
-	public void delete(@RequestParam("no") int no, HttpServletResponse response) throws Exception {
+        Map<String, Object> searchMap = new HashMap<String, Object>();
+        searchMap.put("search_ficnic", search_ficnic);
+        searchMap.put("search_qna", search_qna);
+        searchMap.put("search_writer", search_writer);
 
-		int check = this.dao.qnaDelete(no);
 
-		response.setContentType("text/html; charset=UTF-8");
+        // 페이징 처리
+        int page; // 현재 페이지 변수
+        if (request.getParameter("page") != null && request.getParameter("page") != "") {
+            page = Integer.parseInt(request.getParameter("page"));
+        } else {
+            page = 1;
+        }
+        totalRecord = this.dao.getQnaCount(searchMap);
 
-		PrintWriter out = response.getWriter();
+        // 페이징 DTO
+        PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
-		if (check > 0) {
+        // 페이지 이동 URL
+        String pageUrl = request.getContextPath() + "/admin/qna/qna_list.do?search_ficnic=" + search_ficnic + "&search_qna=" + search_qna + "&search_writer=" + search_writer;
 
-			this.cdao.qnaCommentAllDelete(no);
+        List<QnaDTO> list = this.dao.getQnaList(dto.getStartNo(), dto.getEndNo(), searchMap);
+        model.addAttribute("List", list);
 
-			out.println("<script>");
-			out.println("alert('삭제 성공')");
-			out.println("location.href='qna_list.do'");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('삭제 실패')");
-			out.println("history.back()");
-			out.println("</script>");
-		}
+        model.addAttribute("totalCount", totalRecord);
+        model.addAttribute("paging", dto);
+        model.addAttribute("search_ficnic", search_ficnic);
+        model.addAttribute("search_qna", search_qna);
+        model.addAttribute("search_writer", search_writer);
+        model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 
-	}
+        return "admin/qna/qna_list";
+    }
 
-	@RequestMapping("/admin/qna/qnaComment_delete.do")
-	public void commentDelete(@RequestParam("comment_no") int no, @RequestParam("qna_no") int qna_no, HttpServletResponse response, HttpServletRequest request) throws IOException {
 
-		
-		QnaCommentDTO cdto = new QnaCommentDTO();
 
-		cdto.setComment_no(Integer.parseInt(request.getParameter("comment_no")));
-		
-		System.out.println("cdto" + cdto);
-		System.out.println("comment_no" + request.getParameter("comment_no"));
-		
-		/*
-		 * QnaCommentDTO cdto = new QnaCommentDTO();
-		 * 
-		 * 
-		 * cdto.setComment_no(Integer.parseInt(request.getParameter("comment_no")));
-		 * cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
-		 */
-		/*
-		 * System.out.println("no" + no); int check = this.cdao.qnaCommentDelete(no);
-		 * 
-		 * response.setContentType("text/html; charset=UTF-8");
-		 * 
-		 * PrintWriter out = response.getWriter();
-		 * 
-		 * out.println(check);
-		 */
-		
-	}
+    @RequestMapping("admin/qna/qna_view.do")
+    public String view(Model model, @RequestParam("no") int no) {
+        QnaDTO dto = this.dao.qnaView(no);
+        List<QnaCommentDTO> list = this.cdao.getQnaCommentList(no);
+
+        model.addAttribute("dto", dto);
+        model.addAttribute("cdto", list);
+
+        return "admin/qna/qna_view";
+    }
+
+
+
+    @RequestMapping("admin/qna/qna_reply_ok.do")
+    public void reply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        QnaCommentDTO cdto = new QnaCommentDTO();
+
+        cdto.setComment_content(request.getParameter("comment_content"));
+        cdto.setComment_writer_name(request.getParameter("comment_writer_name"));
+        cdto.setComment_writer_pw(request.getParameter("comment_writer_pw"));
+        cdto.setMember_id(request.getParameter("member_id"));
+        cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
+
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int check = this.cdao.qnaReply(cdto);
+        out.println(check);
+    }
+
+
+
+    @RequestMapping("/admin/qna/qna_delete.do")
+    public void delete(@RequestParam("no") int no, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int check = this.dao.qnaDelete(no);
+        if (check > 0) {
+            this.cdao.qnaCommentAllDelete(no);
+            out.println("<script>alert('삭제 성공'); location.href='qna_list.do';</script>");
+        } else {
+            out.println("<script>alert('삭제 실패'); history.back();</script>");
+        }
+    }
+
+
+
+    @RequestMapping("/admin/qna/qnaComment_delete.do")
+    public void commentDelete(@RequestParam("comment_no") int no, @RequestParam("qna_no") int qna_no,
+            HttpServletResponse response, HttpServletRequest request) throws IOException {
+        QnaCommentDTO cdto = new QnaCommentDTO();
+        cdto.setComment_no(Integer.parseInt(request.getParameter("comment_no")));
+    }
 
 }

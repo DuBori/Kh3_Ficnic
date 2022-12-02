@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
 <script type="text/javascript">$("#header .navbar .nav-item:nth-child(5)").addClass("active");</script>
 
@@ -37,7 +38,7 @@
 		                        <div class="col-md-4 mb-2">
 		                            <div class="input-group">
 		                                <div class="input-group-prepend">
-		                                    <label class="input-group-text" for="search_qna">문의내용</label>
+		                                    <label class="input-group-text" for="search_qna">문의제목</label>
 		                                </div>
 		                                <input type="text" id="search_qna" name="search_qna" value="${search_qna}" class="form-control">
 		                            </div>
@@ -88,13 +89,16 @@
 							<c:when test="${!empty list}">
 							<c:forEach items="${list}" var="dto">
 							<c:set var="showLink" value="onclick=\"popWindow('qna_view.do?no=${dto.getQna_no()}', '700', '900');\"" />
+							<c:set var="result_ficnic" value="<span class=\"search\">${search_ficnic}</span>"></c:set>
+							<c:set var="result_qna" value="<span class=\"search\">${search_qna}</span>"></c:set>
+							<c:set var="result_writer" value="<span class=\"search\">${search_writer}</span>"></c:set>
                             <tr>
                                 <td ${showLink} class="py-4 table-list-hide">${dto.getQna_no()}</td>
-                                <td ${showLink} class="px-3 table-list-hide">${dto.getFicnic_name()}</td>
-								<td ${showLink}>${dto.getQna_title()}</td>
+                                <td ${showLink} class="px-3 table-list-hide"><c:choose><c:when test="${search_ficnic != ''}">${dto.getFicnic_name().replace(search_ficnic, result_ficnic)}</c:when><c:otherwise>${dto.getFicnic_name()}</c:otherwise></c:choose></td>
+								<td ${showLink}><c:choose><c:when test="${search_qna != ''}">${dto.getQna_title().replace(search_qna, result_qna)}</c:when><c:otherwise>${dto.getQna_title()}</c:otherwise></c:choose></td>
 								<td ${showLink}>
-									<p><b>${dto.getQna_name()}</b></p>
-									<p class="eng">${dto.getMember_id()}</p>
+									<p><b><c:choose><c:when test="${search_writer != ''}">${dto.getQna_name().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getQna_name()}</c:otherwise></c:choose></b></p>
+									<p class="eng"><c:choose><c:when test="${search_writer != ''}">${dto.getMember_id().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getMember_id()}</c:otherwise></c:choose></p>
 								</td>
 								<td ${showLink} class="table-list-hide-mob eng">${dto.qna_date.substring(0,10)}<br />${dto.qna_date.substring(11)}</td>
                                 <td class="table-list-hide-mob">
