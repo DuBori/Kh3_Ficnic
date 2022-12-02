@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,6 +24,8 @@ import com.kh3.model.member.PointDAO;
 import com.kh3.model.member.PointDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
+
+import lombok.NonNull;
 
 @Controller
 public class AdminMemberController {
@@ -125,15 +128,14 @@ public class AdminMemberController {
     public String write() {
         return "admin/member/member_write";
     }
+
     
     // 아이디 중복 체크
     @RequestMapping("admin/member/memberIdCheck.do")
-    public String checkId(@RequestParam("paramId") String paramId, Model model) {
-    	System.out.println("값 === "+paramId);
+    @ResponseBody
+    public int checkId(@RequestParam("paramId") String paramId) {
     	int no = this.dao.checkId(paramId);
-    	System.out.println(no);
-    	model.addAttribute("no", no);
-    	return "admin/member/member_write";
+    	return no;
     }
     
     

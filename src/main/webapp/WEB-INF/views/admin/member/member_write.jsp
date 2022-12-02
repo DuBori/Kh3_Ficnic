@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../layout/layout_header.jsp" %>
-<c:set var="no" value="${no }"/>
 <script type="text/javascript">
 $("#header .navbar .nav-item:nth-child(3)").addClass("active");
 
 
 $(function(){
-    $("input[name='member_id']").keyup(function(){
-        let userId = $("#member_id").val();
-
+	$("input[name='member_id']").keyup(function(){
+        let userId = $(this).val();
+		
         if($.trim(userId).length < 4){
             $("#idchk-txt").html("<span class=\"text-danger\">* 아이디는 4글자 이상이어야 합니다.</span>");
             return false;
@@ -20,16 +19,15 @@ $(function(){
             type : "post",
             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
             url : "<%=request.getContextPath()%>/admin/member/memberIdCheck.do",
-            data : { paramId : $("#member_id").val() },
-            datatype : "text",
-
+            data : { paramId : userId },
+            datatype : "html",
+            
             success : function(data){
-                console.log(data);
+            	console.log(data);
                 let ajaxTxt = "";
-                if(data != null ){
+                if(data > 0){
                     ajaxTxt = "<span class=\"text-danger\">* 이미 사용중인 아이디입니다.</span>";
                     $("input[name='idchk']").val("N");
-                    alert(data);
                 }else{
                     ajaxTxt = "<span class=\"text-primary\">* 사용 할 수 있는 아이디입니다.</span>";
                     $("input[name='idchk']").val("Y");
@@ -42,9 +40,11 @@ $(function(){
                 $("input[name='idchk']").val("N");
             }
         });
-
-
-
+        
+        
+	});
+	
+});
 
 join_check = function(){
     var form = document.write_form;
@@ -80,9 +80,12 @@ join_check = function(){
 
     form.submit();
 };
-});
-});
-</script>
+
+
+
+
+
+ </script>
 
 
 
@@ -95,8 +98,6 @@ join_check = function(){
         </ol>
     </div>
 </div>
-
-
 
 
 
