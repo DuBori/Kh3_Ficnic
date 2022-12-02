@@ -17,6 +17,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 
 
+    // 카테고리 목록
     @Override
     public List<CategoryDTO> getCategoryList() {
         return this.sqlSession.selectList("adminCategoryList");
@@ -24,6 +25,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 
 
+    // 카테고리 정렬 순서 저장
     @Override
     public void setCategoryRank(String cateid, int rank) {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -35,6 +37,89 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 
 
+    // 카테고리 추가
+    @Override
+    public int addCategory(String ps_ctid, String category_show, String category_name) {
+        int category_depth = 1;
+        String category_id_up = "M";
 
+        if(!ps_ctid.equals("00000000")) {
+            category_depth = 2;
+            category_id_up = ps_ctid;
+        }
+
+        int category_rank = this.sqlSession.selectOne("adminCategoryRankMax");
+
+        // 카테고리 아이디 구하기
+        Map<String, Object> getCateMap = new HashMap<String, Object>();
+        getCateMap.put("ps_ctid", ps_ctid);
+        getCateMap.put("category_depth", category_depth);
+
+        int get_category_num = 1;
+        if(this.sqlSession.selectOne("adminCategoryIdMax", getCateMap) != null) {
+            get_category_num = this.sqlSession.selectOne("adminCategoryIdMax", getCateMap);
+        }
+
+        String set_cate_len = "";
+        for(int i = (int)(Math.log10(get_category_num)+1); i<2; i++){
+            set_cate_len += "0";
+        }
+
+        String category_id = "00000000";
+        if(category_depth == 1) {
+            category_id = set_cate_len + get_category_num + "000000";
+        }else{
+            category_id = ps_ctid.substring(0, 2) + set_cate_len + get_category_num + "0000";
+        }
+
+
+        CategoryDTO dto = new CategoryDTO();
+        dto.setCategory_show(category_show);
+        dto.setCategory_id(category_id);
+        dto.setCategory_depth(category_depth);
+        dto.setCategory_id_up(category_id_up);
+        dto.setCategory_rank(category_rank);
+        dto.setCategory_name(category_name);
+
+        return this.sqlSession.insert("adminCategoryWrite", dto);
+    }
+
+
+
+    // 카테고리 수정
+    @Override
+    public int modifyCategory(String ps_ctid, String category_show, String category_name) {
+        CategoryDTO dto = new CategoryDTO();
+        dto.setCategory_show(category_show);
+        dto.setCategory_id(ps_ctid);
+        dto.setCategory_name(category_name);
+
+        return this.sqlSession.update("adminCategoryModify", dto);
+    }
+
+
+
+    // 카테고리 삭제
+    @Override
+    public int deleteCategory(String ps_ctid) {
+        return this.sqlSession.delete("adminCategoryDelete", ps_ctid);
+    }
+
+
+    // 카테고리 번호 재지정
+    @Override
+    public void updateCategorySeq(int category_no) {
+        this.sqlSession.update("adminCategorySeqUpdate", category_no);
+    }
+
+
+    // 카테고리 속한 상품 카테고리 수정
+    @Override
+    public void updateCategoryFicnic(String ps_ctid) {
+        this.sqlSession.update("adminCategoryFicnicUpdate", ps_ctid);
+        this.sqlSession.update("adminCategoryFicnicUpdate1", ps_ctid);
+        this.sqlSession.update("adminCategoryFicnicUpdate2", ps_ctid);
+        this.sqlSession.update("adminCategoryFicnicUpdate3", ps_ctid);
+    }
 
 }

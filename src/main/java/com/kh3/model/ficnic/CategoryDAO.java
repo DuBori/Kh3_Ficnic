@@ -8,6 +8,14 @@ public interface CategoryDAO {
 
     void setCategoryRank(String cateid, int rank);
 
+    int addCategory(String ps_ctid, String category_show, String category_name);
 
+    int modifyCategory(String ps_ctid, String category_show, String category_name);
+
+    int deleteCategory(String ps_ctid);
+
+    void updateCategorySeq(int category_no);
+
+    void updateCategoryFicnic(String ps_ctid);
 
 }

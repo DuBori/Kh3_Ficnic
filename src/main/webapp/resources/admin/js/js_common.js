@@ -52,33 +52,12 @@ $(document).ready(function(){
 /////////////////////////////////////////////////////
 cateFormReset = function(){
     var f = $("form[name='form_write']");
-    f.find("input[name='ps_mode']").val("");
     f.find("input[name='ps_ctid']").val("");
-    f.find("input:radio[name='menu_show']:radio[value='Y']").prop("checked", true);
     f.find("input:radio[name='category_show']:radio[value='Y']").prop("checked", true);
-    f.find("input#category_link").val("");
-    f.find("input[name='category_name_kor']").val("");
-    f.find("input[name='category_name_eng']").val("");
-    f.find("select[name='category_goods_display']").val("register_date");
-    f.find("select[name='category_skin_pc']").val("");
-    f.find("input:radio[name='category_top_display_pc']:radio[value='none']").prop("checked", true);
-    f.find("input[name='category_top_img_pc']").val("");
-    f.find(".custom-file-label.pc").text("");
-    f.find("input[name='category_top_link_pc']").val("");
-    f.find("select[name='category_top_target_pc']").val("_self");
-    f.find("textarea[name='category_top_html_pc']").val("");
-    f.find("select[name='category_skin_mobile']").val("");
-    f.find("input:radio[name='category_top_display_mobile']:radio[value='none']").prop("checked", true);
-    f.find("input[name='category_top_img_mobile']").val("");
-    f.find(".custom-file-label.mobile").text("");
-    f.find("input[name='category_top_link_mobile']").val("");
-    f.find("select[name='category_top_target_mobile']").val("_self");
-    f.find("textarea[name='category_top_html_mobile']").val("");
-    f.find(".display-img, .display-html").hide();
-    f.find("#form-top-img-pc, #form-top-img-mobile").html("");
+    f.find("input[name='category_name']").val("").focus();
+    f.find("input[name='category_link']").val("");
 
-    $(".category-list .cl-form .clf-button").css("padding-left", "0");
-    $(".category-list .cl-form .clf-button .btn-outline-danger").attr("href", "").hide();
+    $(".category-form .card-body .btn-outline-danger").attr("href", "").hide();
     $("#form-btn").removeClass("btn-success").addClass("btn-primary").html("<i class=\"fa fa-pencil\"></i> 추가하기");
 }
 
@@ -92,8 +71,9 @@ cateFormAdd = function(){
     cateFormReset();
 
     $("#form-title").text("대분류 추가하기");
+    $("form[name='form_write']").attr("action", "category_write_ok.do");
     $("form[name='form_write'] input[name='ps_ctid']").val("00000000");
-    $(".category-list .cl-form .clf-mask").hide();
+    $(".category-form .card-body .category-mask").hide();
 }
 
 
@@ -112,12 +92,10 @@ $(document).ready(function(){
 
         if(get_depth == 1){
             $("#form-title").html("<b>["+get_name+"]</b> 중분류 추가하기");
-        }else{
-            $("#form-title").html("<b>["+get_name+"]</b> 소분류 추가하기");
         }
-        $("form[name='form_write'] input[name='ps_mode']").val("category_write");
+        $("form[name='form_write']").attr("action", "category_write_ok.do");
         $("form[name='form_write'] input[name='ps_ctid']").val(get_ctid);
-        $(".category-list .cl-form .clf-mask").hide();
+        $(".category-form .card-body .category-mask").hide();
     });
 });
 
@@ -146,86 +124,31 @@ $(document).ready(function(){
             $(this).parent().removeClass("line-minus").addClass("line-plus");
         }
 
-        return false;
 
         var getID = $(this).parent().parent().attr("id");
         if(getID != "undefined"){
-            // 입력폼 적용
-            $.ajax({
-                type: "post",
-                url : "admin_goods_category_ajax.php",
-                data : {
-                        ps_ctid : $(this).find("input[name='category_id[]']").val()
-                },
-
-                //데이터 전송전
-                beforeSend: function(xhr, settings){},
-
-                //데이터 전송완료
-                complete: function(xhr, textStatus){},
+            cateFormReset();
 
 
-                //데이터 처리성공
-                success: function(result){
-                    data = jQuery.parseJSON(result);
+            var get_category_no = $(this).parent().find(".ft-title input[name='category_no[]']").val();
+            var get_ctid = $(this).parent().find(".ft-title input[name='category_id[]']").val();
+            var get_show = $(this).parent().find(".ft-title input[name='category_show[]']").val();
+            var get_depth = $(this).parent().find(".ft-title input[name='category_depth[]']").val();
+            var get_name = $(this).parent().find(".ft-title input[name='category_name[]']").val();
 
-                    var ps_mode                 = "modify";
-                    var cate_id                 = data.category_id;
-                    var menu_show               = data.menu_show;
-                    var cate_show               = data.category_show;
-                    var cate_url                = data.category_url;
-                    var cate_name_kor           = data.category_name_kor;
-                    var cate_name_eng           = data.category_name_eng;
-                    var cate_goods_display      = data.category_goods_display;
-                    var cate_skin_pc            = data.category_skin_pc;
-                    var cate_top_display_pc     = data.category_top_display_pc;
-                    var cate_top_img_pc         = data.category_top_img_pc;
-                    var cate_top_link_pc        = data.category_top_link_pc;
-                    var cate_top_target_pc      = data.category_top_target_pc;
-                    var cate_top_html_pc        = data.category_top_html_pc;
-                    var cate_skin_mobile        = data.category_skin_mobile;
-                    var cate_top_display_mobile = data.category_top_display_mobile;
-                    var cate_top_img_mobile     = data.category_top_img_mobile;
-                    var cate_top_link_mobile    = data.category_top_link_mobile;
-                    var cate_top_target_mobile  = data.category_top_target_mobile;
-                    var cate_top_html_mobile    = data.category_top_html_mobile;
+            $("#form-title").html("<b>["+get_name+"]</b> 카테고리 수정/삭제");
+            $(".category-list .cl-form .clf-mask").hide();
 
+            var f = $("form[name='form_write']");
+            f.attr("action", "category_modify_ok.do");
+            f.find("input[name='ps_ctid']").val(get_ctid);
+            f.find("input:radio[name='category_show']:radio[value='"+get_show+"']").prop("checked", true);
+            f.find("input[name='category_name']").val(get_name).focus();
+            f.find("input[name='category_link']").val(get_ctid);
 
-                    cateFormReset();
-
-
-                    $("#form-title").html("<b>["+cate_name_kor+"]</b> 카테고리 수정/삭제");
-                    $(".category-list .cl-form .clf-mask").hide();
-
-                    var f = $("form[name='form_write']");
-                    f.find("input[name='ps_mode']").val("category_modify");
-                    f.find("input[name='ps_ctid']").val(cate_id);
-
-
-                    f.find("input:radio[name='menu_show']:radio[value='"+menu_show+"']").prop("checked", true);
-                    f.find("input:radio[name='category_show']:radio[value='"+cate_show+"']").prop("checked", true);
-                    f.find("input#category_link").val(cate_url);
-                    f.find("input[name='category_name_kor']").val(cate_name_kor);
-                    f.find("input[name='category_name_eng']").val(cate_name_eng);
-                    f.find("select[name='category_goods_display']").val(cate_goods_display);
-                    f.find("select[name='category_skin_pc']").val(cate_skin_pc);
-                    f.find("input:radio[name='category_top_display_pc']:radio[value='"+cate_top_display_pc+"']").prop("checked", true);
-                    f.find("input[name='category_top_link_pc']").val(cate_top_link_pc);
-                    f.find("select[name='category_top_target_pc']").val(cate_top_target_pc);
-                    f.find("textarea[name='category_top_html_pc']").val(cate_top_html_pc);
-
-
-                    $(".category-list .cl-form .clf-button").css("padding-left", "98px");
-                    $(".category-list .cl-form .clf-button .btn-outline-danger").attr("href", "admin_goods_category_ok.php?ps_mode=category_delete&ps_ctid="+cate_id).show();
-                    $("#form-btn").removeClass("btn-primary").addClass("btn-success").html("<i class=\"fa fa-save\"></i> 수정하기");
-                },
-
-
-                //데이터 처리에러
-                error: function (xhr, textStatus, errorThrown){
-                    alert("Error : "+errorThrown);
-                }
-            });
+            $(".category-form .card-body .btn-outline-danger").attr("href", "category_delete.do?category_no="+get_category_no+"&ps_ctid="+get_ctid).show();
+            $("#form-btn").removeClass("btn-primary").addClass("btn-success").html("<i class=\"fa fa-save\"></i> 수정하기");
+            $(".category-form .card-body .category-mask").hide();
         }
 
         return false;
