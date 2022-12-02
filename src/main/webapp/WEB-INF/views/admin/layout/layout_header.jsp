@@ -162,7 +162,7 @@
                         <div class="dropdown-menu" aria-labelledby="ficnic_menu">
                             <a href="${path}/admin/ficnic/ficnic_list.do" class="dropdown-item"><div class="arrow-right"></div> 피크닉 목록</a>
                             <a href="${path}/admin/ficnic/ficnic_write.do" class="dropdown-item"><div class="arrow-right"></div> 피크닉 등록</a>
-                            <a href="${path}/admin/ficnic/category_list.do" class="dropdown-item"><div class="arrow-right"></div> 카테고리 목록</a>
+                            <a href="${path}/admin/ficnic/category_list.do" class="dropdown-item"><div class="arrow-right"></div> 카테고리 관리</a>
                         </div>
                     </li>
 
