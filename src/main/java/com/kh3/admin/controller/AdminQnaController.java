@@ -1,6 +1,5 @@
 package com.kh3.admin.controller;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh3.model.qna.QnaCommentDAO;
 import com.kh3.model.qna.QnaCommentDTO;
@@ -135,12 +135,39 @@ public class AdminQnaController {
     }
 
 
+     /* @RequestMapping("/admin/qna/qnaComment_delete.do") public void
+	  commentDelete(@RequestParam("no") int no, HttpServletResponse response,
+	  QnaDTO qdto, QnaCommentDTO dto) throws Exception {
+	  
+	  int check = this.cdao.qnaCommentDelete(no);
+	  
+	  response.setContentType("text/html; charset=UTF-8");
+	  
+	  PrintWriter out = response.getWriter();
+	  
+	  
+	  // 나중에 세션으로 location 수정 
+	  if(check > 0) {
+	  out.println("<script>"); out.println("alert('댓글 삭제 성공')");
+	  out.println("location.href='qna_view.do?no="+no+"'");
+	  out.println("</script>"); 
+	  } 
+      else { out.println("<script>");
+	  out.println("alert('댓글 삭제 실패')"); out.println("history.back()");
+	  out.println("</script>"); }
+	  
+	 } */
 
-    @RequestMapping("/admin/qna/qnaComment_delete.do")
-    public void commentDelete(@RequestParam("comment_no") int no, @RequestParam("qna_no") int qna_no,
-            HttpServletResponse response, HttpServletRequest request) throws IOException {
-        QnaCommentDTO cdto = new QnaCommentDTO();
-        cdto.setComment_no(Integer.parseInt(request.getParameter("comment_no")));
-    }
-
+	
+	  @RequestMapping("/admin/qna/comment_delete.do") 
+	  public void commentDelete(@RequestParam("no") int cno, HttpServletResponse response)  {
+		  	
+		  	System.out.println("안나와");
+//		  	System.out.println("번호   " +cno);
+//		  	int check = this.cdao.qnaCommentDelete(cno);
+//          
+//	        return check;
+	  }
+	
+	  
 }
