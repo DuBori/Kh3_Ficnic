@@ -131,10 +131,10 @@ $(document).ready(function(){
         changeYear: true, //년변경가능
         showMonthAfterYear: true, //년 뒤에 월 표시
         buttonImageOnly: false, //이미지표시
-        yearRange: '2021:2040' //2021년부터 2040년까지,
+        yearRange: '2022:2040' //2022년부터 2040년까지,
     };
-    $("#startDate").datepicker(clareCalendar);
-    $("#endDate").datepicker(clareCalendar);
+    $("#startDt").datepicker(clareCalendar);
+    $("#endDt").datepicker(clareCalendar);
     $("#datePick1").datepicker(clareCalendar);
     $("#datePick2").datepicker(clareCalendar);
     $("#datePick3").datepicker(clareCalendar);
