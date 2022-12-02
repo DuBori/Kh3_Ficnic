@@ -15,6 +15,17 @@
 	}
 	
 </style>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+	
+	$(function() {
+		
+		$(".subbtn").on("click",function(){
+			alert("클릭");
+			if(${boardConf.getBoard_level_comment()} == 'null') return;
+		});
+	});
+</script>
 </head>
 <body>
 <body>
@@ -85,22 +96,25 @@
 		    	<!-- 관리자인 경우 || 자신의 게시글인 경우  ||자신의 게시글 x, 3자인 경우  -->
 		    	<c:choose>
 		    		<c:when test="${BoardConDto.getBdata_writer_id() eq session_id }">
-		    			<a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${boardConf.getBoard_id()}&board_no=${BoardDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
-		    			<a href="<%=request.getContextPath()%>/site/board/board_modify.do?bbs_id=${boardConf.getBoard_id()}&board_no=${BoardDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
-		    			<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${boardConf.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+		    			<a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+		    			<a href="<%=request.getContextPath()%>/site/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
+		    			<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 		    		</c:when>
 		    		<c:when test="${BoardConDto.getBdata_writer_id() eq 'admin' }">
-		    		    <a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${boardConf.getBoard_id()}&board_no=${BoardDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>                
-		        		<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${boardConf.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+		    		    <a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&board_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>                
+		        		<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 		    		</c:when>
 		    		<c:otherwise>
-		       		<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${boardConf.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+		    		<a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+		    		<a href="<%=request.getContextPath()%>/site/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
+		       		<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 		    		</c:otherwise>
 		    	</c:choose>
 		    
 		            
 		    </div>
 		<!-- 버튼 //END -->
+		
 		
 		
 		<!-- 댓글 작업 시작 //START  -->
@@ -177,13 +191,15 @@
 							</div>
 							
 							<div>
-								<input type="submit" value="댓글 등록">
+								<!-- 권한 작성  -->
+								<input type="submit" value="댓글 등록"  class="subbtn">
 							</div>
 						</div>	
 					</c:when>			
 					<c:otherwise>
 						<div>
-							<input type="hidden" name="bcomm_id" value="test5">
+							<h3>현재 비회원</h3>
+							<input type="hidden" name="bcomm_id" value="trash">
 							<div>
 								작성자 이름<input name="bcomm_name"  required="required">
 								비밀번호<input type="password" name="bcomm_pw" required="required">	
@@ -194,7 +210,7 @@
 								</div>
 								
 								<div>
-									<input type="submit" value="댓글 등록">
+									<input type="submit" value="댓글 등록" class="subbtn">
 								</div>
 							</div>		
 						</div>			

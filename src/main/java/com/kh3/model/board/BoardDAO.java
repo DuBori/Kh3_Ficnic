@@ -5,19 +5,26 @@ import java.util.Map;
 
 public interface BoardDAO {
 
+	// 해당 게시판 리스트 출력
 	List<BoardDTO> getBoardList(String bbs_id);
 	
-
+	// 해당 게시판 검색 게시글 개수
 	int getListCount(String field,String keyword,String bbs_id);
 	
+	// 해당 게시판 검색 리스트 출력
 	List<BoardDTO> getBoardList(int startNo, int endNo,Map<String, Object> map);
 
-	int insertBoardCont(BoardDTO dto);
+	// 해당 게시판 게시글 작성
+	int insertBoardCont(Map<String, Object> map);
 
-
+	// 해당 게시글 조회수 증가
 	void updateBoardHit(Map<String, Object> map);
 
+	// 해당 게시판의 해당 게시글 출력 
     BoardDTO getBoardCont(Map<String, Object> map);
 
+	int modifyBoard(Map<String, Object> map);
+
+    // 해당 게시판 수정
 
 }
