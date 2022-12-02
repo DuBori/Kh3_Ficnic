@@ -11,6 +11,7 @@ public class CategoryDTO {
     private String category_id;
     private String category_id_sub;
     private int category_depth;
+    private int category_depth_sub;
     private String category_id_up;
     private int category_rank;
     private String category_name;

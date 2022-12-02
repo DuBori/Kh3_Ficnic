@@ -6,7 +6,7 @@ public interface CategoryDAO {
 
     List<CategoryDTO> getCategoryList();
 
-
+    void setCategoryRank(String cateid, int rank);
 
 
 

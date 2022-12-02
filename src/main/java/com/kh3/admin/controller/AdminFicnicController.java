@@ -1,11 +1,14 @@
 package com.kh3.admin.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eclipse.jdt.internal.compiler.ast.ThisReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -99,6 +102,18 @@ public class AdminFicnicController {
         return "admin/ficnic/category_list";
     }
 
+
+    // 카테고리 정렬 순서 저장
+    @RequestMapping("admin/ficnic/category_rank_ok.do")
+    public void categoryRank(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String[] cateid = request.getParameterValues("category_id[]");
+        for(int i=0; i<cateid.length; i++) {
+            cdao.setCategoryRank(cateid[i], i+1);
+        }
+
+        PrintWriter out = response.getWriter();
+        out.println("<script>location.href='category_list.do';</script>");
+    }
 
 
 

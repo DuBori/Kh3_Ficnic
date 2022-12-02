@@ -1398,6 +1398,128 @@ main .view-form .exchange-goods-footer b {
 
 
 
+/*************************/
+/* .folder-tree
+/*************************/
+.folder-tree {
+    position: relative;
+    list-style: none;
+    overflow: hidden;
+    padding: 10px 30px;
+}
+.folder-tree li {
+    position: relative;
+    display: block;
+    height: auto !important;
+    margin: 0;
+    padding: 3px 0 0 15px;
+    font-size: 14px;
+    color: #333;
+    line-height: normal;
+    z-index: 40;
+    background: url('../images/tree_line_normal.gif') no-repeat;
+}
+.folder-tree .line-minus {
+    background: url('../images/tree_line_minus.gif') no-repeat;
+}
+.folder-tree .line-plus {
+    background: url('../images/tree_line_plus.gif') no-repeat 0 2px;
+}
+.folder-tree .line-normal-end {
+    background: url('../images/tree_line_normal_end.gif') no-repeat;
+}
+.folder-tree .line-minus-end {
+    background: url('../images/tree_line_minus_end.gif') no-repeat;
+}
+.folder-tree .line-plus-end {
+    background: url('../images/tree_line_plus_end.gif') no-repeat;
+}
+.folder-tree .depth01-minus,
+.folder-tree .depth01-plus,
+.folder-tree .depth01-normal {
+    padding-left: 18px;
+    font-weight: 700;
+    color: #1b589b;
+    margin-bottom: 5px;
+}
+.folder-tree .depth01-minus {
+    background: url('../images/tree_folder_minus.gif') no-repeat 0 8px;
+    padding-top: 4px;
+}
+.folder-tree .depth01-plus {
+    background: url('../images/tree_folder_plus.gif') no-repeat 0 8px;
+    padding-top: 4px;
+}
+.folder-tree .depth01-normal {
+    background: url('../images/tree_folder_normal.gif') no-repeat 0 8px;
+    padding-top: 4px;
+}
+.folder-tree .depth02-last {
+    background: url('../images/tree_line_depth2_last.gif') no-repeat;
+    padding-top: 7px;
+}
+.folder-tree .depth02-middle {
+    background: url('../images/tree_line_depth2_middle.gif') no-repeat;
+    padding-top: 7px;
+}
+
+
+.folder-tree .ft-add {
+    position: absolute;
+    right: 0;
+    margin-top: 4px;
+    padding: 0 .25rem;
+    font-size: .775rem;
+    line-height: 1.4;
+    z-index: 42;
+}
+
+
+.folder-tree .ft-title {
+    white-space: nowrap;
+    word-break: nowrap;
+    position: relative;
+    padding-bottom: 3px;
+    cursor: pointer;
+    font-weight: 400;
+    z-index: 41;
+    background: #fff;
+}
+.folder-tree .ft-title span {
+    color: #9c9c9c;
+    vertical-align: middle;
+}
+.folder-tree .ft-title span.name {
+    color: #000;
+}
+.folder-tree .ft-title-large span.name {
+    color: #1B589B;
+    font-weight: 700;
+}
+.folder-tree .ft-title span.count {
+    font-family: 'verdana';
+    font-size: 12px;
+    font-weight: 500;
+}
+.folder-tree .now {
+    color: #000;
+    background: #e2f1ff;
+}
+
+.folder-tree ul.sort-list {
+    display: none;
+}
+
+.folder-tree li.noshow {
+    opacity: 0.6;
+}
+.folder-tree li.noshow .ft-title-large span.name {
+    color: #666;
+}
+
+
+
+
 
 /*************************/
 /* .table-list
