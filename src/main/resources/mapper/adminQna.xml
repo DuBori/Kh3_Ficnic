@@ -7,20 +7,43 @@
 <!-- 관리자 : 1:1문의 관련 -->
 <mapper namespace="qnaDAO">
 
-    <!-- 1:1 문의 목록 -->
-    <select id="adminQnaList" resultType="qnaDTO">
-   	 	select * from qna_list order by qna_no
+
+    <!-- 1:1 문의 총 갯수 -->
+    <select id="adminQnaCount" parameterType="java.util.Map" resultType="int">
+        select count(*) from qna_list q join ficnic_list f on q.ficnic_no = f.ficnic_no where q.qna_no > 0
+        <if test="search_ficnic != ''"> and f.ficnic_name like '%' || #{search_ficnic} || '%'</if>
+        <if test="search_qna != ''"> and q.qna_title like '%' || #{search_qna} || '%'</if>
+        <if test="search_writer != ''"> and (q.qna_name like '%' || #{search_writer} || '%' or q.member_id like '%' || #{search_writer} || '%')</if>
     </select>
+
+
+    <!-- 1:1 문의 목록 -->
+    <select id="adminQnaList" parameterType="java.util.Map" resultType="qnaDTO">
+            select * from(
+                select
+                    row_number() over(order by qna_no desc) rnum,
+                    b.*
+                from (
+                    select * from qna_list q join ficnic_list f on q.ficnic_no = f.ficnic_no where q.qna_no > 0
+                    <if test="search_ficnic != ''"> and f.ficnic_name like '%' || #{search_ficnic} || '%'</if>
+                    <if test="search_qna != ''"> and q.qna_title like '%' || #{search_qna} || '%'</if>
+                    <if test="search_writer != ''"> and (q.qna_name like '%' || #{search_writer} || '%' or q.member_id like '%' || #{search_writer} || '%')</if>
+                ) b
+            )
+        <![CDATA[
+            where rnum >= #{startNo} and rnum <= #{endNo}
+        ]]>
+    </select>
+
 
 	<!-- 문의 상세 보기 -->
 	<select id="adminQnaView" parameterType="int" resultType="qnaDTO">
 		select * from qna_list where qna_no = #{qna_no}
 	</select>
 
+
 	<delete id="adminQnaDelete" parameterType="int">
 		delete from qna_list where qna_no = #{qna_no}
 	</delete>
-	
-	
 
 </mapper>
