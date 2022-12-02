@@ -48,7 +48,63 @@
 	     });
 	})
    
-   
+  		/* 삭제!!!!!!!!!!!!!!!!!! */
+     $(function() {
+	    $(".deleteBtn").on("click", function() {
+	         $.ajax({
+		             type : "post",
+		             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+		             url : "<%=request.getContextPath()%>/admin/qna/comment_delete.do",
+		             data : {
+	            	 comment_no : $("#comment_no").val()
+	            	 },
+	             datatype : "text",
+	             success : function(data) {
+	            	 if(data > 0){
+	            		 location.href="<%=request.getContextPath()%>/admin/qna/qna_view.do?no="+$("#qna_no").val();
+	            	 }else{
+	            		 alert("실패");
+	            	 }
+	             },
+	             error : function() {
+	                 alert("에러발생");
+	            	 alert(comment_no);
+	             }
+	         });
+	     });
+	})
+	   
+ 			<%--  $.ajax({
+	             type : "post",
+	             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	             url : "<%=request.getContextPath()%>/admin/qna/qnaComment_delete.do",
+	             data : { 
+		             qna_no :$("#qna_no").val(),
+	            	 para : $("#comment_no").val()
+	            	 
+	            	 },
+	            	 
+	             datatype : "text",
+	             success : function(data) {
+	            	 if(data>0){
+	            		 alert("클릭");
+	            		 alert(data);
+	            		 $(data).parent().parent().remove();
+	            		 location.href="<%=request.getContextPath()%>/admin/qna/qna_view.do?no="+$("#qna_no").val();
+	            	 }else{
+	            		 alert("실패");
+	            	 }
+	             },
+	             error : function(data) {
+	            	 alert(para);
+	                 alert("에러발생");
+	             } 
+
+	     }); 
+		})
+ 	  }) --%>
+	    	
+	       
 	
 	// 댓글 삭제 에이젝스****************************
 	//***********************************
@@ -115,7 +171,6 @@
 			<table class="table table-bordered">
 
 				<c:if test="${!empty dto}">
-					<h3>문의글 상세 정보</h3>
 					<tr>
 						<th>작성일</th>
 						<td align="left">${dto.qna_date}</td>
@@ -181,7 +236,7 @@
 								<td class="msg">${cdto.comment_content }</td>
 								<td>${cdto.comment_date }</td>
 								<td>
-								<button type="button" class="btn btn-sm btn-outline-danger m-1" id="deleteBtn">삭제</button>
+							 <button type="button" class="btn btn-sm btn-outline-danger m-1 deleteBtn">삭제</button>
 								</td>
 							</tr>
 						</c:forEach>
