@@ -8,10 +8,33 @@
 <mapper namespace="categoryDAO">
 
     <!-- 카테고리 목록 -->
-    <select id="adminCategoryList" resultType="categoryDTO">
+    <resultMap id="cateListMap" type="categoryDTO" autoMapping="true">
+        <id column="category_id" property="category_id" jdbcType="VARCHAR" />
+        <result column="category_name" property="category_name" jdbcType="VARCHAR" />
+        <result column="category_depth" property="category_depth" jdbcType="INTEGER" />
+
+        <collection property="sub_category" ofType="categoryDTO">
+            <id column="category_id_sub" property="category_id_sub" jdbcType="VARCHAR" />
+            <result column="category_name_sub" property="category_name_sub" jdbcType="VARCHAR" />
+            <result column="category_depth_sub" property="category_depth_sub" jdbcType="INTEGER" />
+        </collection>
+    </resultMap>
+
+    <select id="adminCategoryList" resultMap="cateListMap">
+	    select c1.category_id, c1.category_name, c1.category_depth, c2.category_id category_id_sub, c2.category_name category_name_sub, c2.category_depth category_depth_sub
+	    from ficnic_category c1, ficnic_category c2
+	    where 1 = 1
+	    and c1.category_id_up = 'M'
+	    and c1.category_id = c2.category_id_up(+)
+	    and c1.category_depth > 0
+	    order by c1.category_rank asc
     </select>
 
 
+    <!-- 카테고리 정렬 순서 저장 -->
+    <update id="adminCategoryRank" parameterType="java.util.Map">
+        update ficnic_category set category_rank = #{rank} where category_id = #{cateid}
+    </update>
 
 
 

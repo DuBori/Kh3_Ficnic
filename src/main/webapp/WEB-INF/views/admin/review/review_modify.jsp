@@ -46,12 +46,6 @@
                             <div class="jf-input">
                                 <div class="row">
                                     <div class="col py-2">
-                                        <c:forEach begin="1" end="10" var="i">
-                                        <div class="form-check form-check-inline mx-2">
-                                            <input class="form-check-input" type="radio" name="review_point" id="review_point${i}" value="${i}"<c:if test="${dto.review_point == i}"> checked="checked"</c:if> />
-                                            <label class="form-check-label" for="review_point${i}">${i}</label>
-                                        </div>
-                                        </c:forEach>
                                     </div>
                                 </div>
                             </div>
