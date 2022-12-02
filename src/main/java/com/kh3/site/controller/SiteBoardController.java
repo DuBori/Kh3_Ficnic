@@ -11,7 +11,9 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,106 @@ public class SiteBoardController {
 	@Inject
 	private BoardConfDAO board_ConfDao;
 
+	/* 파일 처피 메서드 */
+	private void FileProcess(MultipartHttpServletRequest mrequest, String bbs_id, BoardDTO dto, String uploadPath) {
+		
+		/* 파일처리 START */
+		int cnt=1;
+		Iterator<String> iterator =mrequest.getFileNames();
+		
+		while(iterator.hasNext()) { 
+		 
+		  String uploadFileName = iterator.next();
+		  
+		  MultipartFile mFile = mrequest.getFile(uploadFileName);
+		  
+		  /* 확장자 */
+		  String ext = FilenameUtils.getExtension(mFile.getOriginalFilename());
+		  
+		  String FullFileName = bbs_id+"_"+System.currentTimeMillis()+"_"+mFile.getOriginalFilename();
+		  System.out.println("FullFilename >>> "+FullFileName); 
+		  switch (cnt) { 	
+			  case 1:
+				if(dto.getBdata_file1() !=null) new File(uploadPath+dto.getBdata_file1()+"."+ext).delete(); 
+				dto.setBdata_file1(FullFileName);
+				break;
+			  case 2:
+				if(dto.getBdata_file2() !=null) new File(uploadPath+dto.getBdata_file2()+"."+ext).delete(); 
+				dto.setBdata_file2(FullFileName);  
+				break;
+			  case 3:
+				if(dto.getBdata_file3() !=null) new File(uploadPath+dto.getBdata_file3()+"."+ext).delete(); 
+				dto.setBdata_file3(FullFileName);    
+				break;
+			  case 4:
+				if(dto.getBdata_file3() !=null) new File(uploadPath+dto.getBdata_file4()+"."+ext).delete();  
+				dto.setBdata_file4(FullFileName);    
+				break;
+			  default:
+				break;
+		    }
+			 try { 
+				  File origin = new File(uploadPath+"/"+FullFileName);
+				  // 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 -->  경로 설정임.
+				  mFile.transferTo(origin);
+				  
+			 }catch (Exception e) { // TODO Auto-generated catch block
+				  e.printStackTrace(); 
+			 } 
+		  	 cnt++;
+		  }
+	}
+	private void FileProcess(MultipartHttpServletRequest mrequest, String bbs_id, BoardDTO beforedto, BoardDTO dto,String uploadPath) {
+		/* 파일처리 START */
+		int cnt=1;
+		Iterator<String> iterator =mrequest.getFileNames();
+		System.out.println(beforedto.getBdata_file1());
+		System.out.println(beforedto.getBdata_file2());
+		while(iterator.hasNext()) { 
+		 
+		  String uploadFileName = iterator.next();
+		  
+		  MultipartFile mFile = mrequest.getFile(uploadFileName);
+		  
+		  /* 확장자 */
+		  String ext = FilenameUtils.getExtension(mFile.getOriginalFilename());
+		   
+		  
+		   String FullFileName = bbs_id+"_"+System.currentTimeMillis()+"_"+mFile.getOriginalFilename();
+		  
+		  switch (cnt) { 	
+			  case 1:
+				if(beforedto.getBdata_file1() !=null) new File(uploadPath+beforedto.getBdata_file1()).delete(); 
+				if(mFile !=null) {dto.setBdata_file1(FullFileName); }else { dto.setBdata_file1("");}
+				break;
+			  case 2:
+				if(beforedto.getBdata_file2() !=null) new File(uploadPath+beforedto.getBdata_file2()).delete();
+				if(mFile !=null) {dto.setBdata_file2(FullFileName); }else { dto.setBdata_file2("");}
+				break;
+			  case 3:
+				if(beforedto.getBdata_file3() !=null) new File(uploadPath+beforedto.getBdata_file3()).delete();
+				if(mFile !=null) {dto.setBdata_file3(FullFileName); }else { dto.setBdata_file3("");}    
+				break;
+			  case 4:
+				if(beforedto.getBdata_file3() !=null) new File(uploadPath+beforedto.getBdata_file4()).delete();
+				if(mFile !=null) {dto.setBdata_file4(FullFileName); }else { dto.setBdata_file4("");}     
+				break;
+			  default:
+				break;
+		    }
+			 try { 
+				  File origin = new File(uploadPath+"/"+FullFileName);
+				  // 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 -->  경로 설정임.
+				  mFile.transferTo(origin);
+				  
+			 }catch (Exception e) { // TODO Auto-generated catch block
+				  e.printStackTrace(); 
+			 } 
+		  	 cnt++;
+		  }
+		
+	}
+	
 	// 전체 게시물의 수
 	private int totalRecord = 0;
 
@@ -84,7 +186,7 @@ public class SiteBoardController {
 		PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
 		// 페이지 이동 URL
-		String pageUrl = request.getContextPath() + "site/board/board_list.do?field=" + field + "&keyword=" + keyword;
+		String pageUrl = request.getContextPath() + "/site/board/board_list.do?field=" + field + "&keyword=" + keyword+"&bbs_id="+bbs_id;
 
 		model.addAttribute("List", this.board_Dao.getBoardList(dto.getStartNo(), dto.getEndNo(), searchMap));
 
@@ -103,78 +205,135 @@ public class SiteBoardController {
 
 	/* 해당 게시판 게시글 작성 폼 페이지 이동 메서드 */
 	@RequestMapping("/site/board/board_write.do")
-	public String board_write(HttpServletRequest request, Model model) {
+	public String board_write(HttpSession session,HttpServletRequest request, Model model) {
 
+		
+		
 		String bbs_id = request.getParameter("bbs_id");
 		if (bbs_id == null) bbs_id = "";
 
 		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
 		board_skin = BoardConfdto.getBoard_skin();
 		
-		model.addAttribute("board", BoardConfdto);
-		model.addAttribute("bbs_id", bbs_id);
+		model.addAttribute("boardConfig", BoardConfdto);
 		return "/site/board/" + board_skin + "/board_write";
+	}
+	
+	/* 해당 게시판 게시글 작성 완료 메서드 */
+	@RequestMapping("/site/board/board_write_ok.do")
+	public void board_write_ok(MultipartHttpServletRequest mrequest, HttpServletResponse response, BoardDTO dto) throws IOException {
+		
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		//config 테이블 id
+		String bbs_id=mrequest.getParameter("board_id");
+		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/")+"resources\\data\\board\\"+bbs_id+"\\";
+
+		/* 파일처리 시작 */
+		FileProcess(mrequest, bbs_id, dto, uploadPath);
+		/* 파일처리 END */
+		
+		/* 게시글 작성 작업 START */
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bbs_id", bbs_id);
+		map.put("dto", dto);
+		if(this.board_Dao.insertBoardCont(map)>0) {
+			out.println("<script>location.href='" + mrequest.getContextPath() + "/site/board/board_list.do?bbs_id="+bbs_id+"';</script>");
+		} else {
+			out.println("<script>alert('게시글 작성 실패'); history.back();</script>");
+		}
+		/* 게시글 작성 작업 END */
+			  
 	}
 	/* 해당 게시판 게시글 수정 폼 페이지 이동 */
 	@RequestMapping("/site/board/board_modify.do")
 	public String board_modify(HttpServletRequest request, Model model) {
 		
 		String bbs_id = request.getParameter("bbs_id");
+		
+		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
+		board_skin = BoardConfdto.getBoard_skin();
+
+		int bdata_no = 0;
+		if (request.getParameter("bdata_no") != null) {
+			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
+		}
+		
 		if (bbs_id == null) bbs_id = "";
 		
-		return null;
+		/* 게시글 리스트 출력 */
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bbs_id", bbs_id);
+		map.put("bdata_no", bdata_no);
+
+		BoardDTO boardCont =board_Dao.getBoardCont(map);
+		
+		model.addAttribute("Cont", boardCont);
+		model.addAttribute("boardConfig", BoardConfdto);
+		model.addAttribute("m","m");
+		return "/site/board/" + board_skin + "/board_write";
 	}
-	
-	/* 해당 게시판 게시글 작성 완료 메서드 */
-	@RequestMapping("/site/board/board_write_ok.do")
-	public void board_write_ok(MultipartHttpServletRequest mrequest, HttpServletResponse response, BoardDTO dto) {
-		int cnt=1;
-		//config 테이블 id
-		String bbs_id=mrequest.getParameter("board_id");
+	/*해당 게시판 수정 완료 메서드*/
+	@RequestMapping("/site/board/board_modify_ok.do")
+	public void board_modify_ok(MultipartHttpServletRequest mrequest, BoardDTO dto, HttpServletResponse response) throws IOException {
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		String bbs_id = mrequest.getParameter("bbs_id");
+		if (bbs_id == null) bbs_id = "";
+		
+		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
+		board_skin = BoardConfdto.getBoard_skin();
+		
+		int bdata_no = 0;
+		if (mrequest.getParameter("bdata_no") != null) {
+			bdata_no = Integer.parseInt(mrequest.getParameter("bdata_no"));
+		}
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bbs_id", bbs_id);
+		map.put("bdata_no", bdata_no);
+		map.put("dto", dto);
+		BoardDTO boardCont =  board_Dao.getBoardCont(map);
+		
+		
 		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/")+"resources\\data\\board\\"+bbs_id+"\\";
 
+	
+		/* 기존에 파일 안에 존재하는 파일을 제거해야함 */
+		/* 파일처리 시작 */
+		FileProcess(mrequest, bbs_id, boardCont, dto, uploadPath);
+		/* 파일처리 END */
 		
-		Iterator<String> iterator =mrequest.getFileNames();
+		/* 수정된 내용 업데이트 */
+		if(board_Dao.modifyBoard(map)>0) {
+			out.println("<script>location.href='"+mrequest.getContextPath()+"/site/board/board_view.do?bbs_id="+bbs_id+"&bdata_no="+bdata_no+"';</script>");
+		}else {
+			out.println("<script>alert('게시글 수정 실패'); history.back()</script>");
+		}
 		
-		while(iterator.hasNext()) { 
-		 
-		  String uploadFileName = iterator.next();
-		  
-		  MultipartFile mFlie = mrequest.getFile(uploadFileName);
-		  
-		  String FullFileName = bbs_id+"_"+System.currentTimeMillis()+"_"+mFlie.getOriginalFilename();
-		  System.out.println("FullFilename >>> "+FullFileName); 
-		  switch (cnt) { 	
-			  case 1:
-				dto.setBdata_file1(FullFileName);
-				break;
-			  case 2:
-				dto.setBdata_file2(FullFileName);  
-				break;
-			  case 3:
-				dto.setBdata_file3(FullFileName);    
-				break;
-
-			  default:
-				dto.setBdata_file4(FullFileName);  
-				break;
-		    }
-		  
-			 try { 
-				  File origin = new File(uploadPath+"/"+FullFileName);
-				  // 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 -->  경로 설정임.
-				  mFlie.transferTo(origin);
-				  
-			 }catch (Exception e) { // TODO Auto-generated catch block
-				  e.printStackTrace(); 
-			 } 
-		  	 cnt++;
-		  }
-		
-		  
-		
-			  
 	}
+
+	
+
+	/* 해당 게시글 삭제하기 */
+	@RequestMapping("/site/board/board_delete.do")
+	public void board_delete(HttpServletResponse response) throws IOException {
+		
+		
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		
+		
+	}
+	
+	
 
 
 	/* 게시글 눌렀을 때 이동 메서드 */
@@ -258,7 +417,7 @@ public class SiteBoardController {
 		PrintWriter out = response.getWriter();
 
 		String bbs_id = request.getParameter("bbs_id");
-
+		System.out.println("bbs_id >>> "+ bbs_id);
 		int bdata_no = 0;
 		if (request.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
