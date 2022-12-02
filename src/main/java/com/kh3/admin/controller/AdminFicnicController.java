@@ -116,5 +116,61 @@ public class AdminFicnicController {
     }
 
 
+    // 카테고리 추가
+    @RequestMapping("admin/ficnic/category_write_ok.do")
+    public void categoryWrite(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String ps_ctid = request.getParameter("ps_ctid");
+        String category_show = request.getParameter("category_show");
+        String category_name = request.getParameter("category_name");
+
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int check = cdao.addCategory(ps_ctid, category_show, category_name);
+        if(check > 0) {
+            out.println("<script>location.href='category_list.do';</script>");
+        }else{
+            out.println("<script>alert('카테고리 등록 중 에러가 발생하였습니다.'); history.back();</script>");
+        }
+    }
+
+
+    // 카테고리 수정
+    @RequestMapping("admin/ficnic/category_modify_ok.do")
+    public void categoryModify(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String ps_ctid = request.getParameter("ps_ctid");
+        String category_show = request.getParameter("category_show");
+        String category_name = request.getParameter("category_name");
+
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int check = cdao.modifyCategory(ps_ctid, category_show, category_name);
+        if(check > 0) {
+            out.println("<script>location.href='category_list.do';</script>");
+        }else{
+            out.println("<script>alert('카테고리 수정 중 에러가 발생하였습니다.'); history.back();</script>");
+        }
+    }
+
+
+    // 카테고리 삭제
+    @RequestMapping("admin/ficnic/category_delete.do")
+    public void categoryDelete(@RequestParam("category_no") int category_no, @RequestParam("ps_ctid") String ps_ctid, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int check = cdao.deleteCategory(ps_ctid);
+        if(check > 0) {
+            cdao.updateCategorySeq(category_no);
+            cdao.updateCategoryFicnic(ps_ctid);
+            out.println("<script>location.href='category_list.do';</script>");
+        }else{
+            out.println("<script>alert('카테고리 삭제 중 에러가 발생하였습니다.'); history.back();</script>");
+        }
+    }
+
+
+
 
 }

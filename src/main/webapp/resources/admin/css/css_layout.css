@@ -1518,6 +1518,20 @@ main .view-form .exchange-goods-footer b {
 }
 
 
+.category-form .card-body {
+    min-height: 250px;
+}
+.category-form .card-body .category-mask {
+    position: absolute;
+    width: calc(100% - 3rem);
+    height: calc(100% - 3rem);
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 2;
+}
+
+
+
 
 
 

@@ -3,6 +3,10 @@ drop table ficnic_list purge;
 
 create table ficnic_list(
     ficnic_no number(5) primary key,
+    ficnic_category_no varchar2(8) default '00000000' not null,
+    ficnic_category_sub1 varchar2(8),
+    ficnic_category_sub2 varchar2(8),
+    ficnic_category_sub3 varchar2(8),
     ficnic_name varchar2(100) not null,
     ficnic_market_price number(11) default '0',
     ficnic_sale_price number(11) default '0' not null,
@@ -33,6 +37,10 @@ create table ficnic_list(
 );
 
 comment on column ficnic_list.ficnic_no is '피크닉 번호';
+comment on column ficnic_list.ficnic_category_no is '피크닉 카테고리';
+comment on column ficnic_list.ficnic_category_sub1 is '피크닉 서브 카테고리1';
+comment on column ficnic_list.ficnic_category_sub2 is '피크닉 서브 카테고리2';
+comment on column ficnic_list.ficnic_category_sub3 is '피크닉 서브 카테고리3';
 comment on column ficnic_list.ficnic_name is '피크닉 이름';
 comment on column ficnic_list.ficnic_market_price is '이전 판매가';
 comment on column ficnic_list.ficnic_sale_price is '현재 판매가';
@@ -62,7 +70,7 @@ comment on column ficnic_list.ficnic_sale is '피크닉 판매 갯수';
 comment on column ficnic_list.ficnic_date is '피크닉 등록 일자';
 
 
-insert into ficnic_list values(1, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)', 0, 30000, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)★[11세~대인] 제주고사리파스타★[10세~대인] 제주통밀당근파운드케이크', '30000★27000★30000', '10:00 타임★11:00 타임★13:30 타임★14:30 타임', '0★0★0★0', 'N', null, null, null, null, null, '<dt>연령</dt><dd>11세 이상 권장</dd>★<dt>사용기간</dt><dd>구매일로부터 90일</dd>', '<img src="https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/01_8_fqpvuy.jpg" class="fr-fic fr-dib">', null, null, '제주특별자치도 제주시 애월읍 상귀리 152', '강습비 재료비', '주차 별도 문의', '가벼운 마음', '[신청 시 유의사항]
+insert into ficnic_list values(1, '05000000', null, null, null, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)', 0, 30000, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)★[11세~대인] 제주고사리파스타★[10세~대인] 제주통밀당근파운드케이크', '30000★27000★30000', '10:00 타임★11:00 타임★13:30 타임★14:30 타임', '0★0★0★0', 'N', null, null, null, null, null, '<dt>연령</dt><dd>11세 이상 권장</dd>★<dt>사용기간</dt><dd>구매일로부터 90일</dd>', '<img src="https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/01_8_fqpvuy.jpg" class="fr-fic fr-dib">', null, null, '제주특별자치도 제주시 애월읍 상귀리 152', '강습비 재료비', '주차 별도 문의', '가벼운 마음', '[신청 시 유의사항]
 ① 당일 예약시 현장으로 가능 여부 먼저 확인 후 결제해주세요!!
 
 
