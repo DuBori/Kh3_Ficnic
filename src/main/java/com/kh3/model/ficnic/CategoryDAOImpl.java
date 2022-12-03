@@ -39,7 +39,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     // 카테고리 추가
     @Override
-    public int addCategory(String ps_ctid, String category_show, String category_name) {
+    public int addCategory(String ps_ctid, String category_show, String category_name, String category_image) {
         int category_depth = 1;
         String category_id_up = "M";
 
@@ -80,6 +80,7 @@ public class CategoryDAOImpl implements CategoryDAO {
         dto.setCategory_id_up(category_id_up);
         dto.setCategory_rank(category_rank);
         dto.setCategory_name(category_name);
+        dto.setCategory_image(category_image);
 
         return this.sqlSession.insert("adminCategoryWrite", dto);
     }
@@ -88,13 +89,22 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     // 카테고리 수정
     @Override
-    public int modifyCategory(String ps_ctid, String category_show, String category_name) {
+    public int modifyCategory(String ps_ctid, String category_show, String category_name, String category_image) {
         CategoryDTO dto = new CategoryDTO();
         dto.setCategory_show(category_show);
         dto.setCategory_id(ps_ctid);
         dto.setCategory_name(category_name);
+        dto.setCategory_image(category_image);
 
         return this.sqlSession.update("adminCategoryModify", dto);
+    }
+
+
+
+    // 카테고리 정보
+    @Override
+    public CategoryDTO getCategoryCont(String ps_ctid) {
+        return this.sqlSession.selectOne("adminCategoryCont", ps_ctid);
     }
 
 

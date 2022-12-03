@@ -25,6 +25,7 @@
             <div class="card border input-form">
             	<form name="form_sort" method="post" action="${path}/admin/ficnic/category_rank_ok.do" onsubmit="return confirm('현재 화면에 보이는 순서대로 카테고리가 저장됩니다.\n오른쪽 입력폼에 입력된 내용은 사라집니다.\n\n카테고리 위치를 저장하시겠습니까?');">
             	<input type="hidden" name="ps_ctid" value="" />
+            	<input type="hidden" name="ps_project" value="<%=request.getContextPath()%>" />
                 <div class="card-body p-4">
 					<ul id="sort-list" class="folder-tree">
 						<c:forEach var="cate" items="${clist}">
@@ -58,6 +59,7 @@
 								<input type="hidden" name="category_show[]" value="${cate.getCategory_show()}" />
 								<input type="hidden" name="category_depth[]" value="${cate.getCategory_depth()}" />
 								<input type="hidden" name="category_name[]" value="${cate.getCategory_name()}" />
+								<input type="hidden" name="category_image[]" value="${cate.getCategory_image()}" />
 								<span class="name">${cate.getCategory_name()}${show_big_disshow}</span>
 								${show_big_count}
 							</div>
@@ -111,7 +113,7 @@
                 <div class="card-body p-4">
 					<div class="category-mask"></div>
 
-					<form name="form_write" method="post" action="#">
+					<form name="form_write" method="post" enctype="multipart/form-data" action="#">
 					<input type="hidden" name="ps_ctid" value="" />
 					<h4 id="form-title" class="mb-2">대분류 추가하기</h4>
 
@@ -134,6 +136,21 @@
 							<label for="category_link">카테고리 번호</label>
 							<input type="text" name="category_link" id="category_link" value="" class="form-control-plaintext" readonly="readonly" />
 						</div>
+						<div class="p-0 m-0 cate-img">
+							<div class="w-100"></div>
+	                        <div class="form-group join-form">
+	                            <label for="category_image">카테고리 이미지</label>
+	                            <div class="jf-input">
+	                                <div class="row">
+	                                    <div class="col pb-1">
+	                                    	<input type="file" name="category_image" id="category_image" class="form-control" />
+	                                    	<input type="hidden" name="ori_category_image" value="" />
+	                                    	<div></div>
+	                                    </div>
+	                                </div>
+	                            </div>
+                            </div>
+                        </div>
 	                </div>
 
 					<div class="mt-4 text-center">

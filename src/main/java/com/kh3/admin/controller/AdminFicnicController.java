@@ -1,5 +1,6 @@
 package com.kh3.admin.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -8,16 +9,18 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jdt.internal.compiler.ast.ThisReference;
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh3.model.coupon.CouponDTO;
 import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
+import com.kh3.util.UploadFile;
 
 @Controller
 public class AdminFicnicController {
@@ -28,6 +31,10 @@ public class AdminFicnicController {
     @Inject
     private CategoryDAO cdao;
 
+
+    // 카테고리 업로드 설정
+    private String categoryFolder = "/resources/data/category/";
+    private String categorySaveName = "category";
 
 
     // 한 페이지당 보여질 게시물의 수
@@ -91,7 +98,15 @@ public class AdminFicnicController {
 
 
 
-    
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 
     // 카테고리 관리 목록 페이지
     @RequestMapping("admin/ficnic/category_list.do")
@@ -118,15 +133,24 @@ public class AdminFicnicController {
 
     // 카테고리 추가
     @RequestMapping("admin/ficnic/category_write_ok.do")
-    public void categoryWrite(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String ps_ctid = request.getParameter("ps_ctid");
-        String category_show = request.getParameter("category_show");
-        String category_name = request.getParameter("category_name");
+    public void categoryWrite(MultipartHttpServletRequest mRequest, HttpServletResponse response) throws IOException {
+        String ps_ctid = mRequest.getParameter("ps_ctid");
+        String category_show = mRequest.getParameter("category_show");
+        String category_name = mRequest.getParameter("category_name");
+
+
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        String category_image = null;
+        List<String> upload_list = UploadFile.fileUpload(mRequest, categoryFolder, categorySaveName);
+        if(upload_list.size() > 0) {
+            category_image = upload_list.get(0);
+        }
+
 
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        int check = cdao.addCategory(ps_ctid, category_show, category_name);
+        int check = cdao.addCategory(ps_ctid, category_show, category_name, category_image);
         if(check > 0) {
             out.println("<script>location.href='category_list.do';</script>");
         }else{
@@ -137,15 +161,29 @@ public class AdminFicnicController {
 
     // 카테고리 수정
     @RequestMapping("admin/ficnic/category_modify_ok.do")
-    public void categoryModify(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String ps_ctid = request.getParameter("ps_ctid");
-        String category_show = request.getParameter("category_show");
-        String category_name = request.getParameter("category_name");
+    public void categoryModify(MultipartHttpServletRequest mRequest, HttpServletResponse response) throws IOException {
+        String ps_ctid = mRequest.getParameter("ps_ctid");
+        String category_show = mRequest.getParameter("category_show");
+        String category_name = mRequest.getParameter("category_name");
+
+
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        String category_image = mRequest.getParameter("ori_category_image");
+        List<String> upload_list = UploadFile.fileUpload(mRequest, categoryFolder, categorySaveName);
+        if(upload_list.size() > 0) {
+            // 기존 파일 있으면 삭제 처리
+            if(category_image != null){
+                File del_pimage = new File(mRequest.getSession().getServletContext().getRealPath(category_image));
+                if(del_pimage.exists()) del_pimage.delete();
+            }
+            category_image = upload_list.get(0);
+        }
+
 
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        int check = cdao.modifyCategory(ps_ctid, category_show, category_name);
+        int check = cdao.modifyCategory(ps_ctid, category_show, category_name, category_image);
         if(check > 0) {
             out.println("<script>location.href='category_list.do';</script>");
         }else{
@@ -156,13 +194,21 @@ public class AdminFicnicController {
 
     // 카테고리 삭제
     @RequestMapping("admin/ficnic/category_delete.do")
-    public void categoryDelete(@RequestParam("category_no") int category_no, @RequestParam("ps_ctid") String ps_ctid, HttpServletResponse response) throws IOException {
+    public void categoryDelete(@RequestParam("ps_ctid") String ps_ctid, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
+        CategoryDTO cdto = cdao.getCategoryCont(ps_ctid);
+
+        // 기존 파일 있으면 삭제 처리
+        if(cdto.getCategory_image() != null){
+            File del_pimage = new File(request.getSession().getServletContext().getRealPath(cdto.getCategory_image()));
+            if(del_pimage.exists()) del_pimage.delete();
+        }
+
         int check = cdao.deleteCategory(ps_ctid);
         if(check > 0) {
-            cdao.updateCategorySeq(category_no);
+            cdao.updateCategorySeq(cdto.getCategory_no());
             cdao.updateCategoryFicnic(ps_ctid);
             out.println("<script>location.href='category_list.do';</script>");
         }else{

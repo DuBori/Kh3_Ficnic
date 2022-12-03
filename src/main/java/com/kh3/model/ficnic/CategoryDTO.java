@@ -14,6 +14,7 @@ public class CategoryDTO {
     private String category_id_up;
     private int category_rank;
     private String category_name;
+    private String category_image;
     private List<CategoryDTO> sub_category;
 
 }
