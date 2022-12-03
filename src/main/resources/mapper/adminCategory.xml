@@ -13,6 +13,7 @@
         <result property="category_id" column="category_id" />
         <result property="category_name" column="category_name" />
         <result property="category_depth" column="category_depth" />
+        <result property="category_image" column="category_image" />
 	    <collection property="sub_category" column="category_id" select="adminCategoryListSub" javaType="java.util.ArrayList" ofType="categoryDTO" />
 	</resultMap>
 	 
@@ -50,19 +51,29 @@
     </select>
 
 
+
     <!-- 카테고리 추가 -->
     <insert id="adminCategoryWrite" parameterType="CategoryDTO">
         <selectKey resultType="int" keyProperty="category_no" order="BEFORE">
             select max(category_no) from ficnic_category
         </selectKey>
-        insert into ficnic_category values(#{category_no} + 1, #{category_show}, #{category_id}, #{category_depth}, #{category_id_up}, #{category_rank}, #{category_name})
+        insert into ficnic_category values(#{category_no} + 1, #{category_show}, #{category_id}, #{category_depth}, #{category_id_up}, #{category_rank}, #{category_name}, #{category_image})
     </insert>
+
 
 
     <!-- 카테고리 수정 -->
     <update id="adminCategoryModify" parameterType="CategoryDTO">
-        update ficnic_category set category_show = #{category_show}, category_name = #{category_name} where category_id = #{category_id}
+        update ficnic_category set category_show = #{category_show}, category_name = #{category_name}, category_image = #{category_image} where category_id = #{category_id}
     </update>
+
+
+
+    <!-- 카테고리 정보 가져오기 -->
+    <select id="adminCategoryCont" parameterType="String" resultType="CategoryDTO">
+        select * from ficnic_category where category_id = #{ps_ctid}
+    </select>
+
 
 
     <!-- 카테고리 삭제 -->

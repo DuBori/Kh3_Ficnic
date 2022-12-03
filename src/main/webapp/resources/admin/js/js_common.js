@@ -56,6 +56,11 @@ cateFormReset = function(){
     f.find("input:radio[name='category_show']:radio[value='Y']").prop("checked", true);
     f.find("input[name='category_name']").val("").focus();
     f.find("input[name='category_link']").val("");
+    f.find("input[name='category_image']").val("");
+    f.find("input[name='ori_category_image']").val("");
+
+    $(".category-form .card-body .cate-img").hide();
+    $(".category-form .card-body .cate-img .join-form .jf-input .row .col > div").html("");
 
     $(".category-form .card-body .btn-outline-danger").attr("href", "").hide();
     $("#form-btn").removeClass("btn-success").addClass("btn-primary").html("<i class=\"fa fa-pencil\"></i> 추가하기");
@@ -74,6 +79,7 @@ cateFormAdd = function(){
     $("form[name='form_write']").attr("action", "category_write_ok.do");
     $("form[name='form_write'] input[name='ps_ctid']").val("00000000");
     $(".category-form .card-body .category-mask").hide();
+    $(".category-form .card-body .cate-img").show();
 }
 
 
@@ -135,6 +141,8 @@ $(document).ready(function(){
             var get_show = $(this).parent().find(".ft-title input[name='category_show[]']").val();
             var get_depth = $(this).parent().find(".ft-title input[name='category_depth[]']").val();
             var get_name = $(this).parent().find(".ft-title input[name='category_name[]']").val();
+            var get_image = $(this).parent().find(".ft-title input[name='category_image[]']").val();
+            var get_project = $("form[name='form_sort'] input[name='ps_project']").val();
 
             $("#form-title").html("<b>["+get_name+"]</b> 카테고리 수정/삭제");
             $(".category-list .cl-form .clf-mask").hide();
@@ -146,7 +154,15 @@ $(document).ready(function(){
             f.find("input[name='category_name']").val(get_name).focus();
             f.find("input[name='category_link']").val(get_ctid);
 
-            $(".category-form .card-body .btn-outline-danger").attr("href", "category_delete.do?category_no="+get_category_no+"&ps_ctid="+get_ctid).show();
+            if(get_depth == 1){
+                $(".category-form .card-body .cate-img").show();
+                if(get_image != ""){
+                    $(".category-form .card-body .cate-img .join-form .jf-input .row .col > div").html("<img src=\""+get_project+get_image+"\" alt=\"\" />");
+                    f.find("input[name='ori_category_image']").val(get_image);
+                }
+            }
+
+            $(".category-form .card-body .btn-outline-danger").attr("href", "category_delete.do?ps_ctid="+get_ctid).show();
             $("#form-btn").removeClass("btn-primary").addClass("btn-success").html("<i class=\"fa fa-save\"></i> 수정하기");
             $(".category-form .card-body .category-mask").hide();
         }
