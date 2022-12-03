@@ -3,15 +3,19 @@ package com.kh3.admin.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -140,21 +144,43 @@ public class AdminMemberController {
     
     // 회원 등록 하는 메핑
     @RequestMapping("admin/member/memberWriteOk.do")
-    public void writeOk(MemberDTO dto, PointDTO pdto, HttpServletResponse response) throws IOException {
-        int check = this.dao.writeOkMember(dto);
-
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-
-            if (check > 0) {
-                // 회원 가입 포인트 적립
-                this.pdao.joinPoint(pdto);
-                out.println("<script>alert('회원 등록 되었습니다.'); location.href='member_list.do';</script>");
-            } else {
-                out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
-            }
-        
+    public void writeOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto, HttpServletResponse response) throws IOException {
+    	response.setContentType("text/html; charset=UTF-8");
+    	PrintWriter out = response.getWriter();
+    	
+    	// 비밀번호 일치 확인
+    	if(!dto.getMember_pw().equals(dto.getMember_pw_re())) {
+			out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
+    	}
+    	// 유효성 검사
+    	if(result.hasErrors()) {
+			List<ObjectError> list = result.getAllErrors();
+			
+			for (ObjectError error : list) {
+				if(error.getDefaultMessage().equals("idchk")) {	
+					out.println("<script>alert('사용 할수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); history.back();</script>"); break;
+				}else if(error.getDefaultMessage().equals("id")) {
+					out.println("<script>alert('아이디를 6자 이상 입력해주세요.'); history.back();</script>"); break;
+				}else if(error.getDefaultMessage().equals("name")) {
+					out.println("<script>alert('이름을 2~8자 사이로 입력해주세요.'); history.back();</script>"); break;
+				}else if(error.getDefaultMessage().equals("pw")) {
+					out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>"); break;
+				}else if(error.getDefaultMessage().equals("email")) {
+					out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
+				}else if(error.getDefaultMessage().equals("phone")) {
+					out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
+				}
+			}
+    	}else {		// 이상 없을 때 실행
+    		int check = this.dao.writeOkMember(dto);
+    		if (check > 0) {
+    			// 회원 가입 포인트 적립
+    			this.pdao.joinPoint(pdto);
+    			out.println("<script>alert('회원 등록 되었습니다.'); location.href='member_list.do';</script>");
+    		} else {
+    			out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
+    		}
+    	}
     }
 
 
@@ -190,47 +216,119 @@ public class AdminMemberController {
 
     // 회원 정보 수정하는 메핑
     @RequestMapping("admin/member/member_modifyOk.do")
-    public void modifyOk(MemberDTO dto, PointDTO pdto, @RequestParam("pw") String member_pw,
+    public void modifyOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto, @RequestParam("pw") String member_pw,
             @RequestParam("point") int member_point, HttpServletResponse response) throws IOException {
 
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+    	// 비밀번호 일치 확인
+    	if(!member_pw.equals(dto.getMember_pw_re())) {
+			out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
+    	}else if(member_pw.length() > 0) {
+            // 새로운 비밀번호로 수정
+    		 dto.setMember_pw(member_pw);
+    	        // 유효성 검사
+    	        if(result.hasErrors()) {
+    				List<ObjectError> list = result.getAllErrors();
 
-        int point_add = 0;
-        String point_type = "plus";
+    				for (ObjectError error : list) {
+    					if(error.getDefaultMessage().equals("pw_re")) {
+    						System.out.println("번호 ====== " + dto.getMember_pw());
+    						out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>"); break;
+    					}else if(error.getDefaultMessage().equals("name")) {
+    						out.println("<script>alert('이름을 2~8자 사이로 입력해주세요.'); history.back();</script>"); break;
+    					}else if(error.getDefaultMessage().equals("email")) {
+    						out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
+    					}else if(error.getDefaultMessage().equals("phone")) {
+    						out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
+    					}
+    				}
+    	        }
+    	        int point_add = 0;
+    	        String point_type = "plus";
 
-        // 적립금 빼기
-        if (dto.getMember_point() > member_point) {
-            point_add = dto.getMember_point() - member_point;
-            point_type = "minus";
-            // 적립금 더하기
-        } else if (dto.getMember_point() < member_point) {
-            point_add = member_point - dto.getMember_point();
-        }
+    	        // 적립금 빼기
+    	        if (dto.getMember_point() > member_point) {
+    	            point_add = dto.getMember_point() - member_point;
+    	            point_type = "minus";
+    	            // 적립금 더하기
+    	        } else if (dto.getMember_point() < member_point) {
+    	            point_add = member_point - dto.getMember_point();
+    	        }
 
-        // pointDTO에 저장
-        pdto.setPoint_add(point_add);
-        pdto.setPoint_type(point_type);
-        // memberDTO에 저장
-        dto.setMember_point(member_point);
+    	        // pointDTO에 저장
+    	        pdto.setPoint_add(point_add);
+    	        pdto.setPoint_type(point_type);
+    	        // memberDTO에 저장
+    	        dto.setMember_point(member_point);
 
-        // 새로운 비밀번호로 수정
-        if (member_pw.length() > 0) {
-            dto.setMember_pw(member_pw);
-        }
 
-        int check = this.dao.modifyOk(dto);
-        if (check > 0) {
-            // 적립금이 바뀌면 실행
-            if (pdto.getPoint_add() > 0) {
-                // 관리자 수정 포인트 적립
-                this.pdao.modifyPoint(pdto);
+
+    	        int check = this.dao.modifyOk(dto);
+    	        if (check > 0) {
+    	            // 적립금이 바뀌면 실행
+    	            if (pdto.getPoint_add() > 0) {
+    	                // 관리자 수정 포인트 적립
+    	                this.pdao.modifyPoint(pdto);
+    	            }
+    	            out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='member_list.do';</script>");
+    	        } else {
+    	            out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
+    	        }
+    	        
+    	}else {	// 기존에 가지고 있던 비밀번호로 수정
+            // 유효성 검사
+            if(result.hasErrors()) {
+    			List<ObjectError> list = result.getAllErrors();
+
+    			for (ObjectError error : list) {
+    				if(error.getDefaultMessage().equals("name")) {
+    					out.println("<script>alert('이름을 2~8자 사이로 입력해주세요.'); history.back();</script>"); break;
+    				}else if(error.getDefaultMessage().equals("email")) {
+    					out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
+    				}else if(error.getDefaultMessage().equals("phone")) {
+    					out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
+    				}
+    			}
             }
-            out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='member_list.do';</script>");
-        } else {
-            out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
-        }
+            int point_add = 0;
+            String point_type = "plus";
 
+            // 적립금 빼기
+            if (dto.getMember_point() > member_point) {
+                point_add = dto.getMember_point() - member_point;
+                point_type = "minus";
+                // 적립금 더하기
+            } else if (dto.getMember_point() < member_point) {
+                point_add = member_point - dto.getMember_point();
+            }
+
+            // pointDTO에 저장
+            pdto.setPoint_add(point_add);
+            pdto.setPoint_type(point_type);
+            // memberDTO에 저장
+            dto.setMember_point(member_point);
+
+
+
+            int check = this.dao.modifyOk(dto);
+            if (check > 0) {
+                // 적립금이 바뀌면 실행
+                if (pdto.getPoint_add() > 0) {
+                    // 관리자 수정 포인트 적립
+                    this.pdao.modifyPoint(pdto);
+                }
+                out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='member_list.do';</script>");
+            } else {
+                out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
+            }
+            
+    	}
+    	
+
+        
     }
-
+    
+    
 }

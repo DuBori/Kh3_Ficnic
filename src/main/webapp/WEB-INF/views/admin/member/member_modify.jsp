@@ -4,47 +4,6 @@
 <%@ include file="../layout/layout_header.jsp" %>
 <script type="text/javascript">
 $("#header .navbar .nav-item:nth-child(3)").addClass("active");
-
-join_check = function(){
-    var form = document.write_form;
-
-    // 비밀번호 체크
-    if(form.member_pw_chg.value.length > 0 && form.member_pw_chg_re.value.length > 0){
-        let pwd_pattern = /^(?=.*[a-zA-Z])(?=.*[!@#$%^~*+=-])(?=.*[0-9]).{8,20}$/;
-        if(form.member_pw_chg.value != form.member_pw_chg_re.value){
-            alert("[비밀번호]가 일치하지 않습니다.");
-            form.member_pw_chg.focus();
-            return false;
-        }
-        if(pwd_pattern.test(form.member_pw_chg.value)) {
-            if(pwd_pattern.test(form.member_pw_chg_re.value)) {
-                return true;
-            }else{
-                alert("[비밀번호 확인]이 조건에 맞지 않습니다.");
-                return false;
-            }
-        }else {
-            alert("[비밀번호]가 조건에 맞지 않습니다.");
-            return false;
-        }        
-    } 
-
-    if(form.member_email.value == ""){
-        alert("[이메일]을 입력해 주세요.");
-        form.member_email.focus();
-        return false;
-    }
-
-    // 이메일 형식 체크
-    var TEmailChk = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    if(form.member_email.value.match(TEmailChk) != null){
-    }else{
-        alert("잘못된 이메일 형식입니다.\n[이메일]을 다시 입력해 주세요.");
-        form.member_email.focus();
-        return false;
-    }
-    form.submit();
-};
 </script>
 
 
@@ -64,7 +23,7 @@ join_check = function(){
 
 
 
-<form name="form_input" method="post" action="<%=request.getContextPath() %>/admin/member/member_modifyOk.do?no=${dto.getMember_no()}" onsubmit="return join_check();">
+<form name="form_input" method="post" action="<%=request.getContextPath() %>/admin/member/member_modifyOk.do?no=${dto.getMember_no()}" >
 <input type="hidden" name="member_pw" value="${dto.getMember_pw()}" />
 <input type="hidden" name="member_point" value="${dto.getMember_point()}" />
 <div class="page-cont">
@@ -100,7 +59,7 @@ join_check = function(){
                         </div>
                         <div class="form-group col-sm mb-2">
                             <label for="member_pw_chg_re">비밀번호 변경 확인</label>
-                            <input type="password" name="member_pw_chg_re" id="member_pw_chg_re" class="form-control w-50" />
+                            <input type="password" name="member_pw_re" id="member_pw_re" class="form-control w-50" />
                         </div>
 
                         <div class="w-100 border-bottom"></div>
