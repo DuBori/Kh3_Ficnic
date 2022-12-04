@@ -48,94 +48,30 @@
 	     });
 	})
    
-  		/* 삭제!!!!!!!!!!!!!!!!!! */
+  	// 댓글 삭제 에이젝스
      $(function() {
 	    $(".deleteBtn").on("click", function() {
+	    	let comment_no = $(this).val();
 	         $.ajax({
 		             type : "post",
 		             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 		             url : "<%=request.getContextPath()%>/admin/qna/comment_delete.do",
-		             data : {
-	            	 comment_no : $("#comment_no").val()
-	            	 },
+		             data : { comment_no : comment_no },
 	             datatype : "text",
-	             success : function(data) {
+	             success : function(data){
 	            	 if(data > 0){
 	            		 location.href="<%=request.getContextPath()%>/admin/qna/qna_view.do?no="+$("#qna_no").val();
 	            	 }else{
 	            		 alert("실패");
 	            	 }
 	             },
-	             error : function() {
+	             error : function(data) {
 	                 alert("에러발생");
-	            	 alert(comment_no);
 	             }
 	         });
 	     });
 	})
 	   
- 			<%--  $.ajax({
-	             type : "post",
-	             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-	             url : "<%=request.getContextPath()%>/admin/qna/qnaComment_delete.do",
-	             data : { 
-		             qna_no :$("#qna_no").val(),
-	            	 para : $("#comment_no").val()
-	            	 
-	            	 },
-	            	 
-	             datatype : "text",
-	             success : function(data) {
-	            	 if(data>0){
-	            		 alert("클릭");
-	            		 alert(data);
-	            		 $(data).parent().parent().remove();
-	            		 location.href="<%=request.getContextPath()%>/admin/qna/qna_view.do?no="+$("#qna_no").val();
-	            	 }else{
-	            		 alert("실패");
-	            	 }
-	             },
-	             error : function(data) {
-	            	 alert(para);
-	                 alert("에러발생");
-	             } 
-
-	     }); 
-		})
- 	  }) --%>
-	    	
-	       
-	
-	// 댓글 삭제 에이젝스****************************
-	//***********************************
-	
-	<%-- $(function() {
-		$("#deleteBtn").on("click", function() {
-	  let categoryNo = $(this).attr("value")
-	  let imgObj = $(this);
-
-	  $.ajax({
-	    url: "<%=request.getContextPath()%>/admin/qna/qnaComment_delete.do" + categoryNo,
-	    type: "POST",
-	    data: {},
-	    dataType: "text",
-	    success: function( result ){
-	      if( result ){
-	        // 삭제 버튼을 누른 row 제거
-	        $(imgObj).parent().parent().remove();
-	      }
-	    },
-	    error: function( err ){
-	    	alert("에러발생");
-	    }
-	  })
-	})
-		}) --%>
-
-
-
-
-   
 	</script>
 </head>
 <body>
@@ -236,7 +172,7 @@
 								<td class="msg">${cdto.comment_content }</td>
 								<td>${cdto.comment_date }</td>
 								<td>
-							 <button type="button" class="btn btn-sm btn-outline-danger m-1 deleteBtn">삭제</button>
+							 <button type="button" class="btn btn-sm btn-outline-danger m-1 deleteBtn" name="comment_no" value="${cdto.comment_no }">삭제</button>
 								</td>
 							</tr>
 						</c:forEach>
