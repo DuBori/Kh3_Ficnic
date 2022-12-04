@@ -30,9 +30,17 @@
        </selectKey>
        
        insert into board_comment_${bbs_id} values(#{dto.bcomm_no}+1,#{dto.bdata_no},#{dto.bcomm_id},#{dto.bcomm_pw},#{dto.bcomm_name},#{dto.bcomm_cont},sysdate)
-	
 	</insert>
+	
+	<update id="SiteBoardCommentCount" parameterType="map">
+		
+		update board_data_${bbs_id} set bdata_comment=bdata_comment+#{upDown} where bdata_no = #{bdata_no}
+	</update>
 
-
+	<!-- 해당 게시판 > 해당 게시글의 댓글 모두 삭제 -->
+	<delete id="SiteBoardCommDelList" parameterType="map">
+		delete from board_comment_${bbs_id} where bdata_no = #{bdata_no}
+	</delete>
+	
 
 </mapper>

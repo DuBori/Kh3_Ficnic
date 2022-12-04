@@ -22,9 +22,13 @@ public interface BoardDAO {
 
 	// 해당 게시판의 해당 게시글 출력 
     BoardDTO getBoardCont(Map<String, Object> map);
-
+    
+    // 해당 게시판 수정
 	int modifyBoard(Map<String, Object> map);
 
-    // 해당 게시판 수정
+	// 해당 게시판 삭제
+	int deleteBoard(Map<String, Object> map);
+
+    
 
 }

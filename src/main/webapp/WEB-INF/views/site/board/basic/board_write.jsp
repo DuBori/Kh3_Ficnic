@@ -62,9 +62,12 @@
 			<c:if test="${!empty session_id }"> <input type="hidden" name="bdata_writer_id" value="${bdata_writer_id}" ></c:if>
 		<table border="1" cellspacing="0">
 		
+			<!-- 게시물 카테고리 설정  -->
+			<c:if test="${conf.getBoard_use_category() eq 'Y' }">	
 			<tr>
 				<th>게시물 카테고리 번호</th>
 				<td>
+					<!-- 카테고리 작업 끝나면 수정 예정 (리스트) -->
 					<select name="bdata_category">
 						<option value="1" <c:if test="${!empty category and category eq '1'}">selected</c:if> >쓰레기값1</option>
 						<option value="2" <c:if test="${!empty category and category eq '2'}">selected</c:if> >쓰레기값2</option>
@@ -72,6 +75,7 @@
 					</select>
 				</td>
 			</tr>
+			</c:if>
 			
 			<tr>
 				<th>글작성 옵션</th>
@@ -85,17 +89,20 @@
 				 		<input type="hidden" value="N" name="bdata_use_notice">
 				 	</c:if> 
 				 	
-				 	<!-- 게시판 설정값 -->
-				 	<c:if test="${conf.getBoard_use_secret() eq 'Y'}">
-				 		<input type="checkbox" value="Y" name="bdata_use_secret" <c:if test="${!empty category and category eq '1'}">selected</c:if> >비밀글 사용여부
-				 	</c:if>  
-				 	<c:if test="${conf.getBoard_use_secret() ne 'Y'}">
-				 		<input type="hidden" value="N" name="bdata_use_secret">
+				 	<!-- 게시판 비밀글 설정 -->
+				 	<c:if test="${conf.getBoard_use_only_secret() eq 'Y'}">
+				 		<input type="checkbox" value="Y" disabled="disabled" checked="checked" name="bdata_use_secret">비밀글 사용
 				 	</c:if>  
 				 	
-				 	<c:if test="${conf.getBoard_use_only_secret() eq 'Y'}">
-				 		<input type="checkbox" value="Y" disabled="disabled" checked="checked" name="bdata_use_secret">비밀글
-				 	</c:if>  
+				 	<c:if test="${conf.getBoard_use_only_secret() ne 'Y'}">
+					 	<c:if test="${conf.getBoard_use_secret() eq 'Y'}">
+					 		<input type="checkbox" value="Y" name="bdata_use_secret" <c:if test="${secret eq 'Y'}">checked</c:if> >비밀글 사용
+					 	</c:if>  
+					 	<c:if test="${conf.getBoard_use_secret() ne 'Y'}">
+					 		<input type="hidden" value="N" name="bdata_use_secret">
+					 	</c:if>  
+				 	</c:if>
+				 	
 				 </td>
 			</tr>
 			<tr>

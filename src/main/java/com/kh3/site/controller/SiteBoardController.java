@@ -1,7 +1,9 @@
 package com.kh3.site.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,7 +43,7 @@ public class SiteBoardController {
 	@Inject
 	private BoardConfDAO board_ConfDao;
 
-
+	/* 게시물 파일 처리  */
 	private void FileProcess(MultipartHttpServletRequest mrequest, String bbs_id, BoardDTO beforedto, BoardDTO Currentdto,String uploadPath) {
 		/* 파일처리 START */
 		int cnt=1;
@@ -279,14 +281,35 @@ public class SiteBoardController {
 
 	/* 해당 게시글 삭제하기 */
 	@RequestMapping("/site/board/board_delete.do")
-	public void board_delete(HttpServletResponse response) throws IOException {
-		
-		
+	public void board_delete(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 		
+		String bbs_id="";
+		int bdata_no = 0;
+		/* 처리할 것  해당 게시판 게시글 삭제 및 댓글 삭제 */
+		if(request.getParameter("bbs_id")!=null) {
+			bbs_id = request.getParameter("bbs_id");
+		}
+		if(request.getParameter("bdata_no") !=null){
+			bdata_no=Integer.parseInt(request.getParameter("bdata_no"));
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bbs_id", bbs_id);
+		map.put("bdata_no", bdata_no);
 		
+		
+		
+		/* 해당 게시글 삭제 */
+		if(this.board_Dao.deleteBoard(map)>0) {
+			/* 해당 게시글 댓글 삭제 */
+			this.board_CommDao.deleteBoardCommList(map);
+			out.println("<script>location.href='" + request.getContextPath() + "/site/board/board_list.do?bbs_id="+bbs_id+"';</script>");
+		}else {
+			out.println("<script>alert('게시글 삭제 실패'); history.back()</script>");
+			
+		}
 		
 	}
 	
@@ -296,12 +319,45 @@ public class SiteBoardController {
 	/* 게시글 눌렀을 때 이동 메서드 */
 	@RequestMapping("/site/board/board_view.do")
 	public String board_view(HttpServletRequest request, Model model) {
-		String bbs_id = request.getParameter("bbs_id");
 
 		int bdata_no = 0;
 		if (request.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
 		}
+		String field = request.getParameter("field");
+		String keyword = request.getParameter("keyword");
+		String bbs_id = request.getParameter("bbs_id");
+
+		/* 해당 게시판 설정 DTO */
+		// 해당 게시물 설정값 가져오기
+		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
+		board_skin = BoardConfdto.getBoard_skin();
+		
+		// 한 페이지당 보여질 게시물의 수 -> 해당 게시물 설정값 가져와야한다.
+		int rowsize = BoardConfdto.getBoard_list_num();
+
+		if (field == null)
+			field = "";
+		if (keyword == null)
+			keyword = "";
+
+		// 페이징 처리
+		int page; // 현재 페이지 변수
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		} else {
+			page = 1;
+		}
+
+		totalRecord = this.board_Dao.getListCount(field, keyword, bbs_id);
+
+		// 페이징 DTO
+
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("field", field);
+		searchMap.put("keyword", keyword);
+		searchMap.put("bbs_id", bbs_id);
+
 
 		/* 게시글 리스트 출력 */
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -318,10 +374,19 @@ public class SiteBoardController {
 		List<BoardCommentDTO> BoardCommentList = board_CommDao.getBoardCommList(map);
 
 		/* 게시글 설정값 DTO */
-		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
-		board_skin = BoardConfdto.getBoard_skin();
+		
+		/* 해당 게시판 리스트 출력 */
+		List<BoardDTO> List =  board_Dao.getBoardList(bbs_id);
+
+		
+		PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
+
+		// 페이지 이동 URL
+		String pageUrl = request.getContextPath() + "/site/board/board_list.do?field=" + field + "&keyword=" + keyword+"&bbs_id="+bbs_id;
+
 		
 		// 해당 게시판 해당 게시글 내용
+		model.addAttribute("List", List);
 		model.addAttribute("BoardConDto", BoardConDto);
 		model.addAttribute("boardCommentList", BoardCommentList);
 
@@ -329,7 +394,15 @@ public class SiteBoardController {
 		/* 게시글 설정값 DTO */
 		model.addAttribute("boardConf", BoardConfdto);
 
+		/* 페이징처리 */
+		model.addAttribute("totalCount", totalRecord);
+		model.addAttribute("paging", dto);
+		model.addAttribute("field", field);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("pagingWrite",Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
+		
 		return "/site/board/" + board_skin + "/board_view";
+		
 	}
 
 	/* 해당 게시판 댓글 삭제하기 */
@@ -357,8 +430,11 @@ public class SiteBoardController {
 		map.put("bbs_id", bbs_id);
 		map.put("bdata_no", bdata_no);
 		map.put("bcomm_no", bcomm_no);
+		map.put("upDown", -1);
 
 		if (board_CommDao.deleteBoardComm(map) > 0) {
+			/* 게시글 댓글 개수 증가처리 */
+			this.board_CommDao.updateCommentCount(map);
 			out.println("<script>location.href='" + request.getContextPath() + "/site/board/board_view.do?bbs_id="+bbs_id+"&bdata_no="+bdata_no+"';</script>");
 		} else {
 			out.println("<script>alert('댓글 삭제 실패'); history.back();</script>");
@@ -384,13 +460,52 @@ public class SiteBoardController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bbs_id", bbs_id);
 		map.put("dto",dto);
+		map.put("bdata_no", bdata_no);
+		map.put("upDown", +1);
 		 
 		if(board_CommDao.insertBoardComm(map)>0) {
+			/* 게시글 댓글 개수 감소처리 */
+			this.board_CommDao.updateCommentCount(map);
 			out.println("<script>location.href='" + request.getContextPath() + "/site/board/board_view.do?bbs_id="+bbs_id+"&bdata_no="+bdata_no+"';</script>");
 		}else {
-			
+			out.println("<script>alert('댓글 등록 실패'); history.back();</script>");
 		}
 		
+	}
+	
+	@RequestMapping("/site/board/board_download.do")
+	public void board_download(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		/* 게시글 접근 변수, 해당 게시글 번호 변수 bdata_no 해당 댓글 번호 bcomm_no 필요 */
+		String bbs_id = request.getParameter("bbs_id");
+		String fileName = request.getParameter("file");
+		
+		int bdata_no = 0;
+		
+		if (request.getParameter("bdata_no") != null) {
+			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
+		}
+		
+		String uploadPath = request.getSession().getServletContext().getRealPath("/resources/data/board/"+bbs_id+"/");
+		String downloadFile = uploadPath+fileName;
+		
+		OutputStream out = response.getOutputStream();
+		
+		File file = new File(downloadFile);
+		response.setHeader("Cache-Control", "no-cache");
+		response.addHeader("Content-disposition", "attachement; fileName="+fileName);
+		
+		FileInputStream in = new FileInputStream(file);
+		byte[] buffer = new byte[1024*8];
+		
+		while(true) {
+			int cnt = in.read(buffer);
+			
+			if(cnt==-1) break;
+			out.write(buffer,0,cnt);
+		}
+		in.close();
+		out.close();
 	}
 
 }

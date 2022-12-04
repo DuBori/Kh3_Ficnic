@@ -44,8 +44,6 @@ public class BoardDAOImpl implements BoardDAO {
 	/* 해당 게시판 > 게시글 작성 */
 	@Override
 	public int insertBoardCont(Map<String, Object> map) {
-		
-		
 		return this.sqlSession.insert("SiteBoardInsert",map);
 	}
 	
@@ -67,6 +65,12 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int modifyBoard(Map<String, Object> map) {
 		return this.sqlSession.update("SiteBoardUpdate", map);
+	}
+
+	/* 해당 게시판 삭제 */
+	@Override
+	public int deleteBoard(Map<String, Object> map) {
+		return this.sqlSession.delete("SiteBoardDelete", map);
 	}
 
 
