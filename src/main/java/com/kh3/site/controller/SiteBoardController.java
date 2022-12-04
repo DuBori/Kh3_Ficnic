@@ -41,103 +41,60 @@ public class SiteBoardController {
 	@Inject
 	private BoardConfDAO board_ConfDao;
 
-	/* 파일 처피 메서드 */
-	private void FileProcess(MultipartHttpServletRequest mrequest, String bbs_id, BoardDTO dto, String uploadPath) {
-		
+
+	private void FileProcess(MultipartHttpServletRequest mrequest, String bbs_id, BoardDTO beforedto, BoardDTO Currentdto,String uploadPath) {
 		/* 파일처리 START */
 		int cnt=1;
-		Iterator<String> iterator =mrequest.getFileNames();
+		Iterator<String> FileList =mrequest.getFileNames();
 		
-		while(iterator.hasNext()) { 
-		 
-		  String uploadFileName = iterator.next();
-		  
+		
+		while(FileList.hasNext()) { 
+			
+		  // 파일 유무 확인
+		  String uploadFileName = FileList.next();
 		  MultipartFile mFile = mrequest.getFile(uploadFileName);
 		  
-		  /* 확장자 */
-		  String ext = FilenameUtils.getExtension(mFile.getOriginalFilename());
-		  
-		  String FullFileName = bbs_id+"_"+System.currentTimeMillis()+"_"+mFile.getOriginalFilename();
-		  System.out.println("FullFilename >>> "+FullFileName); 
-		  switch (cnt) { 	
+		  if(!mFile.getOriginalFilename().equals("")) {
+			  
+			  // 파일 이름 정리
+			  String uploadFileExt = FilenameUtils.getExtension(mFile.getOriginalFilename());
+			  int extLength = uploadFileExt.length();
+			  String realFileName = bbs_id+"_"+mFile.getOriginalFilename().substring(0, extLength)+"_"+System.currentTimeMillis()+"."+uploadFileExt;
+			  
+			  switch (cnt) { 	 
 			  case 1:
-				if(dto.getBdata_file1() !=null) new File(uploadPath+dto.getBdata_file1()+"."+ext).delete(); 
-				dto.setBdata_file1(FullFileName);
+				if(Currentdto !=null ) { new File(uploadPath+beforedto.getBdata_file1()).delete(); Currentdto.setBdata_file1(realFileName); }else {beforedto.setBdata_file1(realFileName); }
 				break;
 			  case 2:
-				if(dto.getBdata_file2() !=null) new File(uploadPath+dto.getBdata_file2()+"."+ext).delete(); 
-				dto.setBdata_file2(FullFileName);  
+				if(Currentdto !=null) { new File(uploadPath+beforedto.getBdata_file2()).delete(); Currentdto.setBdata_file2(realFileName); }else {beforedto.setBdata_file2(realFileName); }
 				break;
-			  case 3:
-				if(dto.getBdata_file3() !=null) new File(uploadPath+dto.getBdata_file3()+"."+ext).delete(); 
-				dto.setBdata_file3(FullFileName);    
+			  case 3: 
+				if(Currentdto !=null) { new File(uploadPath+beforedto.getBdata_file3()).delete(); Currentdto.setBdata_file3(realFileName); }else {beforedto.setBdata_file3(realFileName); }    
 				break;
 			  case 4:
-				if(dto.getBdata_file3() !=null) new File(uploadPath+dto.getBdata_file4()+"."+ext).delete();  
-				dto.setBdata_file4(FullFileName);    
+				if(Currentdto !=null) { new File(uploadPath+beforedto.getBdata_file4()).delete(); Currentdto.setBdata_file4(realFileName); }else {beforedto.setBdata_file4(realFileName); }     
 				break;
 			  default:
 				break;
-		    }
+			  }
 			 try { 
-				  File origin = new File(uploadPath+"/"+FullFileName);
+				  File origin = new File(uploadPath+realFileName);
 				  // 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 -->  경로 설정임.
 				  mFile.transferTo(origin);
 				  
 			 }catch (Exception e) { // TODO Auto-generated catch block
 				  e.printStackTrace(); 
-			 } 
-		  	 cnt++;
+			 	} 
+		  
+		  	} // 사용자가 파일을 등록 하였을 때 end
+			 cnt++;
+		  
 		  }
-	}
-	private void FileProcess(MultipartHttpServletRequest mrequest, String bbs_id, BoardDTO beforedto, BoardDTO dto,String uploadPath) {
-		/* 파일처리 START */
-		int cnt=1;
-		Iterator<String> iterator =mrequest.getFileNames();
-		System.out.println(beforedto.getBdata_file1());
-		System.out.println(beforedto.getBdata_file2());
-		while(iterator.hasNext()) { 
+		  
 		 
-		  String uploadFileName = iterator.next();
 		  
-		  MultipartFile mFile = mrequest.getFile(uploadFileName);
 		  
-		  /* 확장자 */
-		  String ext = FilenameUtils.getExtension(mFile.getOriginalFilename());
-		   
 		  
-		   String FullFileName = bbs_id+"_"+System.currentTimeMillis()+"_"+mFile.getOriginalFilename();
-		  
-		  switch (cnt) { 	
-			  case 1:
-				if(beforedto.getBdata_file1() !=null) new File(uploadPath+beforedto.getBdata_file1()).delete(); 
-				if(mFile !=null) {dto.setBdata_file1(FullFileName); }else { dto.setBdata_file1("");}
-				break;
-			  case 2:
-				if(beforedto.getBdata_file2() !=null) new File(uploadPath+beforedto.getBdata_file2()).delete();
-				if(mFile !=null) {dto.setBdata_file2(FullFileName); }else { dto.setBdata_file2("");}
-				break;
-			  case 3:
-				if(beforedto.getBdata_file3() !=null) new File(uploadPath+beforedto.getBdata_file3()).delete();
-				if(mFile !=null) {dto.setBdata_file3(FullFileName); }else { dto.setBdata_file3("");}    
-				break;
-			  case 4:
-				if(beforedto.getBdata_file3() !=null) new File(uploadPath+beforedto.getBdata_file4()).delete();
-				if(mFile !=null) {dto.setBdata_file4(FullFileName); }else { dto.setBdata_file4("");}     
-				break;
-			  default:
-				break;
-		    }
-			 try { 
-				  File origin = new File(uploadPath+"/"+FullFileName);
-				  // 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 -->  경로 설정임.
-				  mFile.transferTo(origin);
-				  
-			 }catch (Exception e) { // TODO Auto-generated catch block
-				  e.printStackTrace(); 
-			 } 
-		  	 cnt++;
-		  }
 		
 	}
 	
@@ -229,10 +186,10 @@ public class SiteBoardController {
 		
 		//config 테이블 id
 		String bbs_id=mrequest.getParameter("board_id");
-		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/")+"resources\\data\\board\\"+bbs_id+"\\";
+		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/resources/data/board/"+bbs_id+"/");
 
 		/* 파일처리 시작 */
-		FileProcess(mrequest, bbs_id, dto, uploadPath);
+		FileProcess(mrequest, bbs_id ,dto,null,uploadPath);
 		/* 파일처리 END */
 		
 		/* 게시글 작성 작업 START */
@@ -277,7 +234,7 @@ public class SiteBoardController {
 	}
 	/*해당 게시판 수정 완료 메서드*/
 	@RequestMapping("/site/board/board_modify_ok.do")
-	public void board_modify_ok(MultipartHttpServletRequest mrequest, BoardDTO dto, HttpServletResponse response) throws IOException {
+	public void board_modify_ok(MultipartHttpServletRequest mrequest, BoardDTO Modifydto, HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -297,16 +254,16 @@ public class SiteBoardController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bbs_id", bbs_id);
 		map.put("bdata_no", bdata_no);
-		map.put("dto", dto);
+		map.put("dto", Modifydto);
 		BoardDTO boardCont =  board_Dao.getBoardCont(map);
 		
 		
-		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/")+"resources\\data\\board\\"+bbs_id+"\\";
+		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/resources/data/board/"+bbs_id+"/");
 
 	
 		/* 기존에 파일 안에 존재하는 파일을 제거해야함 */
 		/* 파일처리 시작 */
-		FileProcess(mrequest, bbs_id, boardCont, dto, uploadPath);
+		FileProcess(mrequest, bbs_id, boardCont, Modifydto, uploadPath);
 		/* 파일처리 END */
 		
 		/* 수정된 내용 업데이트 */
