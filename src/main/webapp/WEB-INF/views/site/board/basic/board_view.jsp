@@ -4,6 +4,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+	
+	/* 페이지 리스트 불러오기 Ajax 처리시 선택자 */
+	$(function() {
+		
+		$(".subbtn").on("click",function(){
+	         $.ajax({
+	             type : "post",
+	             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+	             url : "<%=request.getContextPath()%>/site/board/baord_comment_insert.do",
+	             data : $("#form1").serialize(),
+             	 datatype : "text",
+             success : function(data) {
+            	
+             },
+             error : function(data) {
+                 alert("에러발생");
+             }
+         });
+		});
+	});
+
+</script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
@@ -21,17 +45,6 @@
 	}
 	
 </style>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript">
-	
-	$(function() {
-		
-		$(".subbtn").on("click",function(){
-			alert("클릭");
-			if(${boardConf.getBoard_level_comment()} == 'null') return;
-		});
-	});
-</script>
 </head>
 <body>
 <body>
@@ -55,9 +68,8 @@
 		    <div class="row vf-body">
 		    	<div>
 		    		<div>
-		    			<h3>[00회원]${BoardConDto.getBdata_title()}</h3>
-		    		</div>
-	    			
+		    			<h3>${BoardConDto.getBdata_title()}</h3>
+		    		</div>	    			
 	    			<div>
 	    				<div>
 	    					<p>${BoardConDto.getBdata_date()}</p>
@@ -168,7 +180,7 @@
 			<!-- 댓글 작성 부분  -->
 			<hr>
 			<h5>댓글 작성</h5>
-			<form action="<%=request.getContextPath()%>/site/board/baord_comment_insert.do" method="get">
+			<form  method="post" id="form1" >
 				
 				<!-- 해당 게시판 ||해당 게시글 번호  -->				
 				<input type="hidden" value="${bbs_id}" name="bbs_id">
@@ -235,11 +247,11 @@
 				<c:if test="${!empty dto.getBdata_file4()}"><c:set var="file4" value="📷"/></c:if>
 				
 					<tr>
-						<td>${dto.getBdata_no() }</td>
+						<td><c:if test="${dto.getBdata_use_notice() eq 'Y' }">공지🔔</c:if><c:if test="${dto.getBdata_use_notice() ne 'Y' }">${dto.getBdata_no() }</c:if></td>
 						<c:if test="${dto.getBdata_use_secret() eq 'Y'}">
 							<td>🔒비밀글 입니다.</td>
 						</c:if>
-						<c:if test="${dto.getBdata_use_secret() eq 'N'}">
+						<c:if test="${dto.getBdata_use_secret() eq 'N' or session_id eq 'admin'}">
 							<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
 						</c:if>
 						

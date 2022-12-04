@@ -60,8 +60,8 @@ public class SiteBoardController {
 			  
 			  // 파일 이름 정리
 			  String uploadFileExt = FilenameUtils.getExtension(mFile.getOriginalFilename());
-			  int extLength = uploadFileExt.length();
-			  String realFileName = bbs_id+"_"+mFile.getOriginalFilename().substring(0, extLength)+"_"+System.currentTimeMillis()+"."+uploadFileExt;
+			  int extLength = uploadFileExt.length()+1;
+			  String realFileName = bbs_id+"_"+mFile.getOriginalFilename().substring(0, mFile.getOriginalFilename().length()-extLength)+"_"+System.currentTimeMillis()+"."+uploadFileExt;
 			  
 			  switch (cnt) { 	 
 			  case 1:
@@ -464,9 +464,10 @@ public class SiteBoardController {
 		map.put("upDown", +1);
 		 
 		if(board_CommDao.insertBoardComm(map)>0) {
-			/* 게시글 댓글 개수 감소처리 */
-			this.board_CommDao.updateCommentCount(map);
-			out.println("<script>location.href='" + request.getContextPath() + "/site/board/board_view.do?bbs_id="+bbs_id+"&bdata_no="+bdata_no+"';</script>");
+			/* 게시글 댓글 개수 증가처리 */
+			this.board_CommDao.updateCommentCount(map);	
+			request.setAttribute("boardCommentList", board_CommDao.getBoardCommList(map));
+			out.print(request);
 		}else {
 			out.println("<script>alert('댓글 등록 실패'); history.back();</script>");
 		}
