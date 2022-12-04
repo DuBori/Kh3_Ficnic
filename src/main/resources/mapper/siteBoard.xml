@@ -9,7 +9,7 @@
 
     <!-- 게시판 목록 -->
     <select id="siteBoardList" resultType="boardDTO">
-    	select * from board_data_${value}
+    	select * from board_data_${value} order by bdata_use_notice desc, bdata_no desc
     </select>
 
 
