@@ -13,6 +13,12 @@
 		justify-content: center;
 		align-content: center;
 	}
+	#viewDiv{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-content: center;
+	}
 	
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -81,10 +87,10 @@
 		    		<!-- 파일 다운로드 부분 -->
 		    		<div>
 		    			<hr>
-							<c:if test="${!empty BoardConDto.getBdata_file1() }"><p>첨부파일 #1 :<a href="#">${BoardConDto.getBdata_file1() }</a></p></c:if>
-							<c:if test="${!empty BoardConDto.getBdata_file2() }"><p>첨부파일 #2 :<a href="#">${BoardConDto.getBdata_file2() }</a></p></c:if>
-							<c:if test="${!empty BoardConDto.getBdata_file3() }"><p>첨부파일 #3 :<a href="#">${BoardConDto.getBdata_file3() }</a></p></c:if>
-							<c:if test="${!empty BoardConDto.getBdata_file4() }"><p>첨부파일 #4 :<a href="#">${BoardConDto.getBdata_file4() }</a></p></c:if>
+							<c:if test="${!empty BoardConDto.getBdata_file1() }"><p>첨부파일 #1 :<a href="<%=request.getContextPath()%>/site/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&file=${BoardConDto.getBdata_file1()}">${BoardConDto.getBdata_file1() }</a></p></c:if>
+							<c:if test="${!empty BoardConDto.getBdata_file2() }"><p>첨부파일 #2 :<a href="<%=request.getContextPath()%>/site/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&file=${BoardConDto.getBdata_file2()}">${BoardConDto.getBdata_file2() }</a></p></c:if>
+							<c:if test="${!empty BoardConDto.getBdata_file3() }"><p>첨부파일 #3 :<a href="<%=request.getContextPath()%>/site/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&file=${BoardConDto.getBdata_file3()}">${BoardConDto.getBdata_file3() }</a></p></c:if>
+							<c:if test="${!empty BoardConDto.getBdata_file4() }"><p>첨부파일 #4 :<a href="<%=request.getContextPath()%>/site/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&file=${BoardConDto.getBdata_file4()}">${BoardConDto.getBdata_file4() }</a></p></c:if>
 		    			<hr>
 		    		</div>  		
 		    	</div>
@@ -101,7 +107,7 @@
 		    			<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 		    		</c:when>
 		    		<c:when test="${BoardConDto.getBdata_writer_id() eq 'admin' }">
-		    		    <a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&board_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>                
+		    		    <a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>                
 		        		<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 		    		</c:when>
 		    		<c:otherwise>
@@ -114,9 +120,7 @@
 		            
 		    </div>
 		<!-- 버튼 //END -->
-		
-		
-		
+			
 		<!-- 댓글 작업 시작 //START  -->
 		<div align="center">
 			<h5>댓글 </h5>
@@ -220,26 +224,48 @@
 			</form>
 		</div>  
 		<!-- 댓글 작성 부분 end  -->
-		
-		
-		<!-- 게시물 목록 출력부분  -->
-		<div>
-			
-		
-		
 		</div>
+		<!-- 게시물 목록 출력부분  -->
+		<div id="viewDiv" align="center">
+			<table border="1" cellspacing="0" width="600" align="center">
+				<c:forEach items="${List}" var="dto">
+				<c:if test="${!empty dto.getBdata_file1()}"><c:set var="file1" value="📷"/></c:if>
+				<c:if test="${!empty dto.getBdata_file2()}"><c:set var="file2" value="📷"/></c:if>
+				<c:if test="${!empty dto.getBdata_file3()}"><c:set var="file3" value="📷"/></c:if>
+				<c:if test="${!empty dto.getBdata_file4()}"><c:set var="file4" value="📷"/></c:if>
+				
+					<tr>
+						<td>${dto.getBdata_no() }</td>
+						<c:if test="${dto.getBdata_use_secret() eq 'Y'}">
+							<td>🔒비밀글 입니다.</td>
+						</c:if>
+						<c:if test="${dto.getBdata_use_secret() eq 'N'}">
+							<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
+						</c:if>
+						
+						<td>${dto.getBdata_writer_name() }</td>
+						<td>${dto.getBdata_date().substring(0,10) }</td>
+						<td>${dto.getBdata_hit() }</td>
+					
+					</tr>
+				</c:forEach>
+			</table>
+			
+			<!-- 페이징 처리  -->
+			<c:if test="${!empty paging}">
+		            <div class="row list-bottom-util">
+		                <div class="col text-center">
+		                    ${pagingWrite}
+		                </div>
+		            </div>
+		    </c:if>
+    		<!-- 페이징 처리 end -->
+		</div>
+			
+    <!-- 게시물 목록 출력부분 end -->
 		
 		
 		 <!-- 내용 //END -->
-		
-		
-		
-		
-		
-		
-		  
-		</div>
-       </div>
     </main>
  
 	

@@ -3,6 +3,7 @@
 <%-- <%@ include file="../layout/layout_header.jsp" %> --%>
 
 
+
 <div class="page-info row mb-3">
     <div class="d-flex align-items-center justify-content-between">
         <h2>${boardConfig.getBoard_name()}</h2>
@@ -14,6 +15,7 @@
 </div>
 
 <!-- Content 시작부 -->
+
 <div class="page-cont" align="center">
 	
 	<div>
@@ -33,16 +35,27 @@
    </thead>
    <tbody>
 		<c:forEach items="${List}" var="dto">
+		<c:if test="${!empty dto.getBdata_file1()}"><c:set var="file1" value="📷"/></c:if>
+		<c:if test="${!empty dto.getBdata_file2()}"><c:set var="file2" value="📷"/></c:if>
+		<c:if test="${!empty dto.getBdata_file3()}"><c:set var="file3" value="📷"/></c:if>
+		<c:if test="${!empty dto.getBdata_file4()}"><c:set var="file4" value="📷"/></c:if>
+		
 			<tr>
 				<td>${dto.getBdata_no() }</td>
-				<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a></td>
+				<c:if test="${dto.getBdata_use_secret() eq 'Y'}">
+					<td>🔒비밀글 입니다.</td>
+				</c:if>
+				<c:if test="${dto.getBdata_use_secret() eq 'N'}">
+					<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
+				</c:if>
+				
 				<td>${dto.getBdata_writer_name() }</td>
 				<td>${dto.getBdata_date().substring(0,10) }</td>
 				<td>${dto.getBdata_hit() }</td>
 			
 			</tr>
 		</c:forEach>
-	<tbody>
+	</tbody>
 	</table>
 	<!-- 해당 게시글 리스트 출력부 end -->
 	
@@ -60,7 +73,7 @@
     <form name="search_form" method="get" action="<%=request.getContextPath()%>/site/board/board_list.do">
 	    <div class="row mt-2 list-bottom-util">
 	       <div class="col-6 mt-3">
-	               <input type="hidden" value="${board.getBoard_id()}" name="bbs_id">
+	               <input type="hidden" value="${bbs_id}" name="bbs_id">
 	               <div class="input-group w-80">
 	                   <div class="col-sm-4">
 	                       <select name="field" class="form-select">

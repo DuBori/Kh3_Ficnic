@@ -75,13 +75,18 @@
 	 	<selectKey resultType="int" keyProperty="dto.bdata_no" order="BEFORE">
            select nvl(max(bdata_no),0) from board_data_${bbs_id}
        </selectKey>
-		insert into board_data_${bbs_id} values(#{dto.bdata_no}+1,#{bbs_id},default,#{dto.bdata_category},#{dto.bdata_title},#{dto.bdata_cont},#{dto.bdata_sub},#{dto.bdata_link1},#{dto.bdata_link2},#{dto.bdata_file1},#{dto.bdata_file2},#{dto.bdata_file3},#{dto.bdata_file4},default,#{dto.bdata_use_notice},#{dto.bdata_use_secret},default,default,#{dto.bdata_writer_id},#{dto.bdata_writer_pw},#{dto.bdata_writer_name},sysdate)
+		insert into board_data_${bbs_id} values(#{dto.bdata_no}+1,#{bbs_id},default,#{dto.bdata_category},#{dto.bdata_title},#{dto.bdata_cont},#{dto.bdata_sub},#{dto.bdata_link1},#{dto.bdata_link2},#{dto.bdata_file1},#{dto.bdata_file2},#{dto.bdata_file3},#{dto.bdata_file4},default,#{dto.bdata_use_notice},nvl(#{dto.bdata_use_secret},'N'),default,default,#{dto.bdata_writer_id},#{dto.bdata_writer_pw},#{dto.bdata_writer_name},sysdate)
 	</insert>
 	
 	<!-- 해당 게시판 게시글 업데이트  -->
 	<update id="SiteBoardUpdate" parameterType="map">
 		update board_data_${bbs_id} set bdata_category = #{dto.bdata_category}, bdata_title = #{dto.bdata_title}, bdata_cont = #{dto.bdata_cont}, bdata_sub = #{dto.bdata_sub}, bdata_link1 = #{dto.bdata_link1}, bdata_link2 = #{dto.bdata_link2}, bdata_file1 = #{dto.bdata_file1}, bdata_file2 = #{dto.bdata_file2}, bdata_file3 = #{dto.bdata_file3}, bdata_file4 = #{dto.bdata_file4}, bdata_ficnic = #{dto.bdata_ficnic} where bdata_no = #{dto.bdata_no}
 	</update>
+	
+	<!-- 해당 게시판 게시글 삭제  -->
+	<delete id="SiteBoardDelete" parameterType="map">
+		delete from board_data_${bbs_id} where bdata_no= #{bdata_no}
+	</delete>
 
 
 </mapper>
