@@ -7,20 +7,21 @@
 <!-- 사이트 : 댓글 관련 -->
 <mapper namespace="boardCmmentDAO">
 
-    <!-- 댓글 목록 -->
-    <select id="siteBoardCommentList" resultType="boardCommentDTO">
-    </select>
-
-
 	<!-- 해당 게시판 > 해당 게시글의 댓글 리스트 출력 -->
-	<select id="SiteBoardCommList" parameterType="map" resultType="boardCommentDTO">
-		select * from board_comment_${bbs_id} where bdata_no = #{bdata_no}
+	<select id="siteBoardCommentList" parameterType="map" resultType="boardCommentDTO">
+		select * from board_comment_${bbs_id} where bdata_no = #{bdata_no} order by bcomm_date desc
 	</select>
 
 	<!-- 해당 게시판 > 해당 게시글의 댓글 삭제 -->
 	<delete id="SiteBoardCommDelete" parameterType="map">
 		delete from board_comment_${bbs_id} where bcomm_no = #{bcomm_no}
 	</delete>
+	
+	<!-- 해당 게시판 > 해당 게시글 댓글 삭제 후 번호 업데이트 -->
+	<update id="SiteBoardCommNoUpdate" parameterType="map">
+		update board_comment_${bbs_id} set bcomm_no=bcomm_no-1 where bcomm_no>#{bcomm_no} 
+	</update>
+	
 	
 	<!-- 해당 게시판 > 해당 게시글의 댓글 작성 -->
 	<insert id="SiteBoardCommentInsert" parameterType="map">

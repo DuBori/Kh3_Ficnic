@@ -1,24 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript">
-	
-	/* 페이지 리스트 불러오기 Ajax 처리시 선택자 */
+<script type="text/javascript" >
 	$(function() {
 		
+		/* 댓글 삭제 시 Ajax 처리*/
+		$(document).on("click",".delbtn", function() {
+			if($(".chk").val() !="c"){
+				if (prompt('비밀번호를 입력하세요.') != $(".chk").val()){
+					alert('비밀번호가 틀립니다.');
+					return false;
+				}
+			}
+			
+		     $.ajax({
+		         type : "post",
+		         contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+		         url : "<%=request.getContextPath()%>/site/board/baord_comment_delete.do",
+		         data : {bcomm_no : $(this).attr("name"),
+		        	 	 bbs_id : '${bbs_id}',
+		        	 	 bdata_no : ${BoardConDto.getBdata_no()} },
+		     	 datatype : "text",
+		     success : function(data) {
+		 		$("#commList").html("");
+		 		$("#commList").html(data);
+		 		$(".Logininput").val("");
+		     },
+		     error : function(data) {
+		         alert("에러발생");
+		     }
+		 	});
+		});
+		
+		/* 댓글 입력시 Ajax 처리 */
 		$(".subbtn").on("click",function(){
-	         $.ajax({
+         $.ajax({
 	             type : "post",
 	             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 	             url : "<%=request.getContextPath()%>/site/board/baord_comment_insert.do",
 	             data : $("#form1").serialize(),
              	 datatype : "text",
              success : function(data) {
-            	
+         		$("#commList").html("");
+         		$("#commList").html(data);
+         		$(".Logininput").val(""); 		
              },
              error : function(data) {
                  alert("에러발생");
@@ -26,7 +56,6 @@
          });
 		});
 	});
-
 </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -157,7 +186,7 @@
 						<h5>댓글 </h5>
 						<!-- 댓글 리스트 출력부 -->
 						<c:if test="${!empty boardCommentList }">
-							<div>
+							<div id="commList">
 								<c:forEach items="${boardCommentList}" var="comment">
 									
 									<div class="horizon">
@@ -173,7 +202,7 @@
 											</div>
 											
 											<div>
-												<textarea rows="7" cols="25">${comment.getBcomm_cont() }</textarea>
+												<textarea rows="7" cols="25" readonly="readonly">${comment.getBcomm_cont() }</textarea>
 											</div>
 											
 											<div>
@@ -184,8 +213,13 @@
 												
 												<div>
 												<!-- 자신의 댓글인 경우 || 관리자인 경우 || 자신의 댓글 x, 3자인 경우  -->
-														<c:if test="${comment.getBcomm_id() eq session_id or (session_id eq 'admin') }">
-															<input type="button" value="삭제" onclick="location.href='<%=request.getContextPath()%>/site/board/baord_comment_delete.do?bbs_id=${bbs_id}&bdata_no=${comment.getBdata_no()}&bcomm_no=${comment.getBcomm_no()}'">
+														<c:if test="${comment.getBcomm_id() eq session_id or session_id eq 'admin' }">
+															<input type="hidden" value="c" class="chk">
+															<input type="button" class="delbtn" value="삭제"  name="${comment.getBcomm_no() }">
+														</c:if>
+														<c:if test="${comment.getBcomm_id() eq 'trash'  }">
+															<input type="hidden" value="${comment.getBcomm_pw() }" class="chk">
+															<input type="button" class="delbtn" value="삭제" name="${comment.getBcomm_no()}">
 														</c:if>
 												</div>
 											</div>
@@ -230,7 +264,7 @@
 												
 												<div>
 													<!-- 권한 작성  -->
-													<input type="submit" value="댓글 등록"  class="subbtn">
+													<input type="button" value="댓글 등록"  class="subbtn">
 												</div>
 											</div>	
 										</c:when>			
@@ -239,16 +273,16 @@
 												<h3>현재 비회원</h3>
 												<input type="hidden" name="bcomm_id" value="trash">
 												<div>
-													작성자 이름<input name="bcomm_name"  required="required">
-													비밀번호<input type="password" name="bcomm_pw" required="required">	
+													작성자 이름<input name="bcomm_name"  required="required" class="Logininput">
+													비밀번호<input type="password" name="bcomm_pw" required="required" class="Logininput">	
 												</div>
 												<div class="horizon">								
 													<div>
-														<textarea rows="7" cols="25" name="bcomm_cont" required="required"></textarea>
+														<textarea rows="7" cols="25" name="bcomm_cont" required="required" class="Logininput"></textarea>
 													</div>
 													
 													<div>
-														<input type="submit" value="댓글 등록" class="subbtn">
+														<input type="button" value="댓글 등록" class="subbtn">
 													</div>
 												</div>		
 											</div>			
