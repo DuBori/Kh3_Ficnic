@@ -407,8 +407,12 @@ public class SiteBoardController {
 
 	/* 해당 게시판 댓글 삭제하기 */
 	@RequestMapping("/site/board/baord_comment_delete.do")
-	public void board_comment_delete(HttpServletResponse response, HttpServletRequest request) throws IOException {
-
+	public void board_comment_delete(HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
+		System.out.println("진입");
+		String id = (String) session.getAttribute("session_id");
+		String res="";
+		
+		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 
@@ -424,18 +428,45 @@ public class SiteBoardController {
 		if (request.getParameter("bcomm_no") != null) {
 			bcomm_no = Integer.parseInt(request.getParameter("bcomm_no"));
 		}
+		String pw="";
+		if(request.getParameter("pw") !=null) {
+			pw=request.getParameter("pw");
+		}
 		/* 게시글 접근 변수, 해당 게시글 번호 변수 bdata_no 해당 댓글 번호 bcomm_no 필요 end */
-
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bbs_id", bbs_id);
 		map.put("bdata_no", bdata_no);
 		map.put("bcomm_no", bcomm_no);
 		map.put("upDown", -1);
-
+		
+		
 		if (board_CommDao.deleteBoardComm(map) > 0) {
-			/* 게시글 댓글 개수 증가처리 */
+			
+			/* 게시글 댓글 개수 감소처리 */
 			this.board_CommDao.updateCommentCount(map);
-			out.println("<script>location.href='" + request.getContextPath() + "/site/board/board_view.do?bbs_id="+bbs_id+"&bdata_no="+bdata_no+"';</script>");
+			/* 게시글 삭제 시퀀스 업데이트*/
+			this.board_CommDao.updateCommentNum(map);
+			
+			for(BoardCommentDTO commDto : board_CommDao.getBoardCommList(map)) {
+				res+="<div class=\"horizon\"><div><p>부서</p><p>"+commDto.getBcomm_name()+
+						"</p></div><div><textarea readonly=\"readonly\" rows=\"7\" cols=\"25\">"+
+						commDto.getBcomm_cont()+"</textarea></div><div><p>"+commDto.getBcomm_date()+"</p></div>";
+						
+						if(id !=null) {
+							/* 회원 본인 댓글이나 관리자일때 */
+							if((commDto.getBcomm_id().equals(id) || id.equals("admin")) && commDto.getBcomm_id().equals("trash")) {
+								res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >";								
+							}
+						}
+						/* 비회원 인원이 작성한 댓글 */
+						if(commDto.getBcomm_id().equals("trash")) {
+							res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >";	
+						}
+						
+						res+="</div>";
+			}
+			out.print(res);
 		} else {
 			out.println("<script>alert('댓글 삭제 실패'); history.back();</script>");
 		}
@@ -443,9 +474,16 @@ public class SiteBoardController {
 
 	/* 게시글 댓글 입력  */
 	@RequestMapping("/site/board/baord_comment_insert.do")
-	public void baord_comment_insert(HttpServletResponse response, HttpServletRequest request, BoardCommentDTO dto)
+	public void baord_comment_insert(HttpSession session ,HttpServletResponse response, HttpServletRequest request, BoardCommentDTO dto)
 			throws IOException {
-
+		
+		
+		String id ="";
+		String res="";
+		if(session.getAttribute("session_id") !=null) {
+			id = (String) session.getAttribute("session_id");
+		}
+		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 
@@ -466,12 +504,25 @@ public class SiteBoardController {
 		if(board_CommDao.insertBoardComm(map)>0) {
 			/* 게시글 댓글 개수 증가처리 */
 			this.board_CommDao.updateCommentCount(map);	
-			request.setAttribute("boardCommentList", board_CommDao.getBoardCommList(map));
-			out.print(request);
+			for(BoardCommentDTO commDto : board_CommDao.getBoardCommList(map)) {
+				res+="<div class=\"horizon\"><div><p>부서</p><p>"+commDto.getBcomm_name()+
+						"</p></div><div><textarea readonly=\"readonly\" rows=\"7\" cols=\"25\">"+
+						commDto.getBcomm_cont()+"</textarea></div><div><p>"+commDto.getBcomm_date()+"</p></div>";
+						/* 회원 본인 댓글이나 관리자일때 */
+						if(commDto.getBcomm_id().equals(id) || id.equals("admin")) {
+							res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >";									
+						}
+						/* 비회원 인원이 작성한 댓글 */
+						if(commDto.getBcomm_id().equals("trash") && !id.equals("admin")) {
+							res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\">";	
+							
+						}
+						res+="</div>";
+			}
+			out.print(res);			 
 		}else {
 			out.println("<script>alert('댓글 등록 실패'); history.back();</script>");
 		}
-		
 	}
 	
 	@RequestMapping("/site/board/board_download.do")

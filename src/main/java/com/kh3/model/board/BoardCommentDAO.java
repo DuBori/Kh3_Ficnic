@@ -15,4 +15,6 @@ public interface BoardCommentDAO {
 	void updateCommentCount(Map<String, Object> map);
 
 	void deleteBoardCommList(Map<String, Object> map);
+
+	void updateCommentNum(Map<String, Object> map);
 }

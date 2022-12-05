@@ -18,12 +18,18 @@ public class BoardCommentDAOImpl implements BoardCommentDAO {
 	@Override
 	public List<BoardCommentDTO> getBoardCommList(Map<String, Object> map) {
 		
-		return sqlSession.selectList("SiteBoardCommList", map);
+		return sqlSession.selectList("siteBoardCommentList", map);
 	}
 	/* 게시글 댓글 삭제 */
 	@Override
 	public int deleteBoardComm(Map<String, Object> map) {
 		return this.sqlSession.delete("SiteBoardCommDelete", map);
+	}
+	/* 게시글 댓글 삭제시, 시퀀스 번호 감소 업데이트 */
+	@Override
+	public void updateCommentNum(Map<String, Object> map) {
+		this.sqlSession.update("SiteBoardCommNoUpdate",map);
+		
 	}
 	/* 게시글 댓글 등록 */
 	@Override
@@ -45,6 +51,8 @@ public class BoardCommentDAOImpl implements BoardCommentDAO {
 		/* 게시글 삭제 시, 해당 게시글 댓글 전체 삭제 */
 		this.sqlSession.delete("SiteBoardCommDelList",map);	
 	}
+	
+	
     
 
 
