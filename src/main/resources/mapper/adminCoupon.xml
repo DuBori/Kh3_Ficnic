@@ -7,11 +7,44 @@
 <!-- 관리자 : 쿠폰 관련 -->
 <mapper namespace="couponDAO">
 
-    <!-- 쿠폰 목록 -->
-    <select id="adminCouponList" resultType="couponDTO">
+    <!-- 쿠폰 목록 총 갯수 -->
+    <select id="adminCouponCount" parameterType="java.util.Map" resultType="int">
+        select count(*) from coupon_list where coupon_no > 0
+        <if test="search_type != ''"> and coupon_use_type = #{search_type}</if>
+        <if test="search_name != ''"> and coupon_name like '%' || #{search_name} || '%'</if>
     </select>
 
+	<!-- 쿠폰 목록 -->
+	<select id="adminCouponList" resultType="couponDTO">
+            select * from(
+                select
+                    row_number() over(order by coupon_date desc) rnum,
+                    b.*
+                from (
+                    select * from coupon_list where coupon_no > 0
+                    <if test="search_type != ''"> and coupon_use_type = #{search_type}</if>
+                    <if test="search_name != ''"> and coupon_name like '%' || #{search_name} || '%'</if>
+                ) b
+            )
+        <![CDATA[
+            where rnum >= #{startNo} and rnum <= #{endNo}
+        ]]>
+	</select>
 
+	<!-- 쿠폰 보기 -->
+	<select id="adminCouponView" parameterType="int" resultType="couponDTO">
+		select * from coupon_list where coupon_no = #{coupon_no}
+	</select>
+
+	<!-- 쿠폰 삭제 -->
+	<delete id="adminCoupondelete" parameterType="int">
+		delete from coupon_list where coupon_no = #{coupon_no }
+	</delete>
+
+	<!-- 쿠폰 삭제 후 글번호 재작업 -->
+	<update id="adminCouponSequence">
+		<![CDATA[update coupon_list set coupon_no = coupon_no - 1 where coupon_no > #{coupon_no}]]>
+	</update>
 
 
 </mapper>

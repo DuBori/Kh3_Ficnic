@@ -83,7 +83,7 @@ public class AdminCouponController {
     public String couponView(Model model, @RequestParam("no") int no) {
         CouponDTO dto = this.dao.couponView(no);
         model.addAttribute("dto", dto);
-
+        
         return "admin/coupon/coupon_view";
     }
 
@@ -139,14 +139,14 @@ public class AdminCouponController {
     }
 
 
-
+    // 쿠폰 삭제
     @RequestMapping("admin/coupon/coupon_delete.do")
     public void couponDelete(@RequestParam("no") int no, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         int check = this.dao.couponDelete(no);
-
+        
         if (check > 0) {
             this.dao.updateSeq(no);
             out.println("<script>alert('쿠폰이 삭제되었습니다.'); location.href='coupon_list.do';</script>");
