@@ -9,7 +9,9 @@
 
     <!-- 피크닉 목록 -->
     <select id="adminFicnicList" resultType="ficnicDTO">
+    	select * from ficnic_list order by ficnic_no desc
     </select>
+    
 
 
 

@@ -20,6 +20,7 @@ import com.kh3.model.coupon.CouponDTO;
 import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
+import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.util.UploadFile;
 
 @Controller
@@ -48,6 +49,15 @@ public class AdminFicnicController {
     // 피크닉 목록 페이지
     @RequestMapping("admin/ficnic/ficnic_list.do")
     public String ficnicList(Model model, HttpServletRequest request) {
+    	 
+    	List<CategoryDTO> cList = cdao.getCategoryList();
+        List<FicnicDTO> fList = dao.getFicnicList();
+    	
+       
+       	model.addAttribute("flist", fList);
+    	model.addAttribute("clist", cList);
+    	
+
         return "admin/ficnic/ficnic_list";
     }
 
@@ -63,7 +73,10 @@ public class AdminFicnicController {
 
     // 피크닉 등록 페이지
     @RequestMapping("admin/ficnic/ficnic_write.do")
-    public String ficnicWrite() {
+    public String ficnicWrite(Model model, HttpServletRequest request) {
+    	
+    	List<CategoryDTO> cList = cdao.getCategoryList();
+    	model.addAttribute("clist", cList);
         return "admin/ficnic/ficnic_write";
     }
 
@@ -79,7 +92,7 @@ public class AdminFicnicController {
     // 피크닉 수정 페이지
     @RequestMapping("admin/ficnic/ficnic_modify.do")
     public String ficnicModify(@RequestParam("no") int no, Model model) {
-        return "admin/ficnic/ficnic_modify";
+        return "admin/ficnic/ficnic_write";
     }
 
 
