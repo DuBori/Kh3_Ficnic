@@ -10,7 +10,7 @@
 
 	<!-- 코멘트 상세 보기 -->
     <select id="adminQnaCommentList" parameterType="int" resultType="qnacommentDTO">
-   	 	select * from qna_comment where qna_no = #{qna_no} order by comment_date asc
+   	 	select * from qna_comment where qna_no = #{value} order by comment_date asc
     </select>
 
 	<!-- 댓글 추가 -->
