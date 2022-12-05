@@ -85,4 +85,17 @@ public class MemberDAOImpl implements MemberDAO {
         return this.sqlSession.update("adminMemberModifyOk", dto);
     }
 
+
+    // 로그인 체크
+	@Override
+	public int loginCheck(MemberDTO dto) {
+		return this.sqlSession.selectOne("siteMemberLogin", dto);
+	}
+	
+	// 비밀번호 체크 체크
+	@Override
+	public int pwCheck(MemberDTO dto) {
+		return this.sqlSession.selectOne("siteMemberLoginPw", dto);
+	}
+
 }

@@ -7,6 +7,19 @@
 <!-- 사이트 : 회원 관련 -->
 <mapper namespace="memberDAO">
 
+    <!-- 아이디 체크 로그인 -->
+    <select id="siteMemberLogin" resultType="int">
+    select count(*) 
+	from member_list
+	where member_id = #{member_id}
+    </select>
+    <!--비밀번호 체크 로그인 -->
+    <select id="siteMemberLoginPw" resultType="int">
+    select count(*) 
+	from member_list
+	where member_id = #{member_id} and member_pw = #{member_pw}
+    </select>
+
     <!-- 회원 목록 -->
     <select id="siteMemberList" resultType="memberDTO">
     </select>

@@ -15,9 +15,58 @@
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script>
+		
+		   
+			/* 댓글 삭제 시 Ajax 처리*/
+		   $(function() {
+			   $(document).on("click",".deleteBtn", function() {
+			// name= 에 있는 이름의 value 값을 가져옴.
+			let comment_no = $(this).val();
+		     $.ajax({
+		         type : "post",
+		         contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+		         url : "<%=request.getContextPath()%>/admin/qna/comment_delete.do",
+		         data : { comment_no : comment_no ,
+		        	 	  qna_no : $("#qna_no").val() },
+		         datatype : "text",
+		     success : function(data) {
+		         $("#tableDiv").html("");
+		         $("#tableDiv").html(data);
+		         $(".Logininput").val("");
+		     },
+		     error : function(data) {
+		         alert("에러발생");
+		     }
+		 });
+		})
+		   })
+		
+		
+<%-- 		/* 댓글 입력시 Ajax 처리 */
+		$("#replyBtn").on("click",function(){
+		 $.ajax({
+		         type : "post",
+		         contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+		         url : "<%=request.getContextPath()%>/site/board/baord_comment_insert.do",
+		         data : $("#form1").serialize(),
+		          datatype : "text",
+		     success : function(data) {
+		         $("#commList").html("");
+		         $("#commList").html(data);
+		         $(".comment_content").val("");
+		     },
+		     error : function(data) {
+		         alert("에러발생");
+		     }
+		 });
+		});
+		});
+ --%>
 
    
-   // 댓글 추가 에이젝스
+   
+   
+    // 댓글 추가 에이젝스
    $(function() {
 	    $("#replyBtn").on("click", function() {
 	         $.ajax({
@@ -36,6 +85,7 @@
 	             datatype : "text",
 	             success : function(data) {
 	            	 if(data>0){
+	            		 alert("성공");
 	            		 location.href="<%=request.getContextPath()%>/admin/qna/qna_view.do?no="+$("#qna_no").val();
 	            	 }else{
 	            		 alert("실패");
@@ -47,7 +97,9 @@
 	         });
 	     });
 	})
-   
+	
+	
+   <%--
   	// 댓글 삭제 에이젝스
      $(function() {
 	    $(".deleteBtn").on("click", function() {
@@ -70,7 +122,7 @@
 	             }
 	         });
 	     });
-	})
+	}) --%>
 	   
 	</script>
 </head>
@@ -101,7 +153,6 @@
 			<input type="hidden" id="member_id" name="member_id" value="test1" />
 			<input type="hidden" id="comment_writer_name" name="comment_writer_name" value="테스트회원1" /> 
 			<input type="hidden" id="comment_writer_pw" name="comment_writer_pw" value="1234" />
-			<input type="hidden" id="comment_no" name="comment_no" value="${param.comment_no}"/>
 
 
 			<table class="table table-bordered">
@@ -161,7 +212,7 @@
 					</tr>
 				</thead>
 
-				<tbody>
+				<tbody id="tableDiv">
 
 
 
@@ -192,7 +243,7 @@
 				<tr>
 					<th>댓글 내용</th>
 					<td><textarea name="comment_content" id="comment_content"
-							cols="20" rows="3" class="form-control" required></textarea></td>
+							cols="20" rows="3" class="form-control" required class="comment_content"></textarea></td>
 					<td class="text-center">
 						<button type="button" class="btn btn-lg btn-primary w-100 h-100"
 							id="replyBtn">

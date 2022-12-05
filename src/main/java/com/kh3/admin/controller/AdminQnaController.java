@@ -136,13 +136,30 @@ public class AdminQnaController {
 
     // 답글 삭제 매핑
 	  @RequestMapping("/admin/qna/comment_delete.do") 
-	  public void commentDelete(HttpServletRequest request, HttpServletResponse response, @RequestParam("comment_no") int no) throws IOException  {
+	  public void commentDelete(HttpServletRequest request, HttpServletResponse response, @RequestParam("qna_no") int qno, @RequestParam("comment_no") int no) throws IOException  {
 	        response.setContentType("text/html; charset=UTF-8");
 	        PrintWriter out = response.getWriter();
 	        
-	        int check = this.cdao.qnaCommentDelete(no);
-	        out.println(check);
-	  }
-	
-	  
+	        this.cdao.qnaCommentDelete(no);
+	        
+	        String res="";
+	        System.out.println("출력출력1");
+	        System.out.println(no);
+			for(QnaCommentDTO qnaDto : this.cdao.getQnaCommentList(qno)) {
+				System.out.println("출력출력2");
+                res += "<tr>"
+                		+"<td>"+qnaDto.getComment_writer_name()+"</td>"
+                		+"<td class=\"msg\">"+qnaDto.getComment_content()+"</td>"
+                		+ "<td>"+qnaDto.getComment_date()+"</td>"
+                		+"<td>"
+                		+"<button type=\"button\" class=\"btn btn-sm btn-outline-danger m-1 deleteBtn\" name=\"comment_no\" value=\""+qnaDto.getComment_no()+"\">삭제</button>"
+                		+ "</td>"
+                		+ "</tr>";
+
+            }
+			
+            out.print(res);
+        } 
+	        
+  
 }

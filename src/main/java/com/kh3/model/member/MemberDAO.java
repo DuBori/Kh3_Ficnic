@@ -27,5 +27,12 @@ public interface MemberDAO {
 
     // 회원 정보 수정
     int modifyOk(MemberDTO dto);
+    
+    // 로그인
+    int loginCheck(MemberDTO dto);
+    
+    // 비밀번호
+    int pwCheck(MemberDTO dto);
+    
 
 }
