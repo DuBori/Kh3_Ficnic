@@ -4,6 +4,8 @@
 <c:set var="layout_none" value="Y" />
 <%@ include file="../layout/layout_header.jsp" %>
 
+<c:set var="dto" value="${dto}" />
+<c:if test="${empty dto}"><script type="text/javascript">alert('존재하지 않는 데이터입니다.'); window.close();</script></c:if>
 
 
 <h2>쿠폰 정보 보기</h2>
@@ -19,14 +21,20 @@
                     <div class="row form">
                         <div class="form-group col d-flex align-items-center mb-2">
                             <label>쿠폰 이름</label>
-                            <div class="px-3">카테고리 쿠폰</div>
+                            <div class="px-3">${dto.getCoupon_name()}</div>
                         </div>
 
                         <div class="w-100 border-bottom"></div>
 
                         <div class="form-group col d-flex align-items-center">
                             <label>사용 구분</label>
-                            <div class="px-3">카테고리</div>
+                            <div class="px-3">                                    
+                            <c:choose>
+                            	<c:when test="${dto.getCoupon_use_type() eq 'cart'}">장바구니</c:when>
+                            	<c:when test="${dto.getCoupon_use_type() eq 'category'}">카테고리</c:when>
+                           		<c:otherwise>상품</c:otherwise>
+                            </c:choose>
+							</div>
                         </div>
 
                         <div class="w-100"></div>
@@ -37,8 +45,8 @@
                                 <div class="row">
                                     <div class="col pb-2">
                                         <ul class="list-view">
-                                            <li>아웃도어</li>
-                                            <li>피트니스</li>
+                                            <li>아웃도어(여기 헷갈립니다ㅠㅠ)</li>
+                                            <li>피트니스(여기 헷갈립니다ㅠㅠ)</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -49,7 +57,7 @@
 
                         <div class="form-group col d-flex align-items-center">
                             <label>최대 발행 갯수</label>
-                            <div class="px-3 engnum">100</div>
+                            <div class="px-3 engnum"><fmt:formatNumber value="${dto.getCoupon_max_ea()}" /></div>
                         </div>
                     </div>
                 </div>
@@ -69,25 +77,36 @@
                     <div class="row form">
                         <div class="form-group col d-flex align-items-center">
                             <label>할인 금액</label>
-                            <div class="px-3 engnum">10%</div>
+                            <div class="px-3 engnum">
+                            <c:choose>
+	                            <c:when test="${dto.getCoupon_price_type() eq 'price'}"><fmt:formatNumber value="${dto.getCoupon_price()}" />원</c:when>
+	                            <c:otherwise><fmt:formatNumber value="${dto.getCoupon_price()}" />%</c:otherwise>
+                            </c:choose>
+                            </div>
                         </div>
 
                         <div class="w-100"></div>
 
                         <div class="form-group col d-flex align-items-center mb-2">
                             <label>최소 사용 금액</label>
-                            <div class="px-3 engnum">15,000원</div>
+                            <div class="px-3 engnum"><fmt:formatNumber value="${dto.getCoupon_price_over()}" />원</div>
                         </div>
                         <div class="form-group col d-flex align-items-center mb-2">
                             <label>최대 할인 금액</label>
-                            <div class="px-3 engnum">3,000원</div>
+                            <div class="px-3 engnum"><fmt:formatNumber value="${dto.getCoupon_price_max()}" />원</div>
                         </div>
 
                         <div class="w-100 border-bottom"></div>
 
                         <div class="form-group col d-flex align-items-center">
                             <label>사용 기간</label>
-                            <div class="px-3 engnum">2022/12/01 00:00:00 ~ 2022/12/31 23:59:59</div>
+                            <div class="px-3 engnum">
+                            	<c:choose>
+                            	<c:when test="${dto.getCoupon_date_type() eq 'free'}">제한없음</c:when>
+                           		<c:when test="${dto.getCoupon_date_type() eq 'after'}">${dto.getCoupon_date()} &nbsp;&nbsp;~&nbsp;&nbsp; ${dto.getCoupon_end_date()}</c:when>
+                           		<c:otherwise>${dto.getCoupon_start_date()}~<br>${dto.getCoupon_end_date()}</c:otherwise>
+                             	</c:choose>
+                            </div>
                         </div>
                     </div>
                 </div>

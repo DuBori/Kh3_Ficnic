@@ -191,9 +191,9 @@ public class AdminMemberController {
         PrintWriter out = response.getWriter();
 
         int check = this.dao.deleteMember(no);
-        this.dao.updateSequence(no);
 
         if (check > 0) {
+        	this.dao.updateSequence(no);
             out.println("<script>alert('회원 정보가 삭제되었습니다.'); location.href='member_list.do';</script>");
         } else {
             out.println("<script>alert('회원 정보 삭제 중 에러가 발생하였습니다.'); history.back();</script>");

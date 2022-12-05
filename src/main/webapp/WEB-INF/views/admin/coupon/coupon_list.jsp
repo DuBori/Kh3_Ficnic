@@ -75,8 +75,8 @@
                                 <th style="width: 8%; min-width: 88px;" class="table-list-hide-mob">사용 구분</th>
                                 <th>쿠폰 이름</th>
                                 <th style="width: 14%; min-width: 154px;">할인 금액</th>
-                                <th style="width: 14%; min-width: 154px;" class="table-list-hide">사용 기간</th>
-                                <th style="width: 9%; min-width: 100px;" class="table-list-hide">사용 갯수</th>
+                                <th style="width: 16%; min-width: 154px;" class="table-list-hide">사용 기간</th>
+                                <th style="width: 11%; min-width: 100px;" class="table-list-hide">사용 갯수</th>
                                 <th style="width: 10%; min-width: 110px;" class="table-list-hide">발행 현황</th>
                                 <th style="width: 11%; min-width: 120px;" class="table-list-hide">등록일</th>
                                 <th style="width: 10%; min-width: 110px;">기능</th>
@@ -84,39 +84,55 @@
                         </thead>
 
                         <tbody>
-                            <c:set var="showLink" value="onclick=\"popWindow('coupon_view.do?no=2', '700', '900');\"" />
+                            <c:set var="list" value="${List}" />
+                            <c:choose>
+                            <c:when test="${!empty list}">
+                            <c:forEach items="${list}" var="dto">                        
+                            <c:set var="showLink" value="onclick=\"popWindow('coupon_view.do?no=${dto.getCoupon_no()}', '700', '900');\"" />
+                            <c:set var="result_name" value="<span class=\"search\">${search_name}</span>"></c:set>
                             <tr>
-                                <td ${showLink} class="py-4 table-list-hide-mob">1</td>
-                                <td ${showLink} class="table-list-hide-mob">장바구니</td>
-                                <td ${showLink}>테스트 쿠폰</td>
-                                <td ${showLink} class="eng">2,000원</td>
-                                <td ${showLink} class="eng table-list-hide">발급후 30일</td>
-                                <td ${showLink} class="eng table-list-hide">0</td>
-                                <td ${showLink} class="eng table-list-hide"><b class="text-primary">1</b> / 100</td>
-                                <td ${showLink} class="eng table-list-hide">2022/11/28<br />11:38:07</td>
+                                <td ${showLink} class="py-4 table-list-hide-mob">${dto.getCoupon_no()}</td>
+                                <td ${showLink} class="table-list-hide-mob">
+                                    <c:choose>
+                                    <c:when test="${dto.getCoupon_use_type() eq 'cart'}">장바구니</c:when>
+                                    <c:when test="${dto.getCoupon_use_type() eq 'category'}">카테고리</c:when>
+                                    <c:otherwise>상품</c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td ${showLink} class="eng table-list-hide"><c:choose><c:when test="${search_name != ''}">${dto.getCoupon_name().replace(search_name, result_name)}</c:when><c:otherwise>${dto.getCoupon_name()}</c:otherwise></c:choose></td>
+                                <td ${showLink} class="eng">
+                                    <c:choose>
+                                    <c:when test="${dto.getCoupon_price_type() eq 'price'}"><fmt:formatNumber value="${dto.getCoupon_price()}" />원</c:when>
+                                    <c:otherwise>${dto.getCoupon_price()}%</c:otherwise>
+                                    </c:choose><br>
+                                    <c:choose><c:when test="${dto.getCoupon_price_max() != 0}">(최대 <fmt:formatNumber value="${dto.getCoupon_price_max()}" />원)</c:when><c:otherwise></c:otherwise></c:choose>
+                                </td>
+                                <td ${showLink} class="eng table-list-hide">
+                                    <c:choose>
+                                    <c:when test="${dto.getCoupon_date_type() eq 'free'}">무제한</c:when>
+                                    <c:when test="${dto.getCoupon_date_type() eq 'after'}">발급 후 ${dto.getCoupon_date_value()}일</c:when>
+                                    <c:otherwise>${dto.getCoupon_start_date().substring(0, 10)}~<br>${dto.getCoupon_end_date().substring(0, 10)}</c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td ${showLink} class="eng table-list-hide">${dto.getCoupon_use_ea()}</td>
+                                <td ${showLink} class="eng table-list-hide">
+                                <b class="text-primary">${dto.getCoupon_down_ea()}</b>
+                                / ${dto.getCoupon_max_ea()}</td>
+                                <td ${showLink} class="eng table-list-hide">${dto.getCoupon_date().substring(0, 10)}<br />${dto.getCoupon_date().substring(11, 19)}</td>
                                 <td>
                                     <a href="<%=request.getContextPath()%>/admin/coupon/coupon_modify.do?no=${dto.getCoupon_no()}&search_type=${search_type}&search_name=${search_name}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
                                     <a href="<%=request.getContextPath()%>/admin/coupon/coupon_delete.do?no=${dto.getCoupon_no()}&search_type=${search_type}&search_name=${search_name}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td ${showLink} class="py-4 table-list-hide-mob">2</td>
-                                <td ${showLink} class="table-list-hide-mob">카테고리</td>
-                                <td ${showLink}>카테고리 쿠폰</td>
-                                <td ${showLink} class="eng">10%<br />(최대 3,000원)</td>
-                                <td ${showLink} class="eng table-list-hide">2022/12/01<br />~ 2022/12/31</td>
-                                <td ${showLink} class="eng table-list-hide">1</td>
-                                <td ${showLink} class="eng table-list-hide"><b class="text-primary">2</b> / 50</td>
-                                <td ${showLink} class="eng table-list-hide">2022/12/02<br />10:26:28</td>
-                                <td>
-                                    <a href="<%=request.getContextPath()%>/admin/coupon/coupon_modify.do?no=${dto.getCoupon_no()}&search_type=${search_type}&search_name=${search_name}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
-                                    <a href="<%=request.getContextPath()%>/admin/coupon/coupon_delete.do?no=${dto.getCoupon_no()}&search_type=${search_type}&search_name=${search_name}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
-                                </td>
-                            </tr>
+                            </c:forEach>
+                            </c:when>
 
+                            <c:otherwise>
                             <tr>
                                 <td colspan="9" class="nodata">No Data</td>
                             </tr>
+                            </c:otherwise>
+                            </c:choose>                            
                         </tbody>
                     </table>
                 </div>
