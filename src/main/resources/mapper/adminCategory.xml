@@ -6,7 +6,6 @@
 
 <!-- 관리자 : 카테고리 관련 -->
 <mapper namespace="categoryDAO">
-
     <!-- 카테고리 목록 -->
 	<resultMap id="cateListMap" type="categoryDTO">
         <result property="category_id" column="category_id" />

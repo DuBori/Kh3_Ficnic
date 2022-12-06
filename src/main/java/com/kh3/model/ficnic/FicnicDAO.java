@@ -13,6 +13,8 @@ public interface FicnicDAO {
 	/* 피크닉 정보 */
 	FicnicDTO getFicnicCont(int no);
 	/* 피크닉 수정 */
-	int modifyFicnic(CouponDTO dto);
+	int modifyFicnic(FicnicDTO dto,List<String> upload_list);
+	/* 피크닉 삭제 */
+	int deleteFicnic(int no);
 
 }
