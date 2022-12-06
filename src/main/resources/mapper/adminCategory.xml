@@ -100,4 +100,11 @@
         update ficnic_list set ficnic_category_sub3 = '00000000' where ficnic_category_sub3 = #{ps_ctid}
     </update>
 
+
+    <!-- 쿠폰 상세 내역에서 카테고리 정보 찾기 -->
+	<select id="admincheckCategory" resultType="String" parameterType="String">
+		select category_name from ficnic_category where category_id = #{coupon_use_value}
+	</select>
+
+
 </mapper>

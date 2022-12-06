@@ -19,5 +19,7 @@ public interface CategoryDAO {
     void updateCategorySeq(int category_no);
 
     void updateCategoryFicnic(String ps_ctid);
+    
+    String checkCategory(String coupon_use_value);
 
 }
