@@ -1,13 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="../../layout/layout_header.jsp" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+
 
 <c:if test="${!empty boardConfig }">
 	<c:set value="${boardConfig}" var="conf"/>
@@ -36,7 +32,8 @@
 	<c:if test="${empty m}">
 		<c:set var="tag" value="/site/board/board_write_ok.do"/>
 	</c:if>
-<body>
+
+
 	
 
 	<div class="page-info row mb-3">
@@ -204,5 +201,8 @@
 		</form>
 
 	</div>
-</body>
-</html>
+
+
+
+
+<%@ include file="../../layout/layout_footer.jsp" %>

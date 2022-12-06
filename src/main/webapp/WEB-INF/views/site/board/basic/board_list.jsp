@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ include file="../layout/layout_header.jsp" %> --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="../../layout/layout_header.jsp" %>
+
 
 <!-- 게시판 보기 권한  -->
 <c:set var="level_list" value="${boardConfig.getBoard_level_list() }"/>
@@ -69,7 +71,7 @@
 							<td>🔒비밀글 입니다.</td>
 						</c:if>
 						<c:if test="${dto.getBdata_use_secret() eq 'N' or session_id eq 'admin'}">
-							<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">[${level}]회원 ${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
+							<td><a href="<%=request.getContextPath()%>/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">[${level}]회원 ${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
 						</c:if>
 						
 						<td>${dto.getBdata_writer_name() }</td>
@@ -93,7 +95,7 @@
 		    <!-- 페이징 처리 end -->
 		    
 		    <!-- 검색 처리  -->
-		    <form name="search_form" method="get" action="<%=request.getContextPath()%>/site/board/board_list.do">
+		    <form name="search_form" method="get" action="<%=request.getContextPath()%>/board/board_list.do">
 			    <div class="row mt-2 list-bottom-util">
 			       <div class="col-6 mt-3">
 			               <input type="hidden" value="${bbs_id}" name="bbs_id">
@@ -117,10 +119,10 @@
 				<div class="col-6 text-right mt-3">
 			             <c:choose>
 				             <c:when test="${!empty field}">
-				             	<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-outline-secondary"><i class="fa fa-list mr-1"></i> 게시물 전체목록</a>
+				             	<a href="<%=request.getContextPath()%>/board/board_list.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-outline-secondary"><i class="fa fa-list mr-1"></i> 게시물 전체목록</a>
 				             </c:when>
 				             <c:otherwise>
-				             	<a href="<%=request.getContextPath()%>/site/board/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"  
+				             	<a href="<%=request.getContextPath()%>/board/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"  
 				             	
 				             	<c:if test="${boardConfig.getBoard_level_write() ne 'null' and empty session_id}"> 
 				             	onclick="alert('권한이 없습니다.'); return false;" </c:if>
@@ -137,4 +139,4 @@
 
 
 
-<%-- <%@ include file="../layout/layout_footer.jsp" %> --%>
+<%@ include file="../../layout/layout_footer.jsp" %>
