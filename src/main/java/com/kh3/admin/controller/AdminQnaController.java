@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh3.model.ficnic.FicnicDAO;
+import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.model.qna.QnaCommentDAO;
 import com.kh3.model.qna.QnaCommentDTO;
 import com.kh3.model.qna.QnaDAO;
@@ -30,6 +32,9 @@ public class AdminQnaController {
 
     @Inject
     private QnaCommentDAO cdao;
+
+    @Inject
+    private FicnicDAO fdao;
 
 
     // 한 페이지당 보여질 게시물의 수
@@ -92,9 +97,11 @@ public class AdminQnaController {
     public String view(Model model, @RequestParam("no") int no) {
         QnaDTO dto = this.dao.qnaView(no);
         List<QnaCommentDTO> list = this.cdao.getQnaCommentList(no);
+        FicnicDTO fdto = this.fdao.getFicnicCont(dto.getFicnic_no());
 
         model.addAttribute("dto", dto);
         model.addAttribute("cdto", list);
+        model.addAttribute("fdto", fdto);
 
         return "admin/qna/qna_view";
     }
@@ -134,32 +141,16 @@ public class AdminQnaController {
         }
     }
 
-    // 답글 삭제 매핑
-	  @RequestMapping("/admin/qna/comment_delete.do") 
-	  public void commentDelete(HttpServletRequest request, HttpServletResponse response, @RequestParam("qna_no") int qno, @RequestParam("comment_no") int no) throws IOException  {
-	        response.setContentType("text/html; charset=UTF-8");
-	        PrintWriter out = response.getWriter();
-	        
-	        this.cdao.qnaCommentDelete(no);
-	        
-	        String res="";
-	        System.out.println("출력출력1");
-	        System.out.println(no);
-			for(QnaCommentDTO qnaDto : this.cdao.getQnaCommentList(qno)) {
-				System.out.println("출력출력2");
-                res += "<tr>"
-                		+"<td>"+qnaDto.getComment_writer_name()+"</td>"
-                		+"<td class=\"msg\">"+qnaDto.getComment_content()+"</td>"
-                		+ "<td>"+qnaDto.getComment_date()+"</td>"
-                		+"<td>"
-                		+"<button type=\"button\" class=\"btn btn-sm btn-outline-danger m-1 deleteBtn\" name=\"comment_no\" value=\""+qnaDto.getComment_no()+"\">삭제</button>"
-                		+ "</td>"
-                		+ "</tr>";
 
-            }
-			
-            out.print(res);
-        } 
+    // 답글 삭제 매핑
+    @RequestMapping("/admin/qna/comment_delete.do")
+    public void commentDelete(@RequestParam("comment_no") int no, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int res = this.cdao.qnaCommentDelete(no);
+        out.println(res);
+    } 
 	        
   
 }

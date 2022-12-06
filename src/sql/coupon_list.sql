@@ -39,7 +39,7 @@ comment on column coupon_list.coupon_date is '쿠폰 등록일자';
 
 
 insert into coupon_list values(1, '테스트 쿠폰', 'cart', null, 2000, 'price', 30000, 0, 'after', 30, null, null, 100, 1, 0, sysdate);
-insert into coupon_list values(2,'카테고리 쿠폰', 'category', '1000000', 10, 'percent', 15000, 3000, 'date', 0, to_date('2022/12/01 00:00:00','YYYY/MM/DD HH24:MI:SS'), to_date('2022/12/31 23:59:59','YYYY/MM/DD HH24:MI:SS'), 50, 2, 1, sysdate);
+insert into coupon_list values(2,'카테고리 쿠폰', 'category', '1000000★2000000', 10, 'percent', 15000, 3000, 'date', 0, to_date('2022/12/01 00:00:00','YYYY/MM/DD HH24:MI:SS'), to_date('2022/12/31 23:59:59','YYYY/MM/DD HH24:MI:SS'), 50, 2, 1, sysdate);
 
 
 commit;
