@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../layout/layout_header.jsp" %>
+
 <script type="text/javascript">
 $("#header .navbar .nav-item:nth-child(3)").addClass("active");
 
 
 $(function(){
+    // 아이디 중복여부 확인
 	$("input[name='member_id']").keyup(function(){
         let userId = $(this).val();
 		
@@ -14,16 +16,14 @@ $(function(){
             return false;
         }
 
-        // 아이디 중복여부 확인
         $.ajax({
             type : "post",
             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+            datatype : "html",
             url : "<%=request.getContextPath()%>/admin/member/memberIdCheck.do",
             data : { paramId : userId },
-            datatype : "html",
-            
+
             success : function(data){
-            	console.log(data);
                 let ajaxTxt = "";
                 if(data > 0){
                     ajaxTxt = "<span class=\"text-danger\">* 이미 사용중인 아이디입니다.</span>";
@@ -40,13 +40,9 @@ $(function(){
                 $("input[name='idchk']").val("N");
             }
         });
-        
-        
-	});
-	
+	});	
 });
-
- </script>
+</script>
 
 
 
@@ -78,15 +74,12 @@ $(function(){
                                 <label class="btn btn-outline-secondary">
                                     <input type="radio" name="member_type" value="admin" /> 관리자
                                 </label>
-                                <label class="btn btn-outline-secondary">
-                                    <input type="radio" name="member_type" value="exit" /> 탈퇴회원
-                                </label>
                             </div>
                         </div>
                         <div class="w-100 border-bottom"></div>
                         <div class="form-group col">
                             <label for="member_id">아이디</label>
-                            <input type="text" name="member_id" id="member_id" class="form-control d-inline w-30" required />
+                            <input type="text" name="member_id" id="member_id" class="form-control d-inline w-30" onkeydown="EngNumInput(this);" required />
                             <div id="idchk-txt" class="d-inline ml-2"></div>
                             <input type="hidden" name="idchk" value="false" />
                         </div>
@@ -109,12 +102,12 @@ $(function(){
                         <div class="w-100"></div>
                         <div class="form-group col">
                             <label for="member_email">이메일</label>
-                            <input type="text" name="member_email" id="member_email" class="form-control" required />
+                            <input type="text" name="member_email" id="member_email" class="form-control" onkeydown="EmailInput(this);" required />
                         </div>
                         <div class="w-100"></div>
                         <div class="form-group col">
                             <label for="member_phone">연락처</label>
-                            <input type="text" name="member_phone" id="member_phone" maxlength="15" class="form-control w-30" required />
+                            <input type="text" name="member_phone" id="member_phone" maxlength="15" class="form-control w-30" onkeydown="NumSpInput(this);" required />
                         </div>
                     </div>
                 </div>
