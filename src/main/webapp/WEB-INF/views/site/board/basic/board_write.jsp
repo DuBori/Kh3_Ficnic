@@ -4,6 +4,9 @@
 <%@ include file="../../layout/layout_header.jsp" %>
 
 
+<div class="contents w1150">
+
+
 
 <c:if test="${!empty boardConfig }">
 	<c:set value="${boardConfig}" var="conf"/>
@@ -202,6 +205,9 @@
 
 	</div>
 
+
+
+</div>
 
 
 

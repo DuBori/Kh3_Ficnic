@@ -72,8 +72,8 @@
         <nav class="navbar navbar-expand-lg w1150">
             <h1 class="navbar-brand"><a href="${path}/main.do"><img src="${path}/resources/site/images/site_logo.png" alt="Ficnic" /> Ficnic</a></h1>
 
-            <div class="navbar-collapse collapse">
-                <form name="search" class="navbar-search mr-auto" action="#">
+            <div class="navbar-collapse">
+                <form name="search" class="navbar-search mr-auto" action="${path}/ficnic/ficnic_list.do">
                 <fieldset>
                     <legend class="displaynone">통합검색</legend>
                     <input type="text" name="query" value="" autocomplete="off" placeholder="배우고 싶은 재능을 찾아보세요." />
@@ -82,7 +82,7 @@
                 </form>
 
                 <ul class="navmenu">
-                    <li><a href="#"><i class="icon-list"></i><p>카테고리</p></a></li>
+                    <li><a href="${path}/ficnic/category_list.do"><i class="icon-list"></i><p>카테고리</p></a></li>
                     <li><a href="#"><i class="icon-heart"></i><p>위시리스트</p></a></li>
                     <li><a href="#"><i class="icon-user"></i><p>마이페이지</p></a></li>
                     <li><button type="button" data-toggle="modal" data-target="#logoutModal"><i class="icon-logout"></i><p>로그아웃</p></button></li>

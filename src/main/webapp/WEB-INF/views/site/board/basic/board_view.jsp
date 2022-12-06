@@ -4,6 +4,7 @@
 <%@ include file="../../layout/layout_header.jsp" %>
 
 
+<div class="contents w1150">
 
 
 <script type="text/javascript" >
@@ -339,4 +340,8 @@
 	 <!-- 내용 //END -->
     </main>
  
+
+</div>
+
+
 <%@ include file="../../layout/layout_footer.jsp" %>

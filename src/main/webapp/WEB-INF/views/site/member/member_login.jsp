@@ -1,12 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="../layout/layout_header.jsp" %>
+
+
+
+<div class="contents w1150">
+
+
 
 <c:set var="dto" value="${dto}" />
 
@@ -36,7 +37,8 @@
 		});
 		</script> -->
 
-<body>
+
+
 	<h2>로그인</h2>
 	<form name="form1" method="post" action="<%=request.getContextPath() %>/member/member_login_check.do">
 		<table border="1" width="400px">
@@ -60,5 +62,10 @@
 			</tr>
 		</table>
 	</form>
-</body>
-</html>
+
+
+</div>
+
+
+
+<%@ include file="../layout/layout_footer.jsp" %>
