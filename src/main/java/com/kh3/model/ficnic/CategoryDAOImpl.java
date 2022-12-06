@@ -132,4 +132,13 @@ public class CategoryDAOImpl implements CategoryDAO {
         this.sqlSession.update("adminCategoryFicnicUpdate3", ps_ctid);
     }
 
+
+////////////////////////////////////////////////////////////////////////////////
+	/* 카테고리 중분류 */
+	@Override
+	public List<CategoryDTO> getCategorySubList(String category_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

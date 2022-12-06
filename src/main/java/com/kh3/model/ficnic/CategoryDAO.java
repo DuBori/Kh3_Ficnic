@@ -20,4 +20,6 @@ public interface CategoryDAO {
 
     void updateCategoryFicnic(String ps_ctid);
 
+	List<CategoryDTO> getCategorySubList(String category_id);
+
 }
