@@ -105,7 +105,7 @@
 										<c:when test="${search_qna != ''}">${dto.getQna_title().replace(search_qna, result_qna)}</c:when>
 										<c:otherwise>${dto.getQna_title()}</c:otherwise>
 									</c:choose>
-									<c:if test="${dto.getQna_comment() > 0}"><span class="comnum">${dto.getQna_comment()}</span></c:if>
+									<c:if test="${dto.getQna_comment() > 0}"><span class="comnum"><i class="fa fa-comment-o"></i> ${dto.getQna_comment()}</span></c:if>
 								</td>
 								<td ${showLink} class="table-list-hide-mob">
 									<p><b><c:choose><c:when test="${search_writer != ''}">${dto.getQna_name().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getQna_name()}</c:otherwise></c:choose></b></p>
