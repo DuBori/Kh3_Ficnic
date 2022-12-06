@@ -22,6 +22,4 @@ public interface CategoryDAO {
     
     String checkCategory(String coupon_use_value);
 
-	List<CategoryDTO> getCategorySubList(String category_id);
-
 }

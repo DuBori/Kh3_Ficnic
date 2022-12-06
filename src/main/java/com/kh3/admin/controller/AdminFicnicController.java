@@ -119,7 +119,7 @@ public class AdminFicnicController {
     	// 기존에 있던 해당 피크닉 상품 정보 불러와야한다.
     	FicnicDTO fdto =this.dao.getFicnicCont(no);
     	
-		/*  기존에 존재하는 DTO 파일만큼 삭제해야함. */
+		/*  기존에 존재하는 DTO에 있는 이미지만큼 삭제해야함. */
     	
     	
         // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
