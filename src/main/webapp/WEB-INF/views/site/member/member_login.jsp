@@ -51,7 +51,10 @@
 			<tr>
 				<td colspan="2" align="center">
 					<input type="submit" id="btnLogin" value="로그인"> 
-					
+
+
+		<div class="mf-find"><a href="<%=request.getContextPath()%>/site/member/member_find.do">
+		<i class="fa fa-question-circle"></i> 아이디/비밀번호 찾기</a></div>
 
 				</td>
 			</tr>
