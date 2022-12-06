@@ -98,4 +98,22 @@ public class MemberDAOImpl implements MemberDAO {
 		return this.sqlSession.selectOne("siteMemberLoginPw", dto);
 	}
 
+
+	@Override
+	public int findIdAll(MemberDTO dto) {
+		return this.sqlSession.selectOne("siteMemberfindId", dto);
+	}
+
+	
+	@Override
+	public int findIdEmail(MemberDTO dto) { 
+		return this.sqlSession.selectOne("siteMemberFindIdEmail", dto);
+	}
+
+	@Override
+	public int findPw(MemberDTO dto) {
+		return this.sqlSession.selectOne("siteMemberfindPw", dto);
+	}
+
+
 }

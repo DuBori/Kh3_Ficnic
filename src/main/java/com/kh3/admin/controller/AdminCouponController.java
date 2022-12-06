@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh3.model.coupon.CouponDAO;
 import com.kh3.model.coupon.CouponDTO;
+import com.kh3.model.ficnic.CategoryDAO;
+import com.kh3.model.ficnic.CategoryDTO;
+import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
 
@@ -24,8 +27,9 @@ public class AdminCouponController {
 
     @Autowired
     private CouponDAO dao;
-
-
+    
+    @Autowired
+    private CategoryDAO cdto;
 
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
@@ -80,8 +84,17 @@ public class AdminCouponController {
 
 
     @RequestMapping("admin/coupon/coupon_view.do")
-    public String couponView(Model model, @RequestParam("no") int no) {
+    public String couponView(Model model, @RequestParam("no") int no, CategoryDTO cdto) {
         CouponDTO dto = this.dao.couponView(no);
+        String check = "";
+        // 쿠폰을 사용할 수 있는 카테고리 내역 가져오기
+        if(dto.getCoupon_use_value() != null) {
+        	String[] category = dto.getCoupon_use_value().split("★");
+        	for(int i=0;i<category.length;i++) {
+        		check += "☆"+this.cdto.checkCategory(category[i]);
+        	}
+        	model.addAttribute("category", check);
+        }
         model.addAttribute("dto", dto);
         
         return "admin/coupon/coupon_view";
@@ -102,7 +115,7 @@ public class AdminCouponController {
         PrintWriter out = response.getWriter();
 
         int check = this.dao.couponWrite(dto);
-
+        
         if (check > 0) {
             out.println("<script>alert('쿠폰이 등록되었습니다.'); location.href='coupon_list.do';</script>");
         } else {

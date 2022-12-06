@@ -28,11 +28,20 @@ public interface MemberDAO {
     // 회원 정보 수정
     int modifyOk(MemberDTO dto);
     
-    // 로그인
+    // 로그인 아이디체크
     int loginCheck(MemberDTO dto);
     
-    // 비밀번호
+    // 비밀번호 체크
     int pwCheck(MemberDTO dto);
+    
+    // 아이디 찾기 - 모두
+    int findIdAll(MemberDTO dto);
+    
+    // 아이디 찾기 - 이메일만
+    int findIdEmail(MemberDTO dto);
+    
+    // 비밀번호 찾기
+    int findPw(MemberDTO dto);
     
 
 }

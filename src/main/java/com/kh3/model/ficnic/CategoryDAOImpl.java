@@ -133,12 +133,16 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
 
-////////////////////////////////////////////////////////////////////////////////
-	/* 카테고리 중분류 */
+
+    // 쿠폰 상세 내역에서 카테고리 정보 찾기
 	@Override
-	public List<CategoryDTO> getCategorySubList(String category_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public String checkCategory(String coupon_use_value) {
+		return this.sqlSession.selectOne("admincheckCategory", coupon_use_value);
 	}
+
+
+
+
+
 
 }

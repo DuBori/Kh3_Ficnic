@@ -9,11 +9,7 @@
 
     <!-- 카테고리 목록 -->
 	<resultMap id="cateListMap" type="categoryDTO">
-	   <result property="category_show" column="category_show" />
         <result property="category_id" column="category_id" />
-        <result property="category_name" column="category_name" />
-        <result property="category_depth" column="category_depth" />
-        <result property="category_image" column="category_image" />
 	    <collection property="sub_category" column="category_id" select="adminCategoryListSub" javaType="java.util.ArrayList" ofType="categoryDTO" />
 	</resultMap>
 	 
@@ -103,5 +99,12 @@
     <update id="adminCategoryFicnicUpdate3" parameterType="String">
         update ficnic_list set ficnic_category_sub3 = '00000000' where ficnic_category_sub3 = #{ps_ctid}
     </update>
+
+
+    <!-- 쿠폰 상세 내역에서 카테고리 정보 찾기 -->
+	<select id="admincheckCategory" resultType="String" parameterType="String">
+		select category_name from ficnic_category where category_id = #{coupon_use_value}
+	</select>
+
 
 </mapper>

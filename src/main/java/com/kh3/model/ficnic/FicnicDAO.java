@@ -15,4 +15,6 @@ public interface FicnicDAO {
 	/* 피크닉 수정 */
 	int modifyFicnic(CouponDTO dto);
 
+	FicnicDTO getFicnicCont(int ficnic_no);
+
 }
