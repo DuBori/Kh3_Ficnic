@@ -4,6 +4,10 @@
 <%@ include file="../../layout/layout_header.jsp" %>
 
 
+<div class="contents w1150">
+
+
+
 <!-- 게시판 보기 권한  -->
 <c:set var="level_list" value="${boardConfig.getBoard_level_list() }"/>
 
@@ -137,6 +141,9 @@
 	</c:otherwise>
 </c:choose>
 
+
+
+</div>
 
 
 <%@ include file="../../layout/layout_footer.jsp" %>
