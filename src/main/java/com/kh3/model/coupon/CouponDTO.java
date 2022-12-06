@@ -21,5 +21,7 @@ public class CouponDTO {
 	private int coupon_down_ea;
 	private int coupon_use_ea;
 	private String coupon_date;
+	// 카테고리 DB 저장 변수
+	private String coupon_category_value;
 	
 }
