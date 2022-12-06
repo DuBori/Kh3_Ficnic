@@ -39,7 +39,7 @@ public class CouponDAOImpl implements CouponDAO {
     // 쿠폰 등록
     @Override
     public int couponWrite(CouponDTO dto) {
-        return 0;
+        return this.sqlSession.insert("adminCouponWriteOk", dto);
     }
 
 

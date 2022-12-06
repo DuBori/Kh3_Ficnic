@@ -31,7 +31,7 @@
         ]]>
 	</select>
 
-	<!-- 쿠폰 보기 --><!-- select * from coupon_list c join ficnic_category f on c.coupon_use_value = f.category_id where coupon_no = #{coupon_no}; -->
+	<!-- 쿠폰 보기 -->
 	<select id="adminCouponView" parameterType="int" resultType="couponDTO">
 		select * from coupon_list where coupon_no = #{coupon_no}
 	</select>
@@ -45,6 +45,7 @@
 	<update id="adminCouponSequence">
 		<![CDATA[update coupon_list set coupon_no = coupon_no - 1 where coupon_no > #{coupon_no}]]>
 	</update>
+
 
 
 </mapper>
