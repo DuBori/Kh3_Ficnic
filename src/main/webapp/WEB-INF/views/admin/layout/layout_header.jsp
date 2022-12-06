@@ -61,7 +61,7 @@
                     <p>로그아웃 하시겠습니까?</p>
                     <p>&nbsp;</p>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">창닫기</button>
-                    <button type="button" class="btn btn-primary ml-2" onclick="location.href='#';">로그아웃</button>
+                    <a href="${path}/member/member_logout.do" class="btn btn-primary ml-2">로그아웃</a>
                 </div>
             </div>
         </div>
