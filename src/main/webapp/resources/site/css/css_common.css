@@ -1,28 +1,17 @@
 @charset "utf-8";
 
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
-@font-face {
-    font-family: 'NotoSerifKR';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NotoSerifKR.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
 
 
 
-/*************************/
-/* Variable
-/*************************/
 :root {
-    --xpadding: 50px;
-    --xpadding2: 25px;
-    --xpadding3: 10px;
-    --color: #cd5c5c;
+    --font-color: #ff005a;
+    --border-color: #ff0045;
 }
-
 
 
 
@@ -36,26 +25,18 @@ html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form
 html {
     width: 100%;
     height: 100%;
-    min-height: 100%;
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
-    overflow-y: scroll;
 }
-html.noscroll {
-    overflow: hidden !important;
-}
-
 body {
-    width: 100%;
     height: 100%;
-    min-height: 100%;
-    background: #fff;
-    -webkit-backface-visibility: hidden;
 }
 body,
 code,
 pre {
     font-size: 14px;
-    font-family: 'Noto Sans KR'; 
+    font-family: 'Noto Sans KR', '맑은 고딕', 'Malgun Gothic', 'verdana', '굴림', 'Gulim', 'AppleGothic', 'sans-serif';
     color: #333;
     margin: 0;
     padding: 0;
@@ -65,25 +46,14 @@ ul,
 ol,
 dl,
 p,
-span
-     {
+span,
+button {
     margin: 0;
     padding: 0;
     border: 0 none;
 }
-
-div {
-    display: block;
-}
-button {
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    outline: none;
-}
-
 li {
-    font-family: 'Noto Sans KR';    
+    font-family: 'Noto Sans KR', '맑은 고딕', 'Malgun Gothic', 'verdana', '굴림', 'Gulim', 'AppleGothic', 'sans-serif';
     list-style: none;
     color: #333;
 }
@@ -97,25 +67,6 @@ textarea {
     color: #333;
     vertical-align: middle;
 }
-select {
-    height: 38px;
-    border: 1px solid #e5e5e5;
-    border-radius: 5px;
-    background: url('../images/select_arrow.png') no-repeat 90% 50%;
-    background-size: 20px 20px;
-    padding: 0 35px 0 10px;
-    appearance: none;
-    font-weight: 400;
-    color: #181818;
-    vertical-align: middle;
-    outline: none;
-}
-select:focus {
-    border-color: var(--color);
-}
-label {
-    cursor: pointer;
-}
 
 
 img {
@@ -128,13 +79,7 @@ audio {
     display: none;
 }
 
-a, button, input {
-    -webkit-transition: all .2s ease-in-out;
-    -moz-transition: all .2s ease-in-out;
-    -o-transition: all .2s ease-in-out;
-    -ms-transition: all .2s ease-in-out;
-    transition:all .2s ease-in-out
-}
+
 a,
 a:link,
 a:active,
@@ -142,14 +87,21 @@ a:visited {
     font-size: 14px;
     font-family: 'Noto Sans KR', '맑은 고딕', 'Malgun Gothic', 'verdana', '굴림', 'Gulim', 'AppleGothic', 'sans-serif';
     text-decoration: none;
-    letter-spacing: -1px;
+    letter-spacing: -0.5px;
 }
 a:hover {
     text-decoration: none !important;
-    color: var(--color);
+    color: var(--font-color);
 }
 *:focus {
     outline: none !important;
+}
+
+
+a, button {
+    -webkit-transition: all 0.2s ease-out 0s;
+    -o-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
 }
 
 
@@ -169,26 +121,8 @@ table td img {
 }
 
 
-h1, h2, h3, h4, h5 {
-    font-weight: 600;
-}
-legend {
-    display: none;
-}
 
 
-@media screen and (-webkit-min-device-pixel-ratio:0){ 
-    div, a, img, li {
-        image-rendering: -webkit-optimize-contrast;
-    }
-}
-@media not all and (min-resolution:.001dpcm) {
-    @supports (-webkit-appearance:none) and (display:flow-root) {
-        div, a, img, li {
-            image-rendering: auto !important;
-        }
-    }
-}
 
 
 
@@ -197,14 +131,13 @@ legend {
 /* float bugFix
 /*************************/
 .clear {
-	zoom: 1;
+    zoom: 1;
 }
 .clear:after {
-	content: "";
-	display: block;
-	clear: both;
+    content: "";
+    display: block;
+    clear: both;
 }
-
 
 
 
@@ -212,32 +145,25 @@ legend {
 /* Etc
 /*************************/
 .displaynone {
-	display: none;
-}
-
-
-
-
-
-/*************************/
-/* 다음 우편번호
-/*************************/
-.find-zipcode {
-    position: relative;
-    width: 100%;
-    height: 300px;
-    max-height: 500px !important;
-    margin: 10px 0;
-    border: 1px solid;
     display: none;
-    overflow-y: auto;
 }
-@media (max-width: 992px) {
-    .find-zipcode {
-        width: calc(100% + 120px);
-        margin: 10px 0 10px -120px;
-    }
+
+
+.form-control {
+    font-size: 14px !important;
 }
+
+
+.btn-group input[type="radio"] {
+    margin-top: -3px;
+}
+.form-control[type="file"] {
+    height: calc(1.5em + .75rem + 7px);
+    padding: .375rem .5rem;
+}
+
+
+
 
 
 
@@ -261,7 +187,7 @@ legend {
     left: 0;
     right: 0;
     bottom: 0;
-    color: #5b73e8;
+    color: var(--font-color);
     font-size: 50px;
     text-indent: -9999em;
     overflow: hidden;
@@ -336,129 +262,6 @@ legend {
         transform: rotate(360deg);
     }
 }
-
-
-
-
-
-/*************************/
-/* Header
-/*************************/
-.header {}
-
-
-
-
-
-/*************************/
-/* Footer
-/*************************/
-.footer {}
-
-
-
-
-
-/*************************/
-/* Container
-/*************************/
-#container {}
-
-
-
-
-
-
-/*************************/
-/* .page-paging
-/*************************/
-.page-paging {
-    position: relative;
-    max-width: 1330px;
-    padding: 0;
-    margin: 70px auto;
-    text-align: center;
-    font-size: 0;
-    line-height: 0;
-    vertical-align: top;
-    font-family: 'Lato';
-}
-.page-paging:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -40px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: #ddd;
-}
-.page-paging ol {
-    display: inline-block;
-    vertical-align: top;
-    margin: 0 5px;
-    padding: 0;
-}
-.page-paging span,
-.page-paging ol li {
-    display: inline-block;
-    margin-left: -1px;
-    line-height: 36px;
-    letter-spacing: -1px;
-    color: #000;
-    vertical-align: top;
-}
-
-.page-paging span {
-    width: 38px;
-    font-size: 20px;
-    overflow: hidden;
-}
-.page-paging span.nolink {
-    display: none;
-}
-.page-paging span:first-child {
-    margin-left: 0;
-}
-.page-paging span:last-child {
-    margin-left: 0;
-}
-
-.page-paging a {
-    display: block;
-    width: 38px;
-    text-align: center;
-    font-size: 14px;
-    text-decoration: none;
-    letter-spacing: -1px;
-    color: #000;
-    opacity: 0.6;
-}
-.page-paging span a {
-    width: 38px;
-    height: 36px;
-    margin-top: -1px;
-    font-size: 20px;
-    text-decoration: none;
-    letter-spacing: -1px;
-}
-.page-paging a:hover {
-    opacity: 1;
-    text-decoration: none;
-}
-
-.page-paging li.now {
-    width: 38px;
-    height: 38px;
-    font-size: 15px;
-    text-align: center;
-    box-sizing: border-box;
-    opacity: 1;
-    font-weight: 600;
-}
-
-
-
 
 
 

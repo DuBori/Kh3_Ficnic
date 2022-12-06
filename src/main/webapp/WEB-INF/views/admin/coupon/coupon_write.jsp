@@ -19,7 +19,7 @@
 
 
 
-<form name="form_input" method="post" enctype="multipart/form-data" action="<%=request.getContextPath() %>/admin/coupon/coupon_write_ok.do">
+<form name="form_input" method="post" action="<%=request.getContextPath() %>/admin/coupon/coupon_write_ok.do">
 <div class="page-cont">
     <div class="row">
         <div class="col-lg mb-4">
@@ -58,8 +58,8 @@
                                         <div class="col pb-2">
                                             <button type="button" class="btn btn-sm btn-outline-info">카테고리 지정</button>
                                             <ul class="list-box">
-                                                <li><input type="hidden" name="coupon_use_value[]" value="1000000" />아웃도어<button type="button"><i class="fa fa-times"></i></button></li>
-                                                <li><input type="hidden" name="coupon_use_value[]" value="2000000" />피트니스<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="10000000" />아웃도어<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="15000000" />피트니스<button type="button"><i class="fa fa-times"></i></button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -76,8 +76,8 @@
                                         <div class="col pb-2">
                                             <button type="button" class="btn btn-sm btn-outline-success">상품 지정</button>
                                             <ul class="list-box">
-                                                <li><input type="hidden" name="coupon_use_value[]" value="123" />테스트 상품<button type="button"><i class="fa fa-times"></i></button></li>
-                                                <li><input type="hidden" name="coupon_use_value[]" value="456" />테2스2트2 상품<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="01020000" />테스트 상품<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="01100000" />테2스2트2 상품<button type="button"><i class="fa fa-times"></i></button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@
 
                         <div class="form-group col">
                             <label for="coupon_max_ea">최대 발행 갯수</label>
-                            <input type="text" name="coupon_max_ea" id="coupon_max_ea" value="100" maxlength="11" class="form-control text-center w-15" onkeydown="NumberInput(this);" /> 개
+                            <input type="text" name="coupon_max_ea" id="coupon_max_ea" maxlength="11" class="form-control text-center w-15" onkeydown="NumberInput(this);" /> 개
                         </div>
                         <div class="w-100"></div>
                     </div>
@@ -103,7 +103,7 @@
                             <div class="jf-input">
                                 <div class="row">
                                     <div class="col pb-2">
-                                        <input type="text" name="coupon_price" id="coupon_price" value="0" maxlength="11" class="form-control d-inline text-center w-30" onkeydown="NumberInput(this);" required />
+                                        <input type="text" name="coupon_price" id="coupon_price" maxlength="11" class="form-control d-inline text-center w-30" onkeydown="NumberInput(this);" required />
                                         <select id="coupon_price_type" name="coupon_price_type" class="custom-select w-25">
                                             <option value="price">금액 (원)</option>
                                             <option value="percent">할인률 (%)</option>
@@ -117,11 +117,11 @@
 
                         <div class="form-group col mb-2">
                             <label for="coupon_price_over">최소 사용 금액</label>
-                            <input type="text" name="coupon_price_over" id="coupon_price_over" value="0" maxlength="11" class="form-control text-center w-30" onkeydown="NumberInput(this);" /> 원
+                            <input type="text" name="coupon_price_over" id="coupon_price_over" maxlength="11" class="form-control text-center w-30" onkeydown="NumberInput(this);" /> 원
                         </div>
                         <div class="form-group col mb-2">
                             <label for="coupon_price_max">최대 할인 금액</label>
-                            <input type="text" name="coupon_price_max" id="coupon_price_max" value="0" maxlength="11" class="form-control text-center w-30" onkeydown="NumberInput(this);" /> 원
+                            <input type="text" name="coupon_price_max" id="coupon_price_max" maxlength="11" class="form-control text-center w-30" onkeydown="NumberInput(this);" /> 원
                         </div>
 
                         <div class="w-100 border-bottom"></div>
@@ -144,7 +144,7 @@
                                         </div>
 
                                         <div class="px-0 pt-1 pb-2 collapse hide" id="after_layer">
-                                            발급 후 <input type="text" name="coupon_date_value" value="0" maxlength="3" class="form-control d-inline mx-2 text-center w-15" onkeydown="NumberInput(this);" /> 일까지 사용 가능
+                                            발급 후 <input type="text" name="coupon_date_value" maxlength="3" class="form-control d-inline mx-2 text-center w-15" onkeydown="NumberInput(this);" /> 일까지 사용 가능
                                         </div>
 
                                         <div class="px-0 pt-1 pb-2 collapse hide" id="date_layer">
@@ -153,7 +153,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                     </div>
-                                                    <input type="text" name="coupon_start_date" id="startDt" value="2022-12-02" class="form-control text-center eng" />
+                                                    <input type="text" name="coupon_start_date" id="startDt" class="form-control text-center eng" />
                                                 </div>
                                             </div>
                                             <div class="d-inline-block pt-2 px-2">~</div>
@@ -162,7 +162,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                     </div>
-                                                    <input type="text" name="coupon_end_date" id="endDt" value="2022-12-02" class="form-control text-center eng" />
+                                                    <input type="text" name="coupon_end_date" id="endDt" class="form-control text-center eng" />
                                                 </div>
                                             </div>
                                         </div>

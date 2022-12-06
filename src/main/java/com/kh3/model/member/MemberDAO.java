@@ -40,8 +40,13 @@ public interface MemberDAO {
     // 아이디 찾기 - 이메일만
     int findIdEmail(MemberDTO dto);
     
-    // 비밀번호 찾기
-    int findPw(MemberDTO dto);
+    // 결과 출력창에 아이디 보내기
+    String findId(MemberDTO dto);
     
+    // 비밀번호 찾기 - 모두
+    int findPwAll(MemberDTO dto);
+    
+    // 결과 출력창에 비밀번호 보내기
+    String findPw(MemberDTO dto);
 
 }

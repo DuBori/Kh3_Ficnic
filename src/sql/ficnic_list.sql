@@ -24,6 +24,7 @@ create table ficnic_list(
     ficnic_detail varchar2(3000),
     ficnic_curriculum varchar2(3000),
     ficnic_etc varchar2(1000),
+    ficnic_location varchar2(100),
     ficnic_address varchar2(1000),
     ficnic_include varchar2(1000),
     ficnic_notinclude varchar2(1000),
@@ -58,6 +59,7 @@ comment on column ficnic_list.ficnic_info is '피크닉 정보';
 comment on column ficnic_list.ficnic_detail is '피크닉 상세';
 comment on column ficnic_list.ficnic_curriculum is '커리큘럼';
 comment on column ficnic_list.ficnic_etc is '기타 정보';
+comment on column ficnic_list.ficnic_location is '진행 지역';
 comment on column ficnic_list.ficnic_address is '진행 장소';
 comment on column ficnic_list.ficnic_include is '포함 사항';
 comment on column ficnic_list.ficnic_notinclude is '불포함 사항';
@@ -70,7 +72,7 @@ comment on column ficnic_list.ficnic_sale is '피크닉 판매 갯수';
 comment on column ficnic_list.ficnic_date is '피크닉 등록 일자';
 
 
-insert into ficnic_list values(1, '05000000', null, null, null, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)', 0, 30000, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)★[11세~대인] 제주고사리파스타★[10세~대인] 제주통밀당근파운드케이크', '30000★27000★30000', '10:00 타임★11:00 타임★13:30 타임★14:30 타임', '0★0★0★0', 'N', null, null, null, null, null, '<dt>연령</dt><dd>11세 이상 권장</dd>★<dt>사용기간</dt><dd>구매일로부터 90일</dd>', '<img src="https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/01_8_fqpvuy.jpg" class="fr-fic fr-dib">', null, null, '제주특별자치도 제주시 애월읍 상귀리 152', '강습비 재료비', '주차 별도 문의', '가벼운 마음', '[신청 시 유의사항]
+insert into ficnic_list values(1, '05000000', null, null, null, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)', 0, 30000, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)★[11세~대인] 제주고사리파스타★[10세~대인] 제주통밀당근파운드케이크', '30000★27000★30000', '10:00 타임★11:00 타임★13:30 타임★14:30 타임', '0★0★0★0', 'N', null, null, null, null, null, '<dt>연령</dt><dd>11세 이상 권장</dd>★<dt>사용기간</dt><dd>구매일로부터 90일</dd>', '<img src="https://res.cloudinary.com/frientrip/image/upload/c_limit,dpr_3.0,f_auto,q_auto:best,w_500/01_8_fqpvuy.jpg" class="fr-fic fr-dib">', null, null, '제주', '제주특별자치도 제주시 애월읍 상귀리 152', '강습비 재료비', '주차 별도 문의', '가벼운 마음', '[신청 시 유의사항]
 ① 당일 예약시 현장으로 가능 여부 먼저 확인 후 결제해주세요!!
 
 

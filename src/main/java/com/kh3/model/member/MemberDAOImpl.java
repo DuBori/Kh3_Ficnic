@@ -92,27 +92,42 @@ public class MemberDAOImpl implements MemberDAO {
 		return this.sqlSession.selectOne("siteMemberLogin", dto);
 	}
 	
-	// 비밀번호 체크 체크
+	// 비밀번호 체크
 	@Override
 	public int pwCheck(MemberDTO dto) {
 		return this.sqlSession.selectOne("siteMemberLoginPw", dto);
 	}
 
-
+	// 찾기 시 모든 조건 체크
 	@Override
 	public int findIdAll(MemberDTO dto) {
-		return this.sqlSession.selectOne("siteMemberfindId", dto);
+		return this.sqlSession.selectOne("siteMemberFindIdAll", dto);
 	}
 
 	
+	// 찾기 시 이메일 먼저 체크
 	@Override
 	public int findIdEmail(MemberDTO dto) { 
 		return this.sqlSession.selectOne("siteMemberFindIdEmail", dto);
 	}
 
+	// 결과 창 출력할 아이디
 	@Override
-	public int findPw(MemberDTO dto) {
-		return this.sqlSession.selectOne("siteMemberfindPw", dto);
+	public String findId(MemberDTO dto) {
+		return this.sqlSession.selectOne("siteMemberFindIdEnd", dto);
+	}
+
+	// 비밀번호 전부 검색
+	@Override
+	public int findPwAll(MemberDTO dto) {
+		return this.sqlSession.selectOne("siteMemberFindPwAll", dto);
+	}
+
+
+	// 결과창 출력할 비밀번호
+	@Override
+	public String findPw(MemberDTO dto) {
+		return this.sqlSession.selectOne("siteMemberFindPwEnd", dto);
 	}
 
 

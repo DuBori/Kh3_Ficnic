@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="../../layout/layout_header.jsp" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<div class="contents w1150">
+
+
 <script type="text/javascript" >
 	$(function() {
 		
@@ -57,8 +58,8 @@
 		});
 	});
 </script>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+
 <style type="text/css">
 	
 	.horizon{
@@ -74,8 +75,8 @@
 	}
 	
 </style>
-</head>
-<body>
+
+
 <c:set  var="level_view" value="${boardConf.getBoard_level_view() }"/>
 <c:choose>
 	<c:when test="${level_view eq 'null'}">
@@ -339,6 +340,8 @@
 	 <!-- 내용 //END -->
     </main>
  
-	
-</body>
-</html>
+
+</div>
+
+
+<%@ include file="../../layout/layout_footer.jsp" %>
