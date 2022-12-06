@@ -136,8 +136,7 @@ public class AdminMemberController {
     @RequestMapping("admin/member/memberIdCheck.do")
     @ResponseBody
     public int checkId(@RequestParam("paramId") String paramId) {
-    	int no = this.dao.checkId(paramId);
-    	return no;
+    	return this.dao.checkId(paramId);
     }
     
     

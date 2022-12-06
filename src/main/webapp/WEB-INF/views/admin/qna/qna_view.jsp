@@ -138,7 +138,7 @@ $(function() {
                             <label>작성일</label>
                             <div class="jf-input">
                                 <div class="row">
-                                    <div class="col pt-1 pb-2">${dto.qna_date}</div>
+                                    <div class="col pt-1 pb-2 engnum">${dto.qna_date}</div>
                                 </div>
                             </div>
                         </div>
