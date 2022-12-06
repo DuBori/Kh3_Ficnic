@@ -43,26 +43,27 @@ public class SiteBoardController {
 	@Inject
 	private BoardConfDAO board_ConfDao;
 
+
 	/* 게시물 파일 처리  */
 	private void FileProcess(MultipartHttpServletRequest mrequest, String bbs_id, BoardDTO beforedto, BoardDTO Currentdto,String uploadPath) {
 		/* 파일처리 START */
 		int cnt=1;
 		Iterator<String> FileList =mrequest.getFileNames();
-		
-		
+
+
 		while(FileList.hasNext()) { 
-			
+
 		  // 파일 유무 확인
 		  String uploadFileName = FileList.next();
 		  MultipartFile mFile = mrequest.getFile(uploadFileName);
-		  
+
 		  if(!mFile.getOriginalFilename().equals("")) {
-			  
+
 			  // 파일 이름 정리
 			  String uploadFileExt = FilenameUtils.getExtension(mFile.getOriginalFilename());
 			  int extLength = uploadFileExt.length()+1;
 			  String realFileName = bbs_id+"_"+mFile.getOriginalFilename().substring(0, mFile.getOriginalFilename().length()-extLength)+"_"+System.currentTimeMillis()+"."+uploadFileExt;
-			  
+
 			  switch (cnt) { 	 
 			  case 1:
 				if(Currentdto !=null ) { new File(uploadPath+beforedto.getBdata_file1()).delete(); Currentdto.setBdata_file1(realFileName); }else {beforedto.setBdata_file1(realFileName); }
@@ -83,31 +84,30 @@ public class SiteBoardController {
 				  File origin = new File(uploadPath+realFileName);
 				  // 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 -->  경로 설정임.
 				  mFile.transferTo(origin);
-				  
+
 			 }catch (Exception e) { // TODO Auto-generated catch block
 				  e.printStackTrace(); 
 			 	} 
-		  
+
 		  	} // 사용자가 파일을 등록 하였을 때 end
 			 cnt++;
 		  
-		  }
-		  
-		 
-		  
-		  
-		  
-		
+		}
+
 	}
 	
+
+
 	// 전체 게시물의 수
 	private int totalRecord = 0;
 
 	String board_skin="";
-	/* 해당 게시판 리스트 조회 메서드 */
-	@RequestMapping("/site/board/board_list.do")
-	public String board_list(HttpServletRequest request, Model model) {
 
+
+
+	/* 해당 게시판 리스트 조회 메서드 */
+	@RequestMapping("/board/board_list.do")
+	public String board_list(HttpServletRequest request, Model model) {
 		String field = request.getParameter("field");
 		String keyword = request.getParameter("keyword");
 		String bbs_id = request.getParameter("bbs_id");
@@ -116,14 +116,12 @@ public class SiteBoardController {
 		// 해당 게시물 설정값 가져오기
 		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
 		board_skin = BoardConfdto.getBoard_skin();
-		
+
 		// 한 페이지당 보여질 게시물의 수 -> 해당 게시물 설정값 가져와야한다.
 		int rowsize = BoardConfdto.getBoard_list_num();
 
-		if (field == null)
-			field = "";
-		if (keyword == null)
-			keyword = "";
+		if (field == null) field = "";
+		if (keyword == null) keyword = "";
 
 		// 페이징 처리
 		int page; // 현재 페이지 변수
@@ -135,7 +133,6 @@ public class SiteBoardController {
 
 		totalRecord = this.board_Dao.getListCount(field, keyword, bbs_id);
 
-		// 페이징 DTO
 
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("field", field);
@@ -144,10 +141,12 @@ public class SiteBoardController {
 
 		PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
+
 		// 페이지 이동 URL
-		String pageUrl = request.getContextPath() + "/site/board/board_list.do?field=" + field + "&keyword=" + keyword+"&bbs_id="+bbs_id;
+		String pageUrl = request.getContextPath() + "/board/board_list.do?field=" + field + "&keyword=" + keyword+"&bbs_id="+bbs_id;
 
 		model.addAttribute("List", this.board_Dao.getBoardList(dto.getStartNo(), dto.getEndNo(), searchMap));
+
 
 		// 목록보기 , 글보기 , 글쓰기 , 공지사항 쓰기 
 		// 댓글 쓰기 , 모든 글 수정 가능 권한 , 모든 글 삭제 권한
@@ -158,34 +157,33 @@ public class SiteBoardController {
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("pagingWrite",Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 		model.addAttribute("bbs_id", bbs_id);
-		
+
 		return "/site/board/" + board_skin + "/board_list";
 	}
 
-	/* 해당 게시판 게시글 작성 폼 페이지 이동 메서드 */
-	@RequestMapping("/site/board/board_write.do")
-	public String board_write(HttpSession session,HttpServletRequest request, Model model) {
 
-		
-		
+
+	/* 해당 게시판 게시글 작성 폼 페이지 이동 메서드 */
+	@RequestMapping("/board/board_write.do")
+	public String board_write(HttpSession session,HttpServletRequest request, Model model) {
 		String bbs_id = request.getParameter("bbs_id");
 		if (bbs_id == null) bbs_id = "";
 
 		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
 		board_skin = BoardConfdto.getBoard_skin();
-		
+
 		model.addAttribute("boardConfig", BoardConfdto);
-		return "/site/board/" + board_skin + "/board_write";
+        return "/site/board/" + board_skin + "/board_write";
 	}
-	
+
+
+
 	/* 해당 게시판 게시글 작성 완료 메서드 */
-	@RequestMapping("/site/board/board_write_ok.do")
+	@RequestMapping("/board/board_write_ok.do")
 	public void board_write_ok(MultipartHttpServletRequest mrequest, HttpServletResponse response, BoardDTO dto) throws IOException {
-		
-		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
-		
+
 		//config 테이블 id
 		String bbs_id=mrequest.getParameter("board_id");
 		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/resources/data/board/"+bbs_id+"/");
@@ -193,25 +191,26 @@ public class SiteBoardController {
 		/* 파일처리 시작 */
 		FileProcess(mrequest, bbs_id ,dto,null,uploadPath);
 		/* 파일처리 END */
-		
+
 		/* 게시글 작성 작업 START */
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bbs_id", bbs_id);
 		map.put("dto", dto);
 		if(this.board_Dao.insertBoardCont(map)>0) {
-			out.println("<script>location.href='" + mrequest.getContextPath() + "/site/board/board_list.do?bbs_id="+bbs_id+"';</script>");
+			out.println("<script>location.href='" + mrequest.getContextPath() + "/board/board_list.do?bbs_id="+bbs_id+"';</script>");
 		} else {
 			out.println("<script>alert('게시글 작성 실패'); history.back();</script>");
 		}
 		/* 게시글 작성 작업 END */
-			  
 	}
+
+
+
 	/* 해당 게시판 게시글 수정 폼 페이지 이동 */
-	@RequestMapping("/site/board/board_modify.do")
+	@RequestMapping("/board/board_modify.do")
 	public String board_modify(HttpServletRequest request, Model model) {
-		
 		String bbs_id = request.getParameter("bbs_id");
-		
+
 		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
 		board_skin = BoardConfdto.getBoard_skin();
 
@@ -219,75 +218,77 @@ public class SiteBoardController {
 		if (request.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
 		}
-		
+
 		if (bbs_id == null) bbs_id = "";
-		
+
 		/* 게시글 리스트 출력 */
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bbs_id", bbs_id);
 		map.put("bdata_no", bdata_no);
 
 		BoardDTO boardCont =board_Dao.getBoardCont(map);
-		
+
 		model.addAttribute("Cont", boardCont);
 		model.addAttribute("boardConfig", BoardConfdto);
 		model.addAttribute("m","m");
+
 		return "/site/board/" + board_skin + "/board_write";
 	}
+
+
+
 	/*해당 게시판 수정 완료 메서드*/
-	@RequestMapping("/site/board/board_modify_ok.do")
+	@RequestMapping("/board/board_modify_ok.do")
 	public void board_modify_ok(MultipartHttpServletRequest mrequest, BoardDTO Modifydto, HttpServletResponse response) throws IOException {
-		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
-		
+
 		String bbs_id = mrequest.getParameter("bbs_id");
 		if (bbs_id == null) bbs_id = "";
-		
+
 		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
 		board_skin = BoardConfdto.getBoard_skin();
-		
+
 		int bdata_no = 0;
 		if (mrequest.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(mrequest.getParameter("bdata_no"));
 		}
-		
-		
+
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bbs_id", bbs_id);
 		map.put("bdata_no", bdata_no);
 		map.put("dto", Modifydto);
 		BoardDTO boardCont =  board_Dao.getBoardCont(map);
-		
-		
+
+
 		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/resources/data/board/"+bbs_id+"/");
 
-	
+
 		/* 기존에 파일 안에 존재하는 파일을 제거해야함 */
 		/* 파일처리 시작 */
 		FileProcess(mrequest, bbs_id, boardCont, Modifydto, uploadPath);
 		/* 파일처리 END */
-		
+
 		/* 수정된 내용 업데이트 */
 		if(board_Dao.modifyBoard(map)>0) {
-			out.println("<script>location.href='"+mrequest.getContextPath()+"/site/board/board_view.do?bbs_id="+bbs_id+"&bdata_no="+bdata_no+"';</script>");
+			out.println("<script>location.href='"+mrequest.getContextPath()+"/board/board_view.do?bbs_id="+bbs_id+"&bdata_no="+bdata_no+"';</script>");
 		}else {
 			out.println("<script>alert('게시글 수정 실패'); history.back()</script>");
 		}
-		
 	}
 
-	
+
 
 	/* 해당 게시글 삭제하기 */
-	@RequestMapping("/site/board/board_delete.do")
+	@RequestMapping("/board/board_delete.do")
 	public void board_delete(HttpServletRequest request,HttpServletResponse response) throws IOException {
-		
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
-		
+
 		String bbs_id="";
 		int bdata_no = 0;
+
 		/* 처리할 것  해당 게시판 게시글 삭제 및 댓글 삭제 */
 		if(request.getParameter("bbs_id")!=null) {
 			bbs_id = request.getParameter("bbs_id");
@@ -298,28 +299,23 @@ public class SiteBoardController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bbs_id", bbs_id);
 		map.put("bdata_no", bdata_no);
-		
-		
-		
+
+
 		/* 해당 게시글 삭제 */
 		if(this.board_Dao.deleteBoard(map)>0) {
 			/* 해당 게시글 댓글 삭제 */
 			this.board_CommDao.deleteBoardCommList(map);
-			out.println("<script>location.href='" + request.getContextPath() + "/site/board/board_list.do?bbs_id="+bbs_id+"';</script>");
+			out.println("<script>location.href='" + request.getContextPath() + "/board/board_list.do?bbs_id="+bbs_id+"';</script>");
 		}else {
 			out.println("<script>alert('게시글 삭제 실패'); history.back()</script>");
-			
 		}
-		
 	}
-	
-	
+
 
 
 	/* 게시글 눌렀을 때 이동 메서드 */
-	@RequestMapping("/site/board/board_view.do")
+	@RequestMapping("/board/board_view.do")
 	public String board_view(HttpServletRequest request, Model model) {
-
 		int bdata_no = 0;
 		if (request.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
@@ -332,14 +328,12 @@ public class SiteBoardController {
 		// 해당 게시물 설정값 가져오기
 		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
 		board_skin = BoardConfdto.getBoard_skin();
-		
+
 		// 한 페이지당 보여질 게시물의 수 -> 해당 게시물 설정값 가져와야한다.
 		int rowsize = BoardConfdto.getBoard_list_num();
 
-		if (field == null)
-			field = "";
-		if (keyword == null)
-			keyword = "";
+		if (field == null) field = "";
+		if (keyword == null) keyword = "";
 
 		// 페이징 처리
 		int page; // 현재 페이지 변수
@@ -351,7 +345,6 @@ public class SiteBoardController {
 
 		totalRecord = this.board_Dao.getListCount(field, keyword, bbs_id);
 
-		// 페이징 DTO
 
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("field", field);
@@ -374,17 +367,16 @@ public class SiteBoardController {
 		List<BoardCommentDTO> BoardCommentList = board_CommDao.getBoardCommList(map);
 
 		/* 게시글 설정값 DTO */
-		
 		/* 해당 게시판 리스트 출력 */
 		List<BoardDTO> List =  board_Dao.getBoardList(bbs_id);
 
-		
+
 		PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
 		// 페이지 이동 URL
-		String pageUrl = request.getContextPath() + "/site/board/board_list.do?field=" + field + "&keyword=" + keyword+"&bbs_id="+bbs_id;
+		String pageUrl = request.getContextPath() + "/board/board_list.do?field=" + field + "&keyword=" + keyword+"&bbs_id="+bbs_id;
 
-		
+
 		// 해당 게시판 해당 게시글 내용
 		model.addAttribute("List", List);
 		model.addAttribute("BoardConDto", BoardConDto);
@@ -402,17 +394,18 @@ public class SiteBoardController {
 		model.addAttribute("pagingWrite",Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 		
 		return "/site/board/" + board_skin + "/board_view";
-		
 	}
 
+
+
 	/* 해당 게시판 댓글 삭제하기 */
-	@RequestMapping("/site/board/baord_comment_delete.do")
+	@RequestMapping("/board/baord_comment_delete.do")
 	public void board_comment_delete(HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
 		System.out.println("진입");
 		String id = (String) session.getAttribute("session_id");
 		String res="";
-		
-		
+
+
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 
@@ -433,26 +426,25 @@ public class SiteBoardController {
 			pw=request.getParameter("pw");
 		}
 		/* 게시글 접근 변수, 해당 게시글 번호 변수 bdata_no 해당 댓글 번호 bcomm_no 필요 end */
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bbs_id", bbs_id);
 		map.put("bdata_no", bdata_no);
 		map.put("bcomm_no", bcomm_no);
 		map.put("upDown", -1);
-		
-		
+
+
 		if (board_CommDao.deleteBoardComm(map) > 0) {
-			
 			/* 게시글 댓글 개수 감소처리 */
 			this.board_CommDao.updateCommentCount(map);
 			/* 게시글 삭제 시퀀스 업데이트*/
 			this.board_CommDao.updateCommentNum(map);
-			
+
 			for(BoardCommentDTO commDto : board_CommDao.getBoardCommList(map)) {
 				res+="<div class=\"horizon\"><div><p>부서</p><p>"+commDto.getBcomm_name()+
 						"</p></div><div><textarea readonly=\"readonly\" rows=\"7\" cols=\"25\">"+
 						commDto.getBcomm_cont()+"</textarea></div><div><p>"+commDto.getBcomm_date()+"</p></div>";
-						
+
 						if(id !=null) {
 							/* 회원 본인 댓글이나 관리자일때 */
 							if((commDto.getBcomm_id().equals(id) || id.equals("admin")) && commDto.getBcomm_id().equals("trash")) {
@@ -463,7 +455,7 @@ public class SiteBoardController {
 						if(commDto.getBcomm_id().equals("trash")) {
 							res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >";	
 						}
-						
+
 						res+="</div>";
 			}
 			out.print(res);
@@ -472,18 +464,17 @@ public class SiteBoardController {
 		}
 	}
 
+
+
 	/* 게시글 댓글 입력  */
-	@RequestMapping("/site/board/baord_comment_insert.do")
-	public void baord_comment_insert(HttpSession session ,HttpServletResponse response, HttpServletRequest request, BoardCommentDTO dto)
-			throws IOException {
-		
-		
+	@RequestMapping("/board/baord_comment_insert.do")
+	public void baord_comment_insert(HttpSession session ,HttpServletResponse response, HttpServletRequest request, BoardCommentDTO dto) throws IOException {
 		String id ="";
 		String res="";
 		if(session.getAttribute("session_id") !=null) {
 			id = (String) session.getAttribute("session_id");
 		}
-		
+
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 
@@ -493,14 +484,14 @@ public class SiteBoardController {
 		if (request.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
 		}
-		
+
 		// 해당 게시판 게시글 || 폼으로 부터 입력받은 dto 데이터
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("bbs_id", bbs_id);
 		map.put("dto",dto);
 		map.put("bdata_no", bdata_no);
 		map.put("upDown", +1);
-		 
+
 		if(board_CommDao.insertBoardComm(map)>0) {
 			/* 게시글 댓글 개수 증가처리 */
 			this.board_CommDao.updateCommentCount(map);	
@@ -524,35 +515,36 @@ public class SiteBoardController {
 			out.println("<script>alert('댓글 등록 실패'); history.back();</script>");
 		}
 	}
-	
-	@RequestMapping("/site/board/board_download.do")
+
+
+
+	@RequestMapping("/board/board_download.do")
 	public void board_download(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
 		/* 게시글 접근 변수, 해당 게시글 번호 변수 bdata_no 해당 댓글 번호 bcomm_no 필요 */
 		String bbs_id = request.getParameter("bbs_id");
 		String fileName = request.getParameter("file");
-		
+
 		int bdata_no = 0;
-		
+
 		if (request.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
 		}
-		
+
 		String uploadPath = request.getSession().getServletContext().getRealPath("/resources/data/board/"+bbs_id+"/");
 		String downloadFile = uploadPath+fileName;
-		
+
 		OutputStream out = response.getOutputStream();
-		
+
 		File file = new File(downloadFile);
 		response.setHeader("Cache-Control", "no-cache");
 		response.addHeader("Content-disposition", "attachement; fileName="+fileName);
-		
+
 		FileInputStream in = new FileInputStream(file);
 		byte[] buffer = new byte[1024*8];
-		
+
 		while(true) {
 			int cnt = in.read(buffer);
-			
+
 			if(cnt==-1) break;
 			out.write(buffer,0,cnt);
 		}
