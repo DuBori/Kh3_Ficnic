@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="layout_none" value="Y" />
 <%@ include file="../layout/layout_header.jsp" %>
 
 <c:set var="dto" value="${dto}" />
+<c:set var="category" value="${fn:split(category,'☆')}" />
 <c:if test="${empty dto}"><script type="text/javascript">alert('존재하지 않는 데이터입니다.'); window.close();</script></c:if>
 
 
@@ -45,8 +47,13 @@
                                 <div class="row">
                                     <div class="col pb-2">
                                         <ul class="list-view">
-                                            <li>아웃도어(여기 헷갈립니다ㅠㅠ)</li>
-                                            <li>피트니스(여기 헷갈립니다ㅠㅠ)</li>
+			                            <c:choose>
+			                            	<c:when test="${dto.getCoupon_use_type() eq 'cart'}"></c:when>
+			                            	<c:when test="${dto.getCoupon_use_type() eq 'goods'}"><li>${dto.getCoupon_use_value()}</li></c:when>
+			                           		<c:otherwise>
+			                           		<c:forEach items="${category}" var="category"><li>${category}</li></c:forEach>
+			                           		</c:otherwise>
+			                            </c:choose>                                            
                                         </ul>
                                     </div>
                                 </div>
