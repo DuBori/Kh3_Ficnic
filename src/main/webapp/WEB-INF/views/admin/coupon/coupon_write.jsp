@@ -58,8 +58,8 @@
                                         <div class="col pb-2">
                                             <button type="button" class="btn btn-sm btn-outline-info">카테고리 지정</button>
                                             <ul class="list-box">
-                                                <li><input type="hidden" name="coupon_category_value" value="1000000" />아웃도어<button type="button"><i class="fa fa-times"></i></button></li>
-                                                <li><input type="hidden" name="coupon_category_value" value="2000000" />피트니스<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="10000000" />아웃도어<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="15000000" />피트니스<button type="button"><i class="fa fa-times"></i></button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -76,8 +76,8 @@
                                         <div class="col pb-2">
                                             <button type="button" class="btn btn-sm btn-outline-success">상품 지정</button>
                                             <ul class="list-box">
-                                                <li><input type="hidden" name="coupon_category_value" value="123" />테스트 상품<button type="button"><i class="fa fa-times"></i></button></li>
-                                                <li><input type="hidden" name="coupon_category_value" value="456" />테2스2트2 상품<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="01020000" />테스트 상품<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="01100000" />테2스2트2 상품<button type="button"><i class="fa fa-times"></i></button></li>
                                             </ul>
                                         </div>
                                     </div>

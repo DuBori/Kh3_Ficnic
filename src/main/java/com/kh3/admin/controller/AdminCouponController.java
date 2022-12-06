@@ -118,9 +118,15 @@ public class AdminCouponController {
         for(int i = 0; i < category.length; i++) {
         	value += category[i]+"★";
         }
-        
         dto.setCoupon_use_value(value);
-        System.out.println("여기========= "+value);
+        int check = this.dao.couponWrite(dto);
+        
+        if (check > 0) {
+            out.println("<script>alert('쿠폰이 추가되었습니다.'); location.href='coupon_list.do';</script>");
+        } else {
+            out.println("<script>alert('쿠폰 추가 실패했습니다.'); history.back();</script>");
+        }        
+        
     }
 
 
