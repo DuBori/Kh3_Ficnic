@@ -1,282 +1,289 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../layout/layout_header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="layout_none" value="Y" />
+<%@ include file="../layout/layout_header.jsp" %>
 
-<c:set var="dto" value="${dto}" />
-<c:set var="cdto" value="${cdto}" />
+<c:if test="${empty dto}"><script type="text/javascript">alert('존재하지 않는 데이터입니다.'); window.close();</script></c:if>
+<% pageContext.setAttribute("newLine", "\n"); %>
 
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script>
-		
-		   
-			/* 댓글 삭제 시 Ajax 처리*/
-		   $(function() {
-			   $(document).on("click",".deleteBtn", function() {
-			// name= 에 있는 이름의 value 값을 가져옴.
-			let comment_no = $(this).val();
-		     $.ajax({
-		         type : "post",
-		         contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-		         url : "<%=request.getContextPath()%>/admin/qna/comment_delete.do",
-		         data : { comment_no : comment_no ,
-		        	 	  qna_no : $("#qna_no").val() },
-		         datatype : "text",
-		     success : function(data) {
-		         $("#tableDiv").html("");
-		         $("#tableDiv").html(data);
-		         $(".Logininput").val("");
-		     },
-		     error : function(data) {
-		         alert("에러발생");
-		     }
-		 });
-		})
-		   })
-		
-		
-<%-- 		/* 댓글 입력시 Ajax 처리 */
-		$("#replyBtn").on("click",function(){
-		 $.ajax({
-		         type : "post",
-		         contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-		         url : "<%=request.getContextPath()%>/site/board/baord_comment_insert.do",
-		         data : $("#form1").serialize(),
-		          datatype : "text",
-		     success : function(data) {
-		         $("#commList").html("");
-		         $("#commList").html(data);
-		         $(".comment_content").val("");
-		     },
-		     error : function(data) {
-		         alert("에러발생");
-		     }
-		 });
+
+<script type="text/javascript">
+$(function() {
+
+	// 댓글 등록
+	$("#replyBtn").on("click", function() {
+		if(!$("#comment_content").val() || $("#comment_content").val() == ""){
+			alert("댓글 내용을 입력해 주세요.");
+			$("#comment_content").focus();
+			return false;
+		}
+
+		let get_qna_no = $("#qna_no").val();
+		let get_comment_content = $("#comment_content").val();
+		let get_comment_writer_name = $("#comment_writer_name").val();
+		let get_comment_writer_pw = $("#comment_writer_pw").val();
+		let get_member_id = $("#member_id").val();
+
+		$.ajax({
+			type : "post",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			datatype : "text",
+			url : "<%=request.getContextPath()%>/admin/qna/qna_reply_ok.do",
+			data : {
+					qna_no : get_qna_no,
+					comment_content : get_comment_content,
+					comment_writer_name : get_comment_writer_name,
+					comment_writer_pw : get_comment_writer_pw,
+					member_id : get_member_id
+			},
+
+			success : function(data) {
+				if(data > 0){
+					var today = new Date();
+					var year = today.getFullYear();
+					var month = ("0" + (today.getMonth() + 1)).slice(-2);
+					var day = ("0" + today.getDate()).slice(-2);
+					var hours = ("0" + today.getHours()).slice(-2); 
+					var minutes = ("0" + today.getMinutes()).slice(-2);
+					var seconds = ("0" + today.getSeconds()).slice(-2); 
+
+					let new_comment = "<tr>\n";
+						new_comment += "\t<td>\n";
+						new_comment += "\t\t<p><b>"+get_comment_writer_name+"</b></p>\n";
+						new_comment += "\t\t<p class=\"eng\">("+get_member_id+")</p>\n";
+						new_comment += "\t</td>\n";
+						new_comment += "\t<td class=\"text-left pl-4\">"+get_comment_content+"</td>\n";
+						new_comment += "\t<td>\n";
+						new_comment += "\t<p class=\"eng\">"+year+"-"+month+"-"+day+"<br />"+hours+":"+minutes+":"+seconds+"</p>\n";
+						new_comment += "\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-1 px-1 py-0 deleteBtn\" name=\"comment_no\" value=\""+data+"\"><i class=\"fa fa-trash-o\"></i> 삭제</button>\n";
+						new_comment += "\t</td>\n";
+						new_comment += "</tr>\n";
+					$("#comment-list").append(new_comment);
+					$("#comment_content").val("");
+				}else{
+					alert("댓글 등록 중 에러가 발행하였습니다.");
+				}
+			},
+
+			error : function(e) {
+				alert("Error : "+e.status);
+            }
+        });
+	});
+
+
+	// 댓글 삭제
+	$(".deleteBtn").on("click", function(){
+		if(!confirm("이 댓글을 삭제하시겠습니까?")){
+			return false;
+		}
+
+		let comment_no = $(this).val();
+
+		$.ajax({
+			type : "post",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			datatype : "text",
+			url : "<%=request.getContextPath()%>/admin/qna/comment_delete.do",
+			data : {
+					comment_no : comment_no
+			},
+
+			success : function(data) {
+				if(data > 0){
+					$("#comment-"+comment_no).animate({opacity: "0"}, function(){
+						$(this).remove();
+					});
+				}else{
+					alert("댓글 삭제 중 에러가 발행하였습니다.");
+				}
+			},
+
+			error : function(e) {
+				alert("Error : "+e.status);
+            }
 		});
-		});
- --%>
+	});
 
-   
-   
-   
-    // 댓글 추가 에이젝스
-   $(function() {
-	    $("#replyBtn").on("click", function() {
-	         $.ajax({
-		             type : "post",
-		             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-		             url : "<%=request.getContextPath()%>/admin/qna/qna_reply_ok.do",
-		             data : {
-		             qna_no :$("#qna_no").val(),
-	            	 comment_content : $("#comment_content").val(),
-	            	 comment_date : $("#comment_date").val(),
-	            	 comment_no : $("#comment_no").val(),
-	            	 comment_writer_name : $("#comment_writer_name").val(),
-	            	 comment_writer_pw : $("#comment_writer_pw").val(),
-	            	 member_id : $("#member_id").val()
-	            	 },
-	             datatype : "text",
-	             success : function(data) {
-	            	 if(data>0){
-	            		 alert("성공");
-	            		 location.href="<%=request.getContextPath()%>/admin/qna/qna_view.do?no="+$("#qna_no").val();
-	            	 }else{
-	            		 alert("실패");
-	            	 }
-	             },
-	             error : function(data) {
-	                 alert("에러발생");
-	             }
-	         });
-	     });
-	})
-	
-	
-   <%--
-  	// 댓글 삭제 에이젝스
-     $(function() {
-	    $(".deleteBtn").on("click", function() {
-	    	let comment_no = $(this).val();
-	         $.ajax({
-		             type : "post",
-		             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-		             url : "<%=request.getContextPath()%>/admin/qna/comment_delete.do",
-		             data : { comment_no : comment_no },
-	             datatype : "text",
-	             success : function(data){
-	            	 if(data > 0){
-	            		 location.href="<%=request.getContextPath()%>/admin/qna/qna_view.do?no="+$("#qna_no").val();
-	            	 }else{
-	            		 alert("실패");
-	            	 }
-	             },
-	             error : function(data) {
-	                 alert("에러발생");
-	             }
-	         });
-	     });
-	}) --%>
-	   
-	</script>
-</head>
-<body>
-
-	<div class="page-info row mb-3">
-		<div class="d-flex align-items-center justify-content-between">
-			<h2>게시판 목록</h2>
-			<ol class="m-0 p-2">
-				<li>게시판 관리</li>
-				<li><b>게시판 목록</b></li>
-			</ol>
-		</div>
-	</div>
-
-	<div class="page-cont">
-
-
-		<div style="width: 600px; margin: 50px auto; text-align: center;">
-			<hr color="green" />
-			<h3>QnA 상세 정보</h3>
-			<hr color="green" />
-
-			<br />
-
-			<!-- 나중에 세션 생기면 입력하기 -->
-			<input type="hidden" id="qna_no" name="qna_no" value="${param.no}" />
-			<input type="hidden" id="member_id" name="member_id" value="test1" />
-			<input type="hidden" id="comment_writer_name" name="comment_writer_name" value="테스트회원1" /> 
-			<input type="hidden" id="comment_writer_pw" name="comment_writer_pw" value="1234" />
-
-
-			<table class="table table-bordered">
-
-				<c:if test="${!empty dto}">
-					<tr>
-						<th>작성일</th>
-						<td align="left">${dto.qna_date}</td>
-					</tr>
-
-					<tr>
-						<th>이름</th>
-						<td align="left">${dto.qna_name}</td>
-					</tr>
-
-					<tr>
-						<th>아이디</th>
-						<td align="left">${dto.member_id}</td>
-					</tr>
-					<tr>
-						<th>문의 제목</th>
-						<td align="left">${dto.qna_title}</td>
-					</tr>
-					<tr>
-						<th>문의 내용</th>
-						<td align="left">${dto.qna_cont}</td>
-					</tr>
-
-				</c:if>
-
-
-				<c:if test="${empty dto}">
-					<tr>
-						<td colspan="2" align="center">
-							<h3>존재하지 않는 문의글입니다...</h3>
-						</td>
-					</tr>
-				</c:if>
-			</table>
-
-
-			<table border="1" cellspacing="0" cellpadding="4px" width="600px">
-
-
-				<colgroup>
-					<col width="20%" />
-					<col />
-					<col width="20%" />
-					<col width="20%" />
-				</colgroup>
-				<thead>
-					<tr>
-						<th>작성자</th>
-						<th>내용</th>
-						<th>작성일</th>
-						<th>기능</th>
-					</tr>
-				</thead>
-
-				<tbody id="tableDiv">
+});
+</script>
 
 
 
-					<c:if test="${!empty cdto }">
-						<c:forEach items="${cdto }" var="cdto">
-							<tr>
-								<td>${cdto.comment_writer_name }</td>
-								<td class="msg">${cdto.comment_content }</td>
-								<td>${cdto.comment_date }</td>
-								<td>
-							 <button type="button" class="btn btn-sm btn-outline-danger m-1 deleteBtn" name="comment_no" value="${cdto.comment_no }">삭제</button>
-								</td>
-							</tr>
-						</c:forEach>
-					</c:if>
-
-					<c:if test="${empty cdto }">
-						<tr>
-							<td colspan="4" align="center">
-								<h3>댓글이 없습니다.</h3>
-							</td>
-
-						</tr>
-					</c:if>
-				</tbody>
+<h2>1:1 문의 내용 보기</h2>
 
 
-				<tr>
-					<th>댓글 내용</th>
-					<td><textarea name="comment_content" id="comment_content"
-							cols="20" rows="3" class="form-control" required class="comment_content"></textarea></td>
-					<td class="text-center">
-						<button type="button" class="btn btn-lg btn-primary w-100 h-100"
-							id="replyBtn">
-							<i class="fa fa-pencil"></i> 쓰기
-						</button>
+<div class="page-cont">
 
-					</td>
-				</tr>
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card view-form">
+                <div class="card-body p-4">
+                    <h4>문의 내용</h4>
+                    <div class="row form">
+                        <div class="form-group col join-form">
+                            <label>작성자</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2"><b>${dto.qna_name}</b> <span class="engnum">(${dto.member_id})</span></div>
+                                </div>
+                            </div>
+                        </div>
 
-			</table>
+                        <div class="w-100"></div>
+
+                        <div class="form-group col join-form mb-2">
+                            <label>작성일</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2">${dto.qna_date}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-100 border-bottom"></div>
+
+                        <div class="form-group join-form mb-2">
+                            <label>피크닉</label>
+                            <div class="jf-input">
+                                <div class="row align-items-center">
+                                	<div class="col-auto pb-1 pr-0">
+					                    <c:choose>
+					                    <c:when test="${!empty fdto.getFicnic_photo1() }"><img src="<%=request.getContextPath()%>${fdto.getFicnic_photo1()}" alt="" /></c:when>
+					                    <c:otherwise><span class="noimg">no img</span></c:otherwise>
+					                    </c:choose>
+                                	</div>
+                                    <div class="col pb-1 pl-2">
+		                            	<p><b>${fdto.getFicnic_name()}</b></p>
+		                            	<p class="engnum"><fmt:formatNumber value="${fdto.getFicnic_sale_price()}" />원</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-100 border-bottom"></div>
+
+                        <div class="form-group join-form">
+                            <label>제목</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2">${dto.qna_title}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-100"></div>
+
+                        <div class="form-group join-form mb-2">
+                            <label>내용</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2">${dto.qna_cont.replace(newLine, "<br />")}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <c:if test="${!empty dto.qna_file1 or !empty dto.qna_file2}"><div class="w-100 border-bottom"></div></c:if>
+                        <c:if test="${!empty dto.qna_file1}">
+                        <div class="form-group join-form">
+                            <label>첨부파일 1</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2"><img src="<%=request.getContextPath()%>${dto.qna_file1}" style="max-width: 100%;" alt="" /></div>
+                                </div>
+                            </div>
+                        </div>
+                        </c:if>
+
+                        <c:if test="${!empty dto.qna_file2}">
+                        <div class="form-group join-form">
+                            <label>첨부파일 2</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2"><img src="<%=request.getContextPath()%>${dto.qna_file2}" style="max-width: 100%;" alt="" /></div>
+                                </div>
+                            </div>
+                        </div>
+                        </c:if>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
-			<!-- 버튼 //START -->
-			<div class="d-flex justify-content-center mb-4">
-				<button type="button" class="btn btn-outline-secondary"
-					onclick="window.print();">
-					<i class="fa fa-print"></i> 인쇄하기
-				</button>
-				<button type="button" class="btn btn-secondary ml-2"
-					onclick="window.close();">
-					<i class="fa fa-times"></i> 창닫기
-				</button>
-			</div>
-			<!-- 버튼 //END -->
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card view-form">
+                <div class="card-body p-4">
+                    <h4>댓글 목록</h4>
 
-		</div>
+                    <table class="table-list">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%; min-width: 120px;">작성자</th>
+                                <th>내용</th>
+                                <th style="width: 20%; min-width: 120px;">작성일</th>
+                            </tr>
+                        </thead>
 
-	</div>
+                        <tbody id="comment-list">
+                        	<c:if test="${!empty cdto}">
+                        	<c:forEach items="${cdto}" var="cdto">
+                            <tr id="comment-${cdto.getComment_no()}">
+                                <td>
+                                	<p><b>${cdto.getComment_writer_name()}</b></p>
+                                	<p class="eng">(${cdto.getMember_id()})</p>
+                                </td>
+                                <td class="text-left pl-4">${cdto.getComment_content().replace(newLine, "<br />")}</td>
+                                <td>
+                                	<p class="eng">${cdto.getComment_date().substring(0,10)}<br />${cdto.getComment_date().substring(11)}</p>
+                                	<button type="button" class="btn btn-sm btn-outline-danger mt-1 px-1 py-0 deleteBtn" name="comment_no" value="${cdto.getComment_no()}"><i class="fa fa-trash-o"></i> 삭제</button>
+                                </td>
+                            </tr>
+                            </c:forEach>
+                            </c:if>
+
+                            <c:if test="${empty cdto}">
+                            <tr>
+                            	<td colspan="3" class="nodata">댓글이 없습니다.</td>
+                            </tr>
+                            </c:if>
+                        </tbody>
+
+                        <tfoot>
+                        	<tr>
+                        		<td>
+                        			<p><b>회원이름</b></p>
+                        			<p class="eng">(회원아이디)</p>
+									<input type="hidden" id="qna_no" name="qna_no" value="${param.no}" />
+									<input type="hidden" id="member_id" name="member_id" value="test1" />
+									<input type="hidden" id="comment_writer_name" name="comment_writer_name" value="테스트회원1" /> 
+									<input type="hidden" id="comment_writer_pw" name="comment_writer_pw" value="1234" />
+                        		</td>
+                        		<td class="pl-4"><textarea name="comment_content" id="comment_content" class="form-control rounded-0" required></textarea></td>
+                        		<td colspan="2"><button type="button" class="btn btn-lg btn-primary rounded-0" id="replyBtn" style="padding: .94rem 1.1rem;"><i class="fa fa-pencil"></i> 댓글 쓰기</button></td>
+                        	</tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 
-	<%@ include file="../layout/layout_footer.jsp"%>
+
+<div class="my-2 text-center">
+    <button type="button" class="btn btn-outline-secondary" onclick="window.print();"><i class="fa fa-print"></i> 인쇄하기</button>
+        <button type="button" class="btn btn-secondary ml-2" onclick="window.close();"><i class="fa fa-times"></i> 창닫기</button>
+</div>
 
 
-</body>
-</html>
+
+<%@ include file="../layout/layout_footer.jsp" %>

@@ -13,7 +13,7 @@ span.noimg {
     display: inline-block;
     width: 98px;
     height: 60px;
-    padding-top: 25px;
+    padding-top: 21px;
     box-sizing: border-box;
     background: #f6f6f6;
     font-family: 'Raleway';
@@ -1591,6 +1591,18 @@ main .table-list tbody td span.search {
     background: #fffc00;
     color: #ff0000;
 }
+
+
+main .table-list tbody td span.comnum {
+    margin-left: 3px;
+    font-family: 'Raleway';
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    color: #007bff;
+    vertical-align: text-top;
+}
+
 
 main .table-list tbody .eng,
 main .card .col a.eng {

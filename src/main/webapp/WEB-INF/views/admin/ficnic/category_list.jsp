@@ -144,7 +144,7 @@
 	                                <div class="row">
 	                                    <div class="col pb-1">
 	                                    	<input type="file" name="category_image" id="category_image" class="form-control" />
-	                                    	<input type="hidden" name="ori_category_image" value="" />
+	                                    	<input type="hidden" name="ori_category_image" value="" accept="image/jpeg, image/png, image/gif" />
 	                                    	<div></div>
 	                                    </div>
 	                                </div>

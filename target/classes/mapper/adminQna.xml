@@ -18,7 +18,12 @@
 
 
     <!-- 1:1 문의 목록 -->
-    <select id="adminQnaList" parameterType="java.util.Map" resultType="qnaDTO">
+    <resultMap id="qnaListMap" type="qnaDTO">
+        <result property="qna_no" column="qna_no" />
+        <collection property="qna_comment" column="qna_no" select="adminQnaListComment" javaType="int" ofType="int" />
+    </resultMap>
+     
+    <select id="adminQnaList" parameterType="java.util.Map" resultMap="qnaListMap">
             select * from(
                 select
                     row_number() over(order by qna_no desc) rnum,
@@ -34,6 +39,10 @@
             where rnum >= #{startNo} and rnum <= #{endNo}
         ]]>
     </select>
+    <select id="adminQnaListComment" resultType="int">
+        select count(*) from qna_comment where qna_no = #{qna_no}
+    </select>
+
 
 
 	<!-- 문의 상세 보기 -->

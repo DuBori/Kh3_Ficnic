@@ -6,4 +6,6 @@ public interface FicnicDAO {
 
 	List<FicnicDTO> getFicnicList();
 
+	FicnicDTO getFicnicCont(int ficnic_no);
+
 }

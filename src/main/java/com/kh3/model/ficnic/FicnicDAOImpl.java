@@ -21,6 +21,14 @@ public class FicnicDAOImpl implements FicnicDAO {
 
 
 
+	// 피크닉 상품 정보
+	@Override
+    public FicnicDTO getFicnicCont(int ficnic_no) {
+        return this.sqlSession.selectOne("adminFicnicCont", ficnic_no);
+    }
+
+
+
 
 
 }

@@ -94,8 +94,19 @@
 							<c:set var="result_writer" value="<span class=\"search\">${search_writer}</span>"></c:set>
                             <tr>
                                 <td ${showLink} class="py-4">${dto.getQna_no()}</td>
-                                <td ${showLink} class="px-3 table-list-hide"><c:choose><c:when test="${search_ficnic != ''}">${dto.getFicnic_name().replace(search_ficnic, result_ficnic)}</c:when><c:otherwise>${dto.getFicnic_name()}</c:otherwise></c:choose></td>
-								<td ${showLink}><c:choose><c:when test="${search_qna != ''}">${dto.getQna_title().replace(search_qna, result_qna)}</c:when><c:otherwise>${dto.getQna_title()}</c:otherwise></c:choose></td>
+                                <td ${showLink} class="px-3 table-list-hide">
+                                	<c:choose>
+                                		<c:when test="${search_ficnic != ''}">${dto.getFicnic_name().replace(search_ficnic, result_ficnic)}</c:when>
+                                		<c:otherwise>${dto.getFicnic_name()}</c:otherwise>
+                                	</c:choose>
+                                </td>
+								<td ${showLink}>
+									<c:choose>
+										<c:when test="${search_qna != ''}">${dto.getQna_title().replace(search_qna, result_qna)}</c:when>
+										<c:otherwise>${dto.getQna_title()}</c:otherwise>
+									</c:choose>
+									<c:if test="${dto.getQna_comment() > 0}"><span class="comnum">${dto.getQna_comment()}</span></c:if>
+								</td>
 								<td ${showLink} class="table-list-hide-mob">
 									<p><b><c:choose><c:when test="${search_writer != ''}">${dto.getQna_name().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getQna_name()}</c:otherwise></c:choose></b></p>
 									<p class="eng"><c:choose><c:when test="${search_writer != ''}">${dto.getMember_id().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getMember_id()}</c:otherwise></c:choose></p>

@@ -9,11 +9,7 @@
 
     <!-- 카테고리 목록 -->
 	<resultMap id="cateListMap" type="categoryDTO">
-	   <result property="category_show" column="category_show" />
         <result property="category_id" column="category_id" />
-        <result property="category_name" column="category_name" />
-        <result property="category_depth" column="category_depth" />
-        <result property="category_image" column="category_image" />
 	    <collection property="sub_category" column="category_id" select="adminCategoryListSub" javaType="java.util.ArrayList" ofType="categoryDTO" />
 	</resultMap>
 	 
