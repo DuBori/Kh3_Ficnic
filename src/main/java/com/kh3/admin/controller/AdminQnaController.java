@@ -9,11 +9,13 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
@@ -109,20 +111,39 @@ public class AdminQnaController {
 
     // 답글 등록 매핑
     @RequestMapping("admin/qna/qna_reply_ok.do")
-    public void reply(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        QnaCommentDTO cdto = new QnaCommentDTO();
+    public void reply(HttpSession session ,HttpServletResponse response, HttpServletRequest request, BoardCommentDTO dto) throws Exception {
+		
+		 QnaCommentDTO cdto = new QnaCommentDTO();
 
-        cdto.setComment_content(request.getParameter("comment_content"));
-        cdto.setComment_writer_name(request.getParameter("comment_writer_name"));
-        cdto.setComment_writer_pw(request.getParameter("comment_writer_pw"));
-        cdto.setMember_id(request.getParameter("member_id"));
-        cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
+		 // 실질적으로 필요한 값만 넣기
+		  cdto.setComment_content(request.getParameter("comment_content"));
+		  cdto.setComment_writer_name(request.getParameter("comment_writer_name"));
+		  cdto.setComment_writer_pw(request.getParameter("comment_writer_pw"));
+		  cdto.setMember_id(request.getParameter("member_id"));
+		  cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
+		  
+		  response.setContentType("text/html; charset=UTF-8"); 
+		  PrintWriter out = response.getWriter();
+		  
+		 this.cdao.qnaReply(cdto); 
+		 
+		 String res="";
+	        System.out.println("출력출력1");
+			for(QnaCommentDTO qnaDto : this.cdao.getQnaCommentList(Integer.parseInt(request.getParameter("qna_no")))) {
+				System.out.println("출력출력2");
+             res += "<tr>"
+             		+"<td>"+qnaDto.getComment_writer_name()+"</td>"
+             		+"<td class=\"msg\">"+qnaDto.getComment_content()+"</td>"
+             		+ "<td>"+qnaDto.getComment_date()+"</td>"
+             		+"<td>"
+             		+"<button type=\"button\" class=\"btn btn-sm btn-outline-danger m-1 deleteBtn\" name=\"comment_no\" value=\""+qnaDto.getComment_no()+"\">삭제</button>"
+             		+ "</td>"
+             		+ "</tr>";
 
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        int check = this.cdao.qnaReply(cdto);
-        out.println(check);
+         }
+			
+         out.print(res);
+        
     }
 
 
