@@ -124,11 +124,8 @@
        </table>
        
        <div class="row mt-2 list-bottom-util">
-	       <div class="col-md-4 mt-3">
-	        	<a href="<%=request.getContextPath()%>/#" class="btn btn-success" onclick="return confirm('현재 상품목록을 엑셀 파일로 다운로드 하시겠습니까?');"><i class="fa fa-floppy-o"></i> 상품목록 엑셀다운로드</a>
-	    	</div>
 	    	<div class="col-md-4 text-right mt-3">
-	        	<a href="<%=request.getContextPath()%>/admin/ficnic/ficnic_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 상품 추가</a>        <button type="button" class="btn btn-info ml-1" data-toggle="modal" data-target="#excelWrite"><i class="fa fa-upload"></i> 엑셀 등록</button>
+	        	<a href="<%=request.getContextPath()%>/admin/ficnic/ficnic_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 상품 추가</a>
 	   	 	</div>
    	 	</div>
        

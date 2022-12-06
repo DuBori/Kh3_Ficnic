@@ -27,6 +27,7 @@ public class FicnicDTO {
 	private String ficnic_detail;
 	private String ficnic_curriculum;
 	private String ficnic_etc;
+	private String ficnic_location;
 	private String ficnic_address;
 	private String ficnic_include;
 	private String ficnic_notinclude;

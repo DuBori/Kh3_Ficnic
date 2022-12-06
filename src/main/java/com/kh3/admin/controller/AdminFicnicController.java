@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +68,6 @@ public class AdminFicnicController {
     }
 
 
-
     // 피크닉 보기 페이지
     @RequestMapping("admin/ficnic/ficnic_view.do")
     public String ficnicView(Model model, @RequestParam("no") int no) {
@@ -98,6 +99,7 @@ public class AdminFicnicController {
         
         List<String> upload_list = UploadFile.fileUpload(mRequest, ficnicFolder, ficnicSaveName);
     	for(String imgsrc : upload_list) {
+    		System.out.println(imgsrc);
     		ficnic_imagesrc.add(imgsrc);
     	}
     	
@@ -105,7 +107,7 @@ public class AdminFicnicController {
     	if(this.dao.writeFicnic(dto, ficnic_imagesrc)>0) {
     		out.println("<script>location.href='"+mRequest.getContextPath()+"/admin/ficnic/ficnic_list.do'</script>");
     	}else {
-    		out.println("<script>history.back()</script>");
+    		out.println("<script>alert('피크닉 등록 실패'); history.back()</script>");
     	}
     	
     }
@@ -114,30 +116,36 @@ public class AdminFicnicController {
 
     // 피크닉 수정 페이지
     @RequestMapping("admin/ficnic/ficnic_modify.do")
-    public String ficnicModify(@RequestParam("no") int no,MultipartHttpServletRequest mRequest ,Model model) {
-
+    public String ficnicModify(@RequestParam("no") int no,Model model) {
+    	int cnt=0;
     	// 기존에 있던 해당 피크닉 상품 정보 불러와야한다.
     	FicnicDTO fdto =this.dao.getFicnicCont(no);
+    	List<CategoryDTO> cList = cdao.getCategoryList();
     	
-		/*  기존에 존재하는 DTO에 있는 이미지만큼 삭제해야함. */
+    	 String[] optionTitle = fdto.getFicnic_option_title().split("★");
+    	//String[] optionTitle = "[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)★[11세~대인] 제주고사리파스타★[10세~대인] 제주통밀당근파운드케이크".split("★");
+    	//String[] optionPrice = "30000★27000★30000".split("★");
+    	 String[] optionPrice = fdto.getFicnic_option_price().split("★");
+		
+		//System.out.println(fdto.getFicnic_option_title());
     	
-    	
-        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
-        String category_image = mRequest.getParameter("ori_category_image");
-        List<String> upload_list = UploadFile.fileUpload(mRequest, categoryFolder, categorySaveName);
-        if(upload_list.size() > 0) {
-            // 기존 파일 있으면 삭제 처리
-            if(category_image != null){
-                File del_pimage = new File(mRequest.getSession().getServletContext().getRealPath(category_image));
-                if(del_pimage.exists()) del_pimage.delete();
-            }
-            category_image = upload_list.get(0);
-        }
-    	
-    	
+    	List<HashMap<String, String>> mapList = new ArrayList<HashMap<String,String>>();
+    
+    	for(String value : optionTitle) {
+    		HashMap<String, String> map = new HashMap<String, String>();
+    		map.put("title", value);
+    		map.put("price", optionPrice[cnt]);
+    		cnt++;
+    		mapList.add(map);
+    	}
+    	 
+    	model.addAttribute("clist", cList);
     	
     	model.addAttribute("fdto",fdto);
+
+    	model.addAttribute("mapList",mapList);
     	model.addAttribute("m", "m");
+    	
     	return "admin/ficnic/ficnic_write";
     }
 
@@ -145,15 +153,40 @@ public class AdminFicnicController {
 
     // 피크닉 수정 처리
     @RequestMapping("admin/ficnic/ficnic_modify_ok.do")
-    public void ficnicModifyOk(CouponDTO dto,HttpServletRequest request , HttpServletResponse response) throws Exception {
+    public void ficnicModifyOk(FicnicDTO dto,MultipartHttpServletRequest mRequest,HttpServletResponse response) throws Exception {
     
     	response.setContentType("text/html; charset=utf-8");
     	PrintWriter out= response.getWriter();
     	
-    	if(this.dao.modifyFicnic(dto)>0) {
-    		out.println("<script>location.href='"+request.getContextPath()+"/admin/ficnic/ficnic_list.do'</script>");
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+    	/*  기존에 존재하는 DTO에 있는 이미지만큼 삭제해야함. */
+        String ficnic_image1 = mRequest.getParameter("ori_ficnic_image1");
+        String ficnic_image2 = mRequest.getParameter("ori_ficnic_image2");
+        String ficnic_image3 = mRequest.getParameter("ori_ficnic_image3");
+        String ficnic_image4 = mRequest.getParameter("ori_ficnic_image4");
+        String ficnic_image5 = mRequest.getParameter("ori_ficnic_image5");
+        
+        List<String> list = new ArrayList<String>();
+        list.add(ficnic_image1);
+        list.add(ficnic_image2);
+        list.add(ficnic_image3);
+        list.add(ficnic_image4);
+        list.add(ficnic_image5);
+         
+        List<String> upload_list = UploadFile.fileUpload(mRequest, ficnicFolder, ficnicSaveName);
+        if(upload_list.size() > 0) {   
+        	for(String value : list) {     		
+        		if(value != null){
+                    File del_pimage = new File(mRequest.getSession().getServletContext().getRealPath(value));
+                    if(del_pimage.exists()) del_pimage.delete();
+                }
+        	}  	
+        }
+    	
+    	if(this.dao.modifyFicnic(dto,upload_list)>0) {
+    		out.println("<script>location.href='"+mRequest.getContextPath()+"/admin/ficnic/ficnic_list.do'</script>");
     	}else {
-    		out.println("<script>history.back()</script>");
+    		out.println("<script>alert('피크닉 수정 실패'); history.back()</script>");
     	}
     }
     
@@ -163,7 +196,16 @@ public class AdminFicnicController {
 
     // 피크닉 삭제 처리
     @RequestMapping("admin/ficnic/ficnic_delete.do")
-    public void ficnicDelete(@RequestParam("no") int no, HttpServletResponse response) throws Exception {
+    public void ficnicDelete(@RequestParam("no") int no,HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	
+    	response.setContentType("text/html; charset=utf-8");
+    	PrintWriter out= response.getWriter();
+    	
+    	if(this.dao.deleteFicnic(no)>0) {
+    		out.println("<script>location.href='"+request.getContextPath()+"/admin/ficnic/ficnic_list.do'</script>");
+    	}else {
+    		out.println("<script>alert('피크닉 삭제 실패'); history.back()</script>");
+    	}
     }
 
 
