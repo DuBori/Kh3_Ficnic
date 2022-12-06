@@ -123,6 +123,7 @@ public class AdminQnaController {
 
         int check = this.cdao.qnaReply(cdto);
         out.println(check);
+        
     }
 
 
