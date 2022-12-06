@@ -59,12 +59,6 @@
 	</update>
 
 
-    <!-- 피크닉 정보 -->
-    <select id="adminFicnicCont" parameterType="int" resultType="ficnicDTO">
-        select * from ficnic_list where ficnic_no = #{ficnic_no}
-    </select>
-
-
 
 
 
