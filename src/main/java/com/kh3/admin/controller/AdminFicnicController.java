@@ -3,13 +3,13 @@ package com.kh3.admin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +37,9 @@ public class AdminFicnicController {
     private String categoryFolder = "/resources/data/category/";
     private String categorySaveName = "category";
 
-
+    // 피크닉 업로드 설정
+    private String ficnicFolder = "/resources/data/ficnic/";
+    private String ficnicSaveName = "ficnic";
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
 
@@ -49,9 +51,11 @@ public class AdminFicnicController {
     // 피크닉 목록 페이지
     @RequestMapping("admin/ficnic/ficnic_list.do")
     public String ficnicList(Model model, HttpServletRequest request) {
-    	 
+    	
+    	// 대분류 카테고리 리스트
     	List<CategoryDTO> cList = cdao.getCategoryList();
-        List<FicnicDTO> fList = dao.getFicnicList();
+        
+    	List<FicnicDTO> fList = dao.getFicnicList();
     	
        
        	model.addAttribute("flist", fList);
@@ -84,23 +88,76 @@ public class AdminFicnicController {
 
     // 피크닉 등록 처리
     @RequestMapping("admin/ficnic/ficnic_write_ok.do")
-    public void ficnicWriteOk(CouponDTO dto, HttpServletResponse response) throws Exception {
+    public void ficnicWriteOk(FicnicDTO dto,MultipartHttpServletRequest mRequest ,HttpServletResponse response) throws Exception {
+    	
+    	response.setContentType("text/html; charset=utf-8");
+    	PrintWriter out= response.getWriter();
+    	
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        List<String> ficnic_imagesrc = new ArrayList<String>();
+        
+        List<String> upload_list = UploadFile.fileUpload(mRequest, ficnicFolder, ficnicSaveName);
+    	for(String imgsrc : upload_list) {
+    		ficnic_imagesrc.add(imgsrc);
+    	}
+    	
+    	
+    	if(this.dao.writeFicnic(dto, ficnic_imagesrc)>0) {
+    		out.println("<script>location.href='"+mRequest.getContextPath()+"/admin/ficnic/ficnic_list.do'</script>");
+    	}else {
+    		out.println("<script>history.back()</script>");
+    	}
+    	
     }
 
 
 
     // 피크닉 수정 페이지
     @RequestMapping("admin/ficnic/ficnic_modify.do")
-    public String ficnicModify(@RequestParam("no") int no, Model model) {
-        return "admin/ficnic/ficnic_write";
+    public String ficnicModify(@RequestParam("no") int no,MultipartHttpServletRequest mRequest ,Model model) {
+
+    	// 기존에 있던 해당 피크닉 상품 정보 불러와야한다.
+    	FicnicDTO fdto =this.dao.getFicnicCont(no);
+    	
+		/*  기존에 존재하는 DTO에 있는 이미지만큼 삭제해야함. */
+    	
+    	
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        String category_image = mRequest.getParameter("ori_category_image");
+        List<String> upload_list = UploadFile.fileUpload(mRequest, categoryFolder, categorySaveName);
+        if(upload_list.size() > 0) {
+            // 기존 파일 있으면 삭제 처리
+            if(category_image != null){
+                File del_pimage = new File(mRequest.getSession().getServletContext().getRealPath(category_image));
+                if(del_pimage.exists()) del_pimage.delete();
+            }
+            category_image = upload_list.get(0);
+        }
+    	
+    	
+    	
+    	model.addAttribute("fdto",fdto);
+    	model.addAttribute("m", "m");
+    	return "admin/ficnic/ficnic_write";
     }
 
 
 
     // 피크닉 수정 처리
     @RequestMapping("admin/ficnic/ficnic_modify_ok.do")
-    public void ficnicModifyOk(CouponDTO dto, HttpServletResponse response) throws Exception {
+    public void ficnicModifyOk(CouponDTO dto,HttpServletRequest request , HttpServletResponse response) throws Exception {
+    
+    	response.setContentType("text/html; charset=utf-8");
+    	PrintWriter out= response.getWriter();
+    	
+    	if(this.dao.modifyFicnic(dto)>0) {
+    		out.println("<script>location.href='"+request.getContextPath()+"/admin/ficnic/ficnic_list.do'</script>");
+    	}else {
+    		out.println("<script>history.back()</script>");
+    	}
     }
+    
+
 
 
 

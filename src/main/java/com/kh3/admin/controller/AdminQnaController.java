@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.model.qna.QnaCommentDAO;
@@ -123,7 +124,6 @@ public class AdminQnaController {
 
         int check = this.cdao.qnaReply(cdto);
         out.println(check);
-        
     }
 
 
