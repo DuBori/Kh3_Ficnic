@@ -38,20 +38,27 @@
 	from member_list
 	where member_email = #{member_email}
     </select>
-    
-    
-    
-    
-    
-    
-    
-<!--     비밀번호 찾기
-    <select id="siteMemberfindPw" resultType="int">
+
+	<!-- 아이디 찾아오기 -->
+    <select id="siteMemberFindIdEnd" resultType="String">
+    select member_id
+	from member_list
+	where member_email = #{member_email} and member_name = #{member_name}
+    </select>
+
+	<!-- 비밀번호 찾기 / 둘다 맞는 경우 -->
+    <select id="siteMemberFindPwAll" resultType="int">
     select count(*) 
 	from member_list
-	where member_id = #{member_id} and member_pw = #{member_pw}
-    </select> -->
+	where member_email = #{member_email} and member_id = #{member_id}
+    </select>
 
+	<!-- 비밀번호 찾아오기 -->
+    <select id="siteMemberFindPwEnd" resultType="String">
+    select member_pw
+	from member_list
+	where member_email = #{member_email} and member_id = #{member_id}
+    </select>
 
 
 </mapper>
