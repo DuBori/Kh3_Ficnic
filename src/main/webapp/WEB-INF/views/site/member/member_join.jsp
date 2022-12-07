@@ -20,7 +20,7 @@ var phoneJ = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 
 //아이디
 	$(function() {
-$('#member_id').blur(function(){
+$('#member_id').keyup(function(){
 	if(idJ.test($(this).val())){
 		console.log(idJ.test($(this).val()));
 		$("#id_check").text('Good.');
@@ -49,12 +49,13 @@ $('#member_pw').blur(function(){
 });
 
 
+/*
 
 // 비밀번호 확인 ***********일치하나 확인**********
 	$(function() {
-$('#member_pw').blur(function(){
-	if(idJ.test($(this).val())){
-		console.log(idJ.test($(this).val()));
+$('#member_pw_re').blur(function(){
+	if(pwJ.test($(this).val())){
+		console.log([wJ.test($(this).val()));
 		$("#id_check").text('Good.');
 		$('#id_check').css('color', 'blue');
 	} else {
@@ -63,6 +64,7 @@ $('#member_pw').blur(function(){
 	}
 });
 });
+*/
 
 
 //이름에 특수문자 들어가지 않도록 설정
@@ -108,35 +110,61 @@ if(phoneJ.test($(this).val())){
 });
 
 
-</script>
-<%-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
-<script type ="text/javascript">
 
-	$('#member_id').keyup(function(){
-		let member_id = $('#member_id').val();
-			
-		$.ajax({
-			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-            url : "<%=request.getContextPath()%>/member/.do",
-			type : "post",
-			data : {member_id: member_id},
-			dataType : 'text',
-			success : function(result){
-				if(result == 1){
-					$("#id_feedback").html('이미 사용중인 아이디입니다.');
-					$("#id_feedback").attr('color','#dc3545');
-				} else{
-					$("#id_feedback").html('사용할 수 있는 아이디입니다.');
-					$("#id_feedback").attr('color','#2fb380');
-				} 
-			},
-			error : function(){
-				alert("서버요청실패");
-			}
-		})
-			 
-	})
-</script> --%>
+//가입하기 실행 버튼 유효성 검사!
+$(function() {
+var inval_Arr = new Array(4).fill(false);
+$('#reg_submit').click(function(){
+	// 비밀번호가 같은 경우 && 비밀번호 정규식
+	if (($('#member_pw').val() == ($('#member_pw_re').val()))
+			&& pwJ.test($('#member_pw').val())) {
+		inval_Arr[0] = true;
+	} else {
+		inval_Arr[0] = false;
+	}
+	// 이름 정규식
+	if (nameJ.test($('#member_name').val())) {
+		inval_Arr[1] = true;	
+	} else {
+		inval_Arr[1] = false;
+	}
+	// 이메일 정규식
+	if (mailJ.test($('#member_email').val())){
+		console.log(phoneJ.test($('#member_email').val()));
+		inval_Arr[2] = true;
+	} else {
+		inval_Arr[2] = false;
+	}
+	// 휴대폰번호 정규식
+	if (phoneJ.test($('#member_phone').val())) {
+		console.log(phoneJ.test($('#member_phone').val()));
+		inval_Arr[3] = true;
+	} else {
+		inval_Arr[3] = false;
+	}
+	
+	var validAll = true;
+	for(var i = 0; i < inval_Arr.length; i++){
+		
+		if(inval_Arr[i] == false){
+			validAll = false;
+		}
+	}
+	
+	if(validAll){ // 유효성 모두 통과
+		alert('가입에 성공하였습니다!');
+		
+	} else{
+		alert('입력한 정보들을 다시 한번 확인해주세요 :)')
+		
+	}
+});
+
+});
+
+
+</script>
+
 
 
 <div class="page-info w1100">
@@ -168,8 +196,8 @@ if(phoneJ.test($(this).val())){
 			<!-- 비밀번호 재확인 -->
 			<div class="form-group">
 				<label for="member_pw2">비밀번호 확인</label>
-				<input type="text" class="form-control" id="member_pw2" name="member_pw2" placeholder="비밀번호를 다시 입력해주세요." required>
-				<div class="check_font" id="pw2_check"></div>
+				<input type="text" class="form-control" id="member_pw_re" name="member_pw_re" placeholder="비밀번호를 다시 입력해주세요." required>
+				<div class="check_font" id="pw_re_check"></div>
 			</div>
 			<!-- 이름 -->
 			<div class="form-group">
