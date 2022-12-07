@@ -33,7 +33,7 @@
 						<c:choose>
 							<c:when test="${cate.getSub_category().size() > 0}">
 								<c:set var="show_big_class" value="plus" />
-								<c:set var="show_big_count" value="<span class=\"count\">[${cate.getSub_category().size()}]</span>" />
+								<c:set var="show_big_count" value="<span class=\"count\" />[${cate.getSub_category().size()}]</span>" />
 							</c:when>
 							<c:otherwise>
 								<c:set var="show_big_class" value="normal" />
