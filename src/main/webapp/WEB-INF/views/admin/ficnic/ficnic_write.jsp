@@ -11,6 +11,9 @@
 		$("#addBtn").on("click",function(){
 			$("#ficnic_div").append("<div class=\"row form mb-5 view-limit\"><div class=\"form-group col-sm\"><label for=\"goods_ea_total\">피크닉 타이틀</label><input name=\"ficnic_info\" ><label for=\"goods_ea_total\">피크닉 내용</label><textarea name=\"ficnic_info\"rows=\"10\" cols=\"80\"></textarea></div></div>");	
 		});
+		$("#optionBtn").on("click",function(){
+			$("#optionDiv").append("<div class=\"row form mb-1 view-limit\"><div class=\"form-group col-sm\"><label for=\"goods_ea_total\">옵션 타이틀</label><input type=\"text\" name=\"ficnic_option_title\" class=\"form-control text-center w-20\"><label for=\"goods_ea_total\">옵션 가격</label><input type=\"text\" name=\"ficnic_option_price\" class=\"form-control text-center w-20\" >원</div></div>");	
+		});
 		
 		$("#submitbtn").on("click",function(){
 			 $('form[name="ficnic_form"]').serialize();
@@ -116,7 +119,7 @@
 		                      <div class="w-100"></div>
 		                      <div class="form-group col-sm">
 		                          <label for="goods_in_price">소비자가</label>
-		                          <input type="text" name="ficnic_sale_price" id="goods_in_price" value=""  class="form-control text-right w-40" onkeydown="NumberInput(this);" required="required">원
+		                          <input type="text" name="ficnic_sale_price" id="goods_in_price"  class="form-control text-right w-40" onkeydown="NumberInput(this);" required="required">원
 		                      </div>
 		                  
 						 
@@ -130,34 +133,35 @@
 		                      </div>
 		                  </div>
 		                  
-		                  <h4 class="view-limit">옵션</h4>
-		              	  <c:if test="${!empty m and !empty mapList }">
-							  	<c:forEach var="option" items="${mapList}">
-							  		<div class="row form mb-1 view-limit">
-							  		  <div class="form-group col-sm">
-			                              <label for="goods_ea_total">옵션 타이틀</label>
-			                              <input type="text" name="ficnic_option_title" value="${option.title}"  class="form-control text-center w-20" >
-			                              
-			                              <label for="goods_ea_total">옵션 가격</label>
-			                              <input type="text" name="ficnic_option_price" value="${option.price}"  class="form-control text-center w-20" >원
-			                          </div>
-							  		</div>		
-						  		</c:forEach>
-						  </c:if>
-						  <c:if test="${empty m }">
-						  	<c:forEach begin="1" end="2">
-						  	<div class="row form mb-1 view-limit">
-							  		  <div class="form-group col-sm">
-			                              <label for="goods_ea_total">옵션 타이틀</label>
-			                              <input type="text" name="ficnic_option_title" value="${option.title}"  class="form-control text-center w-20" >
-			                              
-			                              <label for="goods_ea_total">옵션 가격</label>
-			                              <input type="text" name="ficnic_option_price" value="${option.price}"  class="form-control text-center w-20" >원
-			                          </div>
-							  		</div>
-						  	</c:forEach>
-						  </c:if>
-		                  
+		                  <h4 class="view-limit">옵션</h4><input type="button" value="옵션 추가하기" id="optionBtn">
+		                  <div id="optionDiv">
+			              	  <c:if test="${!empty m and !empty mapList }">
+								  	<c:forEach var="option" items="${mapList}">
+								  		<div class="row form mb-1 view-limit">
+								  		  <div class="form-group col-sm">
+				                              <label for="goods_ea_total">옵션 타이틀</label>
+				                              <input type="text" name="ficnic_option_title" value="${option.title}"  class="form-control text-center w-20" >
+				                              
+				                              <label for="goods_ea_total">옵션 가격</label>
+				                              <input name="ficnic_option_price" value="${option.price}"  class="form-control text-center w-20" >원
+				                          </div>
+								  		</div>		
+							  		</c:forEach>
+							  </c:if>
+							  <c:if test="${empty m }">
+								  	<c:forEach begin="1" end="2">
+								  			<div class="row form mb-1 view-limit">
+									  		  <div class="form-group col-sm">
+					                              <label for="goods_ea_total">옵션 타이틀</label>
+					                              <input type="text" name="ficnic_option_title" value="${option.title}"  class="form-control text-center w-20" >
+					                              
+					                              <label for="goods_ea_total">옵션 가격</label>
+					                              <input  name="ficnic_option_price" value="${option.price}"  class="form-control text-center w-20" >원
+					                          </div>
+									  		</div>
+								  	</c:forEach>
+							  </c:if>
+		                  </div>
 		                  <div>
 		                      <h4 class="view-limit">날짜 선택</h4>
 		                      <div class="row form mb-1 view-limit">
@@ -203,6 +207,8 @@
 		                  
 		                  <div id="ficnic_div">
 		                      <h4 class="view-limit">피크닉 정보</h4><input type="button" value="피크닉 정보추가버튼" id="addBtn">
+		                    
+		                      
 		                      <div class="row form mb-5 view-limit">
 		                          <div class="form-group col-sm">
 		                              <label for="goods_ea_total">피크닉 타이틀</label>		                

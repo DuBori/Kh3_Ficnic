@@ -1,13 +1,13 @@
 package com.kh3.model.ficnic;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh3.model.coupon.CouponDTO;
 
 @Repository
 public class FicnicDAOImpl implements FicnicDAO {
@@ -96,6 +96,20 @@ public class FicnicDAOImpl implements FicnicDAO {
 	@Override
 	public void updateSeq(int no) {
 		this.sqlSession.update("adminFicnicDeleteUpdate",no);	
+	}
+	
+	/* 피크닉 상품 검색 개수*/
+	@Override
+	public int getListCount(Map<String, Object> map) {
+		return this.sqlSession.selectOne("adminFicnicSearchCount", map);
+	}
+	
+	/* 피크닉 검색 리스트*/
+	@Override
+	public List<FicnicDTO> getFicnicList(int startNo, int endNo, Map<String, Object> map) {
+		map.put("startNo", startNo);
+		map.put("endNo", endNo);
+		return this.sqlSession.selectList("adminFicnicSearchList",map);
 	}
 
 

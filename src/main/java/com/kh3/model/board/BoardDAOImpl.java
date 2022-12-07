@@ -15,6 +15,7 @@ public class BoardDAOImpl implements BoardDAO {
     @Inject
     private SqlSessionTemplate sqlSession;
 
+    /* 해당 게시판 리스트 */
 	@Override
 	public List<BoardDTO> getBoardList(String bbs_id) {
 		return sqlSession.selectList("siteBoardList", bbs_id);	
@@ -32,7 +33,7 @@ public class BoardDAOImpl implements BoardDAO {
 		
 	}
 
-	/* 해당 게시판 리스트 */
+	/* 해당 게시판 검색 리스트 */
 	@Override
 	public List<BoardDTO> getBoardList(int startNo, int endNo, Map<String, Object> map) {
 		

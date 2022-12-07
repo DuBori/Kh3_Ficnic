@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
 
 <div class="page-info row mb-3">
@@ -16,7 +15,7 @@
 <div class="page-cont">
 
 <div class="card-body px-5 pt-4 pb-3">
-                    <form name="search_form" post="/admin/goods/goods_list.php" method="post" class="row py-2 px-3">
+		<form name="search_form" method="post" action="${path}/admin/ficnic/ficnic_list.do" >
                     <input type="hidden" name="ps_page" value="1">
                     <div class="row justify-content-center mb-2">
                         <div class="col-sm-3 mb-2">
@@ -25,6 +24,7 @@
                                     <label class="input-group-text" for="search_cate">카테고리 구분</label>
                                 </div>
                                  <select id="search_boxtype" name="finic_category_no" class="custom-select">
+                                   		<option value="">카테고리 없음</option>
                                     <c:forEach items="${clist}" var="dto">
                                     	<option value="${dto.getCategory_id()}">[${dto.getCategory_id()}]${dto.getCategory_name() }</option>
                                     
@@ -35,35 +35,21 @@
                         <div class="col-sm-3 mb-2">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="search_soldout">지역</label>
-                                </div>
-                                <select id="search_soldout" name="search_soldout" class="custom-select">
-                                    <option value="">- 전체보기 -</option>
-                                    <option value="N">판매중</option>
-                                    <option value="Y">품절</option>
-                                </select>
+                                    <label class="input-group-text" for="ficnic_location">지역</label>
+                                	<input name="ficnic_location">
+                                </div>                                
                             </div>
-                        </div>
+                        </div>                     
+                        <div class="col-sm-3 mb-2">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="ficnic_name">피크닉 이름</label>
+                                </div>
+                                <input type="text" name="ficnic_name" class="form-control">
+                            </div>
+                        </div>         
                     </div>
-
                     <div class="row justify-content-center">
-
-                        <div class="col-sm-3 mb-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="search_name">품목이름</label>
-                                </div>
-                                <input type="text" id="search_name" name="search_name" value="" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-3 mb-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="search_code">품목코드</label>
-                                </div>
-                                <input type="text" id="search_code" name="search_code" value="" class="form-control">
-                            </div>
-                        </div>
                         <div class="search-form-button col-sm-auto mb-2">
                             <button type="submit" class="btn btn-secondary"><i class="fa fa-search"></i> 검색하기</button>
                         </div>
@@ -95,17 +81,26 @@
                    <td class="eng table-list-hide">${dto.getFicnic_sale_price() }</td>
                    <td class="eng table-list-hide-mob">${dto.getFicnic_sale() }</td>
                    <td>
-                    <a href="<%=request.getContextPath()%>/admin/ficnic/ficnic_modify.do?no=${dto.getFicnic_no()}" class="btn btn-outline-success btn-sm">수정</a>
+                    <a href="${path}/admin/ficnic/ficnic_modify.do?no=${dto.getFicnic_no()}" class="btn btn-outline-success btn-sm">수정</a>
                        &nbsp;
-                    <a href="<%=request.getContextPath()%>/admin/ficnic/ficnic_delete.do?no=${dto.getFicnic_no()}" class="btn btn-outline-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>                                                                    </td>
+                    <a href="${path}/admin/ficnic/ficnic_delete.do?no=${dto.getFicnic_no()}" class="btn btn-outline-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>                                                                    </td>
                </tr>
 	        </c:forEach>   
             </tbody>
        </table>
        
+      	<!-- 페이징 처리  -->
+		<c:if test="${!empty paging}">
+	            <div class="row list-bottom-util">
+	                <div class="col text-center">
+	                    ${pagingWrite}
+	                </div>
+	            </div>
+	    </c:if>
+	    <!-- 페이징 처리 end -->
        <div class="row mt-2 list-bottom-util">
 	    	<div class="col-md-4 text-right mt-3">
-	        	<a href="<%=request.getContextPath()%>/admin/ficnic/ficnic_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 상품 추가</a>
+	        	<a href="${path}/admin/ficnic/ficnic_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 상품 추가</a>
 	   	 	</div>
    	 	</div>
        

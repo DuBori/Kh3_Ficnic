@@ -23,6 +23,8 @@ import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
+import com.kh3.util.PageDTO;
+import com.kh3.util.Paging;
 import com.kh3.util.UploadFile;
 
 @Controller
@@ -59,12 +61,52 @@ public class AdminFicnicController {
     	// 대분류 카테고리 리스트
     	List<CategoryDTO> cList = cdao.getCategoryList();
         
-    	List<FicnicDTO> fList = dao.getFicnicList();
-    	
+		/* 페이징 처리 */
+    	// 페이징 처리
+		int page; // 현재 페이지 변수
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		} else {
+			page = 1;
+		}
+		String finic_category_no="";
+		String ficnic_location="";
+		String ficnic_name="";
+		if (request.getParameter("finic_category_no")!=null) {
+			finic_category_no = request.getParameter("finic_category_no");
+		}
+		if (request.getParameter("ficnic_location")!=null) {
+			ficnic_location = request.getParameter("ficnic_location");
+		}
+		if (request.getParameter("ficnic_name")!=null) {
+			ficnic_name = request.getParameter("ficnic_name");
+		}
+		
+		ficnic_location = request.getParameter("ficnic_location");
+		ficnic_name = request.getParameter("ficnic_name");
+		
+		System.out.println(finic_category_no+","+ficnic_location+","+ficnic_name);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("category_no", finic_category_no);
+		map.put("location", ficnic_location);
+		map.put("name", ficnic_name);
+		
+		totalRecord = dao.getListCount(map);
+		
+		PageDTO dto = new PageDTO(page, rowsize, totalRecord, map);
        
+		// 페이지 이동 URL
+		String pageUrl = request.getContextPath() + "/admin/ficnic/ficnic_list.do?category_no="+finic_category_no+"&location="+ficnic_location+"&name"+ficnic_name;
+
+		System.out.println(dto.getStartNo()+","+dto.getEndNo());
+		List<FicnicDTO> fList = dao.getFicnicList(dto.getStartNo(), dto.getEndNo(), map);
+		
+		
        	model.addAttribute("flist", fList);
     	model.addAttribute("clist", cList);
-    	
+    	model.addAttribute("totalCount", totalRecord);
+		model.addAttribute("paging", dto);
+		model.addAttribute("pagingWrite",Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 
         return "admin/ficnic/ficnic_list";
     }
@@ -95,8 +137,8 @@ public class AdminFicnicController {
     	int cnt=0;
     	//서브 카테고리 처리
     	String[] ficnicSub =null;
-    	if(mRequest.getParameter("ficnic_usb")!=null) {
-    		ficnicSub=mRequest.getParameter("ficnic_usb").split("/");
+    	if(mRequest.getParameter("ficnic_sub")!=null) {
+    		ficnicSub=mRequest.getParameter("ficnic_sub").split("/");
     		for(String sub : ficnicSub) {
     			switch (cnt) {
 				case 0:
@@ -180,6 +222,11 @@ public class AdminFicnicController {
     		mapList.add(map);
     		cnt++;
     	}    	 
+    	
+    	
+    	
+    	
+    	
     	model.addAttribute("clist", cList);
     	
     	model.addAttribute("fdto",fdto);

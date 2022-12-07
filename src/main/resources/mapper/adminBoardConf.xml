@@ -41,7 +41,32 @@
 
     <!-- 게시판 설정 게시판 추가하기 -->
     <insert id="adminBoardConfWrite" parameterType="boardConfDTO">
-        insert into board_config values( (select max(board_no) from board_config )+1,#{board_id},#{board_name},#{board_skin},#{board_list_num},#{board_page_num},#{board_use_category},#{board_use_comment},#{board_use_secret},#{board_use_only_secret},#{board_use_link1},#{board_use_link2},#{board_use_file1},#{board_use_file2},#{board_use_file3},#{board_use_file4},#{board_level_list},#{board_level_view},#{board_level_write},#{board_level_comment},#{board_level_notice},#{board_level_modify},#{board_level_delete},sysdate)	
+        insert into board_config values( 
+        (select max(board_no) from board_config )+1,
+        #{board_id},
+        #{board_name},
+        #{board_skin},
+        #{board_list_num},
+        #{board_page_num},
+        #{board_use_category},
+        #{board_use_comment},
+        #{board_use_secret},
+        #{board_use_only_secret},
+        #{board_use_link1},
+        #{board_use_link2},
+        #{board_use_file1},
+        #{board_use_file2},
+        #{board_use_file3},
+        #{board_use_file4},
+        #{board_level_list}
+        ,#{board_level_view},
+        #{board_level_write},
+        #{board_level_comment},
+        #{board_level_notice},
+        #{board_level_modify},
+        #{board_level_delete},
+        sysdate
+        )	
     </insert>
 
     <insert id="adminBoardConfCategory" parameterType="boardConfDTO" >
@@ -102,7 +127,32 @@
 
     <!-- 게시판 설정 게시판 수정 -->
 	<update id="adminBoardUpdate" parameterType="boardConfDTO">
-		update board_config set board_id = #{board_id}, board_skin = #{board_skin}, board_list_num = #{board_list_num}, board_page_num = #{board_page_num}, board_use_category=#{board_use_category}, board_use_comment=#{board_use_comment}, board_use_secret =#{board_use_secret}, board_use_only_secret =#{board_use_only_secret}, board_use_link1=#{board_use_link1}, board_use_link2=#{board_use_link2},  board_use_file1=#{ board_use_file1},  board_use_file2=#{ board_use_file2},  board_use_file3=#{ board_use_file3},  board_use_file4=#{ board_use_file4}, board_level_list=#{board_level_list}, board_level_view=#{board_level_view}, board_level_write=#{board_level_write}, board_level_comment=#{board_level_comment}, board_level_notice=#{board_level_notice}, board_level_modify =#{board_level_modify }, board_level_delete=#{board_level_delete}, board_date = sysdate where board_no = #{board_no}
+		update board_config set 
+		<trim suffixOverrides=",">
+			<if test="board_name != ''">board_name = #{board_name},</if>
+			<if test="board_skin != ''">board_skin = #{board_skin},</if>
+			<if test="board_list_num != ''"> board_list_num = #{board_list_num},</if>
+			<if test="board_page_num != ''"> board_page_num = #{board_page_num},</if>
+			<if test="board_use_category != ''"> board_use_category=#{board_use_category},</if>
+			<if test="board_use_comment != ''"> board_use_comment=#{board_use_comment},</if>
+			<if test="board_use_secret != ''"> board_use_secret =#{board_use_secret},</if>
+			<if test="board_use_only_secret != ''"> board_use_only_secret =#{board_use_only_secret},</if>
+			<if test="board_use_link1 != ''"> board_use_link1=#{board_use_link1},</if>
+			<if test="board_use_link2 != ''"> board_use_link2=#{board_use_link2},</if>
+			<if test="board_use_file1 != ''"> board_use_file1=#{ board_use_file1},</if>
+			<if test="board_use_file2 != ''"> board_use_file2=#{ board_use_file2},</if>
+			<if test="board_use_file3 != ''"> board_use_file3=#{ board_use_file3},</if>
+			<if test="board_use_file4 != ''"> board_use_file4=#{ board_use_file4},</if>
+			<if test="board_level_list != ''"> board_level_list=#{board_level_list},</if>
+			<if test="board_level_view != ''"> board_level_view=#{board_level_view},</if>
+			<if test="board_level_write != ''"> board_level_write=#{board_level_write},</if>
+			<if test="board_level_comment != ''"> board_level_comment=#{board_level_comment},</if>
+			<if test="board_level_notice != ''"> board_level_notice=#{board_level_notice},</if>
+			<if test="board_level_modify != ''"> board_level_modify =#{board_level_modify },</if>
+			<if test="board_level_delete != ''"> board_level_delete=#{board_level_delete},</if>
+			board_date = sysdate, 
+		 </trim>
+		 where board_no = #{board_no}
 	</update>
 
 
