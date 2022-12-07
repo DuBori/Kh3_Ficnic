@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -180,6 +179,7 @@ public class AdminCouponController {
         System.out.println("값=============================13"+dto.getCoupon_max_ea());
         System.out.println("값=============================14"+dto.getCoupon_down_ea());	//0
         System.out.println("값=============================15"+dto.getCoupon_use_ea());	//0
+        
         dto.setCoupon_use_value(value);
         System.out.println("값5555555555555555555555555555555555555555555555");
         int check = this.dao.couponModify(dto);
