@@ -73,6 +73,20 @@ span.noimg {
     height: 40px;
     margin-top: -5px;
 }
+#header .h-logo a span {
+    background-image: -webkit-linear-gradient(60deg, #ef365c, #1975b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 5s infinite linear;
+}
+@-webkit-keyframes hue {
+    from {
+        -webkit-filter: hue-rotate(0deg);
+    }
+    to {
+        -webkit-filter: hue-rotate(-180deg);
+    }
+}
 
 
 #header .h-ico {

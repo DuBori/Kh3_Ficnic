@@ -74,7 +74,7 @@
     <header id="header">
         <div class="navbar-header w1150">
             <div class="d-flex">
-                <h1 class="h-logo"><a href="${path}/admin/main.do"><img src="${path}/resources/admin/images/admin_logo.png" alt="Ficnic" /> Ficnic</a></h1>
+                <h1 class="h-logo"><a href="${path}/admin/main.do"><img src="${path}/resources/admin/images/admin_logo.png" alt="Ficnic" /> <span>Ficnic</span></a></h1>
                 <button type="button" class="btn btn-lg px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-toggle="collapse" data-target="#topnav-menu-content"><i class="fa fa-fw fa-bars"></i></button>
             </div>
 
