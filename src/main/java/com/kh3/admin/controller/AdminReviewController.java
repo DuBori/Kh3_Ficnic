@@ -151,9 +151,22 @@ public class AdminReviewController {
 
 
     @RequestMapping("admin/review/review_delete.do")
-    public void delete(@RequestParam("no") int no, HttpServletResponse response) throws Exception {
+    public void delete(@RequestParam("no") int no, HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
+
+        ReviewDTO dto = this.dao.reviewView(no);
+
+        // 기존 파일 있으면 삭제 처리
+        if(dto.getReview_photo1() != null){
+            File del_pimage1 = new File(request.getSession().getServletContext().getRealPath(dto.getReview_photo1()));
+            if(del_pimage1.exists()) del_pimage1.delete();
+        }
+        if(dto.getReview_photo2() != null){
+            File del_pimage2 = new File(request.getSession().getServletContext().getRealPath(dto.getReview_photo2()));
+            if(del_pimage2.exists()) del_pimage2.delete();
+        }
+
 
         int check = this.dao.reviewDelete(no);
 
