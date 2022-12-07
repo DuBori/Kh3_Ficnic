@@ -203,10 +203,14 @@ public class SiteMemberController {
 	    	response.setContentType("text/html; charset=UTF-8");
 	    	PrintWriter out = response.getWriter();
 	    	
+	    	System.out.println("dto.getMember_pw" + dto.getMember_pw());
+	    	System.out.println("dto.getMember_pw_re" + dto.getMember_pw_re());
+	    	
 	    	// 비밀번호 일치 확인
 	    	if(!dto.getMember_pw().equals(dto.getMember_pw_re())) {
 				out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
 	    	}
+
 	    	
 	    	 else {				// 이상 없을 때 실행
 	    		int check = this.dao.joinMember(dto);
