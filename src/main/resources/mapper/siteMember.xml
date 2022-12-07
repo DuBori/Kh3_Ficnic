@@ -61,4 +61,14 @@
     </select>
 
 
+      <!-- 회원 가입 -->    
+    	<insert id="siteMemberJoin" parameterType="memberDTO">
+		<selectKey resultType="int" keyProperty="member_no" order="BEFORE">
+			select max(member_no) from member_list
+		</selectKey>
+		insert into member_list values(#{member_no} + 1, #{member_type},
+		#{member_id}, #{member_pw}, #{member_name}, #{member_email},
+		#{member_phone}, 1000, sysdate)
+	</insert>
+
 </mapper>

@@ -46,13 +46,13 @@ $(function(){
 
 
 <div class="page-info row mb-3">
-    <div class="d-flex align-items-center justify-content-between">
-        <h2>회원 등록</h2>
-        <ol class="m-0 p-2">
-            <li>회원 관리</li>
-            <li><b>회원 등록</b></li>
-        </ol>
-    </div>
+	<div class="d-flex align-items-center justify-content-between">
+		<h2>회원 등록</h2>
+		<ol class="m-0 p-2">
+			<li>회원 관리</li>
+			<li><b>회원 등록</b></li>
+		</ol>
+	</div>
 </div>
 
 
@@ -91,28 +91,30 @@ $(function(){
                             <label for="member_pw_re">비밀번호 확인</label>
                             <input type="password" name="member_pw_re" id="member_pw_re" class="form-control w-50" required />
                         </div>
-
-                        <div class="w-100 border-bottom"></div>
-
-                        <div class="form-group col">
-                            <label for="member_name">이름</label>
-                            <input type="text" name="member_name" id="member_name" class="form-control w-30" required />
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="form-group col">
-                            <label for="member_email">이메일</label>
-                            <input type="text" name="member_email" id="member_email" class="form-control" onkeydown="EmailInput(this);" required />
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="form-group col">
-                            <label for="member_phone">연락처</label>
-                            <input type="text" name="member_phone" id="member_phone" maxlength="15" class="form-control w-30" onkeydown="NumSpInput(this);" required />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+						<div class="w-100 border-bottom"></div>
+						<div class="form-group col">
+							<label for="member_name">이름</label> <input type="text"
+								name="member_name" id="member_name" class="form-control w-30"
+								required />
+						</div>
+						<div class="w-100"></div>
+						<div class="form-group col">
+							<label for="member_email">이메일</label> <input type="text"
+								name="member_email" id="member_email" class="form-control"
+								onkeydown="EmailInput(this);" required />
+						</div>
+						<div class="w-100"></div>
+						<div class="form-group col">
+							<label for="member_phone">연락처</label> <input type="text"
+								name="member_phone" id="member_phone" maxlength="15"
+								class="form-control w-30" onkeydown="NumSpInput(this);"
+								required />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
@@ -129,4 +131,4 @@ $(function(){
 
 
 
-<%@ include file="../layout/layout_footer.jsp" %>
+<%@ include file="../layout/layout_footer.jsp"%>

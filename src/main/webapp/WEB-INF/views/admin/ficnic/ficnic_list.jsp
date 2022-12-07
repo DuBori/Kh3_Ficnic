@@ -22,18 +22,6 @@
                         <div class="col-sm-3 mb-2">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="search_show">노출여부</label>
-                                </div>
-                                <select id="category_show" name="search_show" class="custom-select">
-                                    <option value="">- 전체보기 -</option>
-                                    <option value="Y">노출</option>
-                                    <option value="N">숨김</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 mb-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
                                     <label class="input-group-text" for="search_cate">카테고리 구분</label>
                                 </div>
                                  <select id="search_boxtype" name="finic_category_no" class="custom-select">
@@ -47,19 +35,7 @@
                         <div class="col-sm-3 mb-2">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="search_boxtype">박스타입</label>
-                                </div>
-                               
-                            </div>
-                        </div>
-                        <div class="col-sm-1" style="margin-right: 20px;"></div>
-                    </div>
-
-                    <div class="row justify-content-center">
-                        <div class="col-sm-3 mb-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="search_soldout">품절여부</label>
+                                    <label class="input-group-text" for="search_soldout">지역</label>
                                 </div>
                                 <select id="search_soldout" name="search_soldout" class="custom-select">
                                     <option value="">- 전체보기 -</option>
@@ -68,6 +44,10 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+
                         <div class="col-sm-3 mb-2">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -117,7 +97,7 @@
                    <td>
                     <a href="<%=request.getContextPath()%>/admin/ficnic/ficnic_modify.do?no=${dto.getFicnic_no()}" class="btn btn-outline-success btn-sm">수정</a>
                        &nbsp;
-                    <a href="<%=request.getContextPath()%>admin/ficnic/ficnic_delete.do" class="btn btn-outline-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>                                                                    </td>
+                    <a href="<%=request.getContextPath()%>/admin/ficnic/ficnic_delete.do?no=${dto.getFicnic_no()}" class="btn btn-outline-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>                                                                    </td>
                </tr>
 	        </c:forEach>   
             </tbody>

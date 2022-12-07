@@ -29,9 +29,10 @@
 	<update id="adminFicnicModify" parameterType="ficnicDTO">
 		update ficnic_list set ficnic_category_no =#{ficnic_category_no},
 		ficnic_category_sub1 =#{ficnic_category_sub1},
-		ficnic_category_sub1 =#{ficnic_category_sub2},
-		ficnic_category_sub1 =#{ficnic_category_sub3},
+		ficnic_category_sub2 =#{ficnic_category_sub2},
+		ficnic_category_sub3 =#{ficnic_category_sub3},
 		ficnic_name = #{ficnic_name},
+		ficnic_market_price = #{ficnic_market_price},
 		ficnic_sale_price = #{ficnic_sale_price},
 		ficnic_option_title =#{ficnic_option_title},
 		ficnic_option_price =#{ficnic_option_price},
@@ -53,8 +54,6 @@
 		ficnic_notinclude = #{ficnic_notinclude},
 		ficnic_prepare = #{ficnic_prepare},
 		ficnic_caution = #{ficnic_caution},
-		ficnic_review_point = #{ficnic_review_point},
-		ficnic_review_count = #{ficnic_review_count},
 		ficnic_sale=#{ficnic_sale},
 		ficnic_date=sysdate where ficnic_no=#{ficnic_no}
 	</update>
@@ -63,6 +62,10 @@
 	<delete id="adminFicnicDelete" parameterType="int">
 		delete from ficnic_list where ficnic_no = #{no}	
 	</delete>
-
+	
+	<!-- 해당 피크닉 삭제 후 번호 정렬  -->
+	<update id="adminFicnicDeleteUpdate" parameterType="int">
+		update ficnic_list set ficnic_no = ficnic_no-1 where ficnic_no > #{no}
+	</update>
 
 </mapper>

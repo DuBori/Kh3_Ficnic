@@ -1,45 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
-
-
-
-<div class="contents w1150">
-
-
 
 <c:set var="dto" value="${dto}" />
 
-<!-- <script type="text/javascript">
 
-		$(function(){
-		$("#btnLogin").click(function(){
-		let	member_id = $("#member_id").val();
-		 let member_pw = $("#member_pw").val(); 
-		 
-		 if(member_id == ""){
-		  alert("아이디를 입력하세요");
-		  $("#member_id").focus(); //입력포커스 이동
-		
-		  return; //함수 종료
-		}
-		 
-		if(member_pw==""){
-		 alert("비밀번호를 입력하세요"); 
-		 $("#member_pw").focus();
-		  return;
-		}
-		//폼 내부의 데이터를 전송할 주소
-/* 		 document.form1.action= "${path}/member/member_login_check.do";
-		 document.form1.submit(); //제출 */
-		 });
-		});
-		</script> -->
+<div class="page-info w1100" align="center">
+    <h2>로그인</h2>
+    <ol>
+        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><b>로그인</b></li>
+    </ol>
+</div>
 
 
 
-	<h2>로그인</h2>
+<div class="contents w1100" align="center">
+
+
 	<form name="form1" method="post" action="<%=request.getContextPath() %>/member/member_login_check.do">
 		<table border="1" width="400px">
 			<tr>
