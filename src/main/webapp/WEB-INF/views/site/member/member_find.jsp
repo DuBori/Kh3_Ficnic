@@ -1,18 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../layout/layout_header.jsp" %>
 
-<body>
+
+
+<div class="page-info w1100" align="center">
+    <h2>아이디 찾기</h2>
+    <ol>
+        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><b>아이디 찾기</b></li>
+    </ol>
+</div>
+
+<div class="contents w1100">
 
 	<div align="center">
     <form name="find_form" method="post" action="<%=request.getContextPath()%>/member/member_find_id_result.do">
     
-	<h2>아이디/ 비밀번호 찾기</h2>
             <a href="javascript:location.reload();" class="login-tab-list__item active" role="tab" aria-controls="tab-panel1">아이디 찾기</a>
             <a href="<%=request.getContextPath()%>/member/member_find_pw.do" class="login-tab-list__item" role="tab" aria-controls="tab-panel2">비밀번호 찾기</a>
 
@@ -25,5 +28,5 @@
             </form>
         </div>
 
-</body>
-</html>
+
+<%@ include file="../layout/layout_footer.jsp" %>

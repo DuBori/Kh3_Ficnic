@@ -42,6 +42,8 @@ public class AdminFicnicController {
     // 피크닉 업로드 설정
     private String ficnicFolder = "/resources/data/ficnic/";
     private String ficnicSaveName = "ficnic";
+
+
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
 

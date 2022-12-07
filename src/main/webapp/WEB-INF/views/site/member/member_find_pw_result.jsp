@@ -1,19 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../layout/layout_header.jsp" %>
 
 <c:set var="pw" value="${pw }"/>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
-<div class="container page-title">
+<div class="page-info w1100">
     <h2>FIND RESULT</h2>
+    <ol>
+        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><b>비밀번호 찾기/b></li>
+    </ol>
 </div>
+
+<div class="contents w1100">
+
 
 <div class="container member-form result">
     <div class="mf-wrap">
@@ -26,7 +25,8 @@
             <p><a href="<%=request.getContextPath()%>/member/member_login.do">로그인</a></p>
         </div>
     </div>
-</div>
+   </div>
+   </div>
+   
 
-</body>
-</html>
+<%@ include file="../layout/layout_footer.jsp" %>

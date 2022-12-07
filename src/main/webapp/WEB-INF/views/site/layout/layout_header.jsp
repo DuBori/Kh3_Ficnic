@@ -52,7 +52,7 @@
 
     <!-- 로그아웃 Modal // START -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body text-center py-5">
                     <p>로그아웃 하시겠습니까?</p>
@@ -69,7 +69,7 @@
 
     <!-- #header // START -->
     <header id="header" class="fixed-top">
-        <nav class="navbar navbar-expand-lg w1150">
+        <nav class="navbar navbar-expand-lg w1100">
             <h1 class="navbar-brand"><a href="${path}/main.do"><img src="${path}/resources/site/images/site_logo.png" alt="Ficnic" /> Ficnic</a></h1>
 
             <div class="navbar-collapse">
