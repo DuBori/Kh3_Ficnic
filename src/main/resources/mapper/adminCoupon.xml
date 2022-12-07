@@ -31,7 +31,7 @@
         ]]>
 	</select>
 
-	<!-- 쿠폰 보기 --><!-- select * from coupon_list c join ficnic_category f on c.coupon_use_value = f.category_id where coupon_no = #{coupon_no}; -->
+	<!-- 쿠폰 보기 -->
 	<select id="adminCouponView" parameterType="int" resultType="couponDTO">
 		select * from coupon_list where coupon_no = #{coupon_no}
 	</select>
@@ -45,6 +45,19 @@
 	<update id="adminCouponSequence">
 		<![CDATA[update coupon_list set coupon_no = coupon_no - 1 where coupon_no > #{coupon_no}]]>
 	</update>
+
+	<!-- 쿠폰 등록 -->
+	<insert id="adminCouponWriteOk" parameterType="couponDTO">
+		<selectKey resultType="int" keyProperty="coupon_no" order="BEFORE">
+			select max(coupon_no) from coupon_list
+		</selectKey>
+		insert into coupon_list values(#{coupon_no} + 1, #{coupon_name}, #{coupon_use_type},
+		#{coupon_use_value}, #{coupon_price}, #{coupon_price_type}, #{coupon_price_over},
+		#{coupon_price_max}, #{coupon_date_type}, 
+		<if test="coupon_date_type.equals('free')">default, default, default</if>
+		<if test="coupon_date_type.equals('after')">#{coupon_date_value}, default, default</if>
+		<if test="coupon_date_type.equals('date')">default, #{coupon_start_date}, #{coupon_end_date}</if>, #{coupon_max_ea}, default, default, sysdate)
+	</insert>
 
 
 </mapper>

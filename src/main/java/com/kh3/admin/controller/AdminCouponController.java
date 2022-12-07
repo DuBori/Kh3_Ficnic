@@ -18,7 +18,6 @@ import com.kh3.model.coupon.CouponDAO;
 import com.kh3.model.coupon.CouponDTO;
 import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
-import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
 
@@ -82,7 +81,7 @@ public class AdminCouponController {
     }
 
 
-
+    // 쿠폰 상세내역 페이지
     @RequestMapping("admin/coupon/coupon_view.do")
     public String couponView(Model model, @RequestParam("no") int no, CategoryDTO cdto) {
         CouponDTO dto = this.dao.couponView(no);
@@ -91,6 +90,7 @@ public class AdminCouponController {
         if(dto.getCoupon_use_value() != null) {
         	String[] category = dto.getCoupon_use_value().split("★");
         	for(int i=0;i<category.length;i++) {
+        		System.out.println(category[i]);
         		check += "☆"+this.cdto.checkCategory(category[i]);
         	}
         	model.addAttribute("category", check);
@@ -101,31 +101,36 @@ public class AdminCouponController {
     }
 
 
-
+    // 쿠폰 등록 페이지
     @RequestMapping("admin/coupon/coupon_write.do")
     public String couponWrite() {
         return "admin/coupon/coupon_write";
     }
 
 
-
+    // 쿠폰 등록하기
     @RequestMapping("admin/coupon/coupon_write_ok.do")
     public void couponWriteOk(CouponDTO dto, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+        String value = "";
+        String[] category = dto.getCoupon_category_value().split(",");
+        for(int i = 0; i < category.length; i++) {
+        	value += category[i]+"★";
+        }
+        dto.setCoupon_use_value(value);
         int check = this.dao.couponWrite(dto);
         
         if (check > 0) {
-            out.println("<script>alert('쿠폰이 등록되었습니다.'); location.href='coupon_list.do';</script>");
+            out.println("<script>alert('쿠폰이 추가되었습니다.'); location.href='coupon_list.do';</script>");
         } else {
-            out.println("<script>alert('쿠폰 등록에 실패했습니다.'); history.back();</script>");
-        }
-
+            out.println("<script>alert('쿠폰 추가 실패했습니다.'); history.back();</script>");
+        }        
+        
     }
 
 
-
+    // 쿠폰 수정 페이지
     @RequestMapping("admin/coupon/coupon_modify.do")
     public String couponModify(@RequestParam("no") int no, Model model) {
         CouponDTO dto = this.dao.couponView(no);
@@ -135,7 +140,7 @@ public class AdminCouponController {
     }
 
 
-
+    // 쿠폰 수정하기
     @RequestMapping("admin/coupon/coupon_modify_ok.do")
     public void couponModifyOk(CouponDTO dto, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
