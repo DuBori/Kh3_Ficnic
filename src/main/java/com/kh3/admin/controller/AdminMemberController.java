@@ -231,7 +231,6 @@ public class AdminMemberController {
 
     				for (ObjectError error : list) {
     					if(error.getDefaultMessage().equals("pw_re")) {
-    						System.out.println("번호 ====== " + dto.getMember_pw());
     						out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>"); break;
     					}else if(error.getDefaultMessage().equals("name")) {
     						out.println("<script>alert('이름을 2~8자 사이로 입력해주세요.'); history.back();</script>"); break;
