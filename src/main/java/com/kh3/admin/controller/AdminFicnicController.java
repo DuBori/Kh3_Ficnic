@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -163,20 +164,24 @@ public class AdminFicnicController {
     	if (dto.getFicnic_select_title()!=null) dto.setFicnic_select_title(dto.getFicnic_option_title().replace(",",  "★"));
     	if (dto.getFicnic_select_price()!=null) dto.setFicnic_option_price(dto.getFicnic_option_price().replace(",","★"));
     	String res="";
+    	
+
+    	
     	if(dto.getFicnic_info()!=null) {
     		String[] infoList = dto.getFicnic_info().split(",");
         	cnt=0;
         	for(String info : infoList) {
         		if(cnt%2==0) {
-        			res+="<dt>"+info+"</dt>";	
+        			res+=info+",";	
         		}else{
-        			res+="<dd>"+info+"</dd>";
+        			res+=info;
         			if(cnt!= infoList.length-1) res+="★";
         		}
         		cnt++;	
         	}
     	}
     	dto.setFicnic_info(res);
+    	
     	
     	
     	response.setContentType("text/html; charset=utf-8");
@@ -223,13 +228,22 @@ public class AdminFicnicController {
     		cnt++;
     	}    	 
     	
+    	String[] list =fdto.getFicnic_info().split("★");
     	
+    	List<HashMap<String, String>> infoList = new ArrayList<HashMap<String,String>>();
     	
-    	
+    	for(String value: list) {
+    		String[] valueList = value.split(",");
+    		HashMap<String, String> map = new HashMap<String, String>();
+    		map.put("title", valueList[0]);
+    		map.put("cont", valueList[1]);
+    		infoList.add(map);
+    	}
     	
     	model.addAttribute("clist", cList);
     	
     	model.addAttribute("fdto",fdto);
+    	model.addAttribute("infoList",infoList);
 
     	model.addAttribute("mapList",mapList);
     	model.addAttribute("m", "m");
@@ -242,7 +256,7 @@ public class AdminFicnicController {
     // 피크닉 수정 처리
     @RequestMapping("admin/ficnic/ficnic_modify_ok.do")
     public void ficnicModifyOk(FicnicDTO dto,MultipartHttpServletRequest mRequest,HttpServletResponse response) throws Exception {
-    
+    	int cnt=0;
     	response.setContentType("text/html; charset=utf-8");
     	PrintWriter out= response.getWriter();
     	
@@ -271,6 +285,30 @@ public class AdminFicnicController {
                 }
         	}  	
         }
+        
+    	// 들어온 구분자 ',' 처리하기
+    	if (dto.getFicnic_option_title()!=null) dto.setFicnic_option_title(dto.getFicnic_option_title().replace(",", "★"));
+    	if (dto.getFicnic_option_price()!=null) dto.setFicnic_option_price(dto.getFicnic_option_price().replace(",", "★"));
+    	if (dto.getFicnic_select_title()!=null) dto.setFicnic_select_title(dto.getFicnic_option_title().replace(",",  "★"));
+    	if (dto.getFicnic_select_price()!=null) dto.setFicnic_option_price(dto.getFicnic_option_price().replace(",","★"));
+    	String res="";
+    	
+
+    	
+    	if(dto.getFicnic_info()!=null) {
+    		String[] infoList = dto.getFicnic_info().split(",");
+        	cnt=0;
+        	for(String info : infoList) {
+        		if(cnt%2==0) {
+        			res+=info+",";	
+        		}else{
+        			res+=info;
+        			if(cnt!= infoList.length-1) res+="★";
+        		}
+        		cnt++;	
+        	}
+    	}
+    	dto.setFicnic_info(res);
     	
     	if(this.dao.modifyFicnic(dto,upload_list)>0) {
     		out.println("<script>location.href='"+mRequest.getContextPath()+"/admin/ficnic/ficnic_list.do'</script>");
