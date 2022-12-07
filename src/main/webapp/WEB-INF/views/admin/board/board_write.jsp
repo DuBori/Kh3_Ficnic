@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
 <script type="text/javascript">$("#header .navbar .nav-item:nth-child(7)").addClass("active");</script>
 
@@ -310,8 +308,8 @@
 
 <div class="d-flex mt-2 input-form-button">
 	<div class="col-lg text-center">
-		<c:if test="${!empty m }"><a href="<%=request.getContextPath()%>/admin/board/board_delete.do?board_no=${Cont.getBoard_no()}" class="btn btn-danger btn-lg m-2" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a></c:if>
-		<a href="<%=request.getContextPath()%>/admin/board/board_list.do?keyword=${param.keyword}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
+		<c:if test="${!empty m }"><a href="${path}/admin/board/board_delete.do?board_no=${Cont.getBoard_no()}" class="btn btn-danger btn-lg m-2" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a></c:if>
+		<a href="${path}/admin/board/board_list.do?keyword=${param.keyword}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
 		<button type="submit" class="btn btn-primary btn-lg m-2"><c:choose><c:when test="${!empty m}"><i class="fa fa-save"></i> 수정하기</c:when><c:otherwise><i class="fa fa-pencil"></i> 등록하기</c:otherwise></c:choose></button>
 	</div>
 </div>

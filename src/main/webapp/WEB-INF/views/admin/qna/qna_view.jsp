@@ -30,7 +30,7 @@ $(function() {
 			type : "post",
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			datatype : "text",
-			url : "<%=request.getContextPath()%>/admin/qna/qna_reply_ok.do",
+			url : "${path}/admin/qna/qna_reply_ok.do",
 			data : {
 					qna_no : get_qna_no,
 					comment_content : get_comment_content,
@@ -86,7 +86,7 @@ $(function() {
 			type : "post",
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			datatype : "text",
-			url : "<%=request.getContextPath()%>/admin/qna/comment_delete.do",
+			url : "${path}/admin/qna/comment_delete.do",
 			data : {
 					comment_no : comment_no
 			},
@@ -151,7 +151,7 @@ $(function() {
                                 <div class="row align-items-center">
                                 	<div class="col-auto pb-1 pr-0">
 					                    <c:choose>
-					                    <c:when test="${!empty fdto.getFicnic_photo1() }"><img src="<%=request.getContextPath()%>${fdto.getFicnic_photo1()}" alt="" /></c:when>
+					                    <c:when test="${!empty fdto.getFicnic_photo1() }"><img src="${path}${fdto.getFicnic_photo1()}" alt="" /></c:when>
 					                    <c:otherwise><span class="noimg">no img</span></c:otherwise>
 					                    </c:choose>
                                 	</div>
@@ -191,7 +191,7 @@ $(function() {
                             <label>첨부파일 1</label>
                             <div class="jf-input">
                                 <div class="row">
-                                    <div class="col pt-1 pb-2"><img src="<%=request.getContextPath()%>${dto.qna_file1}" style="max-width: 100%;" alt="" /></div>
+                                    <div class="col pt-1 pb-2"><img src="${path}${dto.qna_file1}" style="max-width: 100%;" alt="" /></div>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +202,7 @@ $(function() {
                             <label>첨부파일 2</label>
                             <div class="jf-input">
                                 <div class="row">
-                                    <div class="col pt-1 pb-2"><img src="<%=request.getContextPath()%>${dto.qna_file2}" style="max-width: 100%;" alt="" /></div>
+                                    <div class="col pt-1 pb-2"><img src="${path}${dto.qna_file2}" style="max-width: 100%;" alt="" /></div>
                                 </div>
                             </div>
                         </div>

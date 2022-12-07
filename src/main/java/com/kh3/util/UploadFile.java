@@ -43,12 +43,15 @@ public class UploadFile {
     
                     // 업로드 완료 리스트에 추가
                     uploadList.add(thisFolder + uploadFileName);
-                    count++;
     
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
+            }else{
+                uploadList.add("");
             }
+
+            count++;
         }
 
         return uploadList;

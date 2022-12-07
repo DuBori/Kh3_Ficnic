@@ -24,7 +24,7 @@
                 <h5><i class="fa fa-phone"></i> 피크닉에게 문의하기</h5>
                 <div>운영시간<br />평일 10:00 ~ 17:00  점심 13:00 ~ 14:00</div>
                 <div>
-                    <a href="#">자주묻는 질문</a>
+                    <a href="${path}/board/board_list.do?bbs_id=faq">자주묻는 질문</a>
                     <a href="#">1:1문의</a>
                 </div>
             </div>
