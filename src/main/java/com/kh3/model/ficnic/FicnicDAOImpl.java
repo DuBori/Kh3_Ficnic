@@ -62,25 +62,24 @@ public class FicnicDAOImpl implements FicnicDAO {
 		/* 이미지가 저장된 만큼 dto 설정*/
 		int size = upload_list.size();
 		for(int i=1; i<=size;i++) {
-			
 			switch (i) {			
-			case 1:
-				dto.setFicnic_photo1(upload_list.get(0));
-				break;
-			case 2:
-				dto.setFicnic_photo2(upload_list.get(1));
-				break;
-			case 3:
-				dto.setFicnic_photo3(upload_list.get(2));
-				break;
-			case 4:
-				dto.setFicnic_photo4(upload_list.get(3));
-				break;
-			case 5:
-				dto.setFicnic_photo5(upload_list.get(4));
-				break;
-			default:
-				break;
+				case 1:
+					dto.setFicnic_photo1(upload_list.get(0));
+					break;
+				case 2:
+					dto.setFicnic_photo2(upload_list.get(1));
+					break;
+				case 3:
+					dto.setFicnic_photo3(upload_list.get(2));
+					break;
+				case 4:
+					dto.setFicnic_photo4(upload_list.get(3));
+					break;
+				case 5:
+					dto.setFicnic_photo5(upload_list.get(4));
+					break;
+				default:
+					break;
 			}
 		}
 		
@@ -91,8 +90,12 @@ public class FicnicDAOImpl implements FicnicDAO {
 	/* 피크닉 상품 삭제 */
 	@Override
 	public int deleteFicnic(int no) {
-		
 		return this.sqlSession.delete("adminFicnicDelete", no);
+	}
+	/* 피크닉 상품 삭제 후 번호 정렬*/
+	@Override
+	public void updateSeq(int no) {
+		this.sqlSession.update("adminFicnicDeleteUpdate",no);	
 	}
 
 
