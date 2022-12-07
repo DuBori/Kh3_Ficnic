@@ -9,19 +9,16 @@
 			 $("input[name=ficnic_category_no]").val($(this).find("option:selected").data("sub"));
 		});
 		$("#addBtn").on("click",function(){
-			$("#ficnic_div").append("<div class=\"row form mb-5 view-limit\"><div class=\"form-group col-sm\"><label for=\"goods_ea_total\">피크닉 타이틀</label><input name=\"ficnic_info\" ><label for=\"goods_ea_total\">피크닉 내용</label><textarea name=\"ficnic_info\"rows=\"10\" cols=\"80\"></textarea></div></div>");	
+			$("#ficnic_div").append("<div class=\"row form mb-5 view-limit\"><div class=\"form-group col-sm\"><label for=\"goods_ea_total\">피크닉 타이틀</label><input name=\"ficnic_info\" ><label for=\"goods_ea_total\">피크닉 내용</label><textarea name=\"ficnic_info\"rows=\"10\" cols=\"80\"></textarea></div><input type=\"button\" class=\"delbtn\" value=\"-\"></div>");	
 		});
 		$("#optionBtn").on("click",function(){
-			$("#optionDiv").append("<div class=\"row form mb-1 view-limit\"><div class=\"form-group col-sm\"><label for=\"goods_ea_total\">옵션 타이틀</label><input type=\"text\" name=\"ficnic_option_title\" class=\"form-control text-center w-20\"><label for=\"goods_ea_total\">옵션 가격</label><input type=\"text\" name=\"ficnic_option_price\" class=\"form-control text-center w-20\" >원</div></div>");	
+			$("#optionDiv").append("<div class=\"row form mb-1 view-limit\"><div class=\"form-group col-sm\"><label for=\"goods_ea_total\">옵션 타이틀</label><input type=\"text\" name=\"ficnic_option_title\" class=\"form-control text-center w-20\"><label for=\"goods_ea_total\">옵션 가격</label><input type=\"text\" name=\"ficnic_option_price\" class=\"form-control text-center w-20\" >원</div><input type=\"button\" class=\"delbtn\" value=\"-\"></div>");	
 		});
-		
-		$("#submitbtn").on("click",function(){
-			 $('form[name="ficnic_form"]').serialize();
-			 $('form[name="ficnic_form"]').submit();
+		$(document).on("click",".delbtn", function(){
+			
+			$(this).parent().remove();
 		});
-		
-		
-		
+	
 	});
 </script>
 <c:if test="${!empty m }">
@@ -109,17 +106,17 @@
 		                          <label for="goods_name"><span>*</span> 피크닉 이름</label>
 		                          <input type="text" name="ficnic_name" id="goods_name" value="${name }" class="form-control">
 		                      </div>
-		                      <c:if test="${!empty m and fdto.getFicnic_sale_price() ne 0}">
-			                      <div class="w-100"></div>
-			                      <div class="form-group col-sm">
-			                          <label for="goods_in_price">설정 판매가</label>
-			                          <input type="text" name="ficnic_market_price" id="goods_in_price" value="${fdto.getFicnic_sale_price()}"  class="form-control text-right w-40" onkeydown="NumberInput(this);">원
-			                      </div>
-		                      </c:if>
+		                     
+		                      <div class="w-100"></div>
+		                      <div class="form-group col-sm">
+		                          <label for="goods_in_price">매장가</label>
+		                          <input type="text" name="ficnic_market_price" id="goods_in_price" value="${fdto.getFicnic_market_price()}"  class="form-control text-right w-40" onkeydown="NumberInput(this);">원
+		                      </div>
+		                     
 		                      <div class="w-100"></div>
 		                      <div class="form-group col-sm">
 		                          <label for="goods_in_price">소비자가</label>
-		                          <input type="text" name="ficnic_sale_price" id="goods_in_price"  class="form-control text-right w-40" onkeydown="NumberInput(this);" required="required">원
+		                          <input type="text" name="ficnic_sale_price" id="goods_in_price"  value="${fdto.getFicnic_sale_price() }" class="form-control text-right w-40" onkeydown="NumberInput(this);" required="required">원
 		                      </div>
 		                  
 						 
@@ -145,6 +142,7 @@
 				                              <label for="goods_ea_total">옵션 가격</label>
 				                              <input name="ficnic_option_price" value="${option.price}"  class="form-control text-center w-20" >원
 				                          </div>
+				                          <input type="button" class="delbtn" value="-" >
 								  		</div>		
 							  		</c:forEach>
 							  </c:if>
@@ -158,6 +156,7 @@
 					                              <label for="goods_ea_total">옵션 가격</label>
 					                              <input  name="ficnic_option_price" value="${option.price}"  class="form-control text-center w-20" >원
 					                          </div>
+					                          <input type="button" class="delbtn" value="-" >
 									  		</div>
 								  	</c:forEach>
 							  </c:if>
@@ -217,6 +216,7 @@
 					                              <label for="goods_ea_total">피크닉 내용</label>		                
 					                              <textarea name="ficnic_info"rows="10" cols="80">${info.cont}</textarea>     
 					                          </div>
+					                          <input type="button" class="delbtn" value="-" >
 			                      		</div>		                      					                      	
 			                      	</c:forEach>
 		                      </c:if>
@@ -230,6 +230,7 @@
 			                              <label for="goods_ea_total">피크닉 내용</label>		                
 			                              <textarea name="ficnic_info"rows="10" cols="80"  ></textarea>     
 			                          </div>
+			                          <input type="button" class="delbtn" value="-">
 			                      </div>		                      
 		                      </c:if>
 
@@ -320,7 +321,7 @@
 						    <div class="col-lg-3 pl-0 ml-0">
 						            </div>
 						    <div class="col-lg-6 text-center">
-								<button type="button" class="btn btn-primary btn-lg" id="submitbtn" ><i class="fa fa-pencil"></i> ${title}하기</button>    
+								<button type="submit" class="btn btn-primary btn-lg" id="submitbtn" ><i class="fa fa-pencil"></i> ${title}하기</button>    
 							</div>
 						    <div class="col-lg-3 text-right pr-0 mr-0">
 						    	<a href="<%=request.getContextPath()%>/admin/ficnic/ficnic_list.do" class="btn btn-secondary btn-lg"><i class="fa fa-bars"></i> 목록보기</a>
