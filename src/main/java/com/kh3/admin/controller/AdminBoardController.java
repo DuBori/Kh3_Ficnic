@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -15,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh3.model.board.BoardCategoryDAO;
+import com.kh3.model.board.BoardCategoryDTO;
 import com.kh3.model.board.BoardConfDAO;
 import com.kh3.model.board.BoardConfDTO;
 import com.kh3.util.PageDTO;
@@ -26,6 +29,8 @@ public class AdminBoardController {
     @Inject
     private BoardConfDAO board_ConfDao;
 
+    @Inject
+    private BoardCategoryDAO bcate_dao;
 
 
     // 한 페이지당 보여질 게시물의 수
@@ -149,5 +154,66 @@ public class AdminBoardController {
             out.println("<script>alert('게시판 삭제 실패'); history.back();</script>");
         }
     }
+
+
+
+    // 게시판 카테고리 목록
+    @RequestMapping("admin/board/board_category.do")
+    public String board_category(@RequestParam("board_id") String board_id, Model model) {
+        List<BoardCategoryDTO> list = this.bcate_dao.getBoardCategoryList(board_id);
+        model.addAttribute("bcate", list);
+
+        return "/admin/board/board_category";
+    }
+
+
+    // 게시판 카테고리 수정
+    @RequestMapping("admin/board/board_category_modify.do")
+    public void bcate_modify(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
+
+        String board_id = request.getParameter("board_id");
+        String[] bcate_no = request.getParameterValues("bcate_no[]");
+        String[] bcate_name = request.getParameterValues("bcate_name[]");
+
+        for(int i=0; i<bcate_no.length; i++) {
+            bcate_dao.boardCategoryModify(board_id, bcate_no[i], i+1, bcate_name[i]);
+        }
+
+        out.println("<script>location.href='board_category.do?board_id="+board_id+"';</script>");
+    }
+
+
+    // 게시판 카테고리 추가
+    @RequestMapping("admin/board/board_category_write.do")
+    public void bcate_write(@RequestParam("board_id") String board_id, @RequestParam("bcate_name") String bcate_name, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
+
+        int check = this.bcate_dao.boardCategoryWrite(board_id, bcate_name);
+        if(check > 0){
+            out.println("<script>location.href='board_category.do?board_id="+board_id+"';</script>");
+        }else{
+            out.println("<script>alert('게시판 카테고리 등록 중 에러가 발생하였습니다.'); history.back();</script>");
+        }
+    }
+
+
+    // 게시판 카테고리 삭제
+    @RequestMapping("admin/board/board_category_delete.do")
+    public void bcate_delete(@RequestParam("board_id") String board_id, @RequestParam("bcate_no") int bcate_no, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
+
+        int check = this.bcate_dao.boardCategoryDelete(board_id, bcate_no);
+        if(check > 0){
+            this.bcate_dao.boardCategorySeqUpdate(board_id, bcate_no);
+            out.println("<script>location.href='board_category.do?board_id="+board_id+"';</script>");
+        }else{
+            out.println("<script>alert('게시판 카테고리 삭제 중 에러가 발생하였습니다.'); history.back();</script>");
+        }
+    }
+
 
 }

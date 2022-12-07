@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
 <script type="text/javascript">
 $("#header .navbar .nav-item:nth-child(3)").addClass("active");
@@ -23,7 +21,7 @@ $("#header .navbar .nav-item:nth-child(3)").addClass("active");
 
 
 
-<form name="form_input" method="post" action="<%=request.getContextPath() %>/admin/member/member_modifyOk.do?no=${dto.getMember_no()}" >
+<form name="form_input" method="post" action="${path}/admin/member/member_modifyOk.do?no=${dto.getMember_no()}" >
 <input type="hidden" name="member_pw" value="${dto.getMember_pw()}" />
 <input type="hidden" name="member_point" value="${dto.getMember_point()}" />
 <div class="page-cont">
@@ -97,8 +95,8 @@ $("#header .navbar .nav-item:nth-child(3)").addClass("active");
 
 <div class="d-flex mt-2 input-form-button">
     <div class="col-lg text-center">
-        <a href="<%=request.getContextPath()%>/admin/member/member_delete.do?no=${dto.getMember_no()}" class="btn btn-danger btn-lg m-2" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
-        <a href="<%=request.getContextPath()%>/admin/member/member_list.do?search_type=${search_type}&search_name=${search_name}&search_id=${search_id}&search_email=${search_email}&search_phone=${search_phone}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
+        <a href="member_delete.do?no=${dto.getMember_no()}" class="btn btn-danger btn-lg m-2" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+        <a href="member_list.do?search_type=${search_type}&search_name=${search_name}&search_id=${search_id}&search_email=${search_email}&search_phone=${search_phone}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
         <button type="submit" class="btn btn-primary btn-lg m-2"><i class="fa fa-save"></i> 수정하기</button>
     </div>
 </div>

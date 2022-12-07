@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
 <script type="text/javascript">$("#header .navbar .nav-item:nth-child(6)").addClass("active");</script>
 
@@ -22,7 +20,7 @@
         <div class="col-lg">
             <div class="card">
                 <div class="card-body px-5 pt-4 pb-3">
-                    <form name="search_form" method="get" action="<%=request.getContextPath()%>/admin/review/review_list.do" class="row py-2 px-3">
+                    <form name="search_form" method="get" action="${path}/admin/review/review_list.do" class="row py-2 px-3">
                     <div class="row justify-content-center">
                     	<div class="col-lg-9">
                     		<div class="row justify-content-center">
@@ -54,7 +52,7 @@
                     	</div>
                         <div class="search-form-button col-lg-auto text-center">
                             <button type="submit" class="btn btn-secondary mb-2"><i class="fa fa-search"></i> 검색하기</button>
-                            <a href="<%=request.getContextPath()%>/admin/review/review_list.do" class="btn btn-outline-secondary ml-1 mb-2"><i class="fa fa-refresh"></i> 초기화</a>
+                            <a href="${path}/admin/review/review_list.do" class="btn btn-outline-secondary ml-1 mb-2"><i class="fa fa-refresh"></i> 초기화</a>
                         </div>
                     </div>
                     </form>
@@ -95,9 +93,9 @@
 							<c:set var="result_writer" value="<span class=\"search\">${search_writer}</span>"></c:set>
                             <tr>
                                 <td ${showLink} class="py-4 table-list-hide">${dto.getReview_no()}</td>
-								<td ${showLink}>
+								<td class="photo" ${showLink}>
 				                    <c:choose>
-				                    <c:when test="${!empty dto.getReview_photo1() }"><img src="<%=request.getContextPath()%>${dto.getReview_photo1()}" alt="" /></c:when>
+				                    <c:when test="${!empty dto.getReview_photo1() }"><img src="${path}${dto.getReview_photo1()}" alt="" /></c:when>
 				                    <c:otherwise><span class="noimg">no img</span></c:otherwise>
 				                    </c:choose>
 								</td>
@@ -110,8 +108,8 @@
                                 </td>
 								<td ${showLink} class="table-list-hide-mob eng">${dto.review_date.substring(0,10)}<br />${dto.review_date.substring(11)}</td>
                                 <td class="table-list-hide-mob">
-                                    <a href="<%=request.getContextPath()%>/admin/review/review_modify.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
-                                    <a href="<%=request.getContextPath()%>/admin/review/review_delete.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
+                                    <a href="${path}/admin/review/review_modify.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
+                                    <a href="${path}/admin/review/review_delete.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
                                 </td>
                             </tr>
                         	</c:forEach>

@@ -15,7 +15,7 @@
 	position: relative;
 	display: flex;
 	width: 100%;
-	height: 150px;
+	height: 120px;
 	border-radius: 12px;
 	align-items: flex-end;
 	padding: 10px 15px;
@@ -59,12 +59,39 @@
 }
 
 .category-list ul li a:hover {
-	font-size: 24px;
-	line-height: 30px;
+	font-size: 22px;
+	line-height: 28px;
 }
 .category-list ul li a:hover .cate-overlay {
 	opacity: 0;
 }
+
+
+@media (min-width: 992px) {
+}
+
+@media (max-width: 992px) {
+	.category-list ul li a {
+		height: 80px;
+		padding: 8px 12px;
+	}
+}
+
+@media (max-width: 520px) {
+	.category-list ul {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 10px;
+	}
+}
+
+
+
+
+
+
+
+
+
 
 
 

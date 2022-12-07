@@ -1,18 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../layout/layout_header.jsp" %>
 
+<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_board.css" />
 
-<div class="contents w1150">
+
+
+<%@ include file="../../layout/layout_csmenu.jsp" %>
+
+
+
+<div class="contents w1100 board-list">
 
 
 
 <!-- 게시판 보기 권한  -->
-<c:set var="level_list" value="${boardConfig.getBoard_level_list() }"/>
+<c:set var="level_list" value="${boardConfig.getBoard_level_list()}"/>
 
 <!-- 게시물 보기 권한 -->
-<c:set  var="level_view" value="${boardConfig.getBoard_level_view() }"/>
+<c:set var="level_view" value="${boardConfig.getBoard_level_view()}"/>
 <c:choose>
 	<c:when test="${level_view eq 'null'}">
 		<c:set var="level" value="모든"/>
@@ -26,16 +31,6 @@
 </c:choose>
 
 
-<div class="page-info row mb-3">
-    <div class="d-flex align-items-center justify-content-between">
-        <h2>${boardConfig.getBoard_name()}</h2>
-        <ol class="m-0 p-2">
-        	<li>게시판</li>
-            <li><b>${boardConfig.getBoard_name()}</b></li>
-        </ol>
-    </div>
-</div>
-
 <!-- Content 시작부 -->
 <c:choose>
 	<c:when test="${level_list ne 'null' and empty session_id  }">
@@ -46,11 +41,7 @@
 	</c:when>
 	<c:otherwise>
 		<div class="page-cont" align="center">
-		
-			<div>
-				${boardConfig.getBoard_id()} &nbsp; >${boardConfig.getBoard_id()}<br>
-			</div>
-		
+
 			<!-- 해당 게시글 리스트 출력부  -->
 			<table class="table-list mb-2" border="1">
 		      <thead>
@@ -70,17 +61,17 @@
 				<c:if test="${!empty dto.getBdata_file4()}"><c:set var="file4" value="📷"/></c:if>
 				
 					<tr>
-						<td><c:if test="${dto.getBdata_use_notice() eq 'Y' }">공지🔔</c:if><c:if test="${dto.getBdata_use_notice() ne 'Y' }">${dto.getBdata_no() }</c:if></td>
+						<td><c:if test="${dto.getBdata_use_notice() eq 'Y' }">공지🔔</c:if><c:if test="${dto.getBdata_use_notice() ne 'Y' }">${dto.getBdata_no()}</c:if></td>
 						<c:if test="${dto.getBdata_use_secret() eq 'Y' }">
 							<td>🔒비밀글 입니다.</td>
 						</c:if>
 						<c:if test="${dto.getBdata_use_secret() eq 'N' or session_id eq 'admin'}">
-							<td><a href="<%=request.getContextPath()%>/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">[${level}]회원 ${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
+							<td><a href="<%=request.getContextPath()%>/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}">[${level}]회원 ${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
 						</c:if>
 						
-						<td>${dto.getBdata_writer_name() }</td>
-						<td>${dto.getBdata_date().substring(0,10) }</td>
-						<td>${dto.getBdata_hit() }</td>
+						<td>${dto.getBdata_writer_name()}</td>
+						<td>${dto.getBdata_date().substring(0,10)}</td>
+						<td>${dto.getBdata_hit()}</td>
 					
 					</tr>
 				</c:forEach>
