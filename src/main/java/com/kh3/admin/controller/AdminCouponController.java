@@ -156,31 +156,22 @@ public class AdminCouponController {
         if(dto.getCoupon_date_type().equals("after")) {
         	dto.setCoupon_date_value(Integer.parseInt(coupon_date_valueCheck));
         }
-        System.out.println("값111111111111111111111111111111111111111");
-        String value = "";
-        String[] category = dto.getCoupon_category_value().split(",");
-        System.out.println("값222222222222222222222222222222222222222" + dto.getCoupon_category_value());
-        for(int i = 0; i < category.length; i++) {
-        	value += category[i]+"★";
-        	System.out.println("값33333333333333333333333333333333333333333");
+        if(dto.getCoupon_price_type().equals("cart")) {
+        	dto.setCoupon_use_value("null");
+        }else {
+        	System.out.println("값111111111111111111111111111111111111111");
+        	String value = "";
+        	String[] category = dto.getCoupon_category_value().split(",");
+        	System.out.println("값222222222222222222222222222222222222222" + dto.getCoupon_category_value());
+        	for(int i = 0; i < category.length; i++) {
+        		value += category[i]+"★";
+        		System.out.println("값33333333333333333333333333333333333333333");
+        	}
+        	dto.setCoupon_use_value(value);
         }
-        System.out.println("값=============================1"+dto.getCoupon_no());
-        System.out.println("값=============================2"+dto.getCoupon_name());
-        System.out.println("값=============================3"+dto.getCoupon_use_type());
-        System.out.println("값=============================4"+dto.getCoupon_use_value());
-        System.out.println("값=============================5"+dto.getCoupon_price());
-        System.out.println("값=============================6"+dto.getCoupon_price_type());
-        System.out.println("값=============================7"+dto.getCoupon_price_over());
-        System.out.println("값=============================8"+dto.getCoupon_price_max());
-        System.out.println("값=============================9"+dto.getCoupon_date_type());
-        System.out.println("값=============================10"+dto.getCoupon_date_value());//이거 0 얘다
-        System.out.println("값=============================11"+dto.getCoupon_start_date());
-        System.out.println("값=============================12"+dto.getCoupon_end_date());
-        System.out.println("값=============================13"+dto.getCoupon_max_ea());
-        System.out.println("값=============================14"+dto.getCoupon_down_ea());	//0
-        System.out.println("값=============================15"+dto.getCoupon_use_ea());	//0
         
-        dto.setCoupon_use_value(value);
+        	
+        System.out.println("+++++++++++++++" + dto.getCoupon_category_value());
         System.out.println("값5555555555555555555555555555555555555555555555");
         int check = this.dao.couponModify(dto);
         System.out.println("값666666666666666666666666666666666666666666666");
