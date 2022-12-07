@@ -6,7 +6,7 @@
 
     <!-- #footer // START -->
     <footer id="footer">
-        <div class="f-wrap w1150">
+        <div class="f-wrap w1100">
             <div class="fw-info">
                 <p><img src="${path}/resources/site/images/site_logo.png" alt="Ficnic" /></p>
                 <h4>Ficnic</h4>

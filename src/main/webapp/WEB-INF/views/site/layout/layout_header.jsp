@@ -69,7 +69,7 @@
 
     <!-- #header // START -->
     <header id="header" class="fixed-top">
-        <nav class="navbar navbar-expand-lg w1150">
+        <nav class="navbar navbar-expand-lg w1100">
             <h1 class="navbar-brand"><a href="${path}/main.do"><img src="${path}/resources/site/images/site_logo.png" alt="Ficnic" /> Ficnic</a></h1>
 
             <div class="navbar-collapse">
