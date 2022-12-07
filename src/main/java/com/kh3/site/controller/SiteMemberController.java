@@ -67,8 +67,8 @@ public class SiteMemberController {
 
 		} else {
 			out.println("<script>");
-			out.println("alert('로그인 성공!')");
-			out.println("location.href='main.do'");
+			out.println("alert('환영합니다.')");
+			out.println("location.href='../main.do'");
 			out.println("</script>");
 		}
 
@@ -183,7 +183,18 @@ public class SiteMemberController {
 	
 	 		return "site/member/member_join";
 	 	}
-
+	 	
+		/*
+		 * // 아이디 중복 체크
+		 * 
+		 * @RequestMapping("member/memberIdCheck.do")
+		 * 
+		 * @ResponseBody public int checkId(@RequestParam("paramId") String paramId) {
+		 * return this.dao.checkId(paramId); }
+		 */
+	    
+	 	
+	    
 	 	// 회원가입
 	    @RequestMapping("member/member_join_ok.do")
 	    public void joinOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto, HttpServletResponse response) throws IOException {
@@ -200,37 +211,49 @@ public class SiteMemberController {
 				List<ObjectError> list = result.getAllErrors();
 				
 				for (ObjectError error : list) {
-					if(error.getDefaultMessage().equals("idchk")) {	
-						out.println("<script>alert('사용 할수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); history.back();</script>"); break;
-					}else if(error.getDefaultMessage().equals("id")) {
+					
+					if(error.getDefaultMessage().equals("id")) {
+						System.out.println("id오류");
 						out.println("<script>alert('아이디를 6자 이상 입력해주세요.'); history.back();</script>"); break;
 					}else if(error.getDefaultMessage().equals("name")) {
+						
+						System.out.println("name오류");
 						out.println("<script>alert('이름을 2~8자 사이로 입력해주세요.'); history.back();</script>"); break;
 					}else if(error.getDefaultMessage().equals("pw")) {
+						System.out.println("pw오류");
 						out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>"); break;
 					}else if(error.getDefaultMessage().equals("email")) {
+						System.out.println("email오류");
 						out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
 					}else if(error.getDefaultMessage().equals("phone")) {
+						System.out.println("phone오류");
 						out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
-					}
-				}
-	    	}else {		// 이상 없을 때 실행
-	    		int check = this.dao.writeOkMember(dto);
+					} 
+				} 
+	    	}else {				// 이상 없을 때 실행
+	    		int check = this.dao.joinMember(dto);
 	    		if (check > 0) {
 	    			// 회원 가입 포인트 적립
-	    			this.pdao.joinPoint(pdto);
-	    			out.println("<script>alert('회원 등록 되었습니다.'); location.href='member_list.do';</script>");
+					 this.pdao.joinPoint(pdto); 
+	    			out.println("<script>alert('회원 등록 되었습니다.'); location.href='../main.do'; </script>");
 	    		} else {
 	    			out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
 	    		}
 	    	}
+	    		
+			// 중복 찾기
+			int check = this.dao.idCheck(dto);
+			
+			if (check == 1) { // 중복인 경우
+				out.println("<script>");
+				out.println("alert('중복 아이디입니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+			}
+			
+			
+			
 	    }
 
-	    // 아이디 중복 체크
-	    @RequestMapping("member/member_check.do")
-	    @ResponseBody
-	    public int checkId(@RequestParam("paramId") String paramId) {
-	    	return this.dao.checkId(paramId);
-	    }
-	    
+
 }

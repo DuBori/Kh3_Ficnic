@@ -123,12 +123,24 @@ public class MemberDAOImpl implements MemberDAO {
 		return this.sqlSession.selectOne("siteMemberFindPwAll", dto);
 	}
 
-
 	// 결과창 출력할 비밀번호
 	@Override
 	public String findPw(MemberDTO dto) {
 		return this.sqlSession.selectOne("siteMemberFindPwEnd", dto);
 	}
+
+
+	@Override
+	public int idCheck(MemberDTO dto) {
+		return this.sqlSession.selectOne("siteMemberCheck", dto);
+	}
+
+
+	@Override
+	public int joinMember(MemberDTO dto) {
+		return this.sqlSession.insert("siteMemberJoin", dto);
+	}
+
 
 
 }
