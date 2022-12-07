@@ -9,32 +9,26 @@
 
     <!-- 게시판 설정 목록 총 갯수 -->
     <select id="adminBoardConfTotal" parameterType="java.util.Map" resultType="int">
-        select count(*) from board_config
-        <choose>
-            <when test="keyword != ''"> where board_name like '%' || #{keyword} || '%'</when>
-        </choose>
+        select count(*) from board_config      
+            <if test="keyword != ''"> where board_name like '%' || #{keyword} || '%'</if>
     </select>
 
 
     <!-- 게시판 설정 목록 -->
     <select id="adminBoardConfList" parameterType="java.util.Map" resultType="boardConfDTO">
+        select * from
+                        (select row_number() over(order by board_no desc) rnum,
         <choose>
             <when test="keyword != ''">
-                <![CDATA[
-                    select * from
-                        (select row_number() over(order by board_no desc) rnum, b.* from board_config b where board_name like '%' || #{keyword} || '%')
-                        where rnum >= #{startNo} and rnum <= #{endNo}
-                ]]>
+                     b.* from board_config b where board_name like '%' || #{keyword} || '%')
             </when>
-
             <otherwise>
-                <![CDATA[
-                    select * from
-                        (select row_number() over(order by board_no desc) rnum, b.* from board_config b)
-                        where rnum >= #{startNo} and rnum <= #{endNo}
-                ]]>
+                     b.* from board_config b)
             </otherwise>
         </choose>
+        <![CDATA[
+                     where rnum >= #{startNo} and rnum <= #{endNo}
+        ]]>
     </select>
 
 
@@ -58,8 +52,8 @@
         #{board_use_file2},
         #{board_use_file3},
         #{board_use_file4},
-        #{board_level_list}
-        ,#{board_level_view},
+        #{board_level_list},
+        #{board_level_view},
         #{board_level_write},
         #{board_level_comment},
         #{board_level_notice},
