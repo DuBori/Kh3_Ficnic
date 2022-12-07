@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
 <script type="text/javascript">$("#header .navbar .nav-item:nth-child(1)").addClass("active");</script>
 
@@ -25,7 +23,7 @@
             <div class="card border input-form">
             	<form name="form_sort" method="post" action="${path}/admin/ficnic/category_rank_ok.do" onsubmit="return confirm('현재 화면에 보이는 순서대로 카테고리가 저장됩니다.\n오른쪽 입력폼에 입력된 내용은 사라집니다.\n\n카테고리 위치를 저장하시겠습니까?');">
             	<input type="hidden" name="ps_ctid" value="" />
-            	<input type="hidden" name="ps_project" value="<%=request.getContextPath()%>" />
+            	<input type="hidden" name="ps_project" value="${path}" />
                 <div class="card-body p-4">
 					<ul id="sort-list" class="folder-tree">
 						<c:forEach var="cate" items="${clist}">
@@ -143,8 +141,8 @@
 	                            <div class="jf-input">
 	                                <div class="row">
 	                                    <div class="col pb-1">
-	                                    	<input type="file" name="category_image" id="category_image" class="form-control" />
-	                                    	<input type="hidden" name="ori_category_image" value="" accept="image/jpeg, image/png, image/gif" />
+	                                    	<input type="file" name="category_image" id="category_image" class="form-control" accept="image/jpeg, image/png, image/gif" />
+	                                    	<input type="hidden" name="ori_category_image" value="" />
 	                                    	<div></div>
 	                                    </div>
 	                                </div>

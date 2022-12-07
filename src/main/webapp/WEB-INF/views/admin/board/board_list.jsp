@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
 <script type="text/javascript">$("#header .navbar .nav-item:nth-child(7)").addClass("active");</script>
 
@@ -59,7 +57,7 @@
                             <tr>
                                 <td class="py-4 table-list-hide">${dto.getBoard_no()}</td>
                                 <td class="eng table-list-hide-mob">${dto.getBoard_id()}</td>
-                                <td><a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBoard_name()}</a></td>
+                                <td><a href="${path}/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBoard_name()}</a></td>
                                 <td class="text-center table-list-hide">
                                     <div class="d-flex flex-wrap justify-content-center">
                                         <div class="col-auto my-1"><b>목록보기 </b>(${level_list})</div>
@@ -67,11 +65,11 @@
                                         <div class="col-auto my-1"><b>글쓰기 </b>(${level_write})</div>
                                     </div>
                                 </td>
-                                <td><a href="<%=request.getContextPath()%>/board/board_list.do?bbs_id=${dto.getBoard_id()}" class="btn btn-outline-info btn-sm" target="_blank"><i class="fa fa-link"></i> 게시판 보기</a></td>
+                                <td><a href="${path}/board/board_list.do?bbs_id=${dto.getBoard_id()}" class="btn btn-outline-info btn-sm" target="_blank"><i class="fa fa-link"></i> 게시판 보기</a></td>
                                 <td>
-                                    <a href="<%=request.getContextPath()%>/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&keyword=${keyword}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
-                                    <a href="<%=request.getContextPath()%>/admin/board/board_delete.do?board_no=${dto.getBoard_no()}&bbs_id=${dto.getBoard_id()}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
-                                    <c:if test="${dto.getBoard_use_category() eq 'Y'}"><p><button type="button" class="btn btn-outline-primary btn-sm">카테고리 관리</button></p></c:if>
+                                    <a href="${path}/admin/board/board_modify.do?board_no=${dto.getBoard_no()}&keyword=${keyword}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
+                                    <a href="${path}/admin/board/board_delete.do?board_no=${dto.getBoard_no()}&bbs_id=${dto.getBoard_id()}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
+                                    <c:if test="${dto.getBoard_use_category() eq 'Y'}"><p><button type="button" class="btn btn-outline-primary btn-sm" onclick="popWindow('${path}/admin/board/board_category.do?board_id=${dto.getBoard_id()}', '400', '600');">카테고리 관리</button></p></c:if>
                                 </td>
                             </tr>
                         	</c:forEach>
@@ -96,7 +94,7 @@
 
 <div class="row mt-2 list-bottom-util">
     <div class="col-md-4 mt-3">
-        <form name="search_form" method="get" action="<%=request.getContextPath()%>/admin/board/board_list.do">
+        <form name="search_form" method="get" action="${path}/admin/board/board_list.do">
         <div class="input-group list-search-form w-80">
             <div class="input-group-prepend">
                 <label class="input-group-text" for="keyword">게시판 이름</label>
@@ -113,8 +111,8 @@
 
     <div class="col-md-4 text-right mt-3">
         <c:choose>
-        <c:when test="${!empty keyword}"><a href="<%=request.getContextPath()%>/admin/board/board_list.do" class="btn btn-outline-secondary"><i class="fa fa-list"></i> 게시판 목록</a></c:when>
-        <c:otherwise><a href="<%=request.getContextPath()%>/admin/board/board_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 게시판 추가</a></c:otherwise>
+        <c:when test="${!empty keyword}"><a href="${path}/admin/board/board_list.do" class="btn btn-outline-secondary"><i class="fa fa-list"></i> 게시판 목록</a></c:when>
+        <c:otherwise><a href="${path}/admin/board/board_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 게시판 추가</a></c:otherwise>
         </c:choose>
     </div>
 </div>

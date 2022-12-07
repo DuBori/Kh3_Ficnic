@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="time" value="<%=System.currentTimeMillis()%>" />
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -146,9 +147,9 @@
                 </li>
                 <!-- 신규 회원가입 알림창//END -->
 
-                <li>
-                    <button type="button" class="h-ico" title="로그아웃" data-toggle="modal" data-target="#logoutModal"><i class="fa fa-power-off"></i></button>
-                </li>
+                <li><a href="${path}/" class="h-ico" target="_blank"><i class="fa fa-desktop"></i></a></li>
+
+                <li><button type="button" class="h-ico" title="로그아웃" data-toggle="modal" data-target="#logoutModal"><i class="fa fa-power-off"></i></button></li>
             </ul>
         </div>
 

@@ -9,11 +9,37 @@
 
     <!-- 게시판 카테고리 목록 -->
     <select id="adminBoardCategoryList" resultType="boardCategoryDTO">
+        select * from board_category_${value} order by bcate_rank asc
     </select>
 
 
 
+    <!-- 게시판 카테고리 등록 -->
+    <insert id="adminBoardCategoryWrite" parameterType="java.util.Map">
+        <selectKey resultType="int" keyProperty="bcate_no" order="BEFORE">
+            select max(bcate_no) from board_category_${board_id}
+        </selectKey>
+        insert into board_category_${board_id} values(#{bcate_no} + 1, #{bcate_name}, default, default, sysdate)
+    </insert>
 
 
+    <!-- 게시판 카테고리 삭제 -->
+    <delete id="adminBoardCategoryDelete" parameterType="java.util.Map">
+        delete from board_category_${board_id} where bcate_no = #{bcate_no}
+    </delete>
+
+
+    <!-- 게시판 카테고리 번호 재정의 -->
+    <update id="adminBoardCategorySeqUpdate" parameterType="java.util.Map">
+        <![CDATA[
+            update board_category_${board_id} set bcate_no = bcate_no - 1 where bcate_no > #{bcate_no}
+        ]]>
+    </update>
+
+
+    <!-- 게시판 카테고리 수정 -->
+    <update id="adminBoardCategoryModify" parameterType="java.util.Map">
+        update board_category_${board_id} set bcate_name = #{bcate_name}, bcate_rank = #{bcate_rank} where bcate_no = #{bcate_no}
+    </update>
 
 </mapper>

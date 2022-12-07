@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="layout_none" value="Y" />
 <%@ include file="../layout/layout_header.jsp" %>
 
@@ -57,7 +58,7 @@
                             <label>리뷰 사진 1</label>
                             <div class="jf-input">
                                 <div class="row">
-                                    <div class="col pt-1 pb-2"><img src="<%=request.getContextPath()%>${dto.review_photo1}" style="max-width: 100%;" alt="" /></div>
+                                    <div class="col pt-1 pb-2"><img src="${path}${dto.review_photo1}" style="max-width: 100%;" alt="" /></div>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +69,7 @@
                             <label>리뷰 사진 2</label>
                             <div class="jf-input">
                                 <div class="row">
-                                    <div class="col pt-1 pb-2"><img src="<%=request.getContextPath()%>${dto.review_photo2}" style="max-width: 100%;" alt="" /></div>
+                                    <div class="col pt-1 pb-2"><img src="${path}${dto.review_photo2}" style="max-width: 100%;" alt="" /></div>
                                 </div>
                             </div>
                         </div>
