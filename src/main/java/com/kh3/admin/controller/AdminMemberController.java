@@ -182,7 +182,6 @@ public class AdminMemberController {
     }
 
 
-
     // 회원 정보 삭제 하는 메핑
     @RequestMapping("admin/member/member_delete.do")
     public void delete(@RequestParam("no") int no, HttpServletResponse response) throws IOException {

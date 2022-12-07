@@ -48,5 +48,9 @@ public interface MemberDAO {
     
     // 결과 출력창에 비밀번호 보내기
     String findPw(MemberDTO dto);
-
+    
+    int idCheck(MemberDTO dto);
+    
+    int joinMember(MemberDTO dto);
+    
 }
