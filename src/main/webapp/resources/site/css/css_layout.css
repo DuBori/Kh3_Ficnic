@@ -51,11 +51,17 @@ span.noimg {
     font-weight: 700;
     color: #444;
 }
+#header .navbar .navbar-brand a:hover {
+    color: var(--font-color);
+}
 #header .navbar .navbar-brand img {
     height: 40px;
 }
 
-#header .navbar .navbar-search {}
+#header .navbar .navbar-search {
+    position: relative;
+    width: 100%;
+}
 #header .navbar .navbar-search input {
     width: 400px;
     height: 44px;
@@ -134,9 +140,35 @@ span.noimg {
 }
 
 @media (max-width: 992px) {
+    .navbar-collapse {
+        display: flex;
+        flex-basis: auto;
+    }
+    #header .navbar .navbar-search input {
+        width: calc(100% - 3rem);
+    }
+    #header .navbar .navmenu li:not(:first-child) {
+        display: none;
+    }
 }
 
 @media (max-width: 520px) {
+    .navbar {
+        flex-wrap: nowrap;
+    }
+    #header .navbar .navbar-brand {
+        margin-right: 0.7rem
+    }
+    #header .navbar .navbar-brand a {
+        font-size: 28px;
+        line-height: 28px;
+    }
+    #header .navbar .navbar-brand img {
+        height: 35px;
+    }
+    #header .navbar .navbar-search input {
+        width: calc(100% - 0.7rem);
+    }
 }
 
 
@@ -168,6 +200,7 @@ span.noimg {
 }
 #footer .fw-info p > img {
     height: 40px;
+    margin-top: 4px;
     margin-bottom: 7px;
 }
 #footer .fw-info h4 {
@@ -200,10 +233,10 @@ span.noimg {
 }
 #footer .fw-copy p:last-child {
     margin-bottom: 0;
-    margin-top: 15px;
+    margin-top: 10px;
     font-family: 'Lato';
-    font-size: 13px;
-    letter-spacing: 0;
+    font-size: 12px;
+    letter-spacing: 1px;
 }
 
 
@@ -218,7 +251,7 @@ span.noimg {
 #footer .fw-cs > div {
     font-size: 13px;
     color: #444;
-    margin-top: 7px;
+    margin-top: 10px;
 }
 #footer .fw-cs > div > a {
     padding: 2px 6px 4px 4px;
@@ -296,6 +329,9 @@ span.noimg {
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
+}
+
+@media (min-width: 992px) {
 }
 
 @media (max-width: 992px) {
