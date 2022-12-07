@@ -90,6 +90,50 @@ public class AdminFicnicController {
     // 피크닉 등록 처리
     @RequestMapping("admin/ficnic/ficnic_write_ok.do")
     public void ficnicWriteOk(FicnicDTO dto,MultipartHttpServletRequest mRequest ,HttpServletResponse response) throws Exception {
+    	int cnt=0;
+    	//서브 카테고리 처리
+    	String[] ficnicSub =null;
+    	if(mRequest.getParameter("ficnic_usb")!=null) {
+    		ficnicSub=mRequest.getParameter("ficnic_usb").split("/");
+    		for(String sub : ficnicSub) {
+    			switch (cnt) {
+				case 0:
+					dto.setFicnic_category_sub1(sub);
+					break;
+				case 1:
+					dto.setFicnic_category_sub2(sub);
+					break;
+				case 2:
+					dto.setFicnic_category_sub3(sub);
+					break;
+
+				default:
+					break;
+				}
+    			cnt++;
+    		}
+    	}
+    	// 들어온 구분자 ',' 처리하기
+    	if (dto.getFicnic_option_title()!=null) dto.setFicnic_option_title(dto.getFicnic_option_title().replace(",", "★"));
+    	if (dto.getFicnic_option_price()!=null) dto.setFicnic_option_price(dto.getFicnic_option_price().replace(",", "★"));
+    	if (dto.getFicnic_select_title()!=null) dto.setFicnic_select_title(dto.getFicnic_option_title().replace(",",  "★"));
+    	if (dto.getFicnic_select_price()!=null) dto.setFicnic_option_price(dto.getFicnic_option_price().replace(",","★"));
+    	String res="";
+    	if(dto.getFicnic_info()!=null) {
+    		String[] infoList = dto.getFicnic_info().split(",");
+        	cnt=0;
+        	for(String info : infoList) {
+        		if(cnt%2==0) {
+        			res+="<dt>"+info+"</dt>";	
+        		}else{
+        			res+="<dd>"+info+"</dd>";
+        			if(cnt!= infoList.length-1) res+="★";
+        		}
+        		cnt++;	
+        	}
+    	}
+    	dto.setFicnic_info(res);
+    	
     	
     	response.setContentType("text/html; charset=utf-8");
     	PrintWriter out= response.getWriter();
@@ -123,22 +167,17 @@ public class AdminFicnicController {
     	List<CategoryDTO> cList = cdao.getCategoryList();
     	
     	 String[] optionTitle = fdto.getFicnic_option_title().split("★");
-    	//String[] optionTitle = "[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)★[11세~대인] 제주고사리파스타★[10세~대인] 제주통밀당근파운드케이크".split("★");
-    	//String[] optionPrice = "30000★27000★30000".split("★");
-    	 String[] optionPrice = fdto.getFicnic_option_price().split("★");
+    	 Object[] optionPrice = fdto.getFicnic_option_price().split("★");
 		
-		//System.out.println(fdto.getFicnic_option_title());
-    	
-    	List<HashMap<String, String>> mapList = new ArrayList<HashMap<String,String>>();
+    	List<HashMap<String, Object>> mapList = new ArrayList<HashMap<String,Object>>();
     
     	for(String value : optionTitle) {
-    		HashMap<String, String> map = new HashMap<String, String>();
+    		HashMap<String, Object> map = new HashMap<String, Object>();
     		map.put("title", value);
-    		map.put("price", optionPrice[cnt]);
-    		cnt++;
+    		map.put("price", Integer.parseInt((String) optionPrice[cnt]));
     		mapList.add(map);
-    	}
-    	 
+    		cnt++;
+    	}    	 
     	model.addAttribute("clist", cList);
     	
     	model.addAttribute("fdto",fdto);
@@ -160,11 +199,11 @@ public class AdminFicnicController {
     	
         // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
     	/*  기존에 존재하는 DTO에 있는 이미지만큼 삭제해야함. */
-        String ficnic_image1 = mRequest.getParameter("ori_ficnic_image1");
-        String ficnic_image2 = mRequest.getParameter("ori_ficnic_image2");
-        String ficnic_image3 = mRequest.getParameter("ori_ficnic_image3");
-        String ficnic_image4 = mRequest.getParameter("ori_ficnic_image4");
-        String ficnic_image5 = mRequest.getParameter("ori_ficnic_image5");
+        String ficnic_image1 = mRequest.getParameter("ori_category_image1");
+        String ficnic_image2 = mRequest.getParameter("ori_category_image2");
+        String ficnic_image3 = mRequest.getParameter("ori_category_image3");
+        String ficnic_image4 = mRequest.getParameter("ori_category_image4");
+        String ficnic_image5 = mRequest.getParameter("ori_category_image5");
         
         List<String> list = new ArrayList<String>();
         list.add(ficnic_image1);
@@ -174,6 +213,7 @@ public class AdminFicnicController {
         list.add(ficnic_image5);
          
         List<String> upload_list = UploadFile.fileUpload(mRequest, ficnicFolder, ficnicSaveName);
+        
         if(upload_list.size() > 0) {   
         	for(String value : list) {     		
         		if(value != null){
@@ -201,7 +241,39 @@ public class AdminFicnicController {
     	response.setContentType("text/html; charset=utf-8");
     	PrintWriter out= response.getWriter();
     	
+        // 기존 파일 있으면 삭제 처리
+        FicnicDTO fdto =this.dao.getFicnicCont(no);
+        
+        if(fdto.getFicnic_photo1()!=null) {
+            File del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo1()));
+            if(del_pimage.exists()) del_pimage.delete();
+        	
+        }
+        if(fdto.getFicnic_photo2()!=null) {
+            File del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo2()));
+            if(del_pimage.exists()) del_pimage.delete();
+        	
+        }
+        if(fdto.getFicnic_photo3()!=null) {
+            File del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo3()));
+            if(del_pimage.exists()) del_pimage.delete();
+        	
+        }
+        if(fdto.getFicnic_photo4()!=null) {
+            File del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo4()));
+            if(del_pimage.exists()) del_pimage.delete();
+        	
+        }
+        if(fdto.getFicnic_photo5()!=null) {
+            File del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo5()));
+            if(del_pimage.exists()) del_pimage.delete();
+        	
+        }
+
+        
+        
     	if(this.dao.deleteFicnic(no)>0) {
+    		this.dao.updateSeq(no);
     		out.println("<script>location.href='"+request.getContextPath()+"/admin/ficnic/ficnic_list.do'</script>");
     	}else {
     		out.println("<script>alert('피크닉 삭제 실패'); history.back()</script>");
