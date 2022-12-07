@@ -15,7 +15,7 @@
 
 
 	<!-- 페이징 처리 -->
-<select id="SiteBoardTotal" parameterType="java.util.Map" resultType="int">
+	<select id="SiteBoardTotal" parameterType="java.util.Map" resultType="int">
         select count(*) from board_data_${bbs_id}
         <choose>
             <when test="field.equals('title') and keyword != ''">where bdata_title like '%' || #{keyword} || '%'</when>
