@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="time" value="<%=System.currentTimeMillis()%>" />
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -74,7 +75,7 @@
     <header id="header">
         <div class="navbar-header w1150">
             <div class="d-flex">
-                <h1 class="h-logo"><a href="${path}/admin/main.do"><img src="${path}/resources/admin/images/admin_logo.png" alt="Ficnic" /> Ficnic</a></h1>
+                <h1 class="h-logo"><a href="${path}/admin/main.do"><img src="${path}/resources/admin/images/admin_logo.png" alt="Ficnic" /> <span>Ficnic</span></a></h1>
                 <button type="button" class="btn btn-lg px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-toggle="collapse" data-target="#topnav-menu-content"><i class="fa fa-fw fa-bars"></i></button>
             </div>
 
@@ -146,9 +147,9 @@
                 </li>
                 <!-- 신규 회원가입 알림창//END -->
 
-                <li>
-                    <button type="button" class="h-ico" title="로그아웃" data-toggle="modal" data-target="#logoutModal"><i class="fa fa-power-off"></i></button>
-                </li>
+                <li><a href="${path}/" class="h-ico" target="_blank"><i class="fa fa-desktop"></i></a></li>
+
+                <li><button type="button" class="h-ico" title="로그아웃" data-toggle="modal" data-target="#logoutModal"><i class="fa fa-power-off"></i></button></li>
             </ul>
         </div>
 

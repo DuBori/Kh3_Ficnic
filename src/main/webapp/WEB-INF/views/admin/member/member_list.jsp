@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../layout/layout_header.jsp" %>
 <script type="text/javascript">$("#header .navbar .nav-item:nth-child(3)").addClass("active");</script>
 
@@ -22,7 +20,7 @@
         <div class="col-lg">
             <div class="card">
                 <div class="card-body px-5 pt-4 pb-3">
-                    <form name="search_form" method="get" action="<%=request.getContextPath()%>/admin/member/member_list.do" class="row py-2 px-3">
+                    <form name="search_form" method="get" action="${path}/admin/member/member_list.do" class="row py-2 px-3">
                     <div class="row justify-content-center">
                         <div class="col-lg-9">
                             <div class="row justify-content-center">
@@ -82,7 +80,7 @@
                         </div>
                         <div class="search-form-button col-lg-auto text-center">
                             <button type="submit" class="btn btn-secondary mb-2"><i class="fa fa-search"></i> 검색하기</button>
-                            <a href="<%=request.getContextPath()%>/admin/member/member_list.do" class="btn btn-outline-secondary ml-1 mb-2"><i class="fa fa-refresh"></i> 초기화</a>
+                            <a href="${path}/admin/member/member_list.do" class="btn btn-outline-secondary ml-1 mb-2"><i class="fa fa-refresh"></i> 초기화</a>
                         </div>
                     </div>
                     </form>
@@ -140,8 +138,8 @@
                                 <td ${showLink} class="eng table-list-hide"><fmt:formatNumber value="${dto.getMember_point()}" /></td>
                                 <td ${showLink} class="eng table-list-hide-mob">${dto.getMember_joindate().substring(0,10)}<br />${dto.getMember_joindate().substring(11)}</td>
                                 <td>
-                                    <a href="<%=request.getContextPath()%>/admin/member/member_modify.do?no=${dto.getMember_no()}&search_type=${search_type}&search_name=${search_name}&search_id=${search_id}&search_email=${search_email}&search_phone=${search_phone}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
-                                    <a href="<%=request.getContextPath()%>/admin/member/member_delete.do?no=${dto.getMember_no()}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
+                                    <a href="${path}/admin/member/member_modify.do?no=${dto.getMember_no()}&search_type=${search_type}&search_name=${search_name}&search_id=${search_id}&search_email=${search_email}&search_phone=${search_phone}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
+                                    <a href="${path}/admin/member/member_delete.do?no=${dto.getMember_no()}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
                                 </td>
                             </tr>
                             </c:forEach>
@@ -173,8 +171,8 @@
 
     <div class="col-md-4 text-right mt-3">
         <c:choose>
-        <c:when test="${!empty keyword}"><a href="<%=request.getContextPath()%>/admin/member/member_list.do" class="btn btn-outline-secondary"><i class="fa fa-list"></i> 회원 목록</a></c:when>
-        <c:otherwise><a href="<%=request.getContextPath()%>/admin/member/member_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 회원 추가</a></c:otherwise>
+        <c:when test="${!empty keyword}"><a href="${path}/admin/member/member_list.do" class="btn btn-outline-secondary"><i class="fa fa-list"></i> 회원 목록</a></c:when>
+        <c:otherwise><a href="${path}/admin/member/member_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 회원 추가</a></c:otherwise>
         </c:choose>
     </div>
 </div>

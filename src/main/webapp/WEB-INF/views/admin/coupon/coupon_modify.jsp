@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ include file="../layout/layout_header.jsp" %>
+<c:set var="dto" value="${Modify}" />
+<c:set var="category" value="${fn:split(category,'☆')}" />
 <script type="text/javascript">$("#header .navbar .nav-item:nth-child(4)").addClass("active");</script>
 
 
@@ -19,7 +22,7 @@
 
 
 <form name="form_input" method="post" enctype="multipart/form-data" action="<%=request.getContextPath() %>/admin/coupon/coupon_modify_ok.do">
-<input type="hidden" name="coupon_no" value="" />
+<input type="hidden" name="coupon_no" value="${dto.getCoupon_no() }" />
 <div class="page-cont">
     <div class="row">
         <div class="col-lg mb-4">
@@ -29,7 +32,7 @@
                     <div class="row form mb-5 view-limit">
                         <div class="form-group col mb-2">
                             <label for="coupon_name">쿠폰 이름</label>
-                            <input type="text" name="coupon_name" id="coupon_name" maxlength="30" class="form-control w-100" required />
+                            <input type="text" name="coupon_name" id="coupon_name" value="${dto.getCoupon_name() }" maxlength="30" class="form-control w-100" required />
                         </div>
 
                         <div class="w-100 border-bottom"></div>
@@ -37,14 +40,14 @@
                         <div class="form-group col">
                             <label for="coupon_use_type">사용 구분</label>
                             <div class="btn-group mt-2" role="group" data-toggle="buttons">
-                                <label class="btn btn-outline-secondary active" onclick="$('#category_layer, #goods_layer').collapse('hide');">
-                                    <input type="radio" name="coupon_use_type" value="cart" checked="checked" /> 장바구니
+                                <label class="btn btn-outline-secondary<c:if test="${dto.getCoupon_use_type() == 'cart'}"> active</c:if>" onclick="$('#category_layer, #goods_layer').collapse('hide');">
+                                    <input type="radio" name="coupon_use_type" value="cart"<c:if test="${dto.getCoupon_use_type() == 'cart'}"> checked="checked"</c:if> /> 장바구니
                                 </label>
-                                <label class="btn btn-outline-secondary" onclick="$('#category_layer').collapse('show'); $('#goods_layer').collapse('hide');">
-                                    <input type="radio" name="coupon_use_type" value="category" /> 카테고리
+                                <label class="btn btn-outline-secondary<c:if test="${dto.getCoupon_use_type() == 'category'}"> active</c:if>" onclick="$('#category_layer').collapse('show'); $('#goods_layer').collapse('hide');">
+                                    <input type="radio" name="coupon_use_type" value="category"<c:if test="${dto.getCoupon_use_type() == 'category'}"> checked="checked"</c:if> /> 카테고리
                                 </label>
-                                <label class="btn btn-outline-secondary" onclick="$('#goods_layer').collapse('show'); $('#category_layer').collapse('hide');">
-                                    <input type="radio" name="coupon_use_type" value="goods" /> 상품지정
+                                <label class="btn btn-outline-secondary<c:if test="${dto.getCoupon_use_type() == 'goods'}"> active</c:if>" onclick="$('#goods_layer').collapse('show'); $('#category_layer').collapse('hide');">
+                                    <input type="radio" name="coupon_use_type" value="goods"<c:if test="${dto.getCoupon_use_type() == 'goods'}"> checked="checked"</c:if> /> 상품지정
                                 </label>
                             </div>
                         </div>
@@ -58,8 +61,8 @@
                                         <div class="col pb-2">
                                             <button type="button" class="btn btn-sm btn-outline-info">카테고리 지정</button>
                                             <ul class="list-box">
-                                                <li><input type="hidden" name="coupon_use_value[]" value="1000000" />아웃도어<button type="button"><i class="fa fa-times"></i></button></li>
-                                                <li><input type="hidden" name="coupon_use_value[]" value="2000000" />피트니스<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="10000000" />아웃도어<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="15000000" />피트니스<button type="button"><i class="fa fa-times"></i></button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -76,8 +79,8 @@
                                         <div class="col pb-2">
                                             <button type="button" class="btn btn-sm btn-outline-success">상품 지정</button>
                                             <ul class="list-box">
-                                                <li><input type="hidden" name="coupon_use_value[]" value="123" />테스트 상품<button type="button"><i class="fa fa-times"></i></button></li>
-                                                <li><input type="hidden" name="coupon_use_value[]" value="456" />테2스2트2 상품<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="10000000" />테스트 상품<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="15000000" />테2스2트2 상품<button type="button"><i class="fa fa-times"></i></button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -89,7 +92,7 @@
 
                         <div class="form-group col">
                             <label for="coupon_max_ea">최대 발행 갯수</label>
-                            <input type="text" name="coupon_max_ea" id="coupon_max_ea" value="100" maxlength="11" class="form-control text-center w-15" onkeydown="NumberInput(this);" /> 개
+                            <input type="text" name="coupon_max_ea" id="coupon_max_ea" value="${dto.getCoupon_max_ea() }" maxlength="11" class="form-control text-center w-15" onkeydown="NumberInput(this);" /> 개
                         </div>
                         <div class="w-100"></div>
                     </div>
@@ -103,10 +106,10 @@
                             <div class="jf-input">
                                 <div class="row">
                                     <div class="col pb-2">
-                                        <input type="text" name="coupon_price" id="coupon_price" value="0" maxlength="11" class="form-control d-inline text-center w-30" onkeydown="NumberInput(this);" required />
+                                        <input type="text" name="coupon_price" id="coupon_price" value="${dto.getCoupon_price() }" maxlength="11" class="form-control d-inline text-center w-30" onkeydown="NumberInput(this);" required />
                                         <select id="coupon_price_type" name="coupon_price_type" class="custom-select w-25">
-                                            <option value="price">금액 (원)</option>
-                                            <option value="percent">할인률 (%)</option>
+                                            <option value="price"<c:if test="${dto.getCoupon_price_type() == 'price'}"> checked="checked"</c:if> >금액 (원)</option>
+                                            <option value="percent"<c:if test="${dto.getCoupon_price_type() == 'percent'}"> checked="checked"</c:if> >할인률 (%)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -117,11 +120,11 @@
 
                         <div class="form-group col mb-2">
                             <label for="coupon_price_over">최소 사용 금액</label>
-                            <input type="text" name="coupon_price_over" id="coupon_price_over" value="0" maxlength="11" class="form-control text-center w-30" onkeydown="NumberInput(this);" /> 원
+                            <input type="text" name="coupon_price_over" id="coupon_price_over" value="${dto.getCoupon_price_over() }" maxlength="11" class="form-control text-center w-30" onkeydown="NumberInput(this);" /> 원
                         </div>
                         <div class="form-group col mb-2">
                             <label for="coupon_price_max">최대 할인 금액</label>
-                            <input type="text" name="coupon_price_max" id="coupon_price_max" value="0" maxlength="11" class="form-control text-center w-30" onkeydown="NumberInput(this);" /> 원
+                            <input type="text" name="coupon_price_max" id="coupon_price_max" value="${dto.getCoupon_price_max() }" maxlength="11" class="form-control text-center w-30" onkeydown="NumberInput(this);" /> 원
                         </div>
 
                         <div class="w-100 border-bottom"></div>
@@ -132,19 +135,19 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="btn-group" role="group" data-toggle="buttons">
-                                            <label class="btn btn-outline-secondary active" onclick="$('#after_layer, #date_layer').collapse('hide');">
-                                                <input type="radio" name="coupon_date_type" value="free" checked="checked" /> 무제한
+                                            <label class="btn btn-outline-secondary<c:if test="${dto.getCoupon_date_type() == 'free'}"> active</c:if>" onclick="$('#after_layer, #date_layer').collapse('hide');">
+                                                <input type="radio" name="coupon_date_type" value="free"<c:if test="${dto.getCoupon_date_type() == 'free'}"> checked="checked"</c:if> /> 무제한
                                             </label>
-                                            <label class="btn btn-outline-secondary" onclick="$('#after_layer').collapse('show'); $('#date_layer').collapse('hide');">
-                                                <input type="radio" name="coupon_date_type" value="after" /> 발급후 며칠까지
+                                            <label class="btn btn-outline-secondary<c:if test="${dto.getCoupon_date_type() == 'after'}"> active</c:if>" onclick="$('#after_layer').collapse('show'); $('#date_layer').collapse('hide');">
+                                                <input type="radio" name="coupon_date_type" value="after"<c:if test="${dto.getCoupon_date_type() == 'after'}"> checked="checked"</c:if> /> 발급후 며칠까지
                                             </label>
-                                            <label class="btn btn-outline-secondary" onclick="$('#after_layer').collapse('hide'); $('#date_layer').collapse('show');">
-                                                <input type="radio" name="coupon_date_type" value="date" /> 기간설정
+                                            <label class="btn btn-outline-secondary<c:if test="${dto.getCoupon_date_type() == 'date'}"> active</c:if>" onclick="$('#after_layer').collapse('hide'); $('#date_layer').collapse('show');">
+                                                <input type="radio" name="coupon_date_type" value="date"<c:if test="${dto.getCoupon_date_type() == 'date'}"> checked="checked"</c:if> /> 기간설정
                                             </label>
                                         </div>
 
                                         <div class="px-0 pt-1 pb-2 collapse hide" id="after_layer">
-                                            발급 후 <input type="text" name="coupon_date_value" value="0" maxlength="3" class="form-control d-inline mx-2 text-center w-15" onkeydown="NumberInput(this);" /> 일까지 사용 가능
+                                            발급 후 <input type="text" name="coupon_date_valueCheck" value="${dto.getCoupon_date_value() }" maxlength="3" class="form-control d-inline mx-2 text-center w-15" onkeydown="NumberInput(this);" /> 일까지 사용 가능
                                         </div>
 
                                         <div class="px-0 pt-1 pb-2 collapse hide" id="date_layer">
@@ -153,7 +156,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                     </div>
-                                                    <input type="text" name="coupon_start_date" id="startDt" value="2022-12-02" class="form-control text-center eng" />
+                                                    <input type="text" name="coupon_start_date" id="startDt" value="${dto.getCoupon_start_date() }" class="form-control text-center eng" />
                                                 </div>
                                             </div>
                                             <div class="d-inline-block pt-2 px-2">~</div>
@@ -162,7 +165,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                     </div>
-                                                    <input type="text" name="coupon_end_date" id="endDt" value="2022-12-02" class="form-control text-center eng" />
+                                                    <input type="text" name="coupon_end_date" id="endDt" value="${dto.getCoupon_end_date() }" class="form-control text-center eng" />
                                                 </div>
                                             </div>
                                         </div>

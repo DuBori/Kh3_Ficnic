@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../layout/layout_header.jsp" %>
 <script type="text/javascript">$("#header .navbar .nav-item:nth-child(6)").addClass("active");</script>
 
@@ -22,7 +21,7 @@
 
 
 
-<form name="form_input" method="post" enctype="multipart/form-data" action="<%=request.getContextPath() %>/admin/review/review_modify_ok.do">
+<form name="form_input" method="post" enctype="multipart/form-data" action="${path}/admin/review/review_modify_ok.do">
 <input type="hidden" name="review_no" value="${dto.review_no}" />
 <div class="page-cont">
     <div class="row">
@@ -46,6 +45,12 @@
                             <div class="jf-input">
                                 <div class="row">
                                     <div class="col py-2">
+                                        <c:forEach begin="1" end="10" var="i">
+                                        <div class="form-check form-check-inline mx-2">
+                                            <input class="form-check-input" type="radio" name="review_point" id="review_point${i}" value="${i}"<c:if test="${dto.review_point == i}"> checked="checked"</c:if> />
+                                            <label class="form-check-label" for="review_point${i}">${i}</label>
+                                        </div>
+                                        </c:forEach>
                                     </div>
                                 </div>
                             </div>
@@ -63,8 +68,11 @@
                             <div class="jf-input">
                                 <div class="row">
                                     <div class="col pb-2">
-                                        <input type="file" name="review_photo1" class="form-control" />
-                                        <c:if test="${!empty dto.review_photo1}"><p class="mt-2"><img src="<%=request.getContextPath()%>${dto.review_photo1}" style="max-width: 400px;" alt="" /></p></c:if>
+                                        <input type="file" name="review_photo_modi1" class="form-control" accept="image/jpeg, image/png, image/gif" />
+                                        <c:if test="${!empty dto.review_photo1}">
+                                        <p class="mt-2"><img src="${path}${dto.review_photo1}" style="max-width: 400px;" alt="" /></p>
+                                        <input type="hidden" name="ori_review_photo1" value="${dto.review_photo1}" />
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
@@ -77,8 +85,11 @@
                             <div class="jf-input">
                                 <div class="row">
                                     <div class="col pb-2">
-                                        <input type="file" name="review_photo2" class="form-control" />
-                                        <c:if test="${!empty dto.review_photo2}"><p class="mt-2"><img src="<%=request.getContextPath()%>${dto.review_photo2}" style="max-width: 400px;" alt="" /></p></c:if>
+                                        <input type="file" name="review_photo_modi2" class="form-control" accept="image/jpeg, image/png, image/gif" />
+                                        <c:if test="${!empty dto.review_photo2}">
+                                        <p class="mt-2"><img src="${path}${dto.review_photo2}" style="max-width: 400px;" alt="" /></p>
+                                        <input type="hidden" name="ori_review_photo2" value="${dto.review_photo2}" />
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
@@ -95,8 +106,8 @@
 
 <div class="d-flex mt-2 input-form-button">
     <div class="col-lg text-center">
-        <a href="<%=request.getContextPath()%>/admin/review/review_delete.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}" class="btn btn-danger btn-lg m-2" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
-        <a href="<%=request.getContextPath()%>/admin/review/review_list.do?search_ficnic=${param.search_ficnic}&search_review=${param.search_review}&search_writer=${param.search_writer}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
+        <a href="${path}/admin/review/review_delete.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}" class="btn btn-danger btn-lg m-2" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+        <a href="${path}/admin/review/review_list.do?search_ficnic=${param.search_ficnic}&search_review=${param.search_review}&search_writer=${param.search_writer}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
         <button type="submit" class="btn btn-primary btn-lg m-2"><i class="fa fa-save"></i> 수정하기</button>
     </div>
 </div>

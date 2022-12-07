@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="time" value="<%=System.currentTimeMillis()%>" />
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -70,7 +71,7 @@
     <!-- #header // START -->
     <header id="header" class="fixed-top">
         <nav class="navbar navbar-expand-lg w1100">
-            <h1 class="navbar-brand"><a href="${path}/main.do"><img src="${path}/resources/site/images/site_logo.png" alt="Ficnic" /> Ficnic</a></h1>
+            <h1 class="navbar-brand"><a href="${path}/main.do"><img src="${path}/resources/site/images/site_logo.png" alt="Ficnic" /> <span>Ficnic</span></a></h1>
 
             <div class="navbar-collapse">
                 <form name="search" class="navbar-search mr-auto" action="${path}/ficnic/ficnic_list.do">
@@ -86,6 +87,7 @@
                     <li><a href="#"><i class="icon-heart"></i><p>위시리스트</p></a></li>
                     <li><a href="#"><i class="icon-user"></i><p>마이페이지</p></a></li>
                     <li><button type="button" data-toggle="modal" data-target="#logoutModal"><i class="icon-logout"></i><p>로그아웃</p></button></li>
+                    <li class="ml-5"><a href="${path}/admin/main.do" target="_blank"><i class="icon-rocket"></i><p>관리자</p></a></li>
                 </ul>
             </div>
         </nav>

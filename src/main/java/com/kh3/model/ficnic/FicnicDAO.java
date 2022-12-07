@@ -16,5 +16,7 @@ public interface FicnicDAO {
 	int modifyFicnic(FicnicDTO dto,List<String> upload_list);
 	/* 피크닉 삭제 */
 	int deleteFicnic(int no);
+	/* 피크닉 삭제 후 번호 정렬 */
+	void updateSeq(int no);
 
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ include file="../layout/layout_header.jsp" %>
 
 <script type="text/javascript">
@@ -20,7 +22,7 @@ $(function(){
             type : "post",
             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
             datatype : "html",
-            url : "<%=request.getContextPath()%>/admin/member/memberIdCheck.do",
+            url : "${path}/admin/member/memberIdCheck.do",
             data : { paramId : userId },
 
             success : function(data){
@@ -58,7 +60,9 @@ $(function(){
 
 
 
-<form name="form_input" method="post" action="<%=request.getContextPath() %>/admin/member/memberWriteOk.do">
+
+<form name="form_input" method="post" action="${path}/admin/member/memberWriteOk.do">
+
 <div class="page-cont">
     <div class="row">
         <div class="col-lg mb-4">
@@ -93,6 +97,7 @@ $(function(){
                             <input type="password" name="member_pw_re" id="member_pw_re" class="form-control w-50" required />
                         </div>
 
+
                         <div class="w-100 border-bottom"></div>
 
                         <div class="form-group col">
@@ -114,6 +119,31 @@ $(function(){
             </div>
         </div>
     </div>
+
+						<div class="w-100 border-bottom"></div>
+						<div class="form-group col">
+							<label for="member_name">이름</label> <input type="text"
+								name="member_name" id="member_name" class="form-control w-30"
+								required />
+						</div>
+						<div class="w-100"></div>
+						<div class="form-group col">
+							<label for="member_email">이메일</label> <input type="text"
+								name="member_email" id="member_email" class="form-control"
+								onkeydown="EmailInput(this);" required />
+						</div>
+						<div class="w-100"></div>
+						<div class="form-group col">
+							<label for="member_phone">연락처</label> <input type="text"
+								name="member_phone" id="member_phone" maxlength="15"
+								class="form-control w-30" onkeydown="NumSpInput(this);"
+								required />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
@@ -121,7 +151,9 @@ $(function(){
 
 <div class="d-flex mt-2 input-form-button">
     <div class="col-lg text-center">
-        <a href="<%=request.getContextPath()%>/admin/member/member_list.do?search_type=${search_type}&search_name=${search_name}&search_id=${search_id}&search_email=${search_email}&search_phone=${search_phone}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
+
+        <a href="${path}/admin/member/member_list.do?search_type=${search_type}&search_name=${search_name}&search_id=${search_id}&search_email=${search_email}&search_phone=${search_phone}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
+
         <button type="submit" class="btn btn-primary btn-lg m-2"><i class="fa fa-pencil"></i> 등록하기</button>
     </div>
 </div>

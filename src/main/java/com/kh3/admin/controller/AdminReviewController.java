@@ -1,5 +1,6 @@
 package com.kh3.admin.controller;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -13,17 +14,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh3.model.review.ReviewDAO;
 import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
+import com.kh3.util.UploadFile;
 
 @Controller
 public class AdminReviewController {
 
     @Inject
     private ReviewDAO dao;
+
+
+    // 리뷰 사진 업로드 설정
+    private String reviewFolder = "/resources/data/review/";
+    private String reviewSaveName = "review";
 
 
     // 한 페이지당 보여질 게시물의 수
@@ -103,14 +111,37 @@ public class AdminReviewController {
 
 
     @RequestMapping("admin/review/review_modify_ok.do")
-    public void updateOk(ReviewDTO dto, HttpServletResponse response) throws Exception {
+    public void updateOk(ReviewDTO dto, MultipartHttpServletRequest mRequest, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
+
+
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        List<String> upload_list = UploadFile.fileUpload(mRequest, reviewFolder, reviewSaveName);
+
+        // 기존 파일 있으면 삭제 처리
+        for(int i=0; i<upload_list.size(); i++) {
+            String check_photo = mRequest.getParameter("ori_review_photo"+(i+1));
+            if(check_photo != null && upload_list.get(i) != ""){
+                File del_pimage = new File(mRequest.getSession().getServletContext().getRealPath(check_photo));
+                if(del_pimage.exists()) del_pimage.delete();
+            }
+        }
+
+        String modify_photo1 = mRequest.getParameter("ori_review_photo1");
+        String modify_photo2 = mRequest.getParameter("ori_review_photo2");
+
+        if(upload_list.get(0) != "") modify_photo1 = upload_list.get(0);
+        if(upload_list.get(1) != "") modify_photo2 = upload_list.get(1);
+
+        dto.setReview_photo1(modify_photo1);
+        dto.setReview_photo2(modify_photo2);
+
 
         int check = this.dao.reviewModify(dto);
 
         if (check > 0) {
-            out.println("<script>alert('리뷰가 수정되었습니다.'); location.href='review_view.do?no=" + dto.getReview_no() + "';</script>");
+            out.println("<script>alert('리뷰가 수정되었습니다.'); location.href='review_list.do';</script>");
         } else {
             out.println("<script>alert('리뷰 수정에 실패했습니다.'); history.back();</script>");
         }
@@ -120,9 +151,22 @@ public class AdminReviewController {
 
 
     @RequestMapping("admin/review/review_delete.do")
-    public void delete(@RequestParam("no") int no, HttpServletResponse response) throws Exception {
+    public void delete(@RequestParam("no") int no, HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
+
+        ReviewDTO dto = this.dao.reviewView(no);
+
+        // 기존 파일 있으면 삭제 처리
+        if(dto.getReview_photo1() != null){
+            File del_pimage1 = new File(request.getSession().getServletContext().getRealPath(dto.getReview_photo1()));
+            if(del_pimage1.exists()) del_pimage1.delete();
+        }
+        if(dto.getReview_photo2() != null){
+            File del_pimage2 = new File(request.getSession().getServletContext().getRealPath(dto.getReview_photo2()));
+            if(del_pimage2.exists()) del_pimage2.delete();
+        }
+
 
         int check = this.dao.reviewDelete(no);
 
