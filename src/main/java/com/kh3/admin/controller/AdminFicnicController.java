@@ -430,6 +430,51 @@ public class AdminFicnicController {
 
 
 
+    @RequestMapping("admin/ficnic/ficnic_img_delete.do")
+    public void ficnicImgDelete(@RequestParam("ficnic_no") int ficnic_no, @RequestParam("img_num") int img_num, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out= response.getWriter();
+
+        String chkResult = "N";
+
+        // 기존 파일 있으면 삭제 처리
+        FicnicDTO fdto = this.dao.getFicnicCont(ficnic_no);
+        File del_pimage = null;
+
+        switch(img_num) {
+            case 1:
+                if(fdto.getFicnic_photo1() != null){
+                    del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo1()));
+                }
+            case 2:
+                if(fdto.getFicnic_photo2() != null){
+                    del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo2()));
+                }
+            case 3:
+                if(fdto.getFicnic_photo3() != null){
+                    del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo3()));
+                }
+            case 4:
+                if(fdto.getFicnic_photo4() != null){
+                    del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo4()));
+                }
+            case 5:
+                if(fdto.getFicnic_photo5() != null){
+                    del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo5()));
+                }
+        }
+
+        if(del_pimage.exists()) {
+            del_pimage.delete();
+            this.dao.deleteFicnicImage(ficnic_no, img_num);
+            chkResult = "Y";
+        }
+
+        out.println(chkResult);
+    }
+
+
+
 
 
 

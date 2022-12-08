@@ -7,10 +7,41 @@
 <!-- 관리자 : 예약 관련 -->
 <mapper namespace="reservDAO">
 
-    <!-- 예약 목록 -->
-    <select id="adminReservList" resultType="reservDTO">
+    <!-- 예약 목록 총 갯수 -->
+    <select id="adminMemberCount" parameterType="java.util.Map" resultType="int">
+        select count(*) from reserv_list where reserv_no > 0
+        <!-- <if test="search_type != ''"> and member_type = #{search_type}</if>
+        <if test="search_name != ''"> and member_name like '%' || #{search_name} || '%'</if>
+        <if test="search_id != ''"> and member_id like '%' || #{search_id} || '%'</if>
+        <if test="search_email != ''"> and member_email like '%' || #{search_email} || '%'</if>
+        <if test="search_phone != ''"> and member_phone like '%' || #{search_phone} || '%'</if> -->
     </select>
 
+
+    <!-- 예약 목록 -->
+    <select id="adminReservList" resultType="reservDTO">
+            select * from(
+                select
+                    row_number() over(order by reserv_date desc) rnum,
+                    b.*
+                from (
+                    select * from reserv_list where reserv_no > 0
+                    <!-- <if test="search_type != ''"> and member_type = #{search_type}</if>
+                    <if test="search_name != ''"> and member_name like '%' || #{search_name} || '%'</if>
+                    <if test="search_id != ''"> and member_id like '%' || #{search_id} || '%'</if>
+                    <if test="search_email != ''"> and member_email like '%' || #{search_email} || '%'</if>
+                    <if test="search_phone != ''"> and member_phone like '%' || #{search_phone} || '%'</if> -->
+                ) b
+            )
+        <![CDATA[
+            where rnum >= #{startNo} and rnum <= #{endNo}
+        ]]>
+    </select>
+
+	<!-- 예약 상세 내역 -->
+	<select id="adminMemberView" parameterType="int" resultType="reservDTO">
+		select * from reserv_list where reserv_no = #{reserv_no}
+	</select>
 
 
 

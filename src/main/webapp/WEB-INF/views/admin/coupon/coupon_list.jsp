@@ -103,9 +103,8 @@
                                 <td ${showLink} class="eng">
                                     <c:choose>
                                     <c:when test="${dto.getCoupon_price_type() eq 'price'}"><fmt:formatNumber value="${dto.getCoupon_price()}" />원</c:when>
-                                    <c:otherwise>${dto.getCoupon_price()}%</c:otherwise>
-                                    </c:choose><br>
-                                    <c:choose><c:when test="${dto.getCoupon_price_max() != 0}">(최대 <fmt:formatNumber value="${dto.getCoupon_price_max()}" />원)</c:when><c:otherwise></c:otherwise></c:choose>
+                                    <c:otherwise>${dto.getCoupon_price()}%<br>(최대 <fmt:formatNumber value="${dto.getCoupon_price_max()}" />원)</c:otherwise>
+                                    </c:choose>
                                 </td>
                                 <td ${showLink} class="eng table-list-hide">
                                     <c:choose>

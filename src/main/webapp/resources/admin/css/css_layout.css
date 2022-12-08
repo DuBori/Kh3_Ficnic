@@ -986,59 +986,6 @@ main .input-form-button {}
 
 
 
-main .input-form td span.quantity {
-    display: inline-block;
-    font-size: 0;
-    line-height: 0;
-}
-main .input-form td span.quantity input[type="text"] {
-    display: inline-block;
-    width: 60px;
-    height: 29px;
-    margin: 0 -1px;
-    font-family: 'Spline Sans';
-    font-size: 14px;
-    line-height: 14px;
-    letter-spacing: 0;
-    text-align: center;
-    border: 1px solid #d4d8d9;
-}
-main .input-form td span.quantity button[type="button"] {
-    display: inline-block;
-    width: 35px;
-    height: 29px;
-    font-size: 20px;
-    color: #666;
-    background: #fff;
-    border: 1px solid #d4d8d9;
-    vertical-align: middle;
-}
-main .input-form td span.quantity button[type="button"]:hover {
-    color: #000;
-}
-main .input-form td span.quantity button[type="button"].down {
-    padding-top: 4px;
-}
-main .input-form td span.quantity button[type="submit"] {
-    display: block;
-    width: auto;
-    margin: 6px auto 0 auto;
-    padding-bottom: 2px;
-    font-size: 14px;
-    line-height: 14px;
-    letter-spacing: -1px;
-    color: #389ea8;
-    text-align: center;
-    border-bottom: 1px solid #389ea8;
-    background: transparent;
-}
-main .input-form td span.quantity button[type="submit"]:hover {
-    color: #000;
-    border-bottom-color: #000;
-}
-
-
-
 main .join-form {
     display: flex !important;
 }
@@ -1105,32 +1052,6 @@ main .card.view-form .inprice-btn {
     background: #ebebeb;
 }
 
-main .card.view-form .log-list {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-}
-main .card.view-form .log-list .target {
-    width: 160px;
-    text-align: center;
-    background: #fff !important;
-}
-main .card.view-form .log-list .memo {}
-main .card.view-form .log-list .memo li {
-    list-style-type: disc;
-    list-style-position: inside;
-    color: #495057;
-    margin: 2px 0;
-}
-main .card.view-form .log-list .writer {
-    width: 150px;
-    text-align: center;
-    font-size: 13px;
-    line-height: 17px;
-    color: #6c757d;
-}
-
 
 @media (max-width: 520px) {
     main .card.view-form span.ea-device {
@@ -1138,24 +1059,6 @@ main .card.view-form .log-list .writer {
         margin: 0 !important;
         font-size: 0;
         line-height: 0;
-    }
-    main .card.view-form .log-list {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 5px !important;
-    }
-    main .card.view-form .log-list .target {
-        width: 100%;
-        text-align: left;
-        padding-left: 10px;
-    }
-    main .card.view-form .log-list .memo li {
-        margin-left: 15px;
-    }
-    main .card.view-form .log-list .writer {
-        width: 100%;
-        text-align: left;
-        padding: 2px 0 0 35px;
     }
 }
 
@@ -1447,6 +1350,25 @@ main .view-form .exchange-goods-footer b {
 }
 #container.view-popup .card-body.p-4 {
     padding: 1.25rem !important;
+}
+
+
+
+
+
+/*************************/
+/* .bootstrap-tagsinput
+/*************************/
+.bootstrap-tagsinput {
+    display: inline-block;
+    width: calc(100% - 30px) !important;
+    margin: 0 5px 0 10px;
+    padding: .375rem .275rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    box-shadow: none;
 }
 
 
