@@ -153,7 +153,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                     </div>
-                                                    <input type="text" name="coupon_start_date" value="22/12/05" id="startDt" class="form-control text-center eng" />
+                                                    <input type="text" name="coupon_start_date" id="startDt" class="form-control text-center eng" />
                                                 </div>
                                             </div>
                                             <div class="d-inline-block pt-2 px-2">~</div>
@@ -162,7 +162,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                     </div>
-                                                    <input type="text" name="coupon_end_date" value="22/12/07" id="endDt" class="form-control text-center eng" />
+                                                    <input type="text" name="coupon_end_date" id="endDt" class="form-control text-center eng" />
                                                 </div>
                                             </div>
                                         </div>
