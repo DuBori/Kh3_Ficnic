@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <div class="px-0 collapse hide" id="category_layer">
+                        <div class="px-0 collapse hide<c:if test="${dto.getCoupon_use_type() == 'category'}"> show</c:if>" id="category_layer">
                             <div class="w-100"></div>
                             <div class="form-group join-form">
                                 <label>사용 카테고리</label>
@@ -70,7 +70,7 @@
                             </div>
                         </div>
 
-                        <div class="px-0 collapse hide" id="goods_layer">
+                        <div class="px-0 collapse<c:if test="${dto.getCoupon_use_type() == 'goods'}"> show</c:if>" id="goods_layer">
                             <div class="w-100"></div>
                             <div class="form-group join-form">
                                 <label>사용 상품</label>
@@ -138,19 +138,19 @@
                                             <label class="btn btn-outline-secondary<c:if test="${dto.getCoupon_date_type() == 'free'}"> active</c:if>" onclick="$('#after_layer, #date_layer').collapse('hide');">
                                                 <input type="radio" name="coupon_date_type" value="free"<c:if test="${dto.getCoupon_date_type() == 'free'}"> checked="checked"</c:if> /> 무제한
                                             </label>
-                                            <label class="btn btn-outline-secondary<c:if test="${dto.getCoupon_date_type() == 'after'}"> active</c:if>" onclick="$('#after_layer').collapse('show'); $('#date_layer').collapse('hide');">
+                                            <label class="btn btn-outline-secondary" onclick="$('#after_layer').collapse('show'); $('#date_layer').collapse('hide');">
                                                 <input type="radio" name="coupon_date_type" value="after"<c:if test="${dto.getCoupon_date_type() == 'after'}"> checked="checked"</c:if> /> 발급후 며칠까지
                                             </label>
-                                            <label class="btn btn-outline-secondary<c:if test="${dto.getCoupon_date_type() == 'date'}"> active</c:if>" onclick="$('#after_layer').collapse('hide'); $('#date_layer').collapse('show');">
+                                            <label class="btn btn-outline-secondary" onclick="$('#after_layer').collapse('hide'); $('#date_layer').collapse('show');">
                                                 <input type="radio" name="coupon_date_type" value="date"<c:if test="${dto.getCoupon_date_type() == 'date'}"> checked="checked"</c:if> /> 기간설정
                                             </label>
                                         </div>
 
-                                        <div class="px-0 pt-1 pb-2 collapse hide" id="after_layer">
+                                        <div class="px-0 pt-1 pb-2 collapse hide<c:if test="${dto.getCoupon_date_type() == 'after'}"> show</c:if>" id="after_layer">
                                             발급 후 <input type="text" name="coupon_date_valueCheck" value="${dto.getCoupon_date_value() }" maxlength="3" class="form-control d-inline mx-2 text-center w-15" onkeydown="NumberInput(this);" /> 일까지 사용 가능
                                         </div>
 
-                                        <div class="px-0 pt-1 pb-2 collapse hide" id="date_layer">
+                                        <div class="px-0 pt-1 pb-2 collapse <c:if test="${dto.getCoupon_date_type() == 'date'}"> show</c:if>" id="date_layer">
                                             <div class="col-5 d-inline-block px-0">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">

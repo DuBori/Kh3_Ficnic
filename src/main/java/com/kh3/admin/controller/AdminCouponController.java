@@ -1,6 +1,12 @@
 package com.kh3.admin.controller;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +121,15 @@ public class AdminCouponController {
 
     // 쿠폰 등록 페이지
     @RequestMapping("admin/coupon/coupon_write.do")
-    public String couponWrite() {
+    public String couponWrite(Model model) {
+    	
+        LocalDate startNowDate = LocalDate.now(); // 이번달 첫째
+        String startDate = startNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-01"));
+        LocalDate endNowDate = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()); // 오늘로부터 30일후 까지
+        String endDate = endNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));    	
+        
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         return "admin/coupon/coupon_write";
     }
 
