@@ -72,5 +72,11 @@
 		select count(*) from member_list where member_email = #{member_email}
 	</select>
 	
+		<!-- 세션 -->
+	<select id="siteMemberSessionCheck" resultType="int">
+		select * from member_list where member_id = #{member_id}
+	</select>
+			
+			
     
 </mapper>
