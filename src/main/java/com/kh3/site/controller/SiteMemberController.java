@@ -30,6 +30,7 @@ public class SiteMemberController {
 	
 	@Autowired
 	private MemberDAO dao;
+	@Autowired
 	private PointDAO pdao;
 
 	
@@ -208,10 +209,9 @@ public class SiteMemberController {
 	    	PrintWriter out = response.getWriter();
 	    	
 	    	// 입력된 값 제대로 들어갔나 확인
-	    	System.out.println("dto.getMember_pw" + dto.getMember_pw());
-	    	System.out.println("dto.getMember_pw_re" + dto.getMember_pw_re());
 	    	System.out.println("dto.getMember_pw_re" + dto.getMember_id());
 	    	
+	    	System.out.println("--------------pdto" + pdto);
 	    	
 	    	// 비밀번호 일치 확인
 	    	if(!dto.getMember_pw().equals(dto.getMember_pw_re())) {
@@ -230,25 +230,25 @@ public class SiteMemberController {
 					}else if(error.getDefaultMessage().equals("mailchk")) {
 						out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력하주세요.'); history.back();</script>"); break;
 					}else if(error.getDefaultMessage().equals("name")) {
-						out.println("<script>alert('이름을 2~8자 사이로 입력해주세요.'); history.back();</script>"); break;
+						out.println("<script>alert('이름을 2~8자 사이로 입력해주세요.'); history.back(); </script>"); break;
 					}else if(error.getDefaultMessage().equals("pw")) {
 						out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>"); break;
 					}else if(error.getDefaultMessage().equals("email")) {
 						out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
 					}else if(error.getDefaultMessage().equals("phone")) {
 						out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
-					}
+					} 
 				}
-	    	}else {		// 이상 없을 때 실행
-	    		int check = this.dao.joinMember(dto);
-	    		if (check > 0) {
-	    			// 회원 가입 포인트 적립
-	    			//this.pdao.joinPoint(pdto);
-	    			out.println("<script>alert('회원 등록 되었습니다.'); location.href='../main.do';</script>");
-	    		} else {
-	    			out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
-	    		}
-	    	}
+				} else {		// 이상 없을 때 실행
+			    		int check = this.dao.joinMember(dto);
+			    		if (check > 0) {
+			    			// 회원 가입 포인트 적립
+			    			this.pdao.joinPoint(pdto);
+			    			out.println("<script>alert('회원 등록 되었습니다.'); location.href='../main.do';</script>");
+			    		} else {
+			    			out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
+			    		}
+				}
 	    }
 	    
 	    

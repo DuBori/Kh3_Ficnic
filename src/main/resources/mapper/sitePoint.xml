@@ -7,12 +7,6 @@
 <!-- 사이트 : 적립금 관련 -->
 <mapper namespace="pointDAO">
 
-    <!-- 적립금 목록 -->
-    <select id="sitePointList" resultType="pointDTO">
-    </select>
-
-
-
 
 
 
