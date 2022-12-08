@@ -115,6 +115,7 @@ public class FicnicDAOImpl implements FicnicDAO {
 	@Override
 	public List<String> getFicnicLocationList() {
 		return this.sqlSession.selectList("adminFicnicLocationList");
+	}
 	/* 쿠폰 상세 내역에서 상품 정보 찾기 */
 	@Override
 	public String checkFicnic(String coupon_use_value) {
