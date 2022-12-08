@@ -117,7 +117,14 @@
 		update ficnic_list set ficnic_no = ficnic_no-1 where ficnic_no > #{no}
 		 ]]>
 	</update>
-	
+
+
+    <!-- 피크닉 이미지 삭제 -->
+    <update id="adminDeleteFicnicImage" parameterType="java.util.Map">
+        update ficnic_list set ficnic_photo${img_no} = null where ficnic_no = #{no}
+    </update>
+
+
 	<!--검색 해당 피크닉 개수  -->
 	<select id="adminFicnicSearchCount" parameterType="map" resultType="int">		
 		select count(*) from ficnic_list where ficnic_no >0

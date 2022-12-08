@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.jasper.tagplugins.jstl.core.If;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -434,7 +433,7 @@ public class AdminFicnicController {
 
 
     @RequestMapping("admin/ficnic/ficnic_img_delete.do")
-    public void ficnicImgDelete(@RequestParam("ficnic_no") int ficnic_no, @RequestParam("img_num") String img_num, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void ficnicImgDelete(@RequestParam("ficnic_no") int ficnic_no, @RequestParam("img_num") int img_num, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out= response.getWriter();
 
@@ -445,23 +444,23 @@ public class AdminFicnicController {
         File del_pimage = null;
 
         switch(img_num) {
-            case "1":
+            case 1:
                 if(fdto.getFicnic_photo1() != null){
                     del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo1()));
                 }
-            case "2":
+            case 2:
                 if(fdto.getFicnic_photo2() != null){
                     del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo2()));
                 }
-            case "3":
+            case 3:
                 if(fdto.getFicnic_photo3() != null){
                     del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo3()));
                 }
-            case "4":
+            case 4:
                 if(fdto.getFicnic_photo4() != null){
                     del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo4()));
                 }
-            case "5":
+            case 5:
                 if(fdto.getFicnic_photo5() != null){
                     del_pimage = new File(request.getSession().getServletContext().getRealPath(fdto.getFicnic_photo5()));
                 }
@@ -469,6 +468,7 @@ public class AdminFicnicController {
 
         if(del_pimage.exists()) {
             del_pimage.delete();
+            this.dao.deleteFicnicImage(ficnic_no, img_num);
             chkResult = "Y";
         }
 

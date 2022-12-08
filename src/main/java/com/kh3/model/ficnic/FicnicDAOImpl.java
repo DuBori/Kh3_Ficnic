@@ -1,5 +1,6 @@
 package com.kh3.model.ficnic;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -97,7 +98,17 @@ public class FicnicDAOImpl implements FicnicDAO {
 	public void updateSeq(int no) {
 		this.sqlSession.update("adminFicnicDeleteUpdate",no);	
 	}
-	
+
+
+	/* 피크닉 사진 삭제 */
+	public void deleteFicnicImage(int no, int img_no) {
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("no", no);
+	    map.put("img_no", img_no);
+	    this.sqlSession.update("adminDeleteFicnicImage", map);
+	}
+
+
 	/* 피크닉 상품 검색 개수*/
 	@Override
 	public int getListCount(Map<String, Object> map) {

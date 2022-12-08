@@ -9,12 +9,16 @@
 		<c:set var="title" value="수정" />
 		<c:set var="icon" value="save" />
 		<c:set var="category" value="${fdto.getFicnic_category_no()}" />
+		<c:set var="market_price" value="${fdto.getFicnic_market_price()}" />
+		<c:set var="sale_price" value="${fdto.getFicnic_sale_price()}" />
 	</c:when>
 
 	<c:otherwise>
 		<c:set var="tag" value="admin/ficnic/ficnic_write_ok.do" />
 		<c:set var="title" value="등록" />
 		<c:set var="icon" value="pencil" />
+		<c:set var="market_price" value="0" />
+		<c:set var="sale_price" value="0" />
 	</c:otherwise>
 </c:choose>
 
@@ -53,11 +57,11 @@
 
 						<div class="form-group col-sm">
 							<label for="ficnic_market_price">이전 판매가</label>
-							<input type="text" name="ficnic_market_price" id="ficnic_market_price" value="${fdto.getFicnic_market_price()}" class="form-control text-right w-30" onkeyup="NumberInput(this)" /> 원
+							<input type="text" name="ficnic_market_price" id="ficnic_market_price" value="${market_price}" class="form-control text-right w-30" onkeyup="NumberInput(this)" /> 원
 						</div>
 						<div class="form-group col-sm">
 							<label for="ficnic_sale_price"><span>*</span> 현재 판매가</label>
-							<input type="text" name="ficnic_sale_price" id="ficnic_sale_price" value="${fdto.getFicnic_sale_price()}" class="form-control text-right w-30" onkeyup="NumberInput(this)" /> 원
+							<input type="text" name="ficnic_sale_price" id="ficnic_sale_price" value="${sale_price}" class="form-control text-right w-30" onkeyup="NumberInput(this)" /> 원
 						</div>
 
 						<div class="w-100 border-bottom mt-2"></div>
@@ -119,7 +123,7 @@
 										<input type="text" name="ficnic_option_price[]" value="" class="form-control h-auto" placeholder="옵션 가격" />
 									</div>
 									<div class="col-sm-auto mb-1">
-										<button type="button" class="btn btn-sm btn-outline-info mt-0" onclick="formOptionBtn('plus', this);"><i class="fa fa-plus"></i></button>
+										<button type="button" class="btn btn-sm btn-outline-info mt-0 px-3" onclick="formOptionBtn('plus', this);"><i class="fa fa-plus"></i></button>
 									</div>
                                 </div>
                             </div>
@@ -138,7 +142,7 @@
 										<input type="text" name="ficnic_select_price[]" value="" class="form-control h-auto" placeholder="선택 가격" />
 									</div>
 									<div class="col-sm-auto mb-1">
-										<button type="button" class="btn btn-sm btn-outline-info mt-0" onclick="formSelectBtn('plus', this);"><i class="fa fa-plus"></i></button>
+										<button type="button" class="btn btn-sm btn-outline-info mt-0 px-3" onclick="formSelectBtn('plus', this);"><i class="fa fa-plus"></i></button>
 									</div>
                                 </div>
                             </div>
@@ -149,11 +153,11 @@
                         <div class="form-group col mb-2">
                             <label>날짜 선택</label>
                             <div class="btn-group mt-2" role="group" data-toggle="buttons">
-                                <label class="btn btn-outline-secondary<c:if test="${fdto.getFicnic_date_use() == 'Y'}"> active</c:if>">
-                                    <input type="radio" name="ficnic_date_use" value="Y"<c:if test="${fdto.getFicnic_date_use() == 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
+                                <label class="btn btn-outline-secondary<c:if test="${fdto.getFicnic_date_use() eq 'Y'}"> active</c:if>">
+                                    <input type="radio" name="ficnic_date_use" value="Y"<c:if test="${fdto.getFicnic_date_use() eq 'Y'}"> checked="checked"</c:if> /><i class="fa fa-circle-o"></i> 사용
                                 </label>
-                                <label class="btn btn-outline-secondary<c:if test="${fdto.getFicnic_date_use() == 'N'}"> active</c:if>">
-                                    <input type="radio" name="ficnic_date_use" value="N"<c:if test="${fdto.getFicnic_date_use() == 'N'}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
+                                <label class="btn btn-outline-secondary<c:if test="${fdto.getFicnic_date_use() eq 'N' or empty fdto.getFicnic_date_use()}"> active</c:if>">
+                                    <input type="radio" name="ficnic_date_use" value="N"<c:if test="${fdto.getFicnic_date_use() eq 'N' or empty fdto.getFicnic_date_use()}"> checked="checked"</c:if> /><i class="fa fa-times"></i> 안함
                                 </label>
                             </div>
                         </div>
@@ -174,7 +178,7 @@
                                     	<c:choose>
                                 			<c:when test="${!empty fdto.getFicnic_photo1()}">
 												<input type="file" name="ficnic_photo_modi1" class="form-control" accept="image/jpeg, image/png, image/gif" />
-												<button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delFicnicPhoto(this, '${fdto.getFicnic_no()}', '1');"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
+												<button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delFicnicPhoto(this, '${fdto.getFicnic_no()}', 1);"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
 												<input type="hidden" name="ori_ficnic_photo1" value="${fdto.getFicnic_photo1()}" />
                                 			</c:when>
                                 			<c:otherwise><input type="file" name="ficnic_photo1" class="form-control" accept="image/jpeg, image/png, image/gif" /></c:otherwise>
@@ -197,7 +201,7 @@
                                     	<c:choose>
                                 			<c:when test="${!empty fdto.getFicnic_photo2()}">
 												<input type="file" name="ficnic_photo_modi2" class="form-control" accept="image/jpeg, image/png, image/gif" />
-												<button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delFicnicPhoto(this, '${fdto.getFicnic_no()}', '2');"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
+												<button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delFicnicPhoto(this, '${fdto.getFicnic_no()}', 2);"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
 												<input type="hidden" name="ori_ficnic_photo2" value="${fdto.getFicnic_photo2()}" />
                                 			</c:when>
                                 			<c:otherwise><input type="file" name="ficnic_photo2" class="form-control" accept="image/jpeg, image/png, image/gif" /></c:otherwise>
@@ -220,7 +224,7 @@
                                     	<c:choose>
                                 			<c:when test="${!empty fdto.getFicnic_photo3()}">
 												<input type="file" name="ficnic_photo_modi3" class="form-control" accept="image/jpeg, image/png, image/gif" />
-												<button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delFicnicPhoto(this, '${fdto.getFicnic_no()}', '3');"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
+												<button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delFicnicPhoto(this, '${fdto.getFicnic_no()}', 3);"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
 												<input type="hidden" name="ori_ficnic_photo3" value="${fdto.getFicnic_photo3()}" />
                                 			</c:when>
                                 			<c:otherwise><input type="file" name="ficnic_photo3" class="form-control" accept="image/jpeg, image/png, image/gif" /></c:otherwise>
@@ -243,7 +247,7 @@
                                     	<c:choose>
                                 			<c:when test="${!empty fdto.getFicnic_photo4()}">
 												<input type="file" name="ficnic_photo_modi4" class="form-control" accept="image/jpeg, image/png, image/gif" />
-												<button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delFicnicPhoto(this, '${fdto.getFicnic_no()}', '4');"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
+												<button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delFicnicPhoto(this, '${fdto.getFicnic_no()}', 4);"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
 												<input type="hidden" name="ori_ficnic_photo4" value="${fdto.getFicnic_photo4()}" />
                                 			</c:when>
                                 			<c:otherwise><input type="file" name="ficnic_photo4" class="form-control" accept="image/jpeg, image/png, image/gif" /></c:otherwise>
@@ -266,7 +270,7 @@
                                     	<c:choose>
                                 			<c:when test="${!empty fdto.getFicnic_photo5()}">
 												<input type="file" name="ficnic_photo_modi5" class="form-control" accept="image/jpeg, image/png, image/gif" />
-												<button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delFicnicPhoto(this, '${fdto.getFicnic_no()}', '5');"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
+												<button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delFicnicPhoto(this, '${fdto.getFicnic_no()}', 5);"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
 												<input type="hidden" name="ori_ficnic_photo5" value="${fdto.getFicnic_photo5()}" />
                                 			</c:when>
                                 			<c:otherwise><input type="file" name="ficnic_photo5" class="form-control" accept="image/jpeg, image/png, image/gif" /></c:otherwise>
@@ -299,7 +303,7 @@
 										<input type="text" name="ficnic_info_cont[]" value="${info.cont}" class="form-control h-auto" placeholder="내용" />
 									</div>
 									<div class="col-sm-auto mb-1">
-										<button type="button" class="btn btn-sm btn-outline-info mt-0" onclick="formFicnicBtn('plus', this);"><i class="fa fa-plus"></i></button>
+										<button type="button" class="btn btn-sm btn-outline-info mt-0 px-3" onclick="formFicnicBtn('plus', this);"><i class="fa fa-plus"></i></button>
 									</div>
                                 </div>
                             </div>
@@ -318,7 +322,7 @@
 										<input type="text" name="ficnic_curriculum_cont[]" value="" class="form-control h-auto" placeholder="내용" />
 									</div>
 									<div class="col-sm-auto mb-1">
-										<button type="button" class="btn btn-sm btn-outline-info mt-0" onclick="formCurriculumBtn('plus', this);"><i class="fa fa-plus"></i></button>
+										<button type="button" class="btn btn-sm btn-outline-info mt-0 px-3" onclick="formCurriculumBtn('plus', this);"><i class="fa fa-plus"></i></button>
 									</div>
                                 </div>
                             </div>
@@ -351,7 +355,7 @@
 							<label for="ficnic_include" style="padding-top: 23px;">포함 사항</label>
                             <div class="jf-input">
                                 <div class="row pb-1">
-                                	<input type="text" name="ficnic_include" id="ficnic_include" value="${fdto.getFicnic_include()}" class="form-control" data-role="tagsinput" />
+                                	<input type="text" name="ficnic_include" id="ficnic_include" value="${fdto.getFicnic_include()}" class="form-control w-100" data-role="tagsinput" />
                                 </div>
                             </div>
                         </div>
