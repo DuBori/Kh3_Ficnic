@@ -23,7 +23,7 @@
             <p id="fid"><input type="text" name="member_name" placeholder="가입한 이름" required /></p>
 
             <p><button type="submit"> 아이디 찾기 </button></p>
-            <p><a href="<%=request.getContextPath()%>/member/member_login.do">로그인</a></p>
+            <p><a href="${path}/member/member_login.do">로그인</a></p>
         
             </form>
         </div>

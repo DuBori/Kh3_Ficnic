@@ -129,16 +129,15 @@ public class MemberDAOImpl implements MemberDAO {
 		return this.sqlSession.selectOne("siteMemberFindPwEnd", dto);
 	}
 
-
 	@Override
-	public int idCheck(MemberDTO dto) {
-		return this.sqlSession.selectOne("siteMemberCheck", dto);
+	public int joinMember(MemberDTO dto) {
+		return this.sqlSession.insert("siteMemberJoin", dto);
 	}
 
 
 	@Override
-	public int joinMember(MemberDTO dto) {
-		return this.sqlSession.insert("siteMemberJoin", dto);
+	public int checkEmail(String userEmail) {
+        return this.sqlSession.selectOne("checkEmail", userEmail);
 	}
 
 
