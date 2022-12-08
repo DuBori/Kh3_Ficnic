@@ -26,8 +26,7 @@
                                  <select id="search_boxtype" name="finic_category_no" class="custom-select">
                                    		<option value="">카테고리 없음</option>
                                     <c:forEach items="${clist}" var="dto">
-                                    	<option value="${dto.getCategory_id()}">[${dto.getCategory_id()}]${dto.getCategory_name() }</option>
-                                    
+                                    	<option  value="${dto}" <c:if test="${ dto eq category_no }">selected</c:if> >${dto }</option>                                  
                                     </c:forEach>
                                 </select>
                             </div>
@@ -35,8 +34,13 @@
                         <div class="col-sm-3 mb-2">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="ficnic_location">지역</label>
-                                	<input name="ficnic_location">
+                                    <select name="ficnic_location" class="input-group-text" >
+                                    	<option value="">지역</option>
+                                    	<c:forEach items="${locationList}" var="dto">
+                                    		<option value="${dto}" <c:if test="${dto eq location }">selected</c:if> >${dto}</option>
+                                    	</c:forEach>
+                                    </select>
+                                	<input name="ficnic_address" value="${addr}" <c:if test="${!empty addr }">value="${addr}"</c:if> >
                                 </div>                                
                             </div>
                         </div>                     
@@ -45,7 +49,7 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="ficnic_name">피크닉 이름</label>
                                 </div>
-                                <input type="text" name="ficnic_name" class="form-control">
+                                <input type="text" name="ficnic_name" class="form-control"  <c:if test="${!empty name }">value="${name}"</c:if>>
                             </div>
                         </div>         
                     </div>
@@ -74,12 +78,13 @@
 
            <tbody>
            	<c:forEach items="${flist }" var="dto">
+           	 <c:set var="showLink" value="onclick=\"popWindow('ficnic_view.do?no=${dto.getFicnic_no()}', '700', '900');\"" />
 	           	<tr>
 	           	   <td class="table-list-hide-mob"><span class="text-primary">${dto.getFicnic_no()}</span></td>
-	           	   <td class="table-list-hide">${dto.getFicnic_category_no() }</td>
-                   <td style="width: 100px;" colspan="2">${dto.getFicnic_name()}</td>
-                   <td class="eng table-list-hide">${dto.getFicnic_sale_price() }</td>
-                   <td class="eng table-list-hide-mob">${dto.getFicnic_sale() }</td>
+	           	   <td ${showLink} class="table-list-hide">${dto.getFicnic_category_no() }</td>
+                   <td ${showLink} style="width: 100px;" colspan="2">${dto.getFicnic_name() }</td>
+                   <td ${showLink} class="eng table-list-hide">${dto.getFicnic_sale_price() }</td>
+                   <td ${showLink} class="eng table-list-hide-mob">${dto.getFicnic_sale() }</td>
                    <td>
                     <a href="${path}/admin/ficnic/ficnic_modify.do?no=${dto.getFicnic_no()}" class="btn btn-outline-success btn-sm">수정</a>
                        &nbsp;

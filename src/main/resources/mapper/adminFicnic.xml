@@ -122,8 +122,9 @@
 	<select id="adminFicnicSearchCount" parameterType="map" resultType="int">		
 		select count(*) from ficnic_list where ficnic_no >0
 		<if test="category_no !=''"> and ficnic_category_no = #{category_no}</if>
-		<if test="location !=''"> and ficnic_location = #{location}</if>
-		<if test="name !=''"> and ficnic_name = #{no}</if>		
+		<if test="location !=''"> and ficnic_location like '%'|| #{location} || '%' </if>
+		<if test="addr !=''"> and ficnic_address like '%' || #{addr} || '%'</if>
+		<if test="name !=''"> and ficnic_name like '%' || #{name} || '%'</if>		
 	</select>
 	
 	<!-- 피크닉 검색 리스트  -->
@@ -135,8 +136,9 @@
 	                from (
 	                select * from ficnic_list where ficnic_no > 0
 					<if test="category_no !=''"> and ficnic_category_no = #{category_no}</if>
-					<if test="location !=''"> and ficnic_location like '%' || #{location} || '%'</if>
-					<if test="name !=''"> and ficnic_name like '%' || #{no} || '%'</if>
+					<if test="location !=''"> and ficnic_location like '%' || #{location} || '%' </if>
+					<if test="addr !=''"> and ficnic_address like '%' || #{addr} || '%'</if>
+					<if test="name !=''"> and ficnic_name like '%' || #{name} || '%'</if>
 			)b
 			)
 			 <![CDATA[
@@ -144,13 +146,19 @@
 	        ]]>
 	</select>
 	
+	<!-- 피크닉 데이터 존재 location 리스트  -->
+	<select id="adminFicnicLocationList" resultType="String">
+		select distinct ficnic_location from ficnic_list
+	</select>
+	
+	<!-- 피크닉 데이터 존재 category 리스트 -->
+	<select id="adminFicnicCategoryList" resultType="String" >
+		select distinct ficnic_category_no from ficnic_list
+	</select>
     <!-- 쿠폰 상세 내역에서 상품 정보 찾기 -->
 	<select id="admincheckFicnic" resultType="String" parameterType="String">
 		select ficnic_name from ficnic_list where ficnic_category_no = #{coupon_use_value}
 	</select>
-	
-	
-	
 	
 	
 </mapper>
