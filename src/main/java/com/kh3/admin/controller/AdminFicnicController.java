@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.kh3.model.coupon.CouponDTO;
 import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
@@ -210,13 +208,14 @@ public class AdminFicnicController {
     // 피크닉 수정 페이지
     @RequestMapping("admin/ficnic/ficnic_modify.do")
     public String ficnicModify(@RequestParam("no") int no,Model model) {
-    	int cnt=0;
+    	int cnt = 0;
+
     	// 기존에 있던 해당 피크닉 상품 정보 불러와야한다.
-    	FicnicDTO fdto =this.dao.getFicnicCont(no);
+    	FicnicDTO fdto = this.dao.getFicnicCont(no);
     	List<CategoryDTO> cList = cdao.getCategoryList();
     	
-    	 String[] optionTitle = fdto.getFicnic_option_title().split("★");
-    	 Object[] optionPrice = fdto.getFicnic_option_price().split("★");
+    	String[] optionTitle = fdto.getFicnic_option_title().split("★");
+    	Object[] optionPrice = fdto.getFicnic_option_price().split("★");
 		
     	List<HashMap<String, Object>> mapList = new ArrayList<HashMap<String,Object>>();
     
@@ -228,22 +227,23 @@ public class AdminFicnicController {
     		cnt++;
     	}    	 
     	
-    	String[] list =fdto.getFicnic_info().split("★");
+    	String[] list = fdto.getFicnic_info().split("★");
     	
     	List<HashMap<String, String>> infoList = new ArrayList<HashMap<String,String>>();
     	
-    	for(String value: list) {
-    		String[] valueList = value.split(",");
-    		HashMap<String, String> map = new HashMap<String, String>();
-    		map.put("title", valueList[0]);
-    		map.put("cont", valueList[1]);
-    		infoList.add(map);
-    	}
-    	
+//    	for(String value: list) {
+//    		String[] valueList = value.split(",");
+//    		HashMap<String, String> map = new HashMap<String, String>();
+//    		map.put("title", valueList[0]);
+//    		map.put("cont", valueList[1]);
+//    		infoList.add(map);
+//    	}
+
+
     	model.addAttribute("clist", cList);
     	
     	model.addAttribute("fdto",fdto);
-    	model.addAttribute("infoList",infoList);
+    	model.addAttribute("infoList", infoList);
 
     	model.addAttribute("mapList",mapList);
     	model.addAttribute("m", "m");

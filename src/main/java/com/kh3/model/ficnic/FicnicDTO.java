@@ -7,9 +7,13 @@ public class FicnicDTO {
 
 	private int ficnic_no;
 	private String ficnic_category_no;
+	private String ficnic_category_name;
 	private String ficnic_category_sub1;
+	private String ficnic_category_sub1_name;
 	private String ficnic_category_sub2;
+	private String ficnic_category_sub2_name;
 	private String ficnic_category_sub3;
+	private String ficnic_category_sub3_name;
 	private String ficnic_name;
 	private int ficnic_market_price;
 	private int ficnic_sale_price;

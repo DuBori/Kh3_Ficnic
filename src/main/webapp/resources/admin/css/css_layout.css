@@ -879,6 +879,47 @@ main .input-form .row > .form-group #idchk_result.no {
 
 
 
+main .input-form .row > .form-group .cate-show {
+    position: relative;
+    width: 100%;
+    min-height: 34px;
+    max-height: 175px;
+    padding: 2px 7px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    background: #fff;
+    overflow: auto;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    border-radius: .25rem;
+}
+main .input-form .row > .form-group .cate-show li {
+    position: relative;
+    width: 100%;
+    padding: 5px 0 5px 7px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    list-style-type: disc !important;
+    list-style-position: inside !important;
+}
+main .input-form .row > .form-group .cate-show li button {
+    float: right;
+    color: #666;
+    border: 1px solid #eee;
+}
+main .input-form .row > .form-group .cate-show li button:hover {
+    border-color: #666;
+}
+main .input-form .row > .form-group .cate-show li i {
+    padding: 2px 3px;
+}
+main .input-form .row > .form-group .cate-show p {
+    margin: 4px 0 0 2px;
+    color: #888;
+}
+
+
+
 main .custom-control {
     display: inline-block;
     vertical-align: middle;
