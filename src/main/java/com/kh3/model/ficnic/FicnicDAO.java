@@ -24,5 +24,8 @@ public interface FicnicDAO {
 	
 	/* 피크닉 검색 상품 개수 */	
 	int getListCount(Map<String, Object> map);
+	
+	/* 쿠폰 상세 내역에서 상품 정보 찾기 */
+	String checkFicnic(String string);
 
 }
