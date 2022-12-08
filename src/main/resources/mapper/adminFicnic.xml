@@ -20,11 +20,59 @@
     	insert into ficnic_list values(#{ficnic_no}+1,#{ficnic_category_no},#{ficnic_category_sub1},#{ficnic_category_sub2},#{ficnic_category_sub3},#{ficnic_name},#{ficnic_market_price},#{ficnic_sale_price},#{ficnic_option_title},#{ficnic_option_price},#{ficnic_select_title},#{ficnic_select_price},#{ficnic_date_use},#{ficnic_photo1},#{ficnic_photo2},#{ficnic_photo3},#{ficnic_photo4},#{ficnic_photo4},#{ficnic_info},#{ficnic_detail},#{ficnic_curriculum},#{ficnic_etc},#{ficnic_location},#{ficnic_address},#{ficnic_include},#{ficnic_notinclude},#{ficnic_prepare},#{ficnic_caution},#{ficnic_review_point},#{ficnic_review_count},#{ficnic_hit},#{ficnic_sale},sysdate)
     </insert>
     
+
+
     <!-- 해당 피크닉 정보  -->
-	<select id="adminFicnicCont" parameterType="int" resultType="ficnicDTO">
-		select * from ficnic_list where ficnic_no=#{no}
-	</select>
+    <resultMap id="ficnicContMap" type="ficnicDTO">
+        <result property="ficnic_category_no" column="ficnic_category_no" />
+        <result property="ficnic_category_sub1" column="ficnic_category_sub1" />
+        <result property="ficnic_category_sub2" column="ficnic_category_sub2" />
+        <result property="ficnic_category_sub3" column="ficnic_category_sub3" />
+        <collection property="ficnic_category_name" column="ficnic_category_no" select="adminFicnicCategoryName" javaType="String" ofType="String" />
+        <collection property="ficnic_category_sub1_name" column="ficnic_category_sub1" select="adminFicnicCategorySub1Name" javaType="String" ofType="String" />
+        <collection property="ficnic_category_sub2_name" column="ficnic_category_sub2" select="adminFicnicCategorySub2Name" javaType="String" ofType="String" />
+        <collection property="ficnic_category_sub3_name" column="ficnic_category_sub3" select="adminFicnicCategorySub3Name" javaType="String" ofType="String" />
+    </resultMap>
+     
+    <select id="adminFicnicCont" resultMap="ficnicContMap">
+        select * from ficnic_list where ficnic_no = #{no}
+    </select>
+
+    <select id="adminFicnicCategoryName" resultType="String">
+        select substr(sys_connect_by_path(category_name, ' > '), 4)
+        from ficnic_category
+        where category_id = #{ficnic_category_no}
+        start with category_id_up = 'M'
+        connect by prior category_id = category_id_up
+    </select>
+
+    <select id="adminFicnicCategorySub1Name" resultType="String">
+        select substr(sys_connect_by_path(category_name, ' > '), 4)
+        from ficnic_category
+        where category_id = #{ficnic_category_sub1}
+        start with category_id_up = 'M'
+        connect by prior category_id = category_id_up
+    </select>
+
+    <select id="adminFicnicCategorySub2Name" resultType="String">
+        select substr(sys_connect_by_path(category_name, ' > '), 4)
+        from ficnic_category
+        where category_id = #{ficnic_category_sub2}
+        start with category_id_up = 'M'
+        connect by prior category_id = category_id_up
+    </select>
+
+    <select id="adminFicnicCategorySub3Name" resultType="String">
+        select substr(sys_connect_by_path(category_name, ' > '), 4)
+        from ficnic_category
+        where category_id = #{ficnic_category_sub3}
+        start with category_id_up = 'M'
+        connect by prior category_id = category_id_up
+    </select>
 	
+
+
+
 	<!-- 해당 피크닉 수정  -->
 	<update id="adminFicnicModify" parameterType="ficnicDTO">
 		update ficnic_list set ficnic_category_no =#{ficnic_category_no},

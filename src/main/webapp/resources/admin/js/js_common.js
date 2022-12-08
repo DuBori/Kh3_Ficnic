@@ -175,6 +175,81 @@ $(document).ready(function(){
 
 
 
+
+/////////////////////////////////////////////////////
+// 피크닉 - 카테고리 선택 적용하기
+/////////////////////////////////////////////////////
+setCategory = function(){
+    var get_type = $("#modalCategory").attr("type");
+    var get_ctid = $("#modalCategory .ft-title.now").attr("ctid");
+    var get_path = $("#modalCategory .ft-title.now").attr("path");
+
+
+    // 기본 카테고리
+    if(get_type == "default"){
+        $(".input-form .form-group input[name='ficnic_category_no']").val(get_ctid);
+        $(".input-form .form-group .cate-show.parent").html("<li>"+get_path+"</li>");
+
+
+    // 다중 카테고리
+    }else{
+        var get_sub_cnt = $(".input-form .form-group .cate-show.sub li").length;
+        if(get_sub_cnt == 0){
+            $(".input-form .form-group .cate-show.sub").html("");
+        }
+        if(get_sub_cnt < 3){
+            if($(".input-form .form-group .cate-show.sub li."+get_ctid).length == 0){
+                $(".input-form .form-group .cate-show.sub").append("<li class=\""+get_ctid+"\">"+get_path+"<button type=\"button\"><i class=\"fa fa-times\"></i></button><input type=\"hidden\" name=\"ficnic_category_sub[]\" value=\""+get_ctid+"\" /></li>");
+            }
+        }else{
+            alert("다중 카테고리는 최대 3개까지 지정 할 수 있습니다.");
+        }
+
+    }
+    $("#modalCategory .btn-close").trigger("click");
+    $("#modalCategory .folder-tree .depth01-minus").each(function(){
+        $(this).removeClass("depth01-minus").addClass("depth01-plus");
+        $(this).find(".sort-list").hide();
+    });
+}
+
+
+/////////////////////////////////////////////////////
+// 피크닉 - 다중 카테고리 선택 삭제하기
+/////////////////////////////////////////////////////
+$(document).ready(function(){
+    $("body").on("click", ".input-form .form-group .cate-show.sub li button", function(){
+        $(this).parent().remove();
+
+        var get_sub_cnt = $(".input-form .form-group .cate-show.sub li").length;
+        if(get_sub_cnt == 0){
+            $(".input-form .form-group .cate-show.sub").html("<p>등록된 카테고리가 없습니다.</p>");
+        }
+    });
+});
+
+
+
+/////////////////////////////////////////////////////
+// 피크닉 - 폼체크
+/////////////////////////////////////////////////////
+chkFicnicWrite = function(){
+    var f = document.ficnic_form;
+
+    if(f.ficnic_category_no.value.length == ""){
+        alert("[기본 카테고리]는 반드시 선택해야 합니다.");
+        f.ficnic_category_no.focus();
+        return false;
+    }
+
+    f.submit();
+}
+
+
+
+
+
+
 /////////////////////////////////////////////////////
 // 팝업창 띄우기
 /////////////////////////////////////////////////////
