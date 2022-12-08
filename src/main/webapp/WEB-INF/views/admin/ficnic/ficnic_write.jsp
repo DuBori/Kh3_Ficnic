@@ -132,8 +132,8 @@
 		                  
 		                  <h4 class="view-limit">옵션</h4><input type="button" value="옵션 추가하기" id="optionBtn">
 		                  <div id="optionDiv">
-			              	  <c:if test="${!empty m and !empty mapList }">
-								  	<c:forEach var="option" items="${mapList}">
+			              	  <c:if test="${!empty m and !empty optionList }">
+								  	<c:forEach var="option" items="${optionList}">
 								  		<div class="row form mb-1 view-limit">
 								  		  <div class="form-group col-sm">
 				                              <label for="goods_ea_total">옵션 타이틀</label>
@@ -177,27 +177,27 @@
 		                          <label>상품 사진</label>
 		                          <c:if test="${!empty fdto.getFicnic_photo1() }">
 		                          	<img alt="이미지 없음" src="<%=request.getContextPath()%>${fdto.getFicnic_photo1() }">
-		                          	<input type="hidden" name="ori_category_image1" value="${fdto.getFicnic_photo1() }">
+		                          	<input type="hidden" name="ori_ficnic_image1" value="${fdto.getFicnic_photo1() }">
 		                          </c:if>
 		                          <input type="file" name="photo1"  class="form-control w-50">
 		                          <c:if test="${!empty fdto.getFicnic_photo2() }">
 		                          	<img alt="이미지 없음" src="<%=request.getContextPath()%>${fdto.getFicnic_photo2() }">
-		                          	<input type="hidden" name="ori_category_image2" value="${fdto.getFicnic_photo2() }">
+		                          	<input type="hidden" name="ori_ficnic_image2" value="${fdto.getFicnic_photo2() }">
 		                          </c:if>
 		                          <input type="file" name="photo2"  class="form-control w-50">
 		                          <c:if test="${!empty fdto.getFicnic_photo3() }">
 		                          	<img alt="이미지 없음" src="<%=request.getContextPath()%>${fdto.getFicnic_photo3() }">
-		                         	<input type="hidden" name="ori_category_image3" value="${fdto.getFicnic_photo3() }">
+		                         	<input type="hidden" name="ori_ficnic_image3" value="${fdto.getFicnic_photo3() }">
 		                          </c:if>
 		                          <input type="file" name="photo3"  class="form-control w-50">
 		                          <c:if test="${!empty fdto.getFicnic_photo4() }">
 		                          	<img alt="이미지 없음" src="<%=request.getContextPath()%>${fdto.getFicnic_photo4() }">
-		                          	<input type="hidden" name="ori_category_image4" value="${fdto.getFicnic_photo4() }">
+		                          	<input type="hidden" name="ori_ficnic_image4" value="${fdto.getFicnic_photo4() }">
 		                          </c:if>
 		                          <input type="file" name="photo4"  class="form-control w-50">
 		                          <c:if test="${!empty fdto.getFicnic_photo5() }">
 		                          	<img alt="이미지 없음" src="<%=request.getContextPath()%>${fdto.getFicnic_photo5() }">
-		                          	<input type="hidden" name="ori_category_image5" value="${fdto.getFicnic_photo5() }">
+		                          	<input type="hidden" name="ori_ficnic_image5" value="${fdto.getFicnic_photo5() }">
 		                          </c:if>
 		                          <input type="file" name="photo5"  class="form-control w-50">
 		                      </div>

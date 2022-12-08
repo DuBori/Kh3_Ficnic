@@ -21,8 +21,9 @@ public interface FicnicDAO {
 	int deleteFicnic(int no);
 	/* 피크닉 삭제 후 번호 정렬 */
 	void updateSeq(int no);
-	
 	/* 피크닉 검색 상품 개수 */	
 	int getListCount(Map<String, Object> map);
+	/* 피크닉 데이터 존재 위치 리스트 */		
+	List<String> getFicnicLocationList();
 
 }
