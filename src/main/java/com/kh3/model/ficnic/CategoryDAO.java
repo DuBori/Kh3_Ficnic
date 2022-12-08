@@ -21,5 +21,7 @@ public interface CategoryDAO {
     void updateCategoryFicnic(String ps_ctid);
     
     String checkCategory(String coupon_use_value);
+    
+    List<FicnicDTO> getExistCategoryList();
 
 }

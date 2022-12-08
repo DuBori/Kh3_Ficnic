@@ -35,6 +35,10 @@ public class MemberDTO {
     @AssertTrue(message = "idchk")
     private boolean idchk;
     
+    // DB 이메일 중복 체크 변수
+    @AssertTrue(message = "mailchk")
+    private boolean mailchk;
+    
     // 비밀번호 확인 체크 변수
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*\\W)(?=\\S+$).{6,12}", message = "pw_re")    
     private String member_pw_re;

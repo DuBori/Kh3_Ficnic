@@ -145,7 +145,7 @@ public class AdminMemberController {
     public void writeOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto, HttpServletResponse response) throws IOException {
     	response.setContentType("text/html; charset=UTF-8");
     	PrintWriter out = response.getWriter();
-    	
+		System.out.println("=============dto는111?" + dto);
     	// 비밀번호 일치 확인
     	if(!dto.getMember_pw().equals(dto.getMember_pw_re())) {
 			out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
@@ -153,7 +153,7 @@ public class AdminMemberController {
     	// 유효성 검사
     	if(result.hasErrors()) {
 			List<ObjectError> list = result.getAllErrors();
-			
+    		System.out.println("=============dto는222?" + dto);
 			for (ObjectError error : list) {
 				if(error.getDefaultMessage().equals("idchk")) {	
 					out.println("<script>alert('사용 할수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); history.back();</script>"); break;
@@ -167,10 +167,12 @@ public class AdminMemberController {
 					out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
 				}else if(error.getDefaultMessage().equals("phone")) {
 					out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
-				}
+				} 
 			}
     	}else {		// 이상 없을 때 실행
+    		System.out.println("=============dto는?" + dto);
     		int check = this.dao.writeOkMember(dto);
+    		System.out.println("============check는?" + check);
     		if (check > 0) {
     			// 회원 가입 포인트 적립
     			this.pdao.joinPoint(pdto);

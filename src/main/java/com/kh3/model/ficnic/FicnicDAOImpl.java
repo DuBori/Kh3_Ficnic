@@ -111,11 +111,16 @@ public class FicnicDAOImpl implements FicnicDAO {
 		map.put("endNo", endNo);
 		return this.sqlSession.selectList("adminFicnicSearchList",map);
 	}
-	
+	/* 피크닉 데이터 존재 위치 리스트 */	
+	@Override
+	public List<String> getFicnicLocationList() {
+		return this.sqlSession.selectList("adminFicnicLocationList");
+	}
 	/* 쿠폰 상세 내역에서 상품 정보 찾기 */
 	@Override
 	public String checkFicnic(String coupon_use_value) {
 		return this.sqlSession.selectOne("admincheckFicnic", coupon_use_value);
+
 	}
 
 

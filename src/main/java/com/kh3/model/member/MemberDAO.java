@@ -15,6 +15,9 @@ public interface MemberDAO {
 
     // 회원 아이디 중복 체크
     int checkId(String userId);
+    
+    // 회원 이메일 중복 체크
+    int checkEmail(String userEmail);
 
     // 회원 추가
     int writeOkMember(MemberDTO dto);
@@ -49,8 +52,7 @@ public interface MemberDAO {
     // 결과 출력창에 비밀번호 보내기
     String findPw(MemberDTO dto);
     
-    int idCheck(MemberDTO dto);
-    
     int joinMember(MemberDTO dto);
+    
     
 }
