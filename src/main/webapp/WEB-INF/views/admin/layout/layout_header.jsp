@@ -34,6 +34,7 @@
     <link type="text/css" rel="stylesheet" href="${path}/resources/admin/css/bootstrap-grid.min.css" />
     <link type="text/css" rel="stylesheet" href="${path}/resources/admin/css/font_awesome.css" />
     <link type="text/css" rel="stylesheet" href="${path}/resources/admin/css/simple-line-icons.css" />
+    <link type="text/css" rel="stylesheet" href="${path}/resources/admin/css/bootstrap-tagsinput.css" />
     <link type="text/css" rel="stylesheet" href="${path}/resources/admin/css/css_common.css?${time}" />
     <link type="text/css" rel="stylesheet" href="${path}/resources/admin/css/css_layout.css?${time}" />
 
@@ -42,7 +43,9 @@
     <script language="javascript" src="${path}/resources/admin/js/jquery-ui.min.js"></script>
     <script language="javascript" src="${path}/resources/admin/js/bootstrap.min.js"></script>
     <script language="javascript" src="${path}/resources/admin/js/bootstrap.bundle.min.js"></script>
+    <script language="javascript" src="${path}/resources/admin/js/bootstrap-tagsinput.min.js"></script>
     <script language="javascript" src="${path}/resources/admin/js/Sortable.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.16.0/standard-all/ckeditor.js"></script>
     <script language="javascript" src="${path}/resources/admin/js/js_common.js?${time}"></script>
 </head>
 <body>
