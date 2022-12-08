@@ -241,8 +241,6 @@ public class AdminFicnicController {
     	
     }
 
-
-
     // 피크닉 수정 페이지
     @RequestMapping("admin/ficnic/ficnic_modify.do")
     public String ficnicModify(@RequestParam("no") int no,Model model) {
