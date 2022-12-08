@@ -12,7 +12,7 @@ var idJ = /^[a-z0-9]{6,12}$/;
 //비밀번호 정규식
 var pwJ = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 //이름 정규식
-var nameJ = /^[가-힣]{3,8}$/;
+var nameJ = /^[가-힣]{2,8}$/;
 //이메일 검사 정규식
 var mailJ = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 //휴대폰 번호 정규식
@@ -140,17 +140,6 @@ $("#member_name").keyup(function() {
 });
 	});
 
-/* // 이메일
-	$(function() {
-$("#member_email").keyup(function() {
-	if (mailJ.test($(this).val())) {
-    	ajaxTxt = "<span style=\"color:blue\">Good.</span>";
-	} else {
-    	ajaxTxt = "<span style=\"color:red\">이메일을 확인해주세요 :)</span>";
-	}
-    $("#email_check").html(ajaxTxt);
-});
-}); */
 
 //휴대폰
 $(function() {
@@ -200,7 +189,7 @@ $(function() {
 			<!-- 비밀번호 재확인 -->
 			<div class="form-group">
 				<label for="member_pw2">비밀번호 확인</label>
-				<input type=""password"" class="form-control" id="member_pw_re" name="member_pw_re" placeholder="비밀번호를 다시 입력해주세요." required>
+				<input type="password" class="form-control" id="member_pw_re" name="member_pw_re" placeholder="비밀번호를 다시 입력해주세요." required>
 				<div class="check_font" id="pw_re_check"></div>
 			</div>
 			<!-- 이름 -->
@@ -212,14 +201,14 @@ $(function() {
 			<!-- 이메일 -->
 			<div class="form-group">
 				<label for="member_email">이메일</label>
-				<input type="email" class="form-control" id="member_email" name="member_email" placeholder="이메일을 입력해주세요." required>
+				<input type="email" class="form-control" id="member_email" name="member_email" placeholder="이메일을 입력해주세요." onkeydown="EmailInput(this);" required>
 				<div id="mailchk-txt" class="d-inline ml-2 check_font"></div>
 				<input type="hidden" name="mailchk" value="false" />
 			</div>
 			<!-- 휴대전화 -->
 			<div class="form-group">
 				<label for="member_phone">연락처</label>
-				<input type="text" class="form-control" id="member_phone" name="member_phone" placeholder="-을 포함한 전화번호를 입력해주세요." required>
+				<input type="text" class="form-control" id="member_phone" name="member_phone" placeholder="-을 포함한 전화번호를 입력해주세요." onkeydown="NumSpInput(this);" required>
 				<div class="check_font" id="phone_check"></div>
 			</div>
 			

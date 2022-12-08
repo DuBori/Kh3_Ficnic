@@ -54,4 +54,5 @@ public interface MemberDAO {
     
     int joinMember(MemberDTO dto);
     
+    
 }

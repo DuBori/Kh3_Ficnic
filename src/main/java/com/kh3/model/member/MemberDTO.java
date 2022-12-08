@@ -31,15 +31,13 @@ public class MemberDTO {
     @Pattern(regexp = "^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\\.[A-Za-z0-9\\-]+$", message = "email")
     private String member_email;
     
-
-	// DB 아이디 중복 체크 변수
-	@AssertTrue(message = "idchk") 
-	private boolean idchk;
-	
-	// DB 이메일 중복 체크 변수
-	@AssertTrue(message = "mailchk") 
-	private boolean mailchk;
-	 
+    // DB 아이디 중복 체크 변수
+    @AssertTrue(message = "idchk")
+    private boolean idchk;
+    
+    // DB 이메일 중복 체크 변수
+    @AssertTrue(message = "mailchk")
+    private boolean mailchk;
     
     // 비밀번호 확인 체크 변수
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*\\W)(?=\\S+$).{6,12}", message = "pw_re")    
