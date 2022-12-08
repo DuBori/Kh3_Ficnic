@@ -79,8 +79,8 @@
                                         <div class="col pb-2">
                                             <button type="button" class="btn btn-sm btn-outline-success">상품 지정</button>
                                             <ul class="list-box">
-                                                <li><input type="hidden" name="coupon_category_value" value="10000000" />테스트 상품<button type="button"><i class="fa fa-times"></i></button></li>
-                                                <li><input type="hidden" name="coupon_category_value" value="15000000" />테2스2트2 상품<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="05000000" />테스트 상품<button type="button"><i class="fa fa-times"></i></button></li>
+                                                <li><input type="hidden" name="coupon_category_value" value="01110000" />테2스2트2 상품<button type="button"><i class="fa fa-times"></i></button></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -156,7 +156,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                     </div>
-                                                    <input type="text" name="coupon_start_date" id="startDt" value="${dto.getCoupon_start_date() }" class="form-control text-center eng" />
+                                                    <input type="text" name="coupon_start_date" id="startDt" value="${dto.getCoupon_start_date().substring(0,10) }" class="form-control text-center eng" />
                                                 </div>
                                             </div>
                                             <div class="d-inline-block pt-2 px-2">~</div>
@@ -165,7 +165,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                     </div>
-                                                    <input type="text" name="coupon_end_date" id="endDt" value="${dto.getCoupon_end_date() }" class="form-control text-center eng" />
+                                                    <input type="text" name="coupon_end_date" id="endDt" value="${dto.getCoupon_end_date().substring(0,10) }" class="form-control text-center eng" />
                                                 </div>
                                             </div>
                                         </div>

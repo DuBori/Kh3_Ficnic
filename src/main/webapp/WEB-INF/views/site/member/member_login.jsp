@@ -17,7 +17,7 @@
 <div class="contents w1100" align="center">
 
 
-	<form name="form1" method="post" action="<%=request.getContextPath() %>/member/member_login_check.do">
+	<form name="form1" method="post" action="${path}/member/member_login_check.do">
 		<table border="1" width="400px">
 			<tr>
 				<td>아이디</td>
@@ -31,8 +31,7 @@
 				<td colspan="2" align="center">
 					<input type="submit" id="btnLogin" value="로그인"> 
 
-
-		<div class="mf-find"><a href="<%=request.getContextPath()%>/member/member_find.do">
+		<div class="mf-find"><a href="${path}/member/member_find.do">
 		<i class="fa fa-question-circle"></i> 아이디/비밀번호 찾기</a></div>
 
 				</td>

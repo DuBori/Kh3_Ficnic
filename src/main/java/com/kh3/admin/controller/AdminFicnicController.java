@@ -295,14 +295,15 @@ public class AdminFicnicController {
     // 피크닉 수정 페이지
     @RequestMapping("admin/ficnic/ficnic_modify.do")
     public String ficnicModify(@RequestParam("no") int no,Model model) {
-    	int cnt=0;
+    	int cnt = 0;
+
     	// 기존에 있던 해당 피크닉 상품 정보 불러와야한다.
-    	FicnicDTO fdto =this.dao.getFicnicCont(no);
+    	FicnicDTO fdto = this.dao.getFicnicCont(no);
     	List<CategoryDTO> cList = cdao.getCategoryList();
     	
     	String[] optionTitle = null; if(fdto.getFicnic_option_title()!= null) optionTitle = fdto.getFicnic_option_title().split("★");
     	Object[] optionPrice = null; if(fdto.getFicnic_option_price()!= null) optionPrice = fdto.getFicnic_option_price().split("★");
-		
+	
     	String[] selectTitle = null; if(fdto.getFicnic_select_title()!= null) selectTitle = fdto.getFicnic_select_title().split("★");
     	Object[] selectPrice = null; if(fdto.getFicnic_select_price()!= null) selectPrice = fdto.getFicnic_select_price().split("★");
 		 
@@ -321,6 +322,7 @@ public class AdminFicnicController {
     	}   
     	/* 앞단 보여질 select_option 처리 */
     	
+
     	
     	List<HashMap<String, Object>> selectList = new ArrayList<HashMap<String,Object>>();
 		
@@ -340,21 +342,23 @@ public class AdminFicnicController {
 
 		/* 앞단 보여질 info 처리 */
     	String[] list =fdto.getFicnic_info().split("★");
+
     	
     	List<HashMap<String, String>> infoList = new ArrayList<HashMap<String,String>>();
     	
-    	for(String value: list) {
-    		String[] valueList = value.split(",");
-    		HashMap<String, String> map = new HashMap<String, String>();
-    		map.put("title", valueList[0]);
-    		map.put("cont", valueList[1]);
-    		infoList.add(map);
-    	}
-    	
+//    	for(String value: list) {
+//    		String[] valueList = value.split(",");
+//    		HashMap<String, String> map = new HashMap<String, String>();
+//    		map.put("title", valueList[0]);
+//    		map.put("cont", valueList[1]);
+//    		infoList.add(map);
+//    	}
+
+
     	model.addAttribute("clist", cList);
     	
     	model.addAttribute("fdto",fdto);
-    	model.addAttribute("infoList",infoList);
+    	model.addAttribute("infoList", infoList);
 
     	model.addAttribute("optionList",optionList);
     	model.addAttribute("selectList",selectList);

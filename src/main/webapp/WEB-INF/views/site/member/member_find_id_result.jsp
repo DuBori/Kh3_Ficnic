@@ -22,7 +22,7 @@
         <div class="mf-result">회원님의 아이디는 <br /> <strong>${id }</strong> 입니다.</div>
 
         <div class="mf-btn">
-            <p><a href="<%=request.getContextPath()%>/member/member_login.do">로그인</a></p>
+            <p><a href="${path}/member/member_login.do">로그인</a></p>
         </div>
     </div>
 </div>
