@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -41,10 +42,25 @@ public class SiteMemberController {
 	
 	// 로그인
 	@RequestMapping("member/member_login_check.do")
-	public void login_check(MemberDTO dto, HttpSession session, HttpServletResponse response) throws IOException {
+	public void login_check(MemberDTO dto, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
 
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
+		
+		String login_id = dto.getMember_id();
+		String login_pw = dto.getMember_pw();
+		String login_email = dto.getMember_email();
+
+		int sessionMem = this.dao.sessionMember(dto);
+		System.out.println("sessionmem=========" + sessionMem);
+		
+		session = request.getSession();
+		
+		/*
+		 * MemberDTO dto = dao.getMemberInfo(login_id); 
+		  
+		 */
+		
 		
 		// 아이디 체크
 		int result = this.dao.loginCheck(dto);

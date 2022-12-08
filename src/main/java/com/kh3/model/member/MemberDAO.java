@@ -54,5 +54,7 @@ public interface MemberDAO {
     
     int joinMember(MemberDTO dto);
     
+    // 세션
+    int sessionMember(MemberDTO dto);
     
 }
