@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh3.model.ficnic.CategoryDAO;
@@ -36,7 +35,6 @@ public class AdminFicnicController {
     @Inject
     private CategoryDAO cdao;
 
-
     // 카테고리 업로드 설정
     private String categoryFolder = "/resources/data/category/";
     private String categorySaveName = "category";
@@ -45,56 +43,29 @@ public class AdminFicnicController {
     private String ficnicFolder = "/resources/data/ficnic/";
     private String ficnicSaveName = "ficnic";
 
-
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
 
     // 전체 게시물의 수
     private int totalRecord = 0;
 
-
-
-    // 피크닉 목록 페이지
+    // 피크닉 조회 및 검색 목록 페이지
     @RequestMapping("admin/ficnic/ficnic_list.do")
-    public String ficnicList(Model model, HttpServletRequest request) {
+    public String ficnicList(
+    		@RequestParam(value = "finic_category_no", required = false, defaultValue = "") String finic_category_no,
+    		@RequestParam(value = "ficnic_location", required = false, defaultValue = "") String ficnic_location,
+    		@RequestParam(value = "ficnic_address", required = false, defaultValue = "") String ficnic_address,
+    		@RequestParam(value = "ficnic_name", required = false, defaultValue = "") String ficnic_name,
+    		@RequestParam(value = "page",required = false ,defaultValue = "1") int page,
+    		Model model, HttpServletRequest request) {
     	
-
     	// 피크닉 데이터가 존재하는 지역
     	List<String> locationList = dao.getFicnicLocationList();
     	
     	// 피크닉 데이터가 존재하는 카테고리 
     	List<FicnicDTO> cList = cdao.getExistCategoryList();
     	
-		/* 페이징 처리 */
-    	// 페이징 처리
-		int page; // 현재 페이지 변수
-		if (request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
-		} else {
-			page = 1;
-		}
-		String finic_category_no="";
-		String ficnic_location="";
-		String ficnic_address="";
-		String ficnic_name="";
-		if (request.getParameter("finic_category_no")!=null) {
-			finic_category_no = request.getParameter("finic_category_no");
-		}
-		if (request.getParameter("ficnic_location")!=null) {
-			ficnic_location = request.getParameter("ficnic_location");
-		}
-		if (request.getParameter("ficnic_address")!=null) {
-			ficnic_address = request.getParameter("ficnic_address");
-		}
-		if (request.getParameter("ficnic_name")!=null) {
-			ficnic_name = request.getParameter("ficnic_name");
-		}
-		
-		ficnic_location = request.getParameter("ficnic_location");
-		ficnic_name = request.getParameter("ficnic_name");
-		
-		System.out.println(finic_category_no+","+ficnic_location+","+ficnic_name);
-		Map<String, Object> map = new HashMap<String, Object>();
+    	Map<String, Object> map = new HashMap<String, Object>();
 		map.put("category_no", finic_category_no);
 		map.put("location", ficnic_location);
 		map.put("addr", ficnic_address);
@@ -107,10 +78,8 @@ public class AdminFicnicController {
 		// 페이지 이동 URL
 		String pageUrl = request.getContextPath() + "/admin/ficnic/ficnic_list.do?category_no="+finic_category_no+"&location="+ficnic_location+"&name"+ficnic_name;
 
-		System.out.println(dto.getStartNo()+","+dto.getEndNo());
 		List<FicnicDTO> fList = dao.getFicnicList(dto.getStartNo(), dto.getEndNo(), map);
-		
-		
+				
        	model.addAttribute("flist", fList);
     	model.addAttribute("clist", cList);
     	model.addAttribute("locationList", locationList);
@@ -125,7 +94,6 @@ public class AdminFicnicController {
 		
         return "admin/ficnic/ficnic_list";
     }
-
 
     // 피크닉 보기 페이지
     @RequestMapping("admin/ficnic/ficnic_view.do")
@@ -142,23 +110,23 @@ public class AdminFicnicController {
 		
     	
     	List<HashMap<String, Object>> optionList = new ArrayList<HashMap<String,Object>>();
+    	
     	/* 앞단 보여질 option 처리 */
-    	cnt=0;
-    	for(String value : optionTitle) {
-    		HashMap<String, Object> map = new HashMap<String, Object>();
-    		map.put("title", value);
-    		map.put("price", Integer.parseInt((String) optionPrice[cnt]));
-    		optionList.add(map);
-    		cnt++;
-    	}   
-    	/* 앞단 보여질 select_option 처리 */
-    	
-    	
+    	if(optionTitle!=null && optionPrice!=null) {
+	    	cnt=0;
+	    	for(String value : optionTitle) {
+	    		HashMap<String, Object> map = new HashMap<String, Object>();
+	    		map.put("title", value);
+	    		map.put("price", Integer.parseInt((String) optionPrice[cnt]));
+	    		optionList.add(map);
+	    		cnt++;
+	    	}
+    	}
+
     	List<HashMap<String, Object>> selectList = new ArrayList<HashMap<String,Object>>();
 		
     	/* 앞단 보여질 option 처리 */
-    	/* 앞단 보여질 select_option 처리 */
-    		
+    	/* 앞단 보여질 select_option 처리 */    		
     	if(selectTitle!=null && selectPrice!=null) {
 	    	cnt=0;
 	    	for(String value : selectTitle) {
@@ -171,16 +139,19 @@ public class AdminFicnicController {
     	}
 
 		/* 앞단 보여질 info 처리 */
-    	String[] list =fdto.getFicnic_info().split("★");
-    	
+    	String[] list=null;    	
+    	if(fdto.getFicnic_info()!=null) list =fdto.getFicnic_info().split("★");
+ 	
     	List<HashMap<String, Object>> infoList = new ArrayList<HashMap<String,Object>>();
-    	cnt=0;
-    	for(String value: list) {
-    		String[] valueList = value.split(",");
-    		HashMap<String, Object> map = new HashMap<String, Object>();
-    		map.put("title", valueList[0]);
-    		map.put("cont", valueList[1]);
-    		infoList.add(map);
+    	if(list!=null) {
+	    	cnt=0;
+	    	for(String value: list) {
+	    		String[] valueList = value.split(",");
+	    		HashMap<String, Object> map = new HashMap<String, Object>();
+	    		map.put("title", valueList[0]);
+	    		map.put("cont", valueList[1]);
+	    		infoList.add(map);
+	    	}
     	}
     	
     	model.addAttribute("dto", fdto);
@@ -188,19 +159,10 @@ public class AdminFicnicController {
     	model.addAttribute("optionList",optionList);
     	model.addAttribute("selectList",selectList);
     	model.addAttribute("infoList",infoList);
-    	
-    	
-    	
-    	
-    	
+    		
     	return "admin/ficnic/ficnic_view";
     }
     
-    
-    
-
-
-
     // 피크닉 등록 페이지
     @RequestMapping("admin/ficnic/ficnic_write.do")
     public String ficnicWrite(Model model, HttpServletRequest request) {
@@ -210,8 +172,6 @@ public class AdminFicnicController {
         return "admin/ficnic/ficnic_write";
     }
 
-
-
     // 피크닉 등록 처리
     @RequestMapping("admin/ficnic/ficnic_write_ok.do")
     public void ficnicWriteOk(FicnicDTO dto,MultipartHttpServletRequest mRequest ,HttpServletResponse response) throws Exception {
@@ -219,7 +179,7 @@ public class AdminFicnicController {
     	//서브 카테고리 처리
     	String[] ficnicSub =null;
     	if(mRequest.getParameter("ficnic_sub")!=null) {
-    		ficnicSub=mRequest.getParameter("ficnic_sub").split("/");
+    		ficnicSub=mRequest.getParameter("ficnic_sub").split(",");
     		for(String sub : ficnicSub) {
     			switch (cnt) {
 				case 0:
@@ -246,11 +206,10 @@ public class AdminFicnicController {
     	if (dto.getFicnic_select_price()!=null) dto.setFicnic_option_price(dto.getFicnic_option_price().replace(",","★"));
     	String res="";
     	
-
 		/* 피크닉 정보(info) 처리 */
     	if(dto.getFicnic_info()!=null) {
-    		String[] infoList = dto.getFicnic_info().split(",");
-        	cnt=0;
+    		cnt=0;
+    		String[] infoList = dto.getFicnic_info().split(",");   	
         	for(String info : infoList) {
         		if(cnt%2==0) {
         			res+=info+",";	
@@ -260,15 +219,9 @@ public class AdminFicnicController {
         		}
         		cnt++;	
         	}
-    	}
-    	
-    	
-    	
-    	
+    	} 	
     	dto.setFicnic_info(res);
-    	
-    	
-    	
+    	    	
     	response.setContentType("text/html; charset=utf-8");
     	PrintWriter out= response.getWriter();
     	
@@ -277,11 +230,9 @@ public class AdminFicnicController {
         
         List<String> upload_list = UploadFile.fileUpload(mRequest, ficnicFolder, ficnicSaveName);
     	for(String imgsrc : upload_list) {
-    		System.out.println(imgsrc);
     		ficnic_imagesrc.add(imgsrc);
     	}
-    	
-    	
+    	    	
     	if(this.dao.writeFicnic(dto, ficnic_imagesrc)>0) {
     		out.println("<script>location.href='"+mRequest.getContextPath()+"/admin/ficnic/ficnic_list.do'</script>");
     	}else {
@@ -306,24 +257,23 @@ public class AdminFicnicController {
 	
     	String[] selectTitle = null; if(fdto.getFicnic_select_title()!= null) selectTitle = fdto.getFicnic_select_title().split("★");
     	Object[] selectPrice = null; if(fdto.getFicnic_select_price()!= null) selectPrice = fdto.getFicnic_select_price().split("★");
-		 
-    	 
-    	 
+		 	 
     	List<HashMap<String, Object>> optionList = new ArrayList<HashMap<String,Object>>();
 		
     	/* 앞단 보여질 option 처리 */
-    	cnt=0;
-    	for(String value : optionTitle) {
-    		HashMap<String, Object> map = new HashMap<String, Object>();
-    		map.put("title", value);
-    		map.put("price", Integer.parseInt((String) optionPrice[cnt]));
-    		optionList.add(map);
-    		cnt++;
-    	}   
+    	if(optionTitle!=null  && optionPrice!=null) {
+    		cnt=0;
+        	for(String value : optionTitle) {
+        		HashMap<String, Object> map = new HashMap<String, Object>();
+        		map.put("title", value);
+        		map.put("price", Integer.parseInt((String) optionPrice[cnt]));
+        		optionList.add(map);
+        		cnt++;
+        	}   
+    	}
+    	
     	/* 앞단 보여질 select_option 처리 */
-    	
-
-    	
+    	   	
     	List<HashMap<String, Object>> selectList = new ArrayList<HashMap<String,Object>>();
 		
     	/* 앞단 보여질 option 처리 */
@@ -341,18 +291,19 @@ public class AdminFicnicController {
     	}
 
 		/* 앞단 보여질 info 처리 */
-    	String[] list =fdto.getFicnic_info().split("★");
-
-    	
+    	   	
     	List<HashMap<String, String>> infoList = new ArrayList<HashMap<String,String>>();
-    	
-//    	for(String value: list) {
-//    		String[] valueList = value.split(",");
-//    		HashMap<String, String> map = new HashMap<String, String>();
-//    		map.put("title", valueList[0]);
-//    		map.put("cont", valueList[1]);
-//    		infoList.add(map);
-//    	}
+//		String[] list=null;    	
+//  	if(fdto.getFicnic_info()!=null) list =fdto.getFicnic_info().split("★");
+//    	if(list!=null) {    	
+//	     	for(String value: list) {
+//	    		String[] valueList = value.split(",");
+//	    		HashMap<String, String> map = new HashMap<String, String>();
+//	    		map.put("title", valueList[0]);
+//	    		map.put("cont", valueList[1]);
+//	    		infoList.add(map);
+//	    	}
+//    }
 
 
     	model.addAttribute("clist", cList);
@@ -367,12 +318,10 @@ public class AdminFicnicController {
     	return "admin/ficnic/ficnic_write";
     }
 
-
-
     // 피크닉 수정 처리
     @RequestMapping("admin/ficnic/ficnic_modify_ok.do")
     public void ficnicModifyOk(FicnicDTO dto,MultipartHttpServletRequest mRequest,HttpServletResponse response) throws Exception {
-    	int cnt=0;
+    	
     	response.setContentType("text/html; charset=utf-8");
     	PrintWriter out= response.getWriter();
     	
@@ -384,15 +333,14 @@ public class AdminFicnicController {
     	String ficnic_image5 = mRequest.getParameter("ori_ficnic_image5");
     	
         List<String> upload_list = UploadFile.fileUpload(mRequest, ficnicFolder, ficnicSaveName);
-        cnt=0;
        
+        int cnt=0;      
         for(int i=0; i<upload_list.size();i++) {
         	 String check_photo = mRequest.getParameter("ori_ficnic_image"+(i+1));
         	if(check_photo !=null && upload_list.get(i) != "") {
                 File del_pimage = new File(mRequest.getSession().getServletContext().getRealPath(check_photo));
                 if(del_pimage.exists()) del_pimage.delete();
-        	}
-        	
+        	}   	
         }   
         
         if(upload_list.get(0) != "") ficnic_image1 = upload_list.get(0);
@@ -402,24 +350,19 @@ public class AdminFicnicController {
         if(upload_list.get(4) != "") ficnic_image5 = upload_list.get(4);
     
         dto.setFicnic_photo1(ficnic_image1);
-        dto.setFicnic_photo1(ficnic_image2);
-        dto.setFicnic_photo1(ficnic_image3);
-        dto.setFicnic_photo1(ficnic_image4);
-        dto.setFicnic_photo1(ficnic_image5);       
-        
-        
-        
-        
-        
+        dto.setFicnic_photo2(ficnic_image2);
+        dto.setFicnic_photo3(ficnic_image3);
+        dto.setFicnic_photo4(ficnic_image4);
+        dto.setFicnic_photo5(ficnic_image5);       
+                
     	// 들어온 구분자 ',' 처리하기
     	if (dto.getFicnic_option_title()!=null) dto.setFicnic_option_title(dto.getFicnic_option_title().replace(",", "★"));
     	if (dto.getFicnic_option_price()!=null) dto.setFicnic_option_price(dto.getFicnic_option_price().replace(",", "★"));
     	if (dto.getFicnic_select_title()!=null) dto.setFicnic_select_title(dto.getFicnic_option_title().replace(",",  "★"));
     	if (dto.getFicnic_select_price()!=null) dto.setFicnic_option_price(dto.getFicnic_option_price().replace(",","★"));
     	String res="";
-    	
-
-    	
+	
+    	/* 앞단 보여질 info 처리 */
     	if(dto.getFicnic_info()!=null) {
     		String[] infoList = dto.getFicnic_info().split(",");
         	cnt=0;
@@ -433,6 +376,7 @@ public class AdminFicnicController {
         		cnt++;	
         	}
     	}
+    	
     	dto.setFicnic_info(res);
     	
     	if(this.dao.modifyFicnic(dto,upload_list)>0) {
@@ -442,10 +386,6 @@ public class AdminFicnicController {
     	}
     }
     
-
-
-
-
     // 피크닉 삭제 처리
     @RequestMapping("admin/ficnic/ficnic_delete.do")
     public void ficnicDelete(@RequestParam("no") int no,HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -481,9 +421,7 @@ public class AdminFicnicController {
             if(del_pimage.exists()) del_pimage.delete();
         	
         }
-
-        
-        
+              
     	if(this.dao.deleteFicnic(no)>0) {
     		this.dao.updateSeq(no);
     		out.println("<script>location.href='"+request.getContextPath()+"/admin/ficnic/ficnic_list.do'</script>");
@@ -611,8 +549,5 @@ public class AdminFicnicController {
             out.println("<script>alert('카테고리 삭제 중 에러가 발생하였습니다.'); history.back();</script>");
         }
     }
-
-
-
 
 }
