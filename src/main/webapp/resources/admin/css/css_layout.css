@@ -1361,8 +1361,14 @@ main .view-form .exchange-goods-footer b {
 /*************************/
 .bootstrap-tagsinput {
     display: inline-block;
-    width: calc(100% - 130px) !important;
-    margin: 0 5px 0 7px;
+    width: calc(100% - 30px) !important;
+    margin: 0 5px 0 10px;
+    padding: .375rem .275rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    box-shadow: none;
 }
 
 

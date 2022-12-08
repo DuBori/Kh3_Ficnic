@@ -21,8 +21,6 @@ import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
 import com.kh3.model.member.PointDAO;
 import com.kh3.model.member.PointDTO;
-import com.kh3.model.qna.QnaCommentDTO;
-import com.kh3.model.qna.QnaDTO;
 
 @Controller
 public class SiteMemberController {
