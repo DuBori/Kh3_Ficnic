@@ -42,14 +42,17 @@
                         <div class="w-100"></div>
 
                         <div class="form-group join-form">
-                            <label>사용 카테고리</label>
+                            <c:choose>
+                            <c:when test="${dto.getCoupon_use_type() eq 'goods'}"><label>사용 상품</label></c:when>
+                            <c:when test="${dto.getCoupon_use_type() eq 'category'}"><label>사용 카테고리</label></c:when>
+                            <c:otherwise></c:otherwise>
+                            </c:choose>
                             <div class="jf-input">
                                 <div class="row">
                                     <div class="col pb-2">
                                         <ul class="list-view">
 			                            <c:choose>
 			                            	<c:when test="${dto.getCoupon_use_type() eq 'cart'}"></c:when>
-			                            	<c:when test="${dto.getCoupon_use_type() eq 'goods'}"><li>${dto.getCoupon_use_value()}</li></c:when>
 			                           		<c:otherwise>
 			                           		<c:forEach items="${category}" var="category"><li>${category}</li></c:forEach>
 			                           		</c:otherwise>
@@ -110,7 +113,7 @@
                             <div class="px-3 engnum">
                             	<c:choose>
                             	<c:when test="${dto.getCoupon_date_type() eq 'free'}">제한없음</c:when>
-                           		<c:when test="${dto.getCoupon_date_type() eq 'after'}">${dto.getCoupon_date()} &nbsp;&nbsp;~&nbsp;&nbsp; ${dto.getCoupon_end_date()}</c:when>
+                           		<c:when test="${dto.getCoupon_date_type() eq 'after'}">발급 후 30일</c:when>
                            		<c:otherwise>${dto.getCoupon_start_date()}~<br>${dto.getCoupon_end_date()}</c:otherwise>
                              	</c:choose>
                             </div>

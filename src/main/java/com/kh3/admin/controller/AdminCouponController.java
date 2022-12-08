@@ -18,6 +18,7 @@ import com.kh3.model.coupon.CouponDAO;
 import com.kh3.model.coupon.CouponDTO;
 import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
+import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
 
@@ -28,7 +29,10 @@ public class AdminCouponController {
     private CouponDAO dao;
     
     @Autowired
-    private CategoryDAO cdto;
+    private CategoryDAO cdao;
+    
+    @Autowired
+    private FicnicDAO fdao;
 
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
@@ -90,10 +94,19 @@ public class AdminCouponController {
         if(dto.getCoupon_use_value() != null) {
         	String[] category = dto.getCoupon_use_value().split("★");
         	for(int i=0;i<category.length;i++) {
-        		check += "☆"+this.cdto.checkCategory(category[i]);
+        		check += "☆"+this.cdao.checkCategory(category[i]);
         	}
         	model.addAttribute("category", check);
         }
+        // 쿠폰을 사용할 수 있는 상품 내역 가져오기
+        if(dto.getCoupon_use_value() != null) {
+        	String[] category = dto.getCoupon_use_value().split("★");
+        	for(int i=0;i<category.length;i++) {
+        		check += "☆"+this.fdao.checkFicnic(category[i]);
+        	}
+        	model.addAttribute("category", check);
+        }
+        
         model.addAttribute("dto", dto);
         
         return "admin/coupon/coupon_view";
@@ -151,40 +164,27 @@ public class AdminCouponController {
     public void couponModifyOk(CouponDTO dto, @RequestParam("coupon_date_valueCheck") String coupon_date_valueCheck, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-        System.out.println("값 ========= " + coupon_date_valueCheck);
         // 발급 후 값 입력 했을때
         if(dto.getCoupon_date_type().equals("after")) {
         	dto.setCoupon_date_value(Integer.parseInt(coupon_date_valueCheck));
         }
-        if(dto.getCoupon_price_type().equals("cart")) {
-        	dto.setCoupon_use_value("null");
+        // 장바구니일때 값처리
+        if(dto.getCoupon_use_type().equals("cart")) {
+        	dto.setCoupon_use_value(null);
         }else {
-        	System.out.println("값111111111111111111111111111111111111111");
         	String value = "";
         	String[] category = dto.getCoupon_category_value().split(",");
-        	System.out.println("값222222222222222222222222222222222222222" + dto.getCoupon_category_value());
         	for(int i = 0; i < category.length; i++) {
         		value += category[i]+"★";
-        		System.out.println("값33333333333333333333333333333333333333333");
         	}
         	dto.setCoupon_use_value(value);
         }
-        
-        	
-        System.out.println("+++++++++++++++" + dto.getCoupon_category_value());
-        System.out.println("값5555555555555555555555555555555555555555555555");
         int check = this.dao.couponModify(dto);
-        System.out.println("값666666666666666666666666666666666666666666666");
-      
         if (check > 0) {
-        	System.out.println("값7777777777777777777777777777777777777777777777");
             out.println("<script>alert('쿠폰이 수정되었습니다.'); location.href='coupon_view.do?no=" + dto.getCoupon_no() + "';</script>");
         } else {
-        	System.out.println("값888888888888888888888888888888888888888");
             out.println("<script>alert('쿠폰 수정에 실패했습니다.'); history.back();</script>");
         }
-        System.out.println("값999999999999999999999999999999999999999");
-
     }
 
 
