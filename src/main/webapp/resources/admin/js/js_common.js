@@ -239,12 +239,123 @@ chkFicnicWrite = function(){
     if(f.ficnic_category_no.value.length == ""){
         alert("[기본 카테고리]는 반드시 선택해야 합니다.");
         f.ficnic_category_no.focus();
+    }
+
+    return false;
+}
+
+
+
+
+/////////////////////////////////////////////////////
+// 피크닉 - 선택 옵션 인풋
+/////////////////////////////////////////////////////
+formOptionBtn = function(type, line){
+    if(type == "plus"){
+        let addOptRow = "<div class=\"row\">\n";
+            addOptRow += "\t<div class=\"col-sm-4 mb-1\"><input type=\"text\" name=\"ficnic_option_title[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"옵션 제목\" /></div>\n";
+            addOptRow += "\t<div class=\"col-sm-6 mb-1\"><input type=\"text\" name=\"ficnic_option_price[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"옵션 가격\" /></div>\n";
+            addOptRow += "\t<div class=\"col-sm-auto mb-1\"><button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-0\" onclick=\"formOptionBtn('minus', this);\"><i class=\"fa fa-minus\"></i></button></div>\n";
+            addOptRow += "</div>\n";
+        $("#ficnic_option").append(addOptRow);
+
+    }else if(type == "minus"){
+        $(line).parent().parent().remove();
+    }
+}
+
+
+
+
+/////////////////////////////////////////////////////
+// 피크닉 - 추가 선택 인풋
+/////////////////////////////////////////////////////
+formSelectBtn = function(type, line){
+    if(type == "plus"){
+        let addSelRow = "<div class=\"row\">\n";
+            addSelRow += "\t<div class=\"col-sm-4 mb-1\"><input type=\"text\" name=\"ficnic_select_title[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"선택 제목\" /></div>\n";
+            addSelRow += "\t<div class=\"col-sm-6 mb-1\"><input type=\"text\" name=\"ficnic_select_cont[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"선택 내용\" /></div>\n";
+            addSelRow += "\t<div class=\"col-sm-auto mb-1\"><button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-0\" onclick=\"formSelectBtn('minus', this);\"><i class=\"fa fa-minus\"></i></button></div>\n";
+            addSelRow += "</div>\n";
+        $("#ficnic_select").append(addSelRow);
+
+    }else if(type == "minus"){
+        $(line).parent().parent().remove();
+    }
+}
+
+
+
+/////////////////////////////////////////////////////
+// 피크닉 - 피크닉 정보 인풋
+/////////////////////////////////////////////////////
+formFicnicBtn = function(type, line){
+    if(type == "plus"){
+        let addInfoRow = "<div class=\"row\">\n";
+            addInfoRow += "\t<div class=\"col-sm-4 mb-1\"><input type=\"text\" name=\"ficnic_info_title[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"제목\" /></div>\n";
+            addInfoRow += "\t<div class=\"col-sm-6 mb-1\"><input type=\"text\" name=\"ficnic_info_cont[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"내용\" /></div>\n";
+            addInfoRow += "\t<div class=\"col-sm-auto mb-1\"><button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-0\" onclick=\"formFicnicBtn('minus', this);\"><i class=\"fa fa-minus\"></i></button></div>\n";
+            addInfoRow += "</div>\n";
+        $("#ficnic_info").append(addInfoRow);
+
+    }else if(type == "minus"){
+        $(line).parent().parent().remove();
+    }
+}
+
+
+/////////////////////////////////////////////////////
+// 피크닉 - 피크닉 커리큘럼 인풋
+/////////////////////////////////////////////////////
+formCurriculumBtn = function(type, line){
+    if(type == "plus"){
+        let addCurrRow = "<div class=\"row\">\n";
+            addCurrRow += "\t<div class=\"col-sm-4 mb-1\"><input type=\"text\" name=\"ficnic_curriculum_title[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"시간\" /></div>\n";
+            addCurrRow += "\t<div class=\"col-sm-6 mb-1\"><input type=\"text\" name=\"ficnic_curriculum_cont[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"내용\" /></div>\n";
+            addCurrRow += "\t<div class=\"col-sm-auto mb-1\"><button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-0\" onclick=\"formCurriculumBtn('minus', this);\"><i class=\"fa fa-minus\"></i></button></div>\n";
+            addCurrRow += "</div>\n";
+        $("#ficnic_curriculum").append(addCurrRow);
+
+    }else if(type == "minus"){
+        $(line).parent().parent().remove();
+    }
+}
+
+
+
+
+
+/////////////////////////////////////////////////////
+// 피크닉 - 사진 삭제
+/////////////////////////////////////////////////////
+delFicnicPhoto = function(btn, ficnic_no, img_num){
+    if(confirm("이 사진을 삭제하시겠습니까?")){
+    }else{
         return false;
     }
 
-    f.submit();
-}
+    $.ajax({
+        type: "post",
+        url : "ficnic_img_delete.do",
+        data : {
+                ficnic_no : ficnic_no,
+                img_num : img_num
+        },
 
+        success: function(result){
+            if(result != "N"){
+                $("#ficnic_photo"+img_num).remove();
+                $(btn).remove();
+            }else{
+                alert("삭제 중 오류가 발생하였습니다.");
+            }
+        },
+
+        error: function (xhr, textStatus, errorThrown){
+            alert("Error : "+errorThrown);
+        }
+    });
+}
 
 
 

@@ -35,7 +35,7 @@
                             	<c:if test="${!empty dto.getFicnic_category_sub3() and dto.getFicnic_category_sub3() eq cdto.getCategory_id()}">/${cdto.getCategory_name() }</c:if>   	
                             </c:forEach>
                         </div>
-                        
+                                                
                         <div class="w-100"></div>
                         <div class="form-group col d-flex align-items-center">
                             <label>매장가</label>
@@ -55,8 +55,7 @@
                         <div class="form-group col d-flex align-items-center">
                             <label>등록일자</label>
                             <div class="px-3 engnum">${dto.getFicnic_date().substring(0,10) }</div>
-                        </div>
-                        
+                        </div>                        
                         <table border="1" cellspacing="0">
 							<thead>
 								<tr>
