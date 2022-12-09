@@ -46,7 +46,7 @@
                                     <input type="radio" name="coupon_use_type" value="category"<c:if test="${dto.getCoupon_use_type() == 'category'}"> checked="checked"</c:if> /> 카테고리
                                 </label>
                                 <label class="btn btn-outline-secondary<c:if test="${dto.getCoupon_use_type() == 'goods'}"> active</c:if>" onclick="$('#goods_layer').collapse('show'); $('#category_layer').collapse('hide');">
-                                    <input type="radio" name="coupon_use_type" value="goods"<c:if test="${dto.getCoupon_use_type() == 'goods'}"> checked="checked"</c:if> /> 상품지정
+                                    <input type="radio" name="coupon_use_type" value="goods"<c:if test="${dto.getCoupon_use_type() == 'goods'}"> checked="checked"</c:if> /> 피크닉지정
                                 </label>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                             <button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#modalCategory">카테고리 지정</button>
                                             <ul class="cate-show sub mt-2">
                                                 <c:choose>
-                                                    <c:when test="${empty dto.getCoupon_use_value()}"><p>등록된 카테고리가 없습니다.</p></c:when>
+                                                    <c:when test="${dto.getCoupon_use_type() ne 'category' or empty dto.getCoupon_use_value()}"><p>등록된 카테고리가 없습니다.</p></c:when>
                                                     <c:otherwise>
                                                         <c:forEach var="cate" items="${cateList}">
                                                         <li class="${cate.cate_id}">${cate.cate_path}<button type="button"><i class="fa fa-times"></i></button><input type="hidden" name="coupon_use_category_value[]" value="${cate.cate_id}"></li>
@@ -78,14 +78,20 @@
                         <div class="px-0 collapse<c:if test="${dto.getCoupon_use_type() == 'goods'}"> show</c:if>" id="goods_layer">
                             <div class="w-100"></div>
                             <div class="form-group join-form">
-                                <label>사용 상품</label>
+                                <label>사용 피크닉</label>
                                 <div class="jf-input">
                                     <div class="row">
                                         <div class="col pb-2">
-                                            <button type="button" class="btn btn-sm btn-outline-success">상품 지정</button>
-                                            <ul class="list-box">
-                                                <li><input type="hidden" name="coupon_use_goods_value" value="05000000" />테스트 상품<button type="button"><i class="fa fa-times"></i></button></li>
-                                                <li><input type="hidden" name="coupon_use_goods_value" value="01110000" />테2스2트2 상품<button type="button"><i class="fa fa-times"></i></button></li>
+                                            <button type="button" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#modalFicnic">피크닉 지정</button>
+                                            <ul class="cate-show ficnic mt-2">
+                                                <c:choose>
+                                                    <c:when test="${dto.getCoupon_use_type() ne 'goods' or empty dto.getCoupon_use_value()}"><p>등록된 피크닉이 없습니다.</p></c:when>
+                                                    <c:otherwise>
+                                                        <c:forEach var="goods" items="${goodsList}">
+                                                        <li class="${goods.ficnic_no}">${goods.ficnic_name}<button type="button"><i class="fa fa-times"></i></button><input type="hidden" name="coupon_use_goods_value[]" value="${goods.ficnic_no}"></li>
+                                                        </c:forEach>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </ul>
                                         </div>
                                     </div>
@@ -199,7 +205,7 @@
 
 
 
-<!-- 상품 분류 선택 //START -->
+<!-- 카테고리 선택 //START -->
 <div class="modal fade" id="modalCategory" tabindex="-1" aria-hidden="true" type="subcoupon">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -271,7 +277,55 @@
         </div>
     </div>
 </div>
-<!-- 상품 분류 선택 //END -->
+<!-- 카테고리 선택 //END -->
+
+
+
+
+<!-- 상품 선택 //START -->
+<div class="modal fade" id="modalFicnic" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-exclamation"></i> 상품 선택</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <form  method="post" onsubmit="return popSearchFicnic(this);" class="form-inline justify-content-center border-bottom mb-4 pb-3">
+                <input type="text" name="search_keyword" value="" class="form-control mx-2" />
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 검색</button>
+                </form>
+
+                <ul class="my-3 px-2" id="search-result">
+                    <c:choose>
+                        <c:when test="${!empty flist }">
+                        <c:forEach var="list" items="${flist}">
+                        <li class="d-flex my-3 align-items-center">
+                            <c:choose>
+                                <c:when test="${!empty list.getFicnic_photo1()}"><img src="${path}${list.getFicnic_photo1()}" alt="" width="98" height="60" /></c:when>
+                                <c:otherwise><span class="noimg">no img</span></c:otherwise>
+                            </c:choose>
+                            <div class="ml-2">
+                                <p><strong>[${list.getFicnic_no()}]</strong> ${list.getFicnic_name()}</p>
+                                <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="addFicnic(${list.getFicnic_no()}, '${list.getFicnic_name()}');">적용하기</button>
+                            </div>
+                        </li>
+                        </c:forEach>
+                        </c:when>
+
+                        <c:otherwise>
+                        <li class="py-5 text-center">No Data</li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
+            </div>
+            <div class="modal-footer text-center" style="display: block;">
+                <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 상품 선택 //END -->
 
 
 

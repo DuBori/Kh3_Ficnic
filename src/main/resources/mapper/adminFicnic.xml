@@ -137,10 +137,10 @@
 	<!--검색 해당 피크닉 개수  -->
 	<select id="adminFicnicSearchCount" parameterType="map" resultType="int">		
 		select count(*) from ficnic_list where ficnic_no > 0
-		<if test="category_no !=''"> and ficnic_category_no = #{category_no}</if>
-		<if test="location !=''"> and ficnic_location like '%'|| #{location} || '%' </if>
-		<if test="addr !=''"> and ficnic_address like '%' || #{addr} || '%'</if>
-		<if test="name !=''"> and ficnic_name like '%' || #{name} || '%'</if>		
+		<if test="category_no != ''"> and ficnic_category_no = #{category_no}</if>
+		<if test="location != ''"> and ficnic_location like '%'|| #{location} || '%' </if>
+		<if test="addr != ''"> and ficnic_address like '%' || #{addr} || '%'</if>
+		<if test="name != ''"> and ficnic_name like '%' || #{name} || '%'</if>		
 	</select>
 	
 
@@ -191,5 +191,16 @@
        </selectKey>
         update ficnic_list set ficnic_review_point = #{set_review_point} where ficnic_no = #{ficnic_no}
     </update>
+
+
+
+    <!-- 피크닉 검색 리스트  -->
+    <select id="adminFicnicPopSearchList" parameterType="String" resultType="ficnicDTO">
+        select * from ficnic_list where ficnic_no > 0
+        <if test="value != ''"> and ficnic_name like '%' || #{value} || '%'</if>
+        order by ficnic_no desc
+    </select>
+
+
 
 </mapper>

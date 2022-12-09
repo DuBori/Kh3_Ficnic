@@ -168,4 +168,13 @@ public class FicnicDAOImpl implements FicnicDAO {
         this.sqlSession.update("adminFIcnicUpdateReview", map);
     }
 
+
+
+
+    /* 피크닉 지정 검색 리스트 (임시) */
+    @Override
+    public List<FicnicDTO> getFicnicPopList(String search_keyword) {
+        return this.sqlSession.selectList("adminFicnicPopSearchList", search_keyword);
+    }
+
 }

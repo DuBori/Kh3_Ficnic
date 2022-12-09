@@ -52,6 +52,9 @@
                                                 </c:forEach>
                                             </c:when>
                                             <c:otherwise>
+                                                <c:forEach var="goods" items="${goodsList}">
+                                                <li>${goods.ficnic_name}</li>
+                                                </c:forEach>
                                             </c:otherwise>
                                             </c:choose>
                                         </ul>
@@ -112,7 +115,7 @@
                             	<c:choose>
                             	<c:when test="${dto.getCoupon_date_type() eq 'free'}">제한없음</c:when>
                            		<c:when test="${dto.getCoupon_date_type() eq 'after'}">발급 후 ${dto.getCoupon_date_value() }일</c:when>
-                           		<c:otherwise>${dto.getCoupon_start_date()}~<br>${dto.getCoupon_end_date()}</c:otherwise>
+                           		<c:otherwise>${dto.getCoupon_start_date()} ~ ${dto.getCoupon_end_date()}</c:otherwise>
                              	</c:choose>
                             </div>
                         </div>
