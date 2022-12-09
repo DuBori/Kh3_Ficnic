@@ -8,10 +8,52 @@
 <mapper namespace="ficnicDAO">
 
     <!-- 피크닉 목록 -->
-    <select id="siteFicnicList" resultType="ficnicDTO">
+    <select id="SiteFicnicList" resultType="ficnicDTO">
+    
     </select>
+    
+    
+    <!--검색 해당 카테고리 피크닉 개수  -->
+	<select id="SiteFicnicSearchCount" parameterType="map" resultType="int">		
+		select count(*) from ficnic_list where ficnic_no >0
+		<if test="category_no !='' and subcategory_no ==''"> and ficnic_category_no in (select category_id from ficnic_category where category_id_up = #{category_no} or category_id = #{category_no} )</if>
+		<if test="category_no !='' and subcategory_no !='' "> and ficnic_category_no = #{subcategory_no}</if>
+		
 
+	</select>
+	
+	<!-- 피크닉 검색 리스트  -->
+	<select id="SiteFicnicCategoryList" parameterType="map" resultType="ficnicDTO">
+			select * from(
+	                select
+	                    row_number() over(order by ficnic_no desc) rnum,
+	                    b.*
+	                from (
+	                select * from ficnic_list where ficnic_no > 0
+					<if test="category_no !='' and subcategory_no ==''"> and ficnic_category_no in (select category_id from ficnic_category where category_id_up = #{category_no} or category_id = #{category_no} )</if>
+					<if test="category_no !='' and subcategory_no !=''"> and ficnic_category_no = #{subcategory_no}</if>
+					
+			)b
+			)
+			 <![CDATA[
+	            where rnum >= #{startNo} and rnum <= #{endNo}
+	        ]]>
+	        
+	        
+	</select>
 
+	
+	<select id="SiteFicnicChildCategory" parameterType="string" resultType="string">
+		select category_id from ficnic_category where category_id_up = #{value}
+	</select>
+	
+	<select id="SiteFicnicReviewList" resultType="reviewDTO">
+		select * from review_list
+	</select>
+	
+	<select id="SiteFicnicNumList" parameterType="int" resultType="reviewDTO">
+		select * from review_list where ficnic_no = #{ficnic_no}
+	</select>
 
 
 

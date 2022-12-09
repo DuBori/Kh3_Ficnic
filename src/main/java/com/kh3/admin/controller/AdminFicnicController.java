@@ -225,6 +225,7 @@ public class AdminFicnicController {
     	response.setContentType("text/html; charset=utf-8");
     	PrintWriter out= response.getWriter();
     	
+    	
         // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
         List<String> ficnic_imagesrc = new ArrayList<String>();
         
@@ -522,7 +523,6 @@ public class AdminFicnicController {
         if(upload_list.size() > 0) {
             category_image = upload_list.get(0);
         }
-
 
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();

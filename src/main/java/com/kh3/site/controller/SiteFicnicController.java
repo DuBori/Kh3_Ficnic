@@ -16,6 +16,8 @@ import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
+import com.kh3.model.review.ReviewDAO;
+import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
 
@@ -27,6 +29,9 @@ public class SiteFicnicController {
 
     @Inject
     FicnicDAO fdao;
+    
+    @Inject
+    ReviewDAO rdao;
 
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
@@ -46,34 +51,69 @@ public class SiteFicnicController {
     // 피크닉 페이지
     @RequestMapping("ficnic/ficnic_list.do")
     public String ficnic_List(
-    		@RequestParam( value = "category", required = false , defaultValue = "") String finic_category_no,
+    		@RequestParam( value = "category", required = false , defaultValue = "") String ficnic_category_no,
+    		@RequestParam( value = "subcategory", required = false, defaultValue = "") String ficnic_sub,
     		@RequestParam(value = "page",required = false ,defaultValue = "1") int page,
     		HttpServletRequest request,
     		Model model) {
     	
     	List<CategoryDTO> cList = cdao.getCategoryList();
     	
-    	Map<String, Object> map = new HashMap<String, Object>();
-		map.put("category_no", finic_category_no);
+    	List<ReviewDTO> rList = rdao.getList();
     	
-		totalRecord = fdao.getListCount(map);
-		
+    	
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	
+		map.put("category_no", ficnic_category_no);
+		map.put("subcategory_no", ficnic_sub);
+
+		totalRecord = fdao.getSiteListCount(map);
+
 		PageDTO dto = new PageDTO(page, rowsize, totalRecord, map);
     	
     	// 페이지 이동 URL
-    	String pageUrl = request.getContextPath() + "/admin/ficnic/ficnic_list.do?category_no="+finic_category_no;
+    	String pageUrl = request.getContextPath() + "/admin/ficnic/ficnic_list.do?category_no="+ficnic_category_no;
 
-    	List<FicnicDTO> fList = fdao.getFicnicList();
+    	List<FicnicDTO> fList = fdao.getSiteFicnicList(dto.getStartNo(), dto.getEndNo(), map);
+ 
     	
-    	System.out.println(dto.getAllPage()+","+dto.getStartBlock()+","+ dto.getEndBlock()+","+dto.getEndBlock()+","+dto.getPage());
     	
     	model.addAttribute("flist", fList);
     	model.addAttribute("clist", cList);	
+    	model.addAttribute("rlist", rList);	
+    	model.addAttribute("category_no", ficnic_category_no);	
+    	
+    	
+    	
     	model.addAttribute("totalCount", totalRecord);
 		model.addAttribute("paging", dto);
 		model.addAttribute("pagingWrite",Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 		
     	return "site/ficnic/ficnic_list";
+    }
+    
+    @RequestMapping("ficnic/ficnic_view.do")
+    public String ficnic_view(@RequestParam(value = "ficnic_no", required = false ,defaultValue = "") int ficnic_no , Model model ) {
+    
+    	FicnicDTO  fdto = fdao.getFicnicCont(ficnic_no);
+    	List<ReviewDTO> rList =  rdao.getNumList(ficnic_no);
+    	
+    	int cnt=0;
+    	for(ReviewDTO rev : rList) {
+    		if(rev.getReview_point()==5) cnt++;	
+    	}
+    	int avg=0;
+    	if(cnt !=0 && rList.size()!=0) {
+    		avg=Math.round(cnt/rList.size());
+    	}
+    	
+    	model.addAttribute("fdto", fdto);
+    	model.addAttribute("rList", rList);
+    	model.addAttribute("count", rList.size());
+    	model.addAttribute("avg",avg);
+    	
+    	
+    	return "site/ficnic/ficnic_view";
     }
 
 

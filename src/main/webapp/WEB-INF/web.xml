@@ -52,5 +52,15 @@
         <filter-name>encodingFilter</filter-name>
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
+    
+    <filter>
+    	<filter-name>CorsFilter</filter-name>
+    	<filter-class>com.kh3.util.CorsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+    	<filter-name>CorsFilter</filter-name>
+    	<url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    
 
 </web-app>
