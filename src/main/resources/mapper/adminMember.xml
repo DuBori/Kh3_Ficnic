@@ -8,7 +8,7 @@
 <mapper namespace="memberDAO">
 
     <!-- 회원 목록 총 갯수 -->
-    <select id="adminMemberCount" parameterType="java.util.Map" resultType="int">
+    <select id="adminMemberTotalCount" parameterType="java.util.Map" resultType="int">
         select count(*) from member_list where member_no > 0
         <if test="search_type != ''"> and member_type = #{search_type}</if>
         <if test="search_name != ''"> and member_name like '%' || #{search_name} || '%'</if>
