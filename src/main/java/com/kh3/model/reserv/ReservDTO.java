@@ -7,6 +7,7 @@ public class ReservDTO {
 	
 	private int reserv_no;
 	private String reserv_sess;
+	private String reserv_status;
 	private int ficnic_no;
 	private String reserv_ficnic_name;
 	private int reserv_ficnic_sale_price;

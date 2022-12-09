@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
-import com.kh3.model.member.MemberService;
 import com.kh3.model.member.PointDAO;
 import com.kh3.model.member.PointDTO;
 

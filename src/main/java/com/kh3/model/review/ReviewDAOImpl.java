@@ -58,4 +58,18 @@ public class ReviewDAOImpl implements ReviewDAO {
         this.sqlSession.update("adminReviewSeq", no);
     }
 
+
+    
+	@Override
+	public List<ReviewDTO> getList() {
+		return  this.sqlSession.selectList("SiteFicnicReviewList");
+	}
+
+
+	@Override
+	public List<ReviewDTO> getNumList(int ficnic_no) {
+		return this.sqlSession.selectList("SiteFicnicNumList",ficnic_no);
+	}
+    
+
 }

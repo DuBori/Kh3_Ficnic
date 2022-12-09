@@ -146,6 +146,12 @@ public class MemberDAOImpl implements MemberDAO {
 		return this.sqlSession.selectOne("loginSession", id);
 	}
 
+    // 예약 상세내역 회원정보 
+	@Override
+	public MemberDTO getReservMember(String member_id) {
+        return this.sqlSession.selectOne("adminReservMember", member_id);
+	}
+
 
 
 }

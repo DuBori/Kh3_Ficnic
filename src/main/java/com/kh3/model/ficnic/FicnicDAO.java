@@ -38,6 +38,12 @@ public interface FicnicDAO {
     /* 쿠폰 상세 내역에서 상품 정보 찾기 */
     String checkFicnic(String string);
 
+    /* 사용자 피크닉 리스트 */
+ 	List<FicnicDTO> getSiteFicnicList(int startNo, int endNo, Map<String, Object> map);
+
+ 	/* 사용자 피크닉 리스트 개수 */
+	int getSiteListCount(Map<String, Object> map);
+
     /* 리뷰 수정시 총점 수정 */
     void updateReviewPoint(int ficnic_no);
 

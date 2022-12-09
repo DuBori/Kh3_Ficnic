@@ -16,5 +16,9 @@ public interface ReviewDAO {
     int reviewDelete(int no);
 
     void updateSeq(int no);
+    
+    List<ReviewDTO> getList();
+
+	List<ReviewDTO> getNumList(int ficnic_no);
 
 }

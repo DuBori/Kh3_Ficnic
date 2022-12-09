@@ -19,7 +19,7 @@
         <legend>🎆비밀번호 찾기 결과🎆</legend>
         <br />
 
-        <div class="mf-result">회원님의 비밀번호는 <br /> <strong>${pw }</strong> 입니다.</div>
+        <div class="mf-result">회원님의 임시 비밀번호는 <br /> <strong>${pw }</strong> 입니다.</div>
 
         <div class="mf-btn">
             <p><a href="${path}/member/member_login.do">로그인</a></p>

@@ -24,4 +24,8 @@ public interface CategoryDAO {
     
     List<FicnicDTO> getExistCategoryList();
 
+    /////////////////////////////////////////////////////////////////////////////
+    
+	List<String> getChildList(String ficnic_category_no);
+
 }
