@@ -65,8 +65,21 @@
 
 
     <!-- 카테고리 정보 가져오기 -->
-    <select id="adminCategoryCont" parameterType="String" resultType="CategoryDTO">
+    <resultMap id="categoryContMap" type="categoryDTO">
+        <result property="category_id" column="category_id" />
+        <collection property="category_path" column="category_id" select="adminCategoryPath" javaType="String" ofType="String" />
+    </resultMap>
+     
+    <select id="adminCategoryCont" resultMap="categoryContMap">
         select * from ficnic_category where category_id = #{ps_ctid}
+    </select>
+
+    <select id="adminCategoryPath" resultType="String">
+        select substr(sys_connect_by_path(category_name, ' > '), 4)
+        from ficnic_category
+        where category_id = #{category_id}
+        start with category_id_up = 'M'
+        connect by prior category_id = category_id_up
     </select>
 
 

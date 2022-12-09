@@ -197,12 +197,18 @@ setCategory = function(){
         if(get_sub_cnt == 0){
             $(".input-form .form-group .cate-show.sub").html("");
         }
-        if(get_sub_cnt < 3){
-            if($(".input-form .form-group .cate-show.sub li."+get_ctid).length == 0){
-                $(".input-form .form-group .cate-show.sub").append("<li class=\""+get_ctid+"\">"+get_path+"<button type=\"button\"><i class=\"fa fa-times\"></i></button><input type=\"hidden\" name=\"ficnic_category_sub[]\" value=\""+get_ctid+"\" /></li>");
-            }
-        }else{
+
+        let input_name = "ficnic_category_sub";
+        if(get_type == "subcoupon"){
+            input_name = "coupon_use_category_value";
+        }
+
+        if(get_type == "sub" && get_sub_cnt >= 3){
             alert("다중 카테고리는 최대 3개까지 지정 할 수 있습니다.");
+        }else{
+            if($(".input-form .form-group .cate-show.sub li."+get_ctid).length == 0){
+                $(".input-form .form-group .cate-show.sub").append("<li class=\""+get_ctid+"\">"+get_path+"<button type=\"button\"><i class=\"fa fa-times\"></i></button><input type=\"hidden\" name=\""+input_name+"[]\" value=\""+get_ctid+"\" /></li>");
+            }
         }
 
     }
