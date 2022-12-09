@@ -57,7 +57,6 @@ public class FicnicDAOImpl implements FicnicDAO {
     }
 
 
-	}
 	/* 사용자 해당 카테고리 피크닉 정보 찾기 */
 	@Override
 	public List<FicnicDTO> getSiteFicnicList(int startNo, int endNo, Map<String, Object> map) {
