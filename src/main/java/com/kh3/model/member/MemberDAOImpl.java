@@ -42,7 +42,7 @@ public class MemberDAOImpl implements MemberDAO {
     // 회원 상세내역 리스트 가져오기
     @Override
     public MemberDTO getMemberView(int no) {
-        return this.sqlSession.selectOne("adminMemberView", no);
+        return this.sqlSession.selectOne("adminMemberCont", no);
     }
 
 

@@ -40,7 +40,7 @@
 
 
 	<!-- 회원 상세 내역 -->
-	<select id="adminMemberView" parameterType="int" resultType="memberDTO">
+	<select id="adminMemberCont" parameterType="int" resultType="memberDTO">
 		select * from member_list where member_no = #{member_no}
 	</select>
 
