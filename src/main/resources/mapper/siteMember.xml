@@ -73,10 +73,10 @@
 	</select>
 	
 		<!-- 세션 -->
-	<select id="siteMemberSessionCheck" resultType="int">
-		select * from member_list where member_id = #{member_id}
+	<select id="loginSession" resultType="memberDTO">
+	select * from member_list where member_id = #{member_id}
 	</select>
 			
-			
+	
     
 </mapper>
