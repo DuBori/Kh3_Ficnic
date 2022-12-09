@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
-import com.kh3.model.member.MemberService;
 import com.kh3.model.member.PointDAO;
 import com.kh3.model.member.PointDTO;
 
@@ -33,8 +33,8 @@ public class SiteMemberController {
 	private MemberDAO dao;
 	@Autowired
 	private PointDAO pdao;
-	@Inject
-	MemberService memberService;
+	
+	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	// 로그인 페이지로 가는 매핑
 	@RequestMapping("member/member_login.do")
@@ -66,7 +66,11 @@ public class SiteMemberController {
 		  
 			out.println("<script>alert('존재하지 않는 아이디입니다.'); history.back(); </script>");	
 		
-		} else if(check == 0) { // 비번 오류
+		} /*
+			 * else if(passwordEncoder.matches(dto.getMember_pw(), passwordEncoder)) {
+			 */
+		
+		 else if(check == 0) { // 비번 틀릴 때
 		
 			out.println("<script>alert('비밀번호를 다시 확인해주세요.'); history.back(); </script>");		
 		
@@ -230,11 +234,19 @@ public class SiteMemberController {
 	    	System.out.println("dto.getMember_pw_re" + dto.getMember_id());
 	    	
 	    	System.out.println("--------------pdto" + pdto);
-	    	
+	    
+
 	    	// 비밀번호 일치 확인
 	    	if(!dto.getMember_pw().equals(dto.getMember_pw_re())) {
 				out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
 	    	}
+	    	
+			// 암호화 설정
+
+			
+			dto.setMember_pw(passwordEncoder.encode(dto.getMember_pw()));
+			dto.setMember_pw_re(passwordEncoder.encode(dto.getMember_pw_re()));
+			 
 	    	
 	    	// 유효성 검사
 	    	if(result.hasErrors()) {
