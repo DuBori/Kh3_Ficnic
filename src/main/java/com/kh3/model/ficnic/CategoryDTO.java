@@ -16,5 +16,6 @@ public class CategoryDTO {
     private String category_name;
     private String category_image;
     private List<CategoryDTO> sub_category;
+    private String category_path;
 
 }
