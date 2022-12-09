@@ -16,6 +16,7 @@ public class FicnicDAOImpl implements FicnicDAO {
     @Inject
     private SqlSessionTemplate sqlSession;
 
+    
 	/* 피크닉 상품 리스트 출력 */
 	@Override
 	public List<FicnicDTO> getFicnicList() {
@@ -134,6 +135,20 @@ public class FicnicDAOImpl implements FicnicDAO {
 	public String checkFicnic(String coupon_use_value) {
 		return this.sqlSession.selectOne("admincheckFicnic", coupon_use_value);
 
+	}
+	/* 사용자 해당 카테고리 피크닉 정보 찾기 */
+	@Override
+	public List<FicnicDTO> getSiteFicnicList(int startNo, int endNo, Map<String, Object> map) {
+		map.put("startNo", startNo);
+		map.put("endNo", endNo);
+		
+	
+		return this.sqlSession.selectList("SiteFicnicCategoryList",map);
+	}
+	@Override
+	public int getSiteListCount(Map<String, Object> map) {
+		
+		return this.sqlSession.selectOne("SiteFicnicSearchCount", map);
 	}
 
 
