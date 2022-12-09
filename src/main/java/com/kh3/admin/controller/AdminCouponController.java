@@ -53,9 +53,9 @@ public class AdminCouponController {
 
 
 
-    // ===================================================================================== //
+    // =====================================================================================
     // 쿠폰 목록 페이지
-    // ===================================================================================== //
+    // =====================================================================================
     @RequestMapping("admin/coupon/coupon_list.do")
     public String couponList(Model model, HttpServletRequest request) {
         // 검색 처리
@@ -101,9 +101,9 @@ public class AdminCouponController {
 
 
 
-    // ===================================================================================== //
+    // =====================================================================================
     // 쿠폰 상세내역 페이지
-    // ===================================================================================== //
+    // =====================================================================================
     @RequestMapping("admin/coupon/coupon_view.do")
     public String couponView(Model model, @RequestParam("no") int no, CategoryDTO cdto) {
         CouponDTO dto = this.dao.couponView(no);
@@ -146,9 +146,9 @@ public class AdminCouponController {
 
 
 
-    // ===================================================================================== //
+    // =====================================================================================
     // 쿠폰 등록 페이지
-    // ===================================================================================== //
+    // =====================================================================================
     @RequestMapping("admin/coupon/coupon_write.do")
     public String couponWrite(Model model) {
         LocalDate startNowDate = LocalDate.now(); // 이번달 첫째
@@ -169,9 +169,9 @@ public class AdminCouponController {
 
 
 
-    // ===================================================================================== //
+    // =====================================================================================
     // 쿠폰 등록하기
-    // ===================================================================================== //
+    // =====================================================================================
     @RequestMapping("admin/coupon/coupon_write_ok.do")
     public void couponWriteOk(CouponDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
@@ -242,9 +242,9 @@ public class AdminCouponController {
 
 
 
-    // ===================================================================================== //
+    // =====================================================================================
     // 쿠폰 수정 페이지
-    // ===================================================================================== //
+    // =====================================================================================
     @RequestMapping("admin/coupon/coupon_modify.do")
     public String couponModify(@RequestParam("no") int no, Model model) {
         CouponDTO dto = this.dao.couponView(no);
@@ -291,9 +291,9 @@ public class AdminCouponController {
 
 
 
-    // ===================================================================================== //
+    // =====================================================================================
     // 쿠폰 수정하기
-    // ===================================================================================== //
+    // =====================================================================================
     @RequestMapping("admin/coupon/coupon_modify_ok.do")
     public void couponModifyOk(CouponDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
@@ -365,9 +365,9 @@ public class AdminCouponController {
 
 
 
-    // ===================================================================================== //
+    // =====================================================================================
     // 쿠폰 삭제
-    // ===================================================================================== //
+    // =====================================================================================
     @RequestMapping("admin/coupon/coupon_delete.do")
     public void couponDelete(@RequestParam("no") int no, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
@@ -387,9 +387,9 @@ public class AdminCouponController {
 
 
 
-    // ===================================================================================== //
+    // =====================================================================================
     // 쿠폰 피크닉 검색
-    // ===================================================================================== //
+    // =====================================================================================
     @RequestMapping("admin/coupon/coupon_ficnic_search.do")
     public void couponSearchFicnic(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=UTF-8");

@@ -9,7 +9,9 @@
 
 
     <h2>메인페이지</h2>
-    <br /><br /><br />
+    <br /><br />
+    ${sess_id}
+    <br /><br />
     <a href="<%=request.getContextPath()%>/admin/">관리자 모드</a>
 
 
