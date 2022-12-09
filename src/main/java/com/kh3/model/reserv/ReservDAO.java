@@ -13,6 +13,6 @@ public interface ReservDAO {
     List<ReservDTO> getReservList(int startNo, int endNo, Map<String, Object> map);
     
     // 예약 상세 내역
-    ReservDTO getReservView(int no);    
+    ReservDTO getReservView(int reserv_no);    
 	
 }
