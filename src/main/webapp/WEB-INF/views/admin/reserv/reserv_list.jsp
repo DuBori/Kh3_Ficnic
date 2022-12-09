@@ -32,10 +32,10 @@
                                         </div>
                                         <select id="search_type" name="search_type" class="custom-select">
                                             <option value="">- 전체보기 -</option>
-                                            <option value="user"<c:if test="${search_type eq 'user'}"> selected="selected"</c:if>>신청</option>
-                                            <option value="admin"<c:if test="${search_type eq 'admin'}"> selected="selected"</c:if>>예약확정</option>
-                                            <option value="exit"<c:if test="${search_type eq 'exit'}"> selected="selected"</c:if>>체험완료</option>
-                                            <option value="exit"<c:if test="${search_type eq 'exit'}"> selected="selected"</c:if>>예약취소</option>
+                                            <option value="reserv"<c:if test="${search_type eq 'reserv'}"> selected="selected"</c:if>>신청</option>
+                                            <option value="confirm"<c:if test="${search_type eq 'confirm'}"> selected="selected"</c:if>>예약확정</option>
+                                            <option value="done"<c:if test="${search_type eq 'done'}"> selected="selected"</c:if>>체험완료</option>
+                                            <option value="cancel"<c:if test="${search_type eq 'cancel'}"> selected="selected"</c:if>>예약취소</option>
                                         </select>
                                     </div>
                                     
@@ -95,7 +95,7 @@
                         </div>
                         <div class="search-form-button col-lg-auto text-center">
                             <button type="submit" class="btn btn-secondary mb-2"><i class="fa fa-search"></i> 검색하기</button>
-                            <a href="${path}/admin/member/member_list.do" class="btn btn-outline-secondary ml-1 mb-2"><i class="fa fa-refresh"></i> 초기화</a>
+                            <a href="${path}/admin/reserv/reserv_list.do" class="btn btn-outline-secondary ml-1 mb-2"><i class="fa fa-refresh"></i> 초기화</a>
                         </div>
                     </div>
                     </form>
@@ -116,10 +116,10 @@
                             <tr>
                                 <th style="width: 6.5%; min-width: 50px;" class="table-list-hide-mob">상태</th>
                                 <th style="width: 10%; min-width: 100px;">예약번호</th>
-                                <th>예약일자</th>
-                                <th style="width: 19%; min-width: 180px;" class="table-list-hide">예약명</th>
-                                <th style="width: 19%; min-width: 180px;" class="table-list-hide">결제금액</th>
-                                <th style="width: 12%; min-width: 100px;" class="table-list-hide">예약자</th>
+                                <th style="width: 15%; min-width: 180px;" class="table-list-hide">상품기간/시간</th>
+                                <th>상품명</th>
+                                <th style="width: 10%; min-width: 180px;" class="table-list-hide">결제금액</th>
+                                <th style="width: 10%; min-width: 100px;" class="table-list-hide">예약자</th>
                                 <th style="width: 13%; min-width: 120px;" class="table-list-hide-mob">예약일자</th>
                             </tr>
                         </thead>
@@ -129,28 +129,28 @@
                             <c:choose>
                             <c:when test="${!empty list}">
                             <c:forEach items="${list}" var="dto">
-                            <c:set var="showLink" value="onclick=\"popWindow('reserv_view.do?no=${dto.getMember_no()}&id=${dto.getMember_id()}', '700', '900');\"" />
-                            <c:set var="result_name" value="<span class=\"search\">${search_name}</span>"></c:set>
+                            <c:set var="showLink" value="onclick=\"popWindow('reserv_view.do?no=${dto.getReserv_no()}&id=${dto.getMember_id() }', '700', '900');\"" />
+                            <c:set var="result_no" value="<span class=\"search\">${search_no}</span>"></c:set>
                             <c:set var="result_id" value="<span class=\"search\">${search_id}</span>"></c:set>
-                            <c:set var="result_email" value="<span class=\"search\">${search_email}</span>"></c:set>
-                            <c:set var="result_phone" value="<span class=\"search\">${search_phone}</span>"></c:set>
+                            <c:set var="result_name" value="<span class=\"search\">${search_name}</span>"></c:set>
                             <tr>
-                                <td ${showLink} class="py-4 table-list-hide-mob">${dto.getMember_no()}</td>
                                 <td ${showLink}>
                                     <c:choose>
-                                    <c:when test="${dto.getMember_type() eq 'admin'}">관리자</c:when>
-                                    <c:when test="${dto.getMember_type() eq 'exit'}">탈퇴회원</c:when>
-                                    <c:otherwise>회원</c:otherwise>
+                                    <c:when test="${dto.getReserv_status() eq 'reserv'}">신청</c:when>
+                                    <c:when test="${dto.getReserv_status() eq 'confirm'}">예약확정</c:when>
+                                    <c:when test="${dto.getReserv_status() eq 'done'}">체험완료</c:when>
+                                    <c:otherwise>예약취소</c:otherwise>
                                     </c:choose>
                                 </td>
+                                <td ${showLink} class="py-4 table-list-hide-mob"><c:choose><c:when test="${search_no != ''}">${dto.getReserv_sess().replace(search_no, result_no)}</c:when><c:otherwise>${dto.getReserv_sess()}</c:otherwise></c:choose></td>
+                                <td ${showLink} class="eng table-list-hide-mob"><c:if test="${dto.getReserv_ficnic_date() != null}">${dto.getReserv_ficnic_date().substring(0,10)}<br /></c:if>(${dto.getReserv_ficnic_select_title() })</td>
                                 <td ${showLink}>
-                                    <p><b><c:choose><c:when test="${search_name != ''}">${dto.getMember_name().replace(search_name, result_name)}</c:when><c:otherwise>${dto.getMember_name()}</c:otherwise></c:choose></b></p>
-                                    <p class="eng"><c:choose><c:when test="${search_id != ''}">${dto.getMember_id().replace(search_id, result_id)}</c:when><c:otherwise>${dto.getMember_id()}</c:otherwise></c:choose></p>
+                                    <p><b><c:choose><c:when test="${search_name != ''}">${dto.getReserv_ficnic_name().replace(search_name, result_name)}</c:when><c:otherwise>${dto.getReserv_ficnic_name()}</c:otherwise></c:choose></b></p>
+                                    <p class="eng">${dto.getReserv_ficnic_option_title()}</p>
                                 </td>
-                                <td ${showLink} class="eng table-list-hide"><c:choose><c:when test="${search_email != ''}">${dto.getMember_email().replace(search_email, result_email)}</c:when><c:otherwise>${dto.getMember_email()}</c:otherwise></c:choose></td>
-                                <td ${showLink} class="eng table-list-hide"><c:choose><c:when test="${search_phone != ''}">${dto.getMember_phone().replace(search_phone, result_phone)}</c:when><c:otherwise>${dto.getMember_phone()}</c:otherwise></c:choose></td>
-                                <td ${showLink} class="eng table-list-hide"><fmt:formatNumber value="${dto.getMember_point()}" /></td>
-                                <td ${showLink} class="eng table-list-hide-mob">${dto.getMember_joindate().substring(0,10)}<br />${dto.getMember_joindate().substring(11)}</td>
+                                <td ${showLink} class="eng table-list-hide"><fmt:formatNumber value="${dto.getReserv_total_price()}" /></td>
+                                <td ${showLink} class="eng table-list-hide"><c:choose><c:when test="${search_id != ''}">${dto.getReserv_name().replace(search_id, result_id)}</c:when><c:otherwise>${dto.getReserv_name()}</c:otherwise></c:choose></td>
+                                <td ${showLink} class="eng table-list-hide">${dto.getReserv_date()}</td>
                             </tr>
                             </c:forEach>
                             </c:when>

@@ -57,4 +57,7 @@ public interface MemberDAO {
     // 세션
     int sessionMember(MemberDTO dto);
     
+    // 예약 상세내역 회원정보 
+    MemberDTO getReservMember(String id);
+    
 }

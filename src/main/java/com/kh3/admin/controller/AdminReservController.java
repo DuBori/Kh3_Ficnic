@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh3.model.member.MemberDAO;
+import com.kh3.model.member.MemberDTO;
 import com.kh3.model.reserv.ReservDAO;
 import com.kh3.model.reserv.ReservDTO;
 import com.kh3.util.PageDTO;
@@ -23,6 +25,9 @@ public class AdminReservController {
 
     @Autowired
     private ReservDAO dao;
+    
+    @Autowired
+    private MemberDAO mdao;
 
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
@@ -32,7 +37,7 @@ public class AdminReservController {
 
 
 
-    // 회원의 전체리스트 메핑
+    // 예약 전체리스트 메핑
     @RequestMapping("admin/reserv/reserv_list.do")
     public String list(HttpServletRequest request, Model model) {
         // 검색 처리
@@ -53,7 +58,7 @@ public class AdminReservController {
         
         String search_name = request.getParameter("search_name");
         if (search_name == null) search_name = "";
-
+        
         Map<String, Object> searchMap = new HashMap<String, Object>();
         searchMap.put("search_type", search_type);
         searchMap.put("startDate", startDate);
@@ -96,10 +101,18 @@ public class AdminReservController {
 
 
 
-    // 회원 상세내역 메핑
+    // 예약 상세내역 메핑
     @RequestMapping("admin/reserv/reserv_view.do")
-    public String view(Model model, @RequestParam("no") int no) {
+    public String view(Model model, @RequestParam("no") int no, @RequestParam("id") String id) {
     	
+    	System.out.println("여기 ====== "+no);
+        ReservDTO dto = this.dao.getReservView(no);
+        
+        System.out.println("여기 ====== "+id);
+        MemberDTO mdto = this.mdao.getReservMember(id);
+        
+        model.addAttribute("dto", dto);
+        model.addAttribute("mdto", mdto);
 
         return "admin/reserv/reserv_view";
     }
