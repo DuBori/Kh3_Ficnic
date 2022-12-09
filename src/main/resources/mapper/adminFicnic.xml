@@ -12,6 +12,8 @@
     	select * from ficnic_list order by ficnic_no desc
     </select>
     
+
+
     <!-- 피크닉 등록 -->
     <insert id="adminFicnicWrite" parameterType="ficnicDTO">
     	<selectKey resultType="int" keyProperty="ficnic_no" order="BEFORE">
@@ -75,15 +77,16 @@
 
 	<!-- 해당 피크닉 수정  -->
 	<update id="adminFicnicModify" parameterType="ficnicDTO">
-		update ficnic_list set ficnic_category_no =#{ficnic_category_no},
-		ficnic_category_sub1 =#{ficnic_category_sub1},
-		ficnic_category_sub2 =#{ficnic_category_sub2},
-		ficnic_category_sub3 =#{ficnic_category_sub3},
+		update ficnic_list set
+		ficnic_category_no = #{ficnic_category_no},
+		ficnic_category_sub1 = #{ficnic_category_sub1},
+		ficnic_category_sub2 = #{ficnic_category_sub2},
+		ficnic_category_sub3 = #{ficnic_category_sub3},
 		ficnic_name = #{ficnic_name},
 		ficnic_market_price = #{ficnic_market_price},
 		ficnic_sale_price = #{ficnic_sale_price},
-		ficnic_option_title =#{ficnic_option_title},
-		ficnic_option_price =#{ficnic_option_price},
+		ficnic_option_title = #{ficnic_option_title},
+		ficnic_option_price = #{ficnic_option_price},
 		ficnic_select_title = #{ficnic_select_title},
 		ficnic_select_price = #{ficnic_select_price},
 		ficnic_date_use = #{ficnic_date_use},
@@ -102,21 +105,26 @@
 		ficnic_notinclude = #{ficnic_notinclude},
 		ficnic_prepare = #{ficnic_prepare},
 		ficnic_caution = #{ficnic_caution},
-		ficnic_sale=#{ficnic_sale},
-		ficnic_date=sysdate where ficnic_no=#{ficnic_no}
+		ficnic_sale = #{ficnic_sale},
+		ficnic_date = sysdate where ficnic_no=#{ficnic_no}
 	</update>
+
+
 
 	<!-- 해당 피크닉 삭제  -->
 	<delete id="adminFicnicDelete" parameterType="int">
 		delete from ficnic_list where ficnic_no = #{no}	
 	</delete>
 	
+
+
 	<!-- 해당 피크닉 삭제 후 번호 정렬  -->
 	<update id="adminFicnicDeleteUpdate" parameterType="int">
 		<![CDATA[
-		update ficnic_list set ficnic_no = ficnic_no-1 where ficnic_no > #{no}
-		 ]]>
+            update ficnic_list set ficnic_no = ficnic_no-1 where ficnic_no > #{no}
+        ]]>
 	</update>
+
 
 
     <!-- 피크닉 이미지 삭제 -->
@@ -125,47 +133,63 @@
     </update>
 
 
+
 	<!--검색 해당 피크닉 개수  -->
 	<select id="adminFicnicSearchCount" parameterType="map" resultType="int">		
-		select count(*) from ficnic_list where ficnic_no >0
+		select count(*) from ficnic_list where ficnic_no > 0
 		<if test="category_no !=''"> and ficnic_category_no = #{category_no}</if>
 		<if test="location !=''"> and ficnic_location like '%'|| #{location} || '%' </if>
 		<if test="addr !=''"> and ficnic_address like '%' || #{addr} || '%'</if>
 		<if test="name !=''"> and ficnic_name like '%' || #{name} || '%'</if>		
 	</select>
 	
+
+
 	<!-- 피크닉 검색 리스트  -->
 	<select id="adminFicnicSearchList" parameterType="map" resultType="ficnicDTO">
-			select * from(
-	                select
-	                    row_number() over(order by ficnic_no desc) rnum,
-	                    b.*
-	                from (
-	                select * from ficnic_list where ficnic_no > 0
-					<if test="category_no !=''"> and ficnic_category_no = #{category_no}</if>
-					<if test="location !=''"> and ficnic_location like '%' || #{location} || '%' </if>
-					<if test="addr !=''"> and ficnic_address like '%' || #{addr} || '%'</if>
-					<if test="name !=''"> and ficnic_name like '%' || #{name} || '%'</if>
-			)b
-			)
-			 <![CDATA[
-	            where rnum >= #{startNo} and rnum <= #{endNo}
-	        ]]>
+		select * from(
+		              select
+                            row_number() over(order by ficnic_no desc) rnum,
+                            b.*
+                      from (
+                            select * from ficnic_list where ficnic_no > 0
+							<if test="category_no !=''"> and ficnic_category_no = #{category_no}</if>
+							<if test="location !=''"> and ficnic_location like '%' || #{location} || '%' </if>
+							<if test="addr !=''"> and ficnic_address like '%' || #{addr} || '%'</if>
+							<if test="name !=''"> and ficnic_name like '%' || #{name} || '%'</if>
+                      ) b
+        )
+        <![CDATA[
+            where rnum >= #{startNo} and rnum <= #{endNo}
+        ]]>
 	</select>
 	
-	<!-- 피크닉 데이터 존재 location 리스트  -->
+
+	<!-- 피크닉 데이터 존재 location 리스트-->
 	<select id="adminFicnicLocationList" resultType="String">
 		select distinct ficnic_location from ficnic_list
 	</select>
 	
+
 	<!-- 피크닉 데이터 존재 category 리스트 -->
 	<select id="adminFicnicCategoryList" resultType="String" >
 		select distinct ficnic_category_no from ficnic_list
 	</select>
+
+
     <!-- 쿠폰 상세 내역에서 상품 정보 찾기 -->
 	<select id="admincheckFicnic" resultType="String" parameterType="String">
 		select ficnic_name from ficnic_list where ficnic_category_no = #{coupon_use_value}
 	</select>
-	
-	
+
+
+
+    <!-- 리뷰 수정시 총점 수정 -->
+    <update id="adminFIcnicUpdateReview" parameterType="java.util.Map">
+        <selectKey resultType="String" keyProperty="set_review_point" order="BEFORE">
+           select avg(nvl(review_point, 1)) from review_list where ficnic_no = #{ficnic_no}
+       </selectKey>
+        update ficnic_list set ficnic_review_point = #{set_review_point} where ficnic_no = #{ficnic_no}
+    </update>
+
 </mapper>
