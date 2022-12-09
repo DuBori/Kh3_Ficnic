@@ -38,4 +38,7 @@ public interface FicnicDAO {
     /* 쿠폰 상세 내역에서 상품 정보 찾기 */
     String checkFicnic(String string);
 
+    /* 리뷰 수정시 총점 수정 */
+    void updateReviewPoint(int ficnic_no);
+
 }

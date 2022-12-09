@@ -109,7 +109,7 @@
 								<td ${showLink} class="table-list-hide-mob eng">${dto.review_date.substring(0,10)}<br />${dto.review_date.substring(11)}</td>
                                 <td class="table-list-hide-mob">
                                     <a href="${path}/admin/review/review_modify.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a>
-                                    <a href="${path}/admin/review/review_delete.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
+                                    <a href="${path}/admin/review/review_delete.do?review_no=${dto.getReview_no()}&ficnic_no=${dto.getFicnic_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}" class="btn btn-outline-danger btn-sm my-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');">삭제</a>
                                 </td>
                             </tr>
                         	</c:forEach>
