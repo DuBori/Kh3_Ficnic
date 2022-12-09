@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
+import com.kh3.model.member.MemberService;
 import com.kh3.model.member.PointDAO;
 import com.kh3.model.member.PointDTO;
 
