@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
+import com.kh3.model.member.MemberService;
 import com.kh3.model.member.PointDAO;
 import com.kh3.model.member.PointDTO;
 
@@ -31,7 +33,8 @@ public class SiteMemberController {
 	private MemberDAO dao;
 	@Autowired
 	private PointDAO pdao;
-
+	@Inject
+	MemberService memberService;
 	
 	// 로그인 페이지로 가는 매핑
 	@RequestMapping("member/member_login.do")
@@ -42,59 +45,48 @@ public class SiteMemberController {
 	
 	// 로그인
 	@RequestMapping("member/member_login_check.do")
-	public void login_check(MemberDTO dto, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
-
+	public void login_check(MemberDTO dto, HttpServletResponse response, HttpServletRequest request) throws IOException {
+		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		String login_id = dto.getMember_id();
-		String login_pw = dto.getMember_pw();
-		String login_email = dto.getMember_email();
-
-		int sessionMem = this.dao.sessionMember(dto);
-		System.out.println("sessionmem=========" + sessionMem);
+		String id = request.getParameter("member_id");
+		String pw = request.getParameter("member_pw");
 		
-		session = request.getSession();
-		
-		/*
-		 * MemberDTO dto = dao.getMemberInfo(login_id); 
-		  
-		 */
-		
+		dto.setMember_id(id);
+		dto.setMember_pw(pw);
 		
 		// 아이디 체크
 		int result = this.dao.loginCheck(dto);
 
 		// 비밀번호 체크
 		int check = this.dao.pwCheck(dto);
+		
+		if(result == 0) { // 일치하는 아이디 없음
+		  
+			out.println("<script>alert('존재하지 않는 아이디입니다.'); history.back(); </script>");	
+		
+		} else if(check == 0) { // 비번 오류
+		
+			out.println("<script>alert('비밀번호를 다시 확인해주세요.'); history.back(); </script>");		
+		
+		} else { // 로그인 성공 시 세션 생성
 
-		if (result == 0) { 
-			out.println("<script>");
-			out.println("alert('존재하지 않는 회원입니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-
-		} else if (check == 0) { 
-			out.println("<script>");
-			out.println("alert('비밀번호가 일치하지 않습니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-
-		} else {
-			out.println("<script>");
-			out.println("alert('환영합니다.')");
-			out.println("location.href='../main.do'");
-			out.println("</script>");
+			HttpSession session = request.getSession();
+			// 아이디로 정보 다 가져옴
+			dto = this.dao.loginSession(id);
+            session.setAttribute("login_id", dto.getMember_id());
+            session.setAttribute("login_pw", dto.getMember_pw());
+            session.setAttribute("login_name", dto.getMember_name());
+            session.setAttribute("login_email", dto.getMember_email());
+            session.setAttribute("login_phone", dto.getMember_phone());
+            session.setAttribute("login_point", dto.getMember_point());
+            
+			out.println("<script>alert('"+dto.getMember_name()+"님 안녕하세요 :)'); location.href='../main.do' </script>");
+		
 		}
-
+		
 	}
-
-	/* 로그 아웃
-	 * @RequestMapping("site/member/member_logout.do") public ModelAndView
-	 * logout(HttpSession session, ModelAndView mav) {
-	 * MemberService.logout(session); mav.setViewName("member/login");
-	 * mav.addObject("message", "logout"); return mav; }
-	 */
 	
 	
 	// 아이디 찾는 창으로 가는 매핑
@@ -110,6 +102,18 @@ public class SiteMemberController {
 		
 		return "site/member/member_find_pw";
 	}
+	
+	
+	   // 로그아웃
+	@RequestMapping("member/member_logout.do")
+	public String logout(HttpServletRequest request) {
+
+		request.getSession().invalidate();
+		request.getSession(true);
+		
+		return "site/main";
+		
+	  }
 	
 	
 	 // 아이디 찾기
@@ -192,7 +196,7 @@ public class SiteMemberController {
 		
 	}
     
-	 // 로그인 페이지로 가는 매핑
+	 // 회원가입 페이지로 가는 매핑
 	 	@RequestMapping("member/member_join.do")
 	 	public String join() {
 	
@@ -216,7 +220,7 @@ public class SiteMemberController {
 	    }
 	    
 	    
-	    // 회원 가입 하는 메핑
+	    // 회원 가입
 	    @RequestMapping("member/member_join_ok.do")
 	    public void joinOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto, HttpServletResponse response) throws IOException {
 	    	response.setContentType("text/html; charset=UTF-8");
