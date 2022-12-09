@@ -8,13 +8,14 @@
 <mapper namespace="reservDAO">
 
     <!-- 예약 목록 총 갯수 -->
-    <select id="adminMemberCount" parameterType="java.util.Map" resultType="int">
+    <select id="adminReservCount" parameterType="java.util.Map" resultType="int">
         select count(*) from reserv_list where reserv_no > 0
-        <!-- <if test="search_type != ''"> and member_type = #{search_type}</if>
-        <if test="search_name != ''"> and member_name like '%' || #{search_name} || '%'</if>
-        <if test="search_id != ''"> and member_id like '%' || #{search_id} || '%'</if>
-        <if test="search_email != ''"> and member_email like '%' || #{search_email} || '%'</if>
-        <if test="search_phone != ''"> and member_phone like '%' || #{search_phone} || '%'</if> -->
+        <if test="search_type != ''"> and reserv_status = #{search_type}</if>
+        <if test="startDate != ''"> and reserv_date like '%' || #{startDate} || '%'</if>
+        <if test="endDate != ''"> and reserv_date like '%' || #{endDate} || '%'</if>
+        <if test="search_no != ''"> and reserv_sess like '%' || #{search_no} || '%'</if>
+        <if test="search_id != ''"> and reserv_name like '%' || #{search_id} || '%'</if>
+        <if test="search_name != ''"> and reserv_ficnic_name like '%' || #{search_name} || '%'</if>
     </select>
 
 
@@ -26,11 +27,12 @@
                     b.*
                 from (
                     select * from reserv_list where reserv_no > 0
-                    <!-- <if test="search_type != ''"> and member_type = #{search_type}</if>
-                    <if test="search_name != ''"> and member_name like '%' || #{search_name} || '%'</if>
-                    <if test="search_id != ''"> and member_id like '%' || #{search_id} || '%'</if>
-                    <if test="search_email != ''"> and member_email like '%' || #{search_email} || '%'</if>
-                    <if test="search_phone != ''"> and member_phone like '%' || #{search_phone} || '%'</if> -->
+	      <if test="search_type != ''"> and reserv_status = #{search_type}</if>
+	      <if test="startDate != ''"> and reserv_date like '%' || #{startDate} || '%'</if>
+	      <if test="endDate != ''"> and reserv_date like '%' || #{endDate} || '%'</if>
+	      <if test="search_no != ''"> and reserv_sess like '%' || #{search_no} || '%'</if>
+	      <if test="search_id != ''"> and reserv_name like '%' || #{search_id} || '%'</if>
+	      <if test="search_name != ''"> and reserv_ficnic_name like '%' || #{search_name} || '%'</if>
                 ) b
             )
         <![CDATA[
@@ -39,7 +41,7 @@
     </select>
 
 	<!-- 예약 상세 내역 -->
-	<select id="adminMemberView" parameterType="int" resultType="reservDTO">
+	<select id="adminReservView" parameterType="int" resultType="reservDTO">
 		select * from reserv_list where reserv_no = #{reserv_no}
 	</select>
 

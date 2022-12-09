@@ -83,4 +83,11 @@
 		#{member_point} where member_id = #{member_id}
 	</update>
 
+	<!-- 예약 상세내역 회원 정보  -->
+	<select id="adminReservMember" parameterType="String" resultType="memberDTO">
+		select * from member_list where member_id = #{member_id}
+	</select>
+
+
+
 </mapper>
