@@ -18,7 +18,7 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public int getMemberCount(Map<String, Object> searchMap) {
-        return this.sqlSession.selectOne("adminMemberCount", searchMap);
+        return this.sqlSession.selectOne("adminMemberTotalCount", searchMap);
     }
 
 
@@ -142,9 +142,8 @@ public class MemberDAOImpl implements MemberDAO {
 
 
 	@Override
-	public int sessionMember(MemberDTO dto) {
-		return this.sqlSession.selectOne("siteMemberSessionCheck", dto);
-		
+	public MemberDTO loginSession(String id) {
+		return this.sqlSession.selectOne("loginSession", id);
 	}
 
 

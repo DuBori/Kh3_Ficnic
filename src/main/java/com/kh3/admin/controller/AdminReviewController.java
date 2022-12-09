@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.review.ReviewDAO;
 import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
@@ -27,6 +28,9 @@ public class AdminReviewController {
 
     @Inject
     private ReviewDAO dao;
+
+    @Inject
+    private FicnicDAO fdao;
 
 
     // 리뷰 사진 업로드 설정
@@ -138,11 +142,15 @@ public class AdminReviewController {
         dto.setReview_photo2(modify_photo2);
 
 
+        // 리뷰 수정
         int check = this.dao.reviewModify(dto);
 
-        if (check > 0) {
+        // 피크닉 평점 수정
+        this.fdao.updateReviewPoint(dto.getFicnic_no());
+
+        if(check > 0){
             out.println("<script>alert('리뷰가 수정되었습니다.'); location.href='review_list.do';</script>");
-        } else {
+        }else{
             out.println("<script>alert('리뷰 수정에 실패했습니다.'); history.back();</script>");
         }
 
@@ -151,11 +159,11 @@ public class AdminReviewController {
 
 
     @RequestMapping("admin/review/review_delete.do")
-    public void delete(@RequestParam("no") int no, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void delete(@RequestParam("review_no") int review_no, @RequestParam("ficnic_no") int ficnic_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        ReviewDTO dto = this.dao.reviewView(no);
+        ReviewDTO dto = this.dao.reviewView(review_no);
 
         // 기존 파일 있으면 삭제 처리
         if(dto.getReview_photo1() != null){
@@ -168,10 +176,11 @@ public class AdminReviewController {
         }
 
 
-        int check = this.dao.reviewDelete(no);
+        int check = this.dao.reviewDelete(review_no);
 
         if (check > 0) {
-            this.dao.updateSeq(no);
+            this.dao.updateSeq(review_no);
+            this.fdao.updateReviewPoint(ficnic_no);
             out.println("<script>alert('리뷰가 삭제되었습니다.'); location.href='review_list.do';</script>");
 
         } else {

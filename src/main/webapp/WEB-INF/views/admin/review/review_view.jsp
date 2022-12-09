@@ -38,6 +38,14 @@
 
                         <div class="w-100 border-bottom"></div>
 
+                        <div class="form-group join-form">
+                            <label>피크닉</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2">${dto.getFicnic_name()}</div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group col d-flex align-items-center">
                             <label>리뷰 평점</label>
                             <div class="px-3">${dto.review_point}점</div>

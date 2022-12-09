@@ -197,12 +197,18 @@ setCategory = function(){
         if(get_sub_cnt == 0){
             $(".input-form .form-group .cate-show.sub").html("");
         }
-        if(get_sub_cnt < 3){
-            if($(".input-form .form-group .cate-show.sub li."+get_ctid).length == 0){
-                $(".input-form .form-group .cate-show.sub").append("<li class=\""+get_ctid+"\">"+get_path+"<button type=\"button\"><i class=\"fa fa-times\"></i></button><input type=\"hidden\" name=\"ficnic_category_sub[]\" value=\""+get_ctid+"\" /></li>");
-            }
-        }else{
+
+        let input_name = "ficnic_category_sub";
+        if(get_type == "subcoupon"){
+            input_name = "coupon_use_category_value";
+        }
+
+        if(get_type == "sub" && get_sub_cnt >= 3){
             alert("다중 카테고리는 최대 3개까지 지정 할 수 있습니다.");
+        }else{
+            if($(".input-form .form-group .cate-show.sub li."+get_ctid).length == 0){
+                $(".input-form .form-group .cate-show.sub").append("<li class=\""+get_ctid+"\">"+get_path+"<button type=\"button\"><i class=\"fa fa-times\"></i></button><input type=\"hidden\" name=\""+input_name+"[]\" value=\""+get_ctid+"\" /></li>");
+            }
         }
 
     }
@@ -227,6 +233,94 @@ $(document).ready(function(){
         }
     });
 });
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////
+// 피크닉 - 피크닉 선택 검색하기
+/////////////////////////////////////////////////////
+function popSearchFicnic(el) {
+    $.ajax({
+        type : "post",
+        url : "coupon_ficnic_search.do",
+        data: {
+            search_keyword  : $(el).find("input[name='search_keyword']").val()
+        },
+        dataType : "html",
+
+        success : function(data) {
+            let get_data = data.split("◇");
+
+            if(get_data[0] > 0){
+                $("#search-result").html("");
+
+                let epd_data = get_data[1].split("♠");
+                for(var i=1; i<epd_data.length; i++) {
+                    let sub_data = epd_data[i].split("♣");
+
+                    let setList = "<li class=\"d-flex my-3 align-items-center\">\n";
+                        if(sub_data[0] != ""){
+                            setList += "<img src=\""+sub_data[0]+"\" alt=\"\" width=\"98\" height=\"60\" />";
+                        }else{
+                            setList += "<span class=\"noimg\">no img</span>";
+                        }
+                        setList += "\t<div class=\"ml-2\">\n";
+                        setList += "\t\t<p><strong>["+sub_data[1]+"]</strong> "+sub_data[2]+"</p>\n";
+                        setList += "\t\t<button type=\"button\" class=\"btn btn-sm btn-outline-primary mt-2\" onclick=\"addFicnic("+sub_data[1]+", '"+sub_data[2].trim()+"');\">적용하기</button>\n";
+                        setList += "\t</div>\n";
+                        setList += "</li>\n";
+                    $("#search-result").append(setList);
+                }
+            }else{
+                $("#search-result").html("<li class=\"py-5 text-center\">No Data</li>");
+            }
+        },
+
+        error : function(e){
+            alert("Error : " + e.status);
+        }
+    });
+
+    return false;
+}
+
+
+
+/////////////////////////////////////////////////////
+// 피크닉 - 피크닉 선택 적용하기
+/////////////////////////////////////////////////////
+addFicnic = function(ficnic_no, ficnic_name){
+    var get_sub_cnt = $(".input-form .form-group .cate-show.ficnic li").length;
+    if(get_sub_cnt == 0){
+        $(".input-form .form-group .cate-show.ficnic").html("");
+    }
+
+    if($(".input-form .form-group .cate-show.ficnic li."+ficnic_no).length == 0){
+        $(".input-form .form-group .cate-show.ficnic").append("<li class=\""+ficnic_no+"\">"+ficnic_name+"<button type=\"button\"><i class=\"fa fa-times\"></i></button><input type=\"hidden\" name=\"coupon_use_goods_value[]\" value=\""+ficnic_no+"\" /></li>");
+    }
+
+    $("#modalFicnic .btn-close").trigger("click");
+}
+
+
+/////////////////////////////////////////////////////
+// 피크닉 - 다중 피크닉 선택 삭제하기
+/////////////////////////////////////////////////////
+$(document).ready(function(){
+    $("body").on("click", ".input-form .form-group .cate-show.ficnic li button", function(){
+        $(this).parent().remove();
+
+        var get_sub_cnt = $(".input-form .form-group .cate-show.ficnic li").length;
+        if(get_sub_cnt == 0){
+            $(".input-form .form-group .cate-show.ficnic").html("<p>등록된 피크닉이 없습니다.</p>");
+        }
+    });
+});
+
 
 
 

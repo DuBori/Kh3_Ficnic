@@ -23,6 +23,7 @@
 
 <form name="form_input" method="post" enctype="multipart/form-data" action="${path}/admin/review/review_modify_ok.do">
 <input type="hidden" name="review_no" value="${dto.review_no}" />
+<input type="hidden" name="ficnic_no" value="${dto.ficnic_no}" />
 <div class="page-cont">
     <div class="row">
         <div class="col-lg mb-4">
@@ -40,6 +41,14 @@
 
                         <div class="w-100 border-bottom"></div>
 
+                        <div class="form-group join-form">
+                            <label>피크닉</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2">${dto.getFicnic_name()}</div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group join-form">
                             <label>리뷰 평점</label>
                             <div class="jf-input">
@@ -106,7 +115,7 @@
 
 <div class="d-flex mt-2 input-form-button">
     <div class="col-lg text-center">
-        <a href="${path}/admin/review/review_delete.do?no=${dto.getReview_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}" class="btn btn-danger btn-lg m-2" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+        <a href="${path}/admin/review/review_delete.do?review_no=${dto.getReview_no()}&ficnic_no=${dto.getFicnic_no()}&search_ficnic=${search_ficnic}&search_review=${search_review}&search_writer=${search_writer}" class="btn btn-danger btn-lg m-2" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
         <a href="${path}/admin/review/review_list.do?search_ficnic=${param.search_ficnic}&search_review=${param.search_review}&search_writer=${param.search_writer}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
         <button type="submit" class="btn btn-primary btn-lg m-2"><i class="fa fa-save"></i> 수정하기</button>
     </div>
