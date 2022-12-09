@@ -18,7 +18,12 @@
 
 
 	<form name="form1" method="post" action="${path}/member/member_login_check.do">
+		
 		<table border="1" width="400px">
+		
+
+			<input type="hidden" name="member_name" value="${dto.getMember_name()}">
+			
 			<tr>
 				<td>아이디</td>
 				<td><input id="member_id" name="member_id" required="required" placeholder="회원 아이디"></td>
