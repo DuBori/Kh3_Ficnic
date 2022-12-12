@@ -35,13 +35,16 @@ public class AdminFicnicController {
     @Inject
     private CategoryDAO cdao;
 
+
     // 카테고리 업로드 설정
     private String categoryFolder = "/resources/data/category/";
     private String categorySaveName = "category";
 
+
     // 피크닉 업로드 설정
     private String ficnicFolder = "/resources/data/ficnic/";
     private String ficnicSaveName = "ficnic";
+
 
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
@@ -49,7 +52,12 @@ public class AdminFicnicController {
     // 전체 게시물의 수
     private int totalRecord = 0;
 
+
+
+
+    // =====================================================================================
     // 피크닉 조회 및 검색 목록 페이지
+    // =====================================================================================
     @RequestMapping("admin/ficnic/ficnic_list.do")
     public String ficnicList(
     		@RequestParam(value = "finic_category_no", required = false, defaultValue = "") String finic_category_no,
