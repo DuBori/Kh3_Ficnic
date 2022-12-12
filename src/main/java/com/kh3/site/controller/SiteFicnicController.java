@@ -66,22 +66,30 @@ public class SiteFicnicController {
     	
 		map.put("category_no", ficnic_category_no);
 		map.put("subcategory_no", ficnic_sub);
-
+	
+		
 		totalRecord = fdao.getSiteListCount(map);
 
 		PageDTO dto = new PageDTO(page, rowsize, totalRecord, map);
     	
     	// 페이지 이동 URL
-    	String pageUrl = request.getContextPath() + "/admin/ficnic/ficnic_list.do?category_no="+ficnic_category_no;
+    	String pageUrl = request.getContextPath() + "/admin/ficnic/ficnic_list.do?category_no="+ficnic_category_no+"&subcategory="+ficnic_sub;
 
     	List<FicnicDTO> fList = fdao.getSiteFicnicList(dto.getStartNo(), dto.getEndNo(), map);
  
+    	String ficnic_name="";
+    	if(!ficnic_sub.equals("")) {
+    		ficnic_name=this.cdao.getCategoryName(ficnic_sub);
+    	}else {
+    		ficnic_name = this.cdao.getCategoryName(ficnic_category_no);
+    	}
     	
     	
     	model.addAttribute("flist", fList);
     	model.addAttribute("clist", cList);	
     	model.addAttribute("rlist", rList);	
     	model.addAttribute("category_no", ficnic_category_no);	
+    	model.addAttribute("ficnic_name", ficnic_name);	
     	
     	
     	

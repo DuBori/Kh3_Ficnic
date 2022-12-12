@@ -22,7 +22,7 @@
 		     $.ajax({
 		         type : "post",
 		         contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-		         url : "<%=request.getContextPath()%>/site/board/baord_comment_delete.do",
+		         url : "<%=request.getContextPath()%>/board/baord_comment_delete.do",
 		         data : {bcomm_no : $(this).attr("name"),
 		        	 	 bbs_id : '${bbs_id}',
 		        	 	 bdata_no : ${BoardConDto.getBdata_no()} },
@@ -43,7 +43,7 @@
          $.ajax({
 	             type : "post",
 	             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-	             url : "<%=request.getContextPath()%>/site/board/baord_comment_insert.do",
+	             url : "<%=request.getContextPath()%>/board/baord_comment_insert.do",
 	             data : $("#form1").serialize(),
              	 datatype : "text",
              success : function(data) {
@@ -52,11 +52,22 @@
          		$(".Logininput").val(""); 		
              },
              error : function(data) {
-                 alert("에러발생");
+                 alert(data);
              }
          });
 		});
 	});
+	
+	function chkpw(no,pwd){
+		if(prompt('비밀번호를 입력하세요.') != pwd){
+			alert('비밀번호가 틀렸습니다.');
+			return false;
+		}else{
+			location.href="${path}/board/board_view.do?bbs_id=${bbs_id}&bdata_no="+no;
+		}
+		
+	}
+	
 </script>
 
 
@@ -105,10 +116,10 @@
         </div>
        </div>
 	<c:choose>
-		<c:when test="${level_view ne 'null' and empty session_id  }">
+		<c:when test="${level_view ne 'null' and empty sess_id  }">
 			게시글 읽기 권한이 부족합니다.
 		</c:when>
-		<c:when test="${level_view eq 'admin' and session_id ne 'admin' }">
+		<c:when test="${level_view eq 'admin' and sess_id ne 'admin' }">
 			게시글 읽기 권한이 부족합니다.
 		</c:when>
 		<c:otherwise>
@@ -165,19 +176,27 @@
 			    	
 			    	<!-- 관리자인 경우 || 자신의 게시글인 경우  ||자신의 게시글 x, 3자인 경우  -->
 			    	<c:choose>
-			    		<c:when test="${BoardConDto.getBdata_writer_id() eq session_id }">
-			    			<a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
-			    			<a href="<%=request.getContextPath()%>/site/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
-			    			<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+			    		<c:when test="${BoardConDto.getBdata_writer_id() eq sess_id }">
+			    			<a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+			    			<a href="${path}/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
+			    			<a href="${path}/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 			    		</c:when>
-			    		<c:when test="${BoardConDto.getBdata_writer_id() eq 'admin' }">
-			    		    <a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>                
-			        		<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+			    		
+			    		<c:when test="${'admin' eq sess_id }">
+			    		    <a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>                
+			        		<a href="${path}/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 			    		</c:when>
+			    		
+			    		<c:when test="${!empty BoardConDto.getBdata_writer_id()}">
+			    			<a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+			    			<a href="${path}/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
+			    			<a href="${path}/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+			    		</c:when>
+			    		
 			    		<c:otherwise>
-			    		<a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
-			    		<a href="<%=request.getContextPath()%>/site/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
-			       		<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+			    		<%-- <a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+			    		<a href="${path}/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a> --%>
+			       		<a href="${path}/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 			    		</c:otherwise>
 			    	</c:choose>
 			    	</div>
@@ -188,8 +207,7 @@
 						<!-- 댓글 리스트 출력부 -->
 						<c:if test="${!empty boardCommentList }">
 							<div id="commList">
-								<c:forEach items="${boardCommentList}" var="comment">
-									
+								<c:forEach items="${boardCommentList}" var="comment">	
 									<div class="horizon">
 									
 										<!-- 댓글 작성 계정 부분 -->
@@ -197,7 +215,6 @@
 												<img alt="이미지 없음" src="">
 												
 												<div>
-													<p>부서</p>
 													<p>${comment.getBcomm_name() }</p>
 												</div>
 											</div>
@@ -214,11 +231,11 @@
 												
 												<div>
 												<!-- 자신의 댓글인 경우 || 관리자인 경우 || 자신의 댓글 x, 3자인 경우  -->
-														<c:if test="${comment.getBcomm_id() eq session_id or session_id eq 'admin' }">
+														<c:if test="${!empty comment.getBcomm_id() and comment.getBcomm_id() eq sess_id or sess_id eq 'admin' }">
 															<input type="hidden" value="c" class="chk">
 															<input type="button" class="delbtn" value="삭제"  name="${comment.getBcomm_no() }">
 														</c:if>
-														<c:if test="${comment.getBcomm_id() eq 'trash'  }">
+														<c:if test="${empty comment.getBcomm_id() }">
 															<input type="hidden" value="${comment.getBcomm_pw() }" class="chk">
 															<input type="button" class="delbtn" value="삭제" name="${comment.getBcomm_no()}">
 														</c:if>
@@ -233,8 +250,8 @@
 						<!-- 댓글 작성 부분  -->
 						<hr>
 						<c:choose>
-							<c:when test="${boardConf.getBoard_level_comment() ne 'null' and empty session_id  }"> 댓글 작성 권한이 부족합니다.<hr></c:when>
-							<c:when test="${boardConf.getBoard_level_comment() eq 'admin' and session_id ne 'admin' }">댓글 작성 권한이 부족합니다.<hr></c:when>
+							<c:when test="${boardConf.getBoard_level_comment() ne 'null' and empty sess_id  }"> 댓글 작성 권한이 부족합니다.<hr></c:when>
+							<c:when test="${boardConf.getBoard_level_comment() eq 'admin' and sess_id ne 'admin' }">댓글 작성 권한이 부족합니다.<hr></c:when>
 							<c:otherwise>
 								<h5>댓글 작성</h5>
 								<form  method="post" id="form1" >
@@ -244,9 +261,10 @@
 									<input type="hidden" value="${BoardConDto.getBdata_no()}" name="bdata_no">
 									<!--회원 || 비회원-->
 									<c:choose>
-										<c:when test="${!empty session }">
-											<input type="hidden" value="${session_id }" name="bcomm_id">
-											<input type="hidden" value="${session_pw }" name="bcomm_pw">
+										<c:when test="${!empty sess_id }">
+											<input type="hidden" value="${sess_id }" name="bcomm_id">
+											<input type="hidden" value="${sess_pw }" name="bcomm_pw">
+											<input type="hidden" value="${sess_name }" name="bcomm_name">
 											<div class="horizon">
 												
 												<!-- 세션 계정 부분 -->
@@ -254,13 +272,12 @@
 													<img alt="이미지 없음" src="${session_src}">
 													
 													<div>
-														<p>부서${session_major}</p>
-														<p>회원 이름<input name="bcomm_name" value="${session_name}"></p>
+														<p>회원 이름<input disabled="disabled" name="bcomm_name" value="${sess_name}"></p>
 													</div>
 												</div>
 												
 												<div>
-													<textarea rows="7" cols="25" name="bcomm_cont" required="required"></textarea>
+													<textarea rows="7" cols="25" name="bcomm_cont" class="Logininput" required="required"></textarea>
 												</div>
 												
 												<div>
@@ -272,7 +289,6 @@
 										<c:otherwise>
 											<div>
 												<h3>현재 비회원</h3>
-												<input type="hidden" name="bcomm_id" value="trash">
 												<div>
 													작성자 이름<input name="bcomm_name"  required="required" class="Logininput">
 													비밀번호<input type="password" name="bcomm_pw" required="required" class="Logininput">	
@@ -309,9 +325,9 @@
 									<tr>
 										<td><c:if test="${dto.getBdata_use_notice() eq 'Y' }">공지🔔</c:if><c:if test="${dto.getBdata_use_notice() ne 'Y' }">${dto.getBdata_no() }</c:if></td>
 										<c:if test="${dto.getBdata_use_secret() eq 'Y'}">
-											<td>🔒비밀글 입니다.</td>
+											<td onclick="chkpw(${dto.getBdata_no()},${dto.getBdata_writer_pw() })">🔒비밀글 입니다.</td>
 										</c:if>
-										<c:if test="${dto.getBdata_use_secret() eq 'N' or session_id eq 'admin'}">
+										<c:if test="${dto.getBdata_use_secret() eq 'N' or sess_id eq 'admin'}">
 											<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
 										</c:if>
 										

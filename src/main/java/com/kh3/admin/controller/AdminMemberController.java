@@ -140,6 +140,14 @@ public class AdminMemberController {
     }
     
     
+    // 이메일 중복 체크
+    @RequestMapping("admin/member/memberMailCheck.do")
+    @ResponseBody
+    public int checkEmail(@RequestParam("paramEmail") String paramEmail) {
+        return this.dao.checkEmail(paramEmail);
+    }
+    
+    
     // 회원 등록 하는 메핑
     @RequestMapping("admin/member/memberWriteOk.do")
     public void writeOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto, HttpServletResponse response) throws IOException {
@@ -167,7 +175,10 @@ public class AdminMemberController {
 					out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
 				}else if(error.getDefaultMessage().equals("phone")) {
 					out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>"); break;
-				} 
+				} else if (error.getDefaultMessage().equals("mailchk")) {
+                    out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력하주세요.'); history.back();</script>");
+                    break;
+                } 
 			}
     	}else {		// 이상 없을 때 실행
     		System.out.println("=============dto는?" + dto);

@@ -1,5 +1,8 @@
 package com.kh3.admin.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +89,14 @@ public class AdminReservController {
         List<ReservDTO> list = this.dao.getReservList(dto.getStartNo(), dto.getEndNo(), searchMap);
         model.addAttribute("List", list);
 
+        LocalDate startNowDate = LocalDate.now().minusDays(30L); // 오늘로부터 30일전 부터
+        String startDay = startNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate endNowDate = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()); // 오늘로부터 30일후 까지
+        String endDay = endNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        
+        
+        model.addAttribute("startDay", startDay);
+        model.addAttribute("endDay", endDay);
         model.addAttribute("totalCount", totalRecord);
         model.addAttribute("paging", dto);
         model.addAttribute("search_type", search_type);

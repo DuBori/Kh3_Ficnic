@@ -161,6 +161,14 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 
 
+	@Override
+	public String getCategoryName(String ficnic_name) {
+		// TODO Auto-generated method stub
+		return this.sqlSession.selectOne("siteFicnicName",ficnic_name);
+	}
+
+
+
 
 
 

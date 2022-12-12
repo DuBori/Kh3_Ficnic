@@ -19,6 +19,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -107,10 +108,12 @@ public class SiteBoardController {
 
 	/* 해당 게시판 리스트 조회 메서드 */
 	@RequestMapping("/board/board_list.do")
-	public String board_list(HttpServletRequest request, Model model) {
-		String field = request.getParameter("field");
-		String keyword = request.getParameter("keyword");
-		String bbs_id = request.getParameter("bbs_id");
+	public String board_list(HttpServletRequest request, Model model,
+			@RequestParam(value = "field", required = false,defaultValue = "") String field, 
+			@RequestParam(value = "keyword", required = false,defaultValue = "") String keyword, 
+			@RequestParam(value = "bbs_id", required = false,defaultValue = "") String bbs_id) {
+
+	
 
 		/* 해당 게시판 설정 DTO */
 		// 해당 게시물 설정값 가져오기
@@ -184,6 +187,12 @@ public class SiteBoardController {
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 
+		if(mrequest.getParameter("bdata_use_secret") == null) {
+			dto.setBdata_use_secret("N");
+		}
+		
+		
+		
 		//config 테이블 id
 		String bbs_id=mrequest.getParameter("board_id");
 		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/resources/data/board/"+bbs_id+"/");
@@ -253,6 +262,10 @@ public class SiteBoardController {
 		if (mrequest.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(mrequest.getParameter("bdata_no"));
 		}
+		
+		if(mrequest.getParameter("bdata_use_secret") == null) {
+			Modifydto.setBdata_use_secret("N");
+		}
 
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -315,15 +328,11 @@ public class SiteBoardController {
 
 	/* 게시글 눌렀을 때 이동 메서드 */
 	@RequestMapping("/board/board_view.do")
-	public String board_view(HttpServletRequest request, Model model) {
-		int bdata_no = 0;
-		if (request.getParameter("bdata_no") != null) {
-			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
-		}
-		String field = request.getParameter("field");
-		String keyword = request.getParameter("keyword");
-		String bbs_id = request.getParameter("bbs_id");
-
+	public String board_view(@RequestParam(value ="bdata_no", required = false, defaultValue = "0") int bdata_no,
+			@RequestParam(value = "field", required = false,defaultValue = "") String field, 
+			@RequestParam(value = "keyword", required = false,defaultValue = "") String keyword, 
+			@RequestParam(value = "bbs_id", required = false,defaultValue = "") String bbs_id , HttpServletRequest request, Model model) {
+		
 		/* 해당 게시판 설정 DTO */
 		// 해당 게시물 설정값 가져오기
 		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
@@ -401,8 +410,10 @@ public class SiteBoardController {
 	/* 해당 게시판 댓글 삭제하기 */
 	@RequestMapping("/board/baord_comment_delete.do")
 	public void board_comment_delete(HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
-		System.out.println("진입");
-		String id = (String) session.getAttribute("session_id");
+		String id = "";
+		if(session.getAttribute("sess_id")!=null) {
+			id = (String)session.getAttribute("sess_id");
+		}
 		String res="";
 
 
@@ -441,19 +452,23 @@ public class SiteBoardController {
 			this.board_CommDao.updateCommentNum(map);
 
 			for(BoardCommentDTO commDto : board_CommDao.getBoardCommList(map)) {
-				res+="<div class=\"horizon\"><div><p>부서</p><p>"+commDto.getBcomm_name()+
+				res+="<div class=\"horizon\"><div><p>"+commDto.getBcomm_name()+
 						"</p></div><div><textarea readonly=\"readonly\" rows=\"7\" cols=\"25\">"+
 						commDto.getBcomm_cont()+"</textarea></div><div><p>"+commDto.getBcomm_date()+"</p></div>";
 
-						if(id !=null) {
+						if(id!=null) {
 							/* 회원 본인 댓글이나 관리자일때 */
-							if((commDto.getBcomm_id().equals(id) || id.equals("admin")) && commDto.getBcomm_id().equals("trash")) {
-								res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >";								
+							if(commDto.getBcomm_id() !=null && (commDto.getBcomm_id().equals(id) || id.equals("admin"))) {
+								res+="<div><input type=\"hidden\" value=\"c\" class=\"chk\">"
+										+ "<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\">"						
+										+ "</div>";								
 							}
 						}
 						/* 비회원 인원이 작성한 댓글 */
-						if(commDto.getBcomm_id().equals("trash")) {
-							res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >";	
+						if(commDto.getBcomm_id() == null) {
+							res+="<div><input type=\"hidden\" value=\""+commDto.getBcomm_pw()+"\" class=\"chk\">"
+								+ "<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >"
+								+ "</div>";	
 						}
 
 						res+="</div>";
@@ -471,15 +486,14 @@ public class SiteBoardController {
 	public void baord_comment_insert(HttpSession session ,HttpServletResponse response, HttpServletRequest request, BoardCommentDTO dto) throws IOException {
 		String id ="";
 		String res="";
-		if(session.getAttribute("session_id") !=null) {
-			id = (String) session.getAttribute("session_id");
+		if(session.getAttribute("sess_id") !=null) {
+			id = (String) session.getAttribute("sess_id");
 		}
 
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 
 		String bbs_id = request.getParameter("bbs_id");
-		System.out.println("bbs_id >>> "+ bbs_id);
 		int bdata_no = 0;
 		if (request.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
@@ -496,21 +510,28 @@ public class SiteBoardController {
 			/* 게시글 댓글 개수 증가처리 */
 			this.board_CommDao.updateCommentCount(map);	
 			for(BoardCommentDTO commDto : board_CommDao.getBoardCommList(map)) {
-				res+="<div class=\"horizon\"><div><p>부서</p><p>"+commDto.getBcomm_name()+
-						"</p></div><div><textarea readonly=\"readonly\" rows=\"7\" cols=\"25\">"+
+				res+="<div class=\"horizon\">"
+						+ "<div>"
+						+ "<p>"+commDto.getBcomm_name()+"</p>"
+						+ "</div>"
+						+ "<div><textarea readonly=\"readonly\" rows=\"7\" cols=\"25\">"+
 						commDto.getBcomm_cont()+"</textarea></div><div><p>"+commDto.getBcomm_date()+"</p></div>";
 						/* 회원 본인 댓글이나 관리자일때 */
-						if(commDto.getBcomm_id().equals(id) || id.equals("admin")) {
-							res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >";									
+						if(!id.equals("") && (commDto.getBcomm_id().equals(id) || id.equals("admin"))){
+							res+="<div><input type=\"hidden\" value=\"c\" class=\"chk\">"
+							+ "<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >"
+							+ "</div>";									
 						}
 						/* 비회원 인원이 작성한 댓글 */
-						if(commDto.getBcomm_id().equals("trash") && !id.equals("admin")) {
-							res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\">";	
+						if(commDto.getBcomm_id() == null && !id.equals("admin")) {
+							res+="<div><input type=\"hidden\" value=\""+commDto.getBcomm_pw()+"\" class=\"chk\">"
+							   + "<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\">"
+							   + "</div>";	
 							
 						}
 						res+="</div>";
-			}
-			out.print(res);			 
+			}		 
+			out.println(res);
 		}else {
 			out.println("<script>alert('댓글 등록 실패'); history.back();</script>");
 		}
@@ -551,5 +572,5 @@ public class SiteBoardController {
 		in.close();
 		out.close();
 	}
-
+	
 }
