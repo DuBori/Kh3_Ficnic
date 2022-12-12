@@ -3,7 +3,17 @@
 
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_board.css" />
 
-
+<script type="text/javascript">
+	function chkpw(no,pwd){
+		if(prompt('비밀번호를 입력하세요.') != pwd){
+			return false;
+		}else{
+			location.href="${path}/board/board_view.do?bbs_id=${bbs_id}&bdata_no="+no;
+		}
+		
+	}
+	
+</script>
 
 <%@ include file="../../layout/layout_csmenu.jsp" %>
 
@@ -63,7 +73,7 @@
 					<tr>
 						<td><c:if test="${dto.getBdata_use_notice() eq 'Y' }">공지🔔</c:if><c:if test="${dto.getBdata_use_notice() ne 'Y' }">${dto.getBdata_no()}</c:if></td>
 						<c:if test="${dto.getBdata_use_secret() eq 'Y' }">
-							<td>🔒비밀글 입니다.</td>
+							<td onclick="chkpw(${dto.getBdata_no() },${dto.getBdata_writer_pw()})">🔒비밀글 입니다.</td>
 						</c:if>
 						<c:if test="${dto.getBdata_use_secret() eq 'N' or session_id eq 'admin'}">
 							<td><a href="<%=request.getContextPath()%>/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}">[${level}]회원 ${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>

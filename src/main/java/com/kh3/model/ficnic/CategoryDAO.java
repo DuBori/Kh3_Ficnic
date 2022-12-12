@@ -28,4 +28,6 @@ public interface CategoryDAO {
     
 	List<String> getChildList(String ficnic_category_no);
 
+	String getCategoryName(String ficnic_sub);
+
 }
