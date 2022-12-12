@@ -3,14 +3,24 @@
 
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_board.css" />
 
+
 <script type="text/javascript">
+	
+
 	function chkpw(no,pwd){
-		if(prompt('비밀번호를 입력하세요.') != pwd){
-			alert('비밀번호가 틀렸습니다.');
-			return false;
-		}else{
+		if('<%=session.getAttribute("sess_pw")%>' == pwd){
 			location.href="${path}/board/board_view.do?bbs_id=${bbs_id}&bdata_no="+no;
+		}else if('<%=session.getAttribute("sess_id")%>' === 'admin' ){
+			location.href="${path}/board/board_view.do?bbs_id=${bbs_id}&bdata_no="+no;
+		}else{
+			if(prompt('비밀번호를 입력하세요.') != pwd){
+				alert('비밀번호가 틀렸습니다.');
+				return false;
+			}else{
+				location.href="${path}/board/board_view.do?bbs_id=${bbs_id}&bdata_no="+no;
+			}
 		}
+		
 		
 	}
 	

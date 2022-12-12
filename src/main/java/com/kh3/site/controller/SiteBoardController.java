@@ -262,7 +262,7 @@ public class SiteBoardController {
 		if (mrequest.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(mrequest.getParameter("bdata_no"));
 		}
-		System.out.println("비밀글 >>>>>>>>>>"+mrequest.getParameter("bdata_use_secret"));
+		
 		if(mrequest.getParameter("bdata_use_secret") == null) {
 			Modifydto.setBdata_use_secret("N");
 		}
@@ -410,8 +410,10 @@ public class SiteBoardController {
 	/* 해당 게시판 댓글 삭제하기 */
 	@RequestMapping("/board/baord_comment_delete.do")
 	public void board_comment_delete(HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
-		System.out.println("진입");
-		String id = (String) session.getAttribute("session_id");
+		String id = "";
+		if(session.getAttribute("sess_id")!=null) {
+			id = (String)session.getAttribute("sess_id");
+		}
 		String res="";
 
 
@@ -450,19 +452,23 @@ public class SiteBoardController {
 			this.board_CommDao.updateCommentNum(map);
 
 			for(BoardCommentDTO commDto : board_CommDao.getBoardCommList(map)) {
-				res+="<div class=\"horizon\"><div><p>부서</p><p>"+commDto.getBcomm_name()+
+				res+="<div class=\"horizon\"><div><p>"+commDto.getBcomm_name()+
 						"</p></div><div><textarea readonly=\"readonly\" rows=\"7\" cols=\"25\">"+
 						commDto.getBcomm_cont()+"</textarea></div><div><p>"+commDto.getBcomm_date()+"</p></div>";
 
-						if(id !=null) {
+						if(id!=null) {
 							/* 회원 본인 댓글이나 관리자일때 */
-							if((commDto.getBcomm_id().equals(id) || id.equals("admin")) && commDto.getBcomm_id().equals("trash")) {
-								res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >";								
+							if(commDto.getBcomm_id() !=null && (commDto.getBcomm_id().equals(id) || id.equals("admin"))) {
+								res+="<div><input type=\"hidden\" value=\"c\" class=\"chk\">"
+										+ "<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\">"						
+										+ "</div>";								
 							}
 						}
 						/* 비회원 인원이 작성한 댓글 */
-						if(commDto.getBcomm_id().equals("trash")) {
-							res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >";	
+						if(commDto.getBcomm_id() == null) {
+							res+="<div><input type=\"hidden\" value=\""+commDto.getBcomm_pw()+"\" class=\"chk\">"
+								+ "<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >"
+								+ "</div>";	
 						}
 
 						res+="</div>";
@@ -480,15 +486,14 @@ public class SiteBoardController {
 	public void baord_comment_insert(HttpSession session ,HttpServletResponse response, HttpServletRequest request, BoardCommentDTO dto) throws IOException {
 		String id ="";
 		String res="";
-		if(session.getAttribute("session_id") !=null) {
-			id = (String) session.getAttribute("session_id");
+		if(session.getAttribute("sess_id") !=null) {
+			id = (String) session.getAttribute("sess_id");
 		}
 
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 
 		String bbs_id = request.getParameter("bbs_id");
-		System.out.println("bbs_id >>> "+ bbs_id);
 		int bdata_no = 0;
 		if (request.getParameter("bdata_no") != null) {
 			bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
@@ -507,22 +512,26 @@ public class SiteBoardController {
 			for(BoardCommentDTO commDto : board_CommDao.getBoardCommList(map)) {
 				res+="<div class=\"horizon\">"
 						+ "<div>"
-						+ "<p>부서</p><p>"+commDto.getBcomm_name()+
-						"</p>"
+						+ "<p>"+commDto.getBcomm_name()+"</p>"
 						+ "</div>"
 						+ "<div><textarea readonly=\"readonly\" rows=\"7\" cols=\"25\">"+
 						commDto.getBcomm_cont()+"</textarea></div><div><p>"+commDto.getBcomm_date()+"</p></div>";
 						/* 회원 본인 댓글이나 관리자일때 */
-						if(!id.equals("") && (commDto.getBcomm_id().equals(id) || id.equals("admin"))) {
-							res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >";									
+						if(!id.equals("") && (commDto.getBcomm_id().equals(id) || id.equals("admin"))){
+							res+="<div><input type=\"hidden\" value=\"c\" class=\"chk\">"
+							+ "<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\" >"
+							+ "</div>";									
 						}
 						/* 비회원 인원이 작성한 댓글 */
 						if(commDto.getBcomm_id() == null && !id.equals("admin")) {
-							res+="<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\">";	
+							res+="<div><input type=\"hidden\" value=\""+commDto.getBcomm_pw()+"\" class=\"chk\">"
+							   + "<input type=\"button\" class=\"delbtn\" value=\"삭제\" name=\""+commDto.getBcomm_no()+"\">"
+							   + "</div>";	
 							
 						}
 						res+="</div>";
 			}		 
+			out.println(res);
 		}else {
 			out.println("<script>alert('댓글 등록 실패'); history.back();</script>");
 		}
@@ -563,5 +572,5 @@ public class SiteBoardController {
 		in.close();
 		out.close();
 	}
-
+	
 }

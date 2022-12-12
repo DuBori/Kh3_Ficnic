@@ -207,8 +207,7 @@
 						<!-- 댓글 리스트 출력부 -->
 						<c:if test="${!empty boardCommentList }">
 							<div id="commList">
-								<c:forEach items="${boardCommentList}" var="comment">
-									
+								<c:forEach items="${boardCommentList}" var="comment">	
 									<div class="horizon">
 									
 										<!-- 댓글 작성 계정 부분 -->
@@ -216,7 +215,6 @@
 												<img alt="이미지 없음" src="">
 												
 												<div>
-													<p>부서</p>
 													<p>${comment.getBcomm_name() }</p>
 												</div>
 											</div>
@@ -233,11 +231,11 @@
 												
 												<div>
 												<!-- 자신의 댓글인 경우 || 관리자인 경우 || 자신의 댓글 x, 3자인 경우  -->
-														<c:if test="${comment.getBcomm_id() eq sess_id or sess_id eq 'admin' }">
+														<c:if test="${!empty comment.getBcomm_id() and comment.getBcomm_id() eq sess_id or sess_id eq 'admin' }">
 															<input type="hidden" value="c" class="chk">
 															<input type="button" class="delbtn" value="삭제"  name="${comment.getBcomm_no() }">
 														</c:if>
-														<c:if test="${comment.getBcomm_id() eq ''  }">
+														<c:if test="${empty comment.getBcomm_id() }">
 															<input type="hidden" value="${comment.getBcomm_pw() }" class="chk">
 															<input type="button" class="delbtn" value="삭제" name="${comment.getBcomm_no()}">
 														</c:if>
@@ -266,6 +264,7 @@
 										<c:when test="${!empty sess_id }">
 											<input type="hidden" value="${sess_id }" name="bcomm_id">
 											<input type="hidden" value="${sess_pw }" name="bcomm_pw">
+											<input type="hidden" value="${sess_name }" name="bcomm_name">
 											<div class="horizon">
 												
 												<!-- 세션 계정 부분 -->
@@ -278,7 +277,7 @@
 												</div>
 												
 												<div>
-													<textarea rows="7" cols="25" name="bcomm_cont" required="required"></textarea>
+													<textarea rows="7" cols="25" name="bcomm_cont" class="Logininput" required="required"></textarea>
 												</div>
 												
 												<div>
