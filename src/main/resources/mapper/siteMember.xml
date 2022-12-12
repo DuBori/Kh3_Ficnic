@@ -44,7 +44,7 @@
 
 	<!-- 비밀번호 찾기 / 둘다 맞는 경우 -->
     <select id="siteMemberFindPwAll" resultType="int">
-    select count(*) 
+    select member_pw
 	from member_list
 	where member_email = #{member_email} and member_id = #{member_id}
     </select>
