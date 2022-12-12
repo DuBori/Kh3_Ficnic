@@ -38,6 +38,7 @@ public class SiteMemberController {
     @Inject
     MemberService memberService;
 
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
     // =====================================================================================
@@ -58,44 +59,85 @@ public class SiteMemberController {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        String id = request.getParameter("member_id");
-        String pw = request.getParameter("member_pw");
-
-        dto.setMember_id(id);
-        dto.setMember_pw(pw);
-
+		
+		  String id = request.getParameter("member_id"); String pw =
+		  request.getParameter("member_pw");
+		  
+		 dto.setMember_id(id); 
+		 dto.setMember_pw(pw);
+		 
+        
+        MemberDTO mdto = this.dao.getReservMember(dto.getMember_id());
+		
+		boolean isTrue=false;
+		
         // 아이디 체크
         int result = this.dao.loginCheck(dto);
 
         // 비밀번호 체크
-        int check = this.dao.pwCheck(dto);
-
+		/*
+		 * int check = this.dao.pwCheck(dto);
+		 */
 
         // 일치하는 아이디 없음
         if(result == 0){
             out.println("<script>alert('존재하지 않는 아이디입니다.'); history.back(); </script>");
 
         // 비번 오류
-        }else if (check == 0){
-            out.println("<script>alert('비밀번호를 다시 확인해주세요.'); history.back(); </script>");
-
-        // 로그인 성공 시 세션 생성
         }else{
-            dto = this.dao.loginSession(id);
+      		  
 
-            HttpSession session = request.getSession();
-            session.setAttribute("sess_id", dto.getMember_id());
-            session.setAttribute("sess_pw", dto.getMember_pw());
-            session.setAttribute("sess_type", dto.getMember_type());
-            session.setAttribute("sess_name", dto.getMember_name());
-            session.setAttribute("sess_email", dto.getMember_email());
-            session.setAttribute("sess_phone", dto.getMember_phone());
-            session.setAttribute("sess_point", dto.getMember_point());
+    			isTrue=passwordEncoder.matches(dto.getMember_pw(), mdto.getMember_pw());
+    			
+    		}
+    		
+    		if(isTrue == true) {
+    			/*HttpSession session = request.getSession();
+    			// 아이디로 정보 다 가져옴
+    			dto = this.dao.loginSession(mdto.getMember_id());
+                session.setAttribute("login_id", dto.getMember_id());
+                session.setAttribute("login_pw", dto.getMember_pw());
+                session.setAttribute("login_name", dto.getMember_name());
+                session.setAttribute("login_email", dto.getMember_email());
+                session.setAttribute("login_phone", dto.getMember_phone());
+                session.setAttribute("login_point", dto.getMember_point());*/
+    			
+    			dto = this.dao.loginSession(id);
 
-            out.println("<script>alert('" + dto.getMember_name() + "님 안녕하세요 :)'); location.href='../main.do' </script>");
-
+                HttpSession session = request.getSession();
+                session.setAttribute("sess_id", dto.getMember_id());
+                session.setAttribute("sess_pw", dto.getMember_pw());
+                session.setAttribute("sess_type", dto.getMember_type());
+                session.setAttribute("sess_name", dto.getMember_name());
+                session.setAttribute("sess_email", dto.getMember_email());
+                session.setAttribute("sess_phone", dto.getMember_phone());
+                session.setAttribute("sess_point", dto.getMember_point());
+                
+    			out.println("<script>alert('"+dto.getMember_name()+"님 안녕하세요 :)'); location.href='../main.do' </script>");
+    		}else {
+    			out.println("<script>alert('비밀번호를 다시 확인해주세요.'); history.back(); </script>");
+    		}
+    		
         }
-    }
+    
+    	
+        
+	/*
+	 * // 로그인 성공 시 세션 생성 }else{ dto = this.dao.loginSession(id);
+	 * 
+	 * HttpSession session = request.getSession(); session.setAttribute("sess_id",
+	 * dto.getMember_id()); session.setAttribute("sess_pw", dto.getMember_pw());
+	 * session.setAttribute("sess_type", dto.getMember_type());
+	 * session.setAttribute("sess_name", dto.getMember_name());
+	 * session.setAttribute("sess_email", dto.getMember_email());
+	 * session.setAttribute("sess_phone", dto.getMember_phone());
+	 * session.setAttribute("sess_point", dto.getMember_point());
+	 * 
+	 * out.println("<script>alert('" + dto.getMember_name() +
+	 * "님 안녕하세요 :)'); location.href='../main.do' </script>");
+	 * 
+	 * } }
+	 */
 
 
 
@@ -250,6 +292,12 @@ public class SiteMemberController {
         if (!dto.getMember_pw().equals(dto.getMember_pw_re())) {
             out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
         }
+        
+     // 암호화 설정
+
+		
+     			dto.setMember_pw(passwordEncoder.encode(dto.getMember_pw()));
+     			dto.setMember_pw_re(passwordEncoder.encode(dto.getMember_pw_re()));
 
         // 유효성 검사
         if (result.hasErrors()) {
