@@ -20,10 +20,9 @@ var phoneJ = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 let ajaxTxt = "";
 
 
-
 $(function(){
     // 아이디 6글자 이상
- 	$("input[name='member_id']").keyup(function(){
+ 	$("#member_id").keyup(function(){
         let userId = $(this).val();
         
          if($.trim(userId).length < 6){
@@ -56,11 +55,10 @@ $(function(){
             }
         });
 	});	
-});
 
 
 
-$(function(){
+
 	// 이메일 정규표현식
 	$("input[name='member_email']").keyup(function(){
         let userEmail = $(this).val();
@@ -95,64 +93,54 @@ $(function(){
                 $("input[name='mailchk']").val("N");
             }
         });
-});
-});
-
-// 비밀번호
-	$(function() {
-$('#member_pw').keyup(function(){
-	if(pwJ.test($(this).val())){
-    	ajaxTxt = "<span style=\"color:blue\">Good.</span>";
-	} else {
-    	ajaxTxt = "<span style=\"color:red\">비밀번호를 확인해주세요 :)</span>";
-	}
-    $("#pw_check").html(ajaxTxt);
-});
-});
-
-
-
-
-// 비밀번호 확인 ***********일치하나 확인**********
-	$(function() {
-$('#member_pw_re').keyup(function(){
-	if($('#member_pw').val() == ($('#member_pw_re').val())) {
-    	ajaxTxt = "<span style=\"color:blue\">일치합니다.</span>";
-	} else {
-		ajaxTxt = "<span style=\"color:red\">일치하는 번호를 적어주세요 :)</span>";
-	}
-    $("#pw_re_check").html(ajaxTxt);
-});
-}); 
-
-
-
-//이름에 특수문자 들어가지 않도록 설정
-	$(function() {
-$("#member_name").keyup(function() {
-	if (nameJ.test($(this).val())) {
-    	ajaxTxt = "<span style=\"color:blue\">Good.</span>";
-	} else {
-    	ajaxTxt = "<span style=\"color:red\">이름을 확인해주세요 :)</span>";
-	}
-    $("#name_check").html(ajaxTxt);
-});
 	});
 
 
-//휴대폰
-$(function() {
-	$("#member_phone").keyup(function() {
-		if (phoneJ.test($(this).val())) {
+
+	// 비밀번호
+	$('#member_pw').keyup(function(){
+		if(pwJ.test($(this).val())){
 	    	ajaxTxt = "<span style=\"color:blue\">Good.</span>";
 		} else {
-	    	ajaxTxt = "<span style=\"color:red\">번호를 다시 확인해주세요 :)</span>";
+	    	ajaxTxt = "<span style=\"color:red\">비밀번호를 확인해주세요 :)</span>";
 		}
-	    $("#phone_check").html(ajaxTxt);
-});
-});
+	    $("#pw_check").html(ajaxTxt);
+	});
 
 
+	// 비밀번호 확인 ***********일치하나 확인**********
+	$('#member_pw_re').keyup(function(){
+		if($('#member_pw').val() == ($('#member_pw_re').val())) {
+	    	ajaxTxt = "<span style=\"color:blue\">일치합니다.</span>";
+		} else {
+			ajaxTxt = "<span style=\"color:red\">일치하는 번호를 적어주세요 :)</span>";
+		}
+	    $("#pw_re_check").html(ajaxTxt);
+	});
+
+
+
+	//이름에 특수문자 들어가지 않도록 설정
+	$("#member_name").keyup(function() {
+		if (nameJ.test($(this).val())) {
+	    	ajaxTxt = "<span style=\"color:blue\">Good.</span>";
+		} else {
+	    	ajaxTxt = "<span style=\"color:red\">이름을 확인해주세요 :)</span>";
+		}
+	    $("#name_check").html(ajaxTxt);
+	});
+
+
+	//휴대폰
+		$("#member_phone").keyup(function() {
+			if (phoneJ.test($(this).val())) {
+		    	ajaxTxt = "<span style=\"color:blue\">Good.</span>";
+			} else {
+		    	ajaxTxt = "<span style=\"color:red\">번호를 다시 확인해주세요 :)</span>";
+			}
+		    $("#phone_check").html(ajaxTxt);
+	});
+});
 </script>
 
 
