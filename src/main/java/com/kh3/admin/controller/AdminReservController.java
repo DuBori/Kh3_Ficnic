@@ -114,6 +114,7 @@ public class AdminReservController {
         model.addAttribute("dto", dto);
         model.addAttribute("mdto", mdto);
 
+        
         return "admin/reserv/reserv_view";
     }
     
