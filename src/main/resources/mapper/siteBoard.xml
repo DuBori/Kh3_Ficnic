@@ -89,7 +89,7 @@
 		#{dto.bdata_file3},
 		#{dto.bdata_file4},
 		default,
-		#{dto.bdata_use_notice},
+		nvl(#{dto.bdata_use_notice},'N'),
 		nvl(#{dto.bdata_use_secret},'N'),
 		default,default,#{dto.bdata_writer_id},
 		#{dto.bdata_writer_pw},
@@ -111,8 +111,8 @@
 		        bdata_file3 = #{dto.bdata_file3},
 		         bdata_file4 = #{dto.bdata_file4},
 		          bdata_ficnic = #{dto.bdata_ficnic},
-		          bdata_use_notice = #{dto.bdata_use_notice},
-		           where bdata_no = #{dto.bdata_no}
+		          bdata_use_notice = nvl(#{dto.bdata_use_notice},'N'),
+		          bdata_date = sysdate where bdata_no = #{dto.bdata_no}
 	</update>
 	
 	<!-- 해당 게시판 게시글 삭제  -->

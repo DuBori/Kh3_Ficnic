@@ -21,7 +21,7 @@ create table board_data_faq(
     bdata_hit number(5) default '0' not null,
     bdata_comment number(5) default '0' not null,
     bdata_writer_id varchar2(50) not null,
-    bdata_writer_pw varchar2(50) not null,
+    bdata_writer_pw varchar2(100) not null,
     bdata_writer_name varchar2(50) not null,
     bdata_date date default sysdate
 );

@@ -192,6 +192,7 @@ public class SiteBoardController {
 		}
 		
 		
+		
 		//config 테이블 id
 		String bbs_id=mrequest.getParameter("board_id");
 		String uploadPath = mrequest.getSession().getServletContext().getRealPath("/resources/data/board/"+bbs_id+"/");
