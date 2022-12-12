@@ -86,21 +86,11 @@ public class SiteMemberController {
         // 비번 오류
         }else{
       		  
-
     			isTrue=passwordEncoder.matches(dto.getMember_pw(), mdto.getMember_pw());
     			
     		}
     		
     		if(isTrue == true) {
-    			/*HttpSession session = request.getSession();
-    			// 아이디로 정보 다 가져옴
-    			dto = this.dao.loginSession(mdto.getMember_id());
-                session.setAttribute("login_id", dto.getMember_id());
-                session.setAttribute("login_pw", dto.getMember_pw());
-                session.setAttribute("login_name", dto.getMember_name());
-                session.setAttribute("login_email", dto.getMember_email());
-                session.setAttribute("login_phone", dto.getMember_phone());
-                session.setAttribute("login_point", dto.getMember_point());*/
     			
     			dto = this.dao.loginSession(id);
 
@@ -120,25 +110,6 @@ public class SiteMemberController {
     		
         }
     
-    	
-        
-	/*
-	 * // 로그인 성공 시 세션 생성 }else{ dto = this.dao.loginSession(id);
-	 * 
-	 * HttpSession session = request.getSession(); session.setAttribute("sess_id",
-	 * dto.getMember_id()); session.setAttribute("sess_pw", dto.getMember_pw());
-	 * session.setAttribute("sess_type", dto.getMember_type());
-	 * session.setAttribute("sess_name", dto.getMember_name());
-	 * session.setAttribute("sess_email", dto.getMember_email());
-	 * session.setAttribute("sess_phone", dto.getMember_phone());
-	 * session.setAttribute("sess_point", dto.getMember_point());
-	 * 
-	 * out.println("<script>alert('" + dto.getMember_name() +
-	 * "님 안녕하세요 :)'); location.href='../main.do' </script>");
-	 * 
-	 * } }
-	 */
-
 
 
     // =====================================================================================
