@@ -5,6 +5,7 @@
 <script type="text/javascript">
 $("#header .navbar .nav-item:nth-child(3)").addClass("active");
 
+var mailJ = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
 $(function(){
     // 아이디 중복여부 확인
@@ -42,6 +43,46 @@ $(function(){
         });
 	});	
 });
+
+
+$(function(){
+	// 이메일 정규표현식
+	$("input[name='member_email']").keyup(function(){
+        let userEmail = $(this).val();
+        
+        if(!mailJ.test($(this).val())) {
+             $("#mailchk-txt").html("<span style=\"color:red\">이메일을 확인해주세요. :)</span>");
+             return false;
+            }
+
+       
+ 		// 이메일 중복
+        $.ajax({
+            type : "post",
+            contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+            datatype : "html",
+            url : "${path}/admin/member/memberMailCheck.do",
+            data : { paramEmail : userEmail },
+
+            success : function(data){
+                if(data > 0){
+                	ajaxTxt = "<span style=\"color:red\">이미 존재하는 이메일 주소입니다.</span>";
+                    $("input[name='mailchk']").val("false");
+                }else{
+                	 ajaxTxt = "<span style=\"color:blue\">Good.</span>";
+                     $("input[name='mailchk']").val("true");
+                }
+                $("#mailchk-txt").html(ajaxTxt);
+            },
+
+            error : function(e){
+                alert("Error : " + e.status);
+                $("input[name='mailchk']").val("N");
+            }
+        });
+	});
+});
+
 </script>
 
 
@@ -105,7 +146,9 @@ $(function(){
                         <div class="w-100"></div>
                         <div class="form-group col">
                             <label for="member_email">이메일</label>
-                            <input type="text" name="member_email" id="member_email" class="form-control" onkeydown="EmailInput(this);" required />
+                            <input type="text" name="member_email" id="member_email" class="form-control w-30" onkeydown="EmailInput(this);" required />
+                        	<div id="mailchk-txt" class="d-inline ml-2"></div>
+							<input type="hidden" name="mailchk" value="false" />
                         </div>
                         <div class="w-100"></div>
                         <div class="form-group col">

@@ -11,8 +11,8 @@
     <select id="adminReservCount" parameterType="java.util.Map" resultType="int">
         select count(*) from reserv_list where reserv_no > 0
         <if test="search_type != ''"> and reserv_status = #{search_type}</if>
-        <if test="startDate != ''"> and reserv_date like '%' || #{startDate} || '%'</if>
-        <if test="endDate != ''"> and reserv_date like '%' || #{endDate} || '%'</if>
+        <if test="startDate != ''"> <![CDATA[and reserv_date > to_date(#{startDate})]]></if>
+        <if test="endDate != ''"> <![CDATA[and reserv_date < to_date(#{endDate})]]></if>
         <if test="search_no != ''"> and reserv_sess like '%' || #{search_no} || '%'</if>
         <if test="search_id != ''"> and reserv_name like '%' || #{search_id} || '%'</if>
         <if test="search_name != ''"> and reserv_ficnic_name like '%' || #{search_name} || '%'</if>
@@ -28,8 +28,8 @@
                 from (
                     select * from reserv_list where reserv_no > 0
 	      <if test="search_type != ''"> and reserv_status = #{search_type}</if>
-	      <if test="startDate != ''"> and reserv_date like '%' || #{startDate} || '%'</if>
-	      <if test="endDate != ''"> and reserv_date like '%' || #{endDate} || '%'</if>
+	      <if test="startDate != ''"> <![CDATA[and reserv_date > to_date(#{startDate})]]></if>
+	      <if test="endDate != ''"> <![CDATA[and reserv_date < to_date(#{endDate})]]></if>
 	      <if test="search_no != ''"> and reserv_sess like '%' || #{search_no} || '%'</if>
 	      <if test="search_id != ''"> and reserv_name like '%' || #{search_id} || '%'</if>
 	      <if test="search_name != ''"> and reserv_ficnic_name like '%' || #{search_name} || '%'</if>
