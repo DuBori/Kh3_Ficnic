@@ -328,14 +328,21 @@ $(document).ready(function(){
 // 피크닉 - 폼체크
 /////////////////////////////////////////////////////
 chkFicnicWrite = function(){
-    var f = document.ficnic_form;
+    var form = document.ficnic_form;
 
-    if(f.ficnic_category_no.value.length == ""){
-        alert("[기본 카테고리]는 반드시 선택해야 합니다.");
-        f.ficnic_category_no.focus();
+    if(form.ficnic_name.value == ""){
+        alert("[피크닉 이름]을 입력해 주세요.");
+        form.ficnic_name.focus();
+        return false;
     }
 
-    return false;
+    if(form.ficnic_category_no.value.length == ""){
+        alert("[기본 카테고리]는 반드시 선택해야 합니다.");
+        form.ficnic_category_no.focus();
+        return false;
+    }
+
+    form.submit();
 }
 
 
@@ -347,8 +354,8 @@ chkFicnicWrite = function(){
 formOptionBtn = function(type, line){
     if(type == "plus"){
         let addOptRow = "<div class=\"row\">\n";
-            addOptRow += "\t<div class=\"col-sm-4 mb-1\"><input type=\"text\" name=\"ficnic_option_title[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"옵션 제목\" /></div>\n";
-            addOptRow += "\t<div class=\"col-sm-6 mb-1\"><input type=\"text\" name=\"ficnic_option_price[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"옵션 가격\" /></div>\n";
+            addOptRow += "\t<div class=\"col-sm-7 mb-1\"><input type=\"text\" name=\"ficnic_option_title\" value=\"\" class=\"form-control h-auto\" placeholder=\"옵션 제목\" /></div>\n";
+            addOptRow += "\t<div class=\"col-sm-3 mb-1\"><input type=\"text\" name=\"ficnic_option_price\" value=\"0\" class=\"form-control h-auto text-right\" placeholder=\"옵션 가격\" onkeyup=\"NumberInput(this)\" /></div>\n";
             addOptRow += "\t<div class=\"col-sm-auto mb-1\"><button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-0 px-3\" onclick=\"formOptionBtn('minus', this);\"><i class=\"fa fa-minus\"></i></button></div>\n";
             addOptRow += "</div>\n";
         $("#ficnic_option").append(addOptRow);
@@ -367,8 +374,8 @@ formOptionBtn = function(type, line){
 formSelectBtn = function(type, line){
     if(type == "plus"){
         let addSelRow = "<div class=\"row\">\n";
-            addSelRow += "\t<div class=\"col-sm-4 mb-1\"><input type=\"text\" name=\"ficnic_select_title[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"선택 제목\" /></div>\n";
-            addSelRow += "\t<div class=\"col-sm-6 mb-1\"><input type=\"text\" name=\"ficnic_select_cont[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"선택 내용\" /></div>\n";
+            addSelRow += "\t<div class=\"col-sm-7 mb-1\"><input type=\"text\" name=\"ficnic_select_title\" value=\"\" class=\"form-control h-auto\" placeholder=\"선택 제목\" /></div>\n";
+            addSelRow += "\t<div class=\"col-sm-3 mb-1\"><input type=\"text\" name=\"ficnic_select_price\" value=\"0\" class=\"form-control h-auto text-right\" placeholder=\"선택 가격\" onkeyup=\"NumberInput(this)\" /></div>\n";
             addSelRow += "\t<div class=\"col-sm-auto mb-1\"><button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-0 px-3\" onclick=\"formSelectBtn('minus', this);\"><i class=\"fa fa-minus\"></i></button></div>\n";
             addSelRow += "</div>\n";
         $("#ficnic_select").append(addSelRow);
@@ -386,8 +393,8 @@ formSelectBtn = function(type, line){
 formFicnicBtn = function(type, line){
     if(type == "plus"){
         let addInfoRow = "<div class=\"row\">\n";
-            addInfoRow += "\t<div class=\"col-sm-4 mb-1\"><input type=\"text\" name=\"ficnic_info_title[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"제목\" /></div>\n";
-            addInfoRow += "\t<div class=\"col-sm-6 mb-1\"><input type=\"text\" name=\"ficnic_info_cont[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"내용\" /></div>\n";
+            addInfoRow += "\t<div class=\"col-sm-4 mb-1\"><input type=\"text\" name=\"ficnic_info\" value=\"\" class=\"form-control h-auto\" placeholder=\"제목\" /></div>\n";
+            addInfoRow += "\t<div class=\"col-sm-6 mb-1\"><input type=\"text\" name=\"ficnic_info\" value=\"\" class=\"form-control h-auto\" placeholder=\"내용\" /></div>\n";
             addInfoRow += "\t<div class=\"col-sm-auto mb-1\"><button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-0 px-3\" onclick=\"formFicnicBtn('minus', this);\"><i class=\"fa fa-minus\"></i></button></div>\n";
             addInfoRow += "</div>\n";
         $("#ficnic_info").append(addInfoRow);
@@ -404,8 +411,8 @@ formFicnicBtn = function(type, line){
 formCurriculumBtn = function(type, line){
     if(type == "plus"){
         let addCurrRow = "<div class=\"row\">\n";
-            addCurrRow += "\t<div class=\"col-sm-4 mb-1\"><input type=\"text\" name=\"ficnic_curriculum_title[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"시간\" /></div>\n";
-            addCurrRow += "\t<div class=\"col-sm-6 mb-1\"><input type=\"text\" name=\"ficnic_curriculum_cont[]\" value=\"\" class=\"form-control h-auto\" placeholder=\"내용\" /></div>\n";
+            addCurrRow += "\t<div class=\"col-sm-4 mb-1\"><input type=\"text\" name=\"ficnic_curriculum\" value=\"\" class=\"form-control h-auto\" placeholder=\"시간\" /></div>\n";
+            addCurrRow += "\t<div class=\"col-sm-6 mb-1\"><input type=\"text\" name=\"ficnic_curriculum\" value=\"\" class=\"form-control h-auto\" placeholder=\"내용\" /></div>\n";
             addCurrRow += "\t<div class=\"col-sm-auto mb-1\"><button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-0 px-3\" onclick=\"formCurriculumBtn('minus', this);\"><i class=\"fa fa-minus\"></i></button></div>\n";
             addCurrRow += "</div>\n";
         $("#ficnic_curriculum").append(addCurrRow);

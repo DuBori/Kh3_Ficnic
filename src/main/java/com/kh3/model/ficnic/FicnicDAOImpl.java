@@ -26,33 +26,7 @@ public class FicnicDAOImpl implements FicnicDAO {
 
     /* 피크닉 상품 등록 */
     @Override
-    public int writeFicnic(FicnicDTO dto, List<String> ficnic_imagesrc) {
-
-        /* 이미지가 저장된 만큼 dto 설정 */
-        int size = ficnic_imagesrc.size();
-
-        for (int i = 1; i <= size; i++) {
-            switch (i) {
-                case 1:
-                    dto.setFicnic_photo1(ficnic_imagesrc.get(0));
-                    break;
-                case 2:
-                    dto.setFicnic_photo2(ficnic_imagesrc.get(1));
-                    break;
-                case 3:
-                    dto.setFicnic_photo3(ficnic_imagesrc.get(2));
-                    break;
-                case 4:
-                    dto.setFicnic_photo4(ficnic_imagesrc.get(3));
-                    break;
-                case 5:
-                    dto.setFicnic_photo5(ficnic_imagesrc.get(4));
-                    break;
-                default:
-                    break;
-            }
-        }
-
+    public int writeFicnic(FicnicDTO dto) {
         return this.sqlSession.insert("adminFicnicWrite", dto);
     }
 

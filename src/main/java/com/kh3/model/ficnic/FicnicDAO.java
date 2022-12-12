@@ -12,7 +12,7 @@ public interface FicnicDAO {
     List<FicnicDTO> getFicnicList(int startNo, int endNo, Map<String, Object> map);
 
     /* 피크닉 작성 */
-    int writeFicnic(FicnicDTO dto, List<String> ficnic_imagesrc);
+    int writeFicnic(FicnicDTO dto);
 
     /* 피크닉 정보 */
     FicnicDTO getFicnicCont(int no);
