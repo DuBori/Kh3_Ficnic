@@ -25,7 +25,9 @@
 	   </div>
 	   
 	   <div>
-	   	<h3>${dummy } 프립</h3>
+	   	<h3><c:if test="${!empty ficnic_name}">${ficnic_name } 프립</c:if></h3>
+	   	<c:choose>
+	   	<c:when test="${!empty flist }">
 	   		<c:forEach items="${flist }" var="dto">
 	   			<c:set var="cnt" value="0"/>
 	   			<div class="border" onclick="location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no() }'">
@@ -42,7 +44,7 @@
 		   			<c:choose>
 		   				<c:when test="${!empty dto.getFicnic_sale_price() }">
 			   				<p>이전가격 : ${dto.getFicnic_market_price()}</p>
-			   				할인율 ${dto.getFicnic_sale_price()/dto.getFicnic_market_price() *100 }% <fmt:formatNumber value="${dto.getFicnic_sale_price() }"></fmt:formatNumber>원
+			   				할인율 <fmt:formatNumber value="${dto.getFicnic_sale_price()/dto.getFicnic_market_price()*100}" type="percent" pattern="##" />% <fmt:formatNumber value="${dto.getFicnic_sale_price() }"></fmt:formatNumber>원
 		   				</c:when>
 		   				<c:otherwise>
 		   					Only  ${dto.getFicnic_market_price()}
@@ -50,7 +52,11 @@
 		   			</c:choose>
 		   		</div>
 	   		</c:forEach>
-
+	   		</c:when>
+	   		<c:otherwise>
+	   			<h5>등록된 피크닉이 없어요</h5>
+	   		</c:otherwise>
+		</c:choose>
 	   </div>
 	   
 	   

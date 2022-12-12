@@ -30,7 +30,7 @@
 	                    b.*
 	                from (
 	                select * from ficnic_list where ficnic_no > 0
-					<if test="category_no !='' and subcategory_no ==''"> and ficnic_category_no in (select category_id from ficnic_category where category_id_up = #{category_no} or category_id = #{category_no} )</if>
+					<if test="category_no !='' and subcategory_no ==''"> and ficnic_category_no in (select category_id from ficnic_category where category_id_up = #{category_no} or category_id = #{category_no} <if test="sub1 != ''">or category_id = #{sub1} </if><if test="sub2 != ''">or category_id = #{sub2} </if><if test="sub3 != ''">or category_id = #{sub3} </if> )</if>
 					<if test="category_no !='' and subcategory_no !=''"> and ficnic_category_no = #{subcategory_no}</if>
 					
 			)b
@@ -53,6 +53,10 @@
 	
 	<select id="SiteFicnicNumList" parameterType="int" resultType="reviewDTO">
 		select * from review_list where ficnic_no = #{ficnic_no}
+	</select>
+	
+	<select id="siteFicnicName" parameterType="string" resultType="string">
+		select category_name from ficnic_category where category_id = #{ficnic_name}
 	</select>
 
 

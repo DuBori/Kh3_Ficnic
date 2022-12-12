@@ -22,7 +22,7 @@
 		     $.ajax({
 		         type : "post",
 		         contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-		         url : "<%=request.getContextPath()%>/site/board/baord_comment_delete.do",
+		         url : "<%=request.getContextPath()%>/board/baord_comment_delete.do",
 		         data : {bcomm_no : $(this).attr("name"),
 		        	 	 bbs_id : '${bbs_id}',
 		        	 	 bdata_no : ${BoardConDto.getBdata_no()} },
@@ -43,7 +43,7 @@
          $.ajax({
 	             type : "post",
 	             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-	             url : "<%=request.getContextPath()%>/site/board/baord_comment_insert.do",
+	             url : "<%=request.getContextPath()%>/board/baord_comment_insert.do",
 	             data : $("#form1").serialize(),
              	 datatype : "text",
              success : function(data) {
@@ -52,7 +52,7 @@
          		$(".Logininput").val(""); 		
              },
              error : function(data) {
-                 alert("에러발생");
+                 alert(data);
              }
          });
 		});
@@ -166,18 +166,26 @@
 			    	<!-- 관리자인 경우 || 자신의 게시글인 경우  ||자신의 게시글 x, 3자인 경우  -->
 			    	<c:choose>
 			    		<c:when test="${BoardConDto.getBdata_writer_id() eq session_id }">
-			    			<a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
-			    			<a href="<%=request.getContextPath()%>/site/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
-			    			<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+			    			<a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+			    			<a href="${path}/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
+			    			<a href="${path}/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 			    		</c:when>
-			    		<c:when test="${BoardConDto.getBdata_writer_id() eq 'admin' }">
-			    		    <a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>                
-			        		<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+			    		
+			    		<c:when test="${'admin' eq session_id }">
+			    		    <a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>                
+			        		<a href="${path}/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 			    		</c:when>
+			    		
+			    		<c:when test="${!empty BoardConDto.getBdata_writer_id()}">
+			    			<a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+			    			<a href="${path}/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
+			    			<a href="${path}/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+			    		</c:when>
+			    		
 			    		<c:otherwise>
-			    		<a href="<%=request.getContextPath()%>/site/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
-			    		<a href="<%=request.getContextPath()%>/site/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a>
-			       		<a href="<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
+			    		<%-- <a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a>
+			    		<a href="${path}/board/board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-2"><i class="fa fa-pencil"></i> 수정하기</a> --%>
+			       		<a href="${path}/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>
 			    		</c:otherwise>
 			    	</c:choose>
 			    	</div>
@@ -272,7 +280,6 @@
 										<c:otherwise>
 											<div>
 												<h3>현재 비회원</h3>
-												<input type="hidden" name="bcomm_id" value="trash">
 												<div>
 													작성자 이름<input name="bcomm_name"  required="required" class="Logininput">
 													비밀번호<input type="password" name="bcomm_pw" required="required" class="Logininput">	
@@ -309,7 +316,7 @@
 									<tr>
 										<td><c:if test="${dto.getBdata_use_notice() eq 'Y' }">공지🔔</c:if><c:if test="${dto.getBdata_use_notice() ne 'Y' }">${dto.getBdata_no() }</c:if></td>
 										<c:if test="${dto.getBdata_use_secret() eq 'Y'}">
-											<td>🔒비밀글 입니다.</td>
+											<td><a href="${path}/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}" onclick="if(propmt('비밀번호를 입력하세요') != ${dto.getBdata_writer_pw()}){return false;}">🔒비밀글 입니다.</a></td>
 										</c:if>
 										<c:if test="${dto.getBdata_use_secret() eq 'N' or session_id eq 'admin'}">
 											<td><a href="<%=request.getContextPath()%>/site/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>

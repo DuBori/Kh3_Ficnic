@@ -13,7 +13,7 @@
 </c:if>
 
 	<c:if test="${!empty m }">
-		<c:set var="tag" value="/site/board/board_modify_ok.do"/>
+		<c:set var="tag" value="/board/board_modify_ok.do"/>
 		<c:set var="category" value="${Cont.getBdata_category() }"/>
 		<c:set var="title" value="${Cont.getBdata_title() }"/>
 		<c:set var="cont" value="${Cont.getBdata_cont() }"/>
@@ -33,7 +33,7 @@
 		<c:set var="bbs_id" value="${Cont.getBoard_id() }"/>
 	</c:if>
 	<c:if test="${empty m}">
-		<c:set var="tag" value="/site/board/board_write_ok.do"/>
+		<c:set var="tag" value="/board/board_write_ok.do"/>
 	</c:if>
 
 
@@ -80,14 +80,24 @@
 			<tr>
 				<th>글작성 옵션</th>
 				 <td>
-				 	<!-- 관리자 게시글 작성 시 공지사항  -->
-				 	<c:if test="${session_id eq'admin' }">
+				 <c:choose>
+				 	<c:when test="${session_id eq'admin'}">
 				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
-				 	</c:if> 
-				 	<!-- 로그인 계정이 관리자 x-->
-				 	<c:if test="${session_id ne'admin'}">
-				 		<input type="hidden" value="N" name="bdata_use_notice">
-				 	</c:if> 
+				 	</c:when>
+				 	<c:when test="${empty conf.getBoard_level_notice() and session_id ne 'admin' }">
+				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
+				 	</c:when>
+				 	<c:when test="${conf.getBoard_level_notice() eq 'user' and !empty session_id}">
+				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
+				 	</c:when>
+				 	<c:otherwise>
+				 	
+				 	</c:otherwise>
+				 </c:choose>
+				 
+				 	<c:if test="${!empty m and notice eq 'Y' }">
+				 		<input type="checkbox" value="Y" name="bdata_use_notice" checked="checked">공지사항
+				 	</c:if>
 				 	
 				 	<!-- 게시판 비밀글 설정 -->
 				 	<c:if test="${conf.getBoard_use_only_secret() eq 'Y'}">
@@ -196,7 +206,7 @@
 					<c:if test="${empty m }">
 						<input type="submit" value="등록하기">
 					</c:if>
-					<input type="button" value="목록보기" onclick="location.href='<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${conf.getBoard_id()}'">
+					<input type="button" value="목록보기" onclick="location.href='${path}/board/board_list.do?bbs_id=${conf.getBoard_id()}'">
 				</td>
 			</tr>	
 			
