@@ -59,7 +59,7 @@
 			</c:if>
 			<input type="hidden" value="${conf.getBoard_id() }" name="board_id">
 			
-			<c:if test="${!empty session_id }"> <input type="hidden" name="bdata_writer_id" value="${bdata_writer_id}" ></c:if>
+			<c:if test="${!empty sess_id }"> <input type="hidden" name="bdata_writer_id" value="${sess_id}" ></c:if>
 		<table border="1" cellspacing="0">
 		
 			<!-- 게시물 카테고리 설정  -->
@@ -81,13 +81,13 @@
 				<th>글작성 옵션</th>
 				 <td>
 				 <c:choose>
-				 	<c:when test="${session_id eq'admin'}">
+				 	<c:when test="${sess_id eq'admin'}">
 				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
 				 	</c:when>
-				 	<c:when test="${empty conf.getBoard_level_notice() and session_id ne 'admin' }">
+				 	<c:when test="${empty conf.getBoard_level_notice() and sess_id ne 'admin' }">
 				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
 				 	</c:when>
-				 	<c:when test="${conf.getBoard_level_notice() eq 'user' and !empty session_id}">
+				 	<c:when test="${conf.getBoard_level_notice() eq 'user' and !empty sess_id}">
 				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
 				 	</c:when>
 				 	<c:otherwise>
@@ -121,10 +121,12 @@
 				
 				<!-- 게시글 작성 글 작성권한(모든사람) || 로그인 | 비로그인 || // 게시글 수정   -->	
 				<c:choose>			
-					<c:when test="${!empty session_id and empty m}">
-						<td><input name="bdata_writer_name" disabled="disabled">${session_writer_name}</td>
+					<c:when test="${!empty sess_id and empty m}">
+						<td><input name="bdata_writer_name" disabled="disabled" value="${sess_name}"></td>
+						<input type="hidden"  name="bdata_writer_name" value="${sess_name}">
+						<input type="hidden"  name="bdata_writer_pw" value="${sess_pw}">
 					</c:when>
-					<c:when test="${!empty m}">
+					<c:when test="${!empty m}">	
 						<td><input name="bdata_writer_name" value="${name}" disabled="disabled"></td>
 					</c:when>
 					<c:otherwise>
