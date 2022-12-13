@@ -16,10 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -45,6 +47,8 @@ public class SiteBoardController {
 	private BoardConfDAO board_ConfDao;
 
 
+	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	 
 	/* 게시물 파일 처리  */
 	private void FileProcess(MultipartHttpServletRequest mrequest, String bbs_id, BoardDTO beforedto, BoardDTO Currentdto,String uploadPath) {
 		/* 파일처리 START */
@@ -383,7 +387,7 @@ public class SiteBoardController {
 		PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
 		// 페이지 이동 URL
-		String pageUrl = request.getContextPath() + "/board/board_list.do?field=" + field + "&keyword=" + keyword+"&bbs_id="+bbs_id;
+		String pageUrl = request.getContextPath() + "/board/board_view.do?field=" + field +"&bdata_no="+bdata_no+"&keyword=" + keyword+"&bbs_id="+bbs_id;
 
 
 		// 해당 게시판 해당 게시글 내용
@@ -415,7 +419,6 @@ public class SiteBoardController {
 			id = (String)session.getAttribute("sess_id");
 		}
 		String res="";
-
 
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -479,8 +482,6 @@ public class SiteBoardController {
 		}
 	}
 
-
-
 	/* 게시글 댓글 입력  */
 	@RequestMapping("/board/baord_comment_insert.do")
 	public void baord_comment_insert(HttpSession session ,HttpServletResponse response, HttpServletRequest request, BoardCommentDTO dto) throws IOException {
@@ -537,8 +538,6 @@ public class SiteBoardController {
 		}
 	}
 
-
-
 	@RequestMapping("/board/board_download.do")
 	public void board_download(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		/* 게시글 접근 변수, 해당 게시글 번호 변수 bdata_no 해당 댓글 번호 bcomm_no 필요 */
@@ -572,5 +571,79 @@ public class SiteBoardController {
 		in.close();
 		out.close();
 	}
+	
+	
+	//비밀글 jsp
+	@RequestMapping("board/board_pw_chk.do")
+	public String board_pwchk(
+			Model model,
+			@RequestParam( value = "bbs_id", required = false ,defaultValue = "") String bbs_id,
+			@RequestParam( value = "bdata_no", required = false ,defaultValue = "") int bdata_no,
+			@RequestParam( value = "bdata_writer_id", required = false ,defaultValue = "") String bdata_writer_id
+			) {
+		
+		/* 해당 게시판 설정 DTO */
+		// 해당 게시물 설정값 가져오기
+		BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
+		board_skin = BoardConfdto.getBoard_skin();
+		
+		model.addAttribute("bbs_id", bbs_id);
+		model.addAttribute("bdata_no", bdata_no);
+		model.addAttribute("bdata_writer_id", bdata_writer_id);
+		
+		return "/site/board/" + board_skin + "/board_pwd_chk";
+	}
+	
+	// 비밀글일 경우
+	@RequestMapping("board/board_view_ok.do")
+	public void board_view_ok(
+			HttpServletResponse response,
+			HttpServletRequest request,
+			@RequestParam(value = "pwd" , required = false, defaultValue = "") String pwd,
+			@RequestParam(value = "bbs_id", required = false, defaultValue = "") String bbs_id,
+			@RequestParam( value = "bdata_no", required = false ,defaultValue = "0" ) int bdata_no,
+			@RequestParam( value = "bdata_writer_id", required = false, defaultValue = "") String bdata_writer_id,
+			HttpSession session) throws IOException{
+		
+		boolean isTrue=false;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bbs_id", bbs_id);
+		map.put("bdata_no", bdata_no);
+				
+		BoardDTO dto =this.board_Dao.getBoardCont(map);
+		
+		response.setContentType("text/html; enctype=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		// 비회원이 작성한 글인 경우
+		if(bdata_writer_id.equals("") || !session.getAttribute("sess_id").equals(dto.getBdata_writer_id()) ) {
+			
+			// 암호화된 비밀번호 체크 
+			if(dto.getBdata_writer_id()!=null) {
+				isTrue=this.passwordEncoder.matches(pwd, dto.getBdata_writer_pw());
+			}else {
+				if(pwd.equals(dto.getBdata_writer_pw())) isTrue=true;
+			}
+			
+			if(isTrue) {
+				session.setAttribute("sess_pw", pwd);
+				out.println("<script>location.href='"+request.getContextPath()+"/board/board_view.do?bbs_id="+bbs_id+"&bdata_no="+bdata_no+"';</script>");
+				
+			}else {
+				out.println("<script>alert('비밀번호가 틀렸습니다.'); location.href='"+request.getContextPath()+"/board/board_list.do?bbs_id="+bbs_id+"';</script>");
+			}
+		}else if(session.getAttribute("sess_pw").equals(dto.getBdata_writer_pw())){
+			//해당 회원이 작성한 경우
+			out.println("<script>location.href='"+request.getContextPath()+"/board/board_view.do?bbs_id="+bbs_id+"&bdata_no="+bdata_no+"';</script>");
+		}else {
+			out.println("<script>location.href='"+request.getContextPath()+"/board/board_view.do?bbs_id="+bbs_id+"&bdata_no="+bdata_no+"';</script>");
+		}
+		
+		
+		
+		
+	}
+	
 	
 }

@@ -130,10 +130,9 @@ public class AdminFicnicController {
             selectPrice = fdto.getFicnic_select_price().split("★");
 
         List<HashMap<String, Object>> optionList = new ArrayList<HashMap<String, Object>>();
-
+        cnt = 0;
         /* 앞단 보여질 option 처리 */
-        if (optionTitle != null && optionPrice != null) {
-            cnt = 0;
+        if (optionTitle != null && optionPrice != null) {          
             for (String value : optionTitle) {
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("title", value);
@@ -147,8 +146,8 @@ public class AdminFicnicController {
 
         /* 앞단 보여질 option 처리 */
         /* 앞단 보여질 select_option 처리 */
+        cnt = 0;
         if (selectTitle != null && selectPrice != null) {
-            cnt = 0;
             for (String value : selectTitle) {
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("title", value);
@@ -162,10 +161,10 @@ public class AdminFicnicController {
         String[] list = null;
         if (fdto.getFicnic_info() != null)
             list = fdto.getFicnic_info().split("★");
-
+        
         List<HashMap<String, Object>> infoList = new ArrayList<HashMap<String, Object>>();
-        if (list != null) {
-            cnt = 0;
+        cnt = 0;
+        if (list != null) {    
             for (String value : list) {
                 String[] valueList = value.split(",");
                 HashMap<String, Object> map = new HashMap<String, Object>();
