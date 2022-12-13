@@ -486,7 +486,7 @@
 
 <div class="d-flex mt-2 input-form-button">
     <div class="col-lg text-center">
-        <a href="ficnic_list.do?search_type=${search_type}&search_name=${search_name}&search_id=${search_id}&search_email=${search_email}&search_phone=${search_phone}&page=${param.page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
+        <a href="ficnic_list.do?category=${finic_category_no}&location=${ficnic_location}&page=${page}" class="btn btn-secondary btn-lg m-2"><i class="fa fa-bars"></i> 목록보기</a>
         <button type="button" class="btn btn-primary btn-lg m-2" onclick="chkFicnicWrite();"><i class="fa fa-${icon}"></i> ${title}하기</button>
     </div>
 </div>
