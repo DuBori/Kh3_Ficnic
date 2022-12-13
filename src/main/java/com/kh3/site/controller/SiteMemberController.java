@@ -3,6 +3,7 @@ package com.kh3.site.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +17,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh3.model.member.MailUtil;
 import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
 import com.kh3.model.member.MemberService;
@@ -60,8 +64,8 @@ public class SiteMemberController {
         PrintWriter out = response.getWriter();
 
 		
-		  String id = request.getParameter("member_id"); String pw =
-		  request.getParameter("member_pw");
+		 String id = request.getParameter("member_id"); 
+		 String pw = request.getParameter("member_pw");
 		  
 		 dto.setMember_id(id); 
 		 dto.setMember_pw(pw);
@@ -75,18 +79,30 @@ public class SiteMemberController {
         int result = this.dao.loginCheck(dto);
 
         // 비밀번호 체크
-		/*
-		 * int check = this.dao.pwCheck(dto);
-		 */
+		int check = this.dao.pwCheck(dto);
+
 
         // 일치하는 아이디 없음
         if(result == 0){
             out.println("<script>alert('존재하지 않는 아이디입니다.'); history.back(); </script>");
 
-        }else{ // 아이디가 있으면 암호화된 비밀번호랑 입력된 비밀번호 비교
-      		  
-    			isTrue=passwordEncoder.matches(dto.getMember_pw(), mdto.getMember_pw());
-    			
+        }else if (check == 1) { // 아이디가 있으면 암호화된 비밀번호랑 입력된 비밀번호 비교
+        	dto = this.dao.loginSession(id);
+
+            HttpSession session = request.getSession();
+            session.setAttribute("sess_id", dto.getMember_id());
+            session.setAttribute("sess_pw", dto.getMember_pw());
+            session.setAttribute("sess_type", dto.getMember_type());
+            session.setAttribute("sess_name", dto.getMember_name());
+            session.setAttribute("sess_email", dto.getMember_email());
+            session.setAttribute("sess_phone", dto.getMember_phone());
+            session.setAttribute("sess_point", dto.getMember_point());
+            
+			out.println("<script>alert('"+dto.getMember_name()+"님 안녕하세요 :)'); location.href='../main.do' </script>");
+        	
+        } else { // by 어쩌구 암호화인 경우
+        		isTrue=passwordEncoder.matches(dto.getMember_pw(), mdto.getMember_pw());
+    			System.out.println("dto>>>>" + dto + "mdto>>>>" + mdto);
     		} 
     		
     		if(isTrue == true) {
@@ -124,12 +140,10 @@ public class SiteMemberController {
     // =====================================================================================
     // 비밀번호 찾기
     // =====================================================================================
-    @RequestMapping("member/member_find_pw.do")
-    public String findpw() {
-        return "site/member/member_find_pw";
-    }
-
-
+	
+	  @RequestMapping("member/member_find_pw.do") public String findpw() { return
+	  "site/member/member_find_pw"; }
+	 
 
     // =====================================================================================
     // 로그아웃 처리
@@ -155,6 +169,7 @@ public class SiteMemberController {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
+		 
         // 아이디 찾기 - 이메일 체크
         int check = this.dao.findIdEmail(dto);
 
@@ -186,14 +201,13 @@ public class SiteMemberController {
     // 비밀번호 찾기 결과
     // =====================================================================================
     @RequestMapping("member/member_find_pw_result.do")
-    public String findpwresult(Model model, HttpServletResponse response, MemberDTO dto) throws IOException {
-        response.setContentType("text/html; charset=UTF-8");
+    public String findpwresult(Model model, HttpServletResponse response, MemberDTO dto, HttpServletRequest request) throws IOException {
+        
+    	response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        // dto에 있는 아이디 가져오기
-        MemberDTO mdto = this.dao.getReservMember(dto.getMember_id());
-        
-    	boolean isTrue = false;
+
+		String id = request.getParameter("member_id");  
+		dto.setMember_id(id); 
                 
         // 비밀번호 찾기 - 이메일 체크
         int check = this.dao.findIdEmail(dto);
@@ -202,8 +216,8 @@ public class SiteMemberController {
         int result = this.dao.findPwAll(dto);
 
         // 비밀번호, 이메일 일치하는 경우 비밀번호 반환.
-        String pw = this.dao.findPw(dto);
-
+		/* String pw = this.dao.findPw(mdto); */
+    	
         // 이메일 틀린 경우
         if(check == 0){
             out.println("<script>alert('존재하지 않는 이메일입니다.'); history.back();</script>");
@@ -211,22 +225,50 @@ public class SiteMemberController {
         // 이름이 틀릴 경우
         }else if(result == 0){
             out.println("<script>alert('아이디를 다시 확인해주세요.'); history.back();</script>");
-
-        }else { // 이름이 맞을 경우 비밀번호 비교
+            
+         // 이메일 이름 둘 다 있는 경우
+        } else if (result == 1){
         	
-        	isTrue = passwordEncoder.matches(dto.getMember_pw(), mdto.getMember_pw());
-          
-        } 
-        
-        if(isTrue == true){ // 비밀번호 비교해서 맞을 경우
-        	  model.addAttribute("pw", pw);
-              return "site/member/member_find_pw_result";
+        	//임시 비밀번호 생성(UUID이용)
+			String tempPw=UUID.randomUUID().toString().replace("-", "");//-를 제거
+			tempPw = tempPw.substring(0,10);//tempPw를 앞에서부터 10자리 잘라줌
+			
+   		 	dto.setMember_pw(tempPw); // 임시비밀번호 담기
+   		 	
+   		 	// 임시 비밀번호 view로 넘겨줌.
+   		 	model.addAttribute("pw", tempPw);
+   		 	System.out.println("tempPw?????????>>>>>>>>>>>>>>>>>>>>>>" + tempPw);
+   		 	
+   		 	// 임시 비밀번호로 업데이트함.
+   		 	dto.setMember_id(id);
+   		 	dto.setMember_pw(tempPw);
+   		 	
+   		 	int pwUpdate = this.dao.updatePw(dto);
+   		 	
+   		 	System.out.println("변경완료 int 반환 >>>>>>>>>"  + pwUpdate);
+   		 	System.out.println("변경완료 temp값 반환 >>>>>>>>>"  + tempPw);
+   		 	System.out.println("변경완료 id값 반환 >>>>>>>>>"  + id);
+   		 	System.out.println("디티오에 넣어진 아이디 반환 >>>>>>>>>"  + dto.getMember_id());
+   		 	System.out.println("디티오에 넣어진 비번 반환 >>>>>>>>>"  + dto.getMember_pw());
+   		 	
+   		 	
+   		 	if(pwUpdate > 0) {
+   		 		System.out.println("변경");
+   		 	} else {
+   		 		System.out.println("오류");
+   		 	}
+   		 	
+            return "site/member/member_find_pw_result";
+            
+        } else {
+        	
+        	out.println("<script>alert('오류'); history.back();</script>");
+        	
         }
         
         return null;
     }
     
-
 
     // =====================================================================================
     // 회원가입
@@ -273,11 +315,9 @@ public class SiteMemberController {
             out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
         }
         
-     // 암호화 설정
-
-		
-     			dto.setMember_pw(passwordEncoder.encode(dto.getMember_pw()));
-     			dto.setMember_pw_re(passwordEncoder.encode(dto.getMember_pw_re()));
+        // 암호화 설정
+		dto.setMember_pw(passwordEncoder.encode(dto.getMember_pw()));
+		dto.setMember_pw_re(passwordEncoder.encode(dto.getMember_pw_re()));
 
         // 유효성 검사
         if (result.hasErrors()) {
@@ -320,4 +360,10 @@ public class SiteMemberController {
         }
     }
 
-}
+   
+  	
+    }
+    
+    
+    
+    

@@ -133,8 +133,17 @@
 
 
 <div class="row mt-2 list-bottom-util">
-    <div class="col text-center mt-3">
-    	<c:if test="${!empty paging}">${pagingWrite}</c:if>
+    <div class="col-md-4 mt-3"></div>
+
+    <div class="col-md-4 text-center mt-3">
+        <c:if test="${!empty paging}">${pagingWrite}</c:if>
+    </div>
+
+    <div class="col-md-4 text-right mt-3">
+        <c:choose>
+        <c:when test="${!empty keyword}"><a href="${path}/admin/member/member_list.do" class="btn btn-outline-secondary"><i class="fa fa-list"></i> 회원 목록</a></c:when>
+        <c:otherwise><a href="${path}/admin/member/member_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 회원 추가</a></c:otherwise>
+        </c:choose>
     </div>
 </div>
 

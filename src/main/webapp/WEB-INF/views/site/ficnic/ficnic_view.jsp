@@ -46,7 +46,7 @@
 		<c:forEach items="${rList}" var="dto">
 			<div class="border">
 			<c:if test="${!empty dto.getReview_photo1() }">
-				<img alt="이미지 없음" src="${dto.getReview_photo1()}">
+				<img alt="이미지 없음" src="${dto.getReview_photo1()}" >
 			</c:if>
 				<div>
 					<img alt="멤버 이미지" src="#">
@@ -69,7 +69,7 @@
 	
 	<div>
 		<h3>프립 소개</h3>
-		<div>
+		<div class="mw-50">
 			${fdto.getFicnic_detail() }
 		</div>
 	</div>

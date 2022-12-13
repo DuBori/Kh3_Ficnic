@@ -142,14 +142,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 
 
-	// 존재하는 카테고리 리스트
-	@Override
-	public List<FicnicDTO> getExistCategoryList() {
-		
-		return this.sqlSession.selectList("adminFicnicCategoryList");
-	}
-
-
 ///////////////////////////////////////////////////////////////////////////////////
 	
 
