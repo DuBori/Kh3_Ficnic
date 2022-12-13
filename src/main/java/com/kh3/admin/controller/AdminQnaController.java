@@ -46,6 +46,10 @@ public class AdminQnaController {
 
 
 
+
+    // =====================================================================================
+    // 1:1 문의 목록
+    // =====================================================================================
     @RequestMapping("admin/qna/qna_list.do")
     public String list(Model model, HttpServletRequest request) {
         // 검색 처리
@@ -93,7 +97,11 @@ public class AdminQnaController {
     }
 
 
-    // 답글 상세내역 보여주는 매핑
+
+
+    // =====================================================================================
+    // 1:1 문의 내용 보기
+    // =====================================================================================
     @RequestMapping("admin/qna/qna_view.do")
     public String view(Model model, @RequestParam("no") int no) {
         QnaDTO dto = this.dao.qnaView(no);
@@ -108,7 +116,31 @@ public class AdminQnaController {
     }
 
 
-    // 답글 등록 매핑
+
+
+    // =====================================================================================
+    // 1:1 문의 삭제 처리
+    // =====================================================================================
+    @RequestMapping("/admin/qna/qna_delete.do")
+    public void delete(@RequestParam("no") int no, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int check = this.dao.qnaDelete(no);
+        if (check > 0) {
+            this.cdao.qnaCommentAllDelete(no);
+            out.println("<script>alert('삭제 성공'); location.href='qna_list.do';</script>");
+        } else {
+            out.println("<script>alert('삭제 실패'); history.back();</script>");
+        }
+    }
+
+
+
+
+    // =====================================================================================
+    // 1:1 문의 댓글 작성 처리
+    // =====================================================================================
     @RequestMapping("admin/qna/qna_reply_ok.do")
     public void reply(HttpServletRequest request, HttpServletResponse response) throws Exception {
         QnaCommentDTO cdto = new QnaCommentDTO();
@@ -127,23 +159,11 @@ public class AdminQnaController {
     }
 
 
-    // 문의글 삭제 매핑
-    @RequestMapping("/admin/qna/qna_delete.do")
-    public void delete(@RequestParam("no") int no, HttpServletResponse response) throws Exception {
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        int check = this.dao.qnaDelete(no);
-        if (check > 0) {
-            this.cdao.qnaCommentAllDelete(no);
-            out.println("<script>alert('삭제 성공'); location.href='qna_list.do';</script>");
-        } else {
-            out.println("<script>alert('삭제 실패'); history.back();</script>");
-        }
-    }
 
 
-    // 답글 삭제 매핑
+    // =====================================================================================
+    // 1:1 문의 댓글 삭제 처리
+    // =====================================================================================
     @RequestMapping("/admin/qna/comment_delete.do")
     public void commentDelete(@RequestParam("comment_no") int no, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=UTF-8");

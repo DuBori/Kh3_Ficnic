@@ -34,22 +34,22 @@
                                         </div>
                                         <select id="search_location" name="search_location" class="custom-select">
                                             <option value="">- 전체보기 -</option>
-                                            <option value="서울" <c:if test="${map.search_location.contains('서울')}"> selected="selected"</c:if>> 서울</option>
-                                            <option value="경기" <c:if test="${map.search_location.contains('경기')}"> selected="selected"</c:if>> 경기</option>
-                                            <option value="인천" <c:if test="${map.search_location.contains('인천')}"> selected="selected"</c:if>> 인천</option>
-                                            <option value="강원" <c:if test="${map.search_location.contains('강원')}"> selected="selected"</c:if>> 강원</option>
-                                            <option value="부산" <c:if test="${map.search_location.contains('부산')}"> selected="selected"</c:if>> 부산</option>
-                                            <option value="충남" <c:if test="${map.search_location.contains('충남')}"> selected="selected"</c:if>> 충남</option>
-                                            <option value="충북" <c:if test="${map.search_location.contains('충북')}"> selected="selected"</c:if>> 충북</option>
-                                            <option value="경남" <c:if test="${map.search_location.contains('경남')}"> selected="selected"</c:if>> 경남</option>
-                                            <option value="경북" <c:if test="${map.search_location.contains('경북')}"> selected="selected"</c:if>> 경북</option>
-                                            <option value="전남" <c:if test="${map.search_location.contains('전남')}"> selected="selected"</c:if>> 전남</option>
-                                            <option value="전북" <c:if test="${map.search_location.contains('전북')}"> selected="selected"</c:if>> 전북</option>
-                                            <option value="광주" <c:if test="${map.search_location.contains('광주')}"> selected="selected"</c:if>> 광주</option>
-                                            <option value="대전" <c:if test="${map.search_location.contains('대전')}"> selected="selected"</c:if>> 대전</option>
-                                            <option value="대구" <c:if test="${map.search_location.contains('대구')}"> selected="selected"</c:if>> 대구</option>
-                                            <option value="울산" <c:if test="${map.search_location.contains('울산')}"> selected="selected"</c:if>> 울산</option>
-                                            <option value="제주" <c:if test="${map.search_location.contains('제주')}"> selected="selected"</c:if>> 제주</option>
+                                            <option value="서울"<c:if test="${search_location.contains('서울')}"> selected="selected"</c:if>>서울</option>
+                                            <option value="경기"<c:if test="${search_location.contains('경기')}"> selected="selected"</c:if>>경기</option>
+                                            <option value="인천"<c:if test="${search_location.contains('인천')}"> selected="selected"</c:if>>인천</option>
+                                            <option value="강원"<c:if test="${search_location.contains('강원')}"> selected="selected"</c:if>>강원</option>
+                                            <option value="부산"<c:if test="${search_location.contains('부산')}"> selected="selected"</c:if>>부산</option>
+                                            <option value="충남"<c:if test="${search_location.contains('충남')}"> selected="selected"</c:if>>충남</option>
+                                            <option value="충북"<c:if test="${search_location.contains('충북')}"> selected="selected"</c:if>>충북</option>
+                                            <option value="경남"<c:if test="${search_location.contains('경남')}"> selected="selected"</c:if>>경남</option>
+                                            <option value="경북"<c:if test="${search_location.contains('경북')}"> selected="selected"</c:if>>경북</option>
+                                            <option value="전남"<c:if test="${search_location.contains('전남')}"> selected="selected"</c:if>>전남</option>
+                                            <option value="전북"<c:if test="${search_location.contains('전북')}"> selected="selected"</c:if>>전북</option>
+                                            <option value="광주"<c:if test="${search_location.contains('광주')}"> selected="selected"</c:if>>광주</option>
+                                            <option value="대전"<c:if test="${search_location.contains('대전')}"> selected="selected"</c:if>>대전</option>
+                                            <option value="대구"<c:if test="${search_location.contains('대구')}"> selected="selected"</c:if>>대구</option>
+                                            <option value="울산"<c:if test="${search_location.contains('울산')}"> selected="selected"</c:if>>울산</option>
+                                            <option value="제주"<c:if test="${search_location.contains('제주')}"> selected="selected"</c:if>>제주</option>
                                         </select>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
                                         <select id="search_category" name="search_category" class="custom-select">
                                             <option value="">- 전체보기 -</option>
                                             <c:forEach var="dto" items="${clist}">
-                                            <option value="${dto.getCategory_no()}"<c:if test="${map.search_category eq dto.getCategory_no()}"> selected="selected"</c:if>>${dto.getCategory_name()}</option>
+                                            <option value="${dto.getCategory_id()}"<c:if test="${search_category eq dto.getCategory_id()}"> selected="selected"</c:if>>${dto.getCategory_name()}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -71,7 +71,7 @@
                                         <div class="input-group-prepend">
                                             <label class="input-group-text" for="search_name">피크닉 이름</label>
                                         </div>
-                                        <input type="text" id="search_name" name="search_name" value="${map.search_name}" class="form-control">
+                                        <input type="text" id="search_name" name="search_name" value="${search_name}" class="form-control">
                                     </div>
                                 </div>
                             </div>

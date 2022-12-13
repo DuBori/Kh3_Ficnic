@@ -51,6 +51,9 @@ public class AdminReviewController {
 
 
 
+    // =====================================================================================
+    // 리뷰 목록
+    // =====================================================================================
     @RequestMapping("admin/review/review_list.do")
     public String list(Model model, HttpServletRequest request) {
         // 검색 처리
@@ -99,6 +102,10 @@ public class AdminReviewController {
 
 
 
+
+    // =====================================================================================
+    // 리뷰 내용 보기
+    // =====================================================================================
     @RequestMapping("admin/review/review_view.do")
     public String view(Model model, @RequestParam("no") int no) {
         ReviewDTO dto = this.dao.reviewView(no);
@@ -109,6 +116,10 @@ public class AdminReviewController {
 
 
 
+
+    // =====================================================================================
+    // 리뷰 수정 페이지
+    // =====================================================================================
     @RequestMapping("admin/review/review_modify.do")
     public String update(@RequestParam("no") int no, Model model) {
         ReviewDTO dto = this.dao.reviewView(no);
@@ -119,6 +130,10 @@ public class AdminReviewController {
 
 
 
+
+    // =====================================================================================
+    // 리뷰 수정 처리
+    // =====================================================================================
     @RequestMapping("admin/review/review_modify_ok.do")
     public void updateOk(ReviewDTO dto, MultipartHttpServletRequest mRequest, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
@@ -162,7 +177,11 @@ public class AdminReviewController {
     }
 
 
-    // 리뷰 삭제
+
+
+    // =====================================================================================
+    // 리뷰 삭제 처리
+    // =====================================================================================
     @RequestMapping("admin/review/review_delete.do")
     public void delete(@RequestParam("review_no") int review_no, @RequestParam("ficnic_no") int ficnic_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
@@ -193,8 +212,13 @@ public class AdminReviewController {
 
         }
     }
-    
-    // 리뷰 등록 페이지 이동
+
+
+
+
+    // =====================================================================================
+    // 리뷰 등록 페이지
+    // =====================================================================================
     @RequestMapping("admin/review/review_write.do")	
     public String reviewWrite(Model model) {
         LocalDate getDate = LocalDate.now();
@@ -216,8 +240,12 @@ public class AdminReviewController {
     	return "admin/review/review_write";
     }    
     
-    
-    // 리뷰 등록하기
+
+
+
+    // =====================================================================================
+    // 리뷰 등록 처리
+    // =====================================================================================
     @RequestMapping("admin/review/review_write_ok.do")
     public void reviewWriteOk(ReviewDTO dto, MultipartHttpServletRequest mRequest, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
@@ -237,20 +265,22 @@ public class AdminReviewController {
                     break;
             }
         }
-        
+
         // 리뷰 등록
         int check = this.dao.writeOkReview(dto);
 
-        // 피크닉 평점 수정
-        this.fdao.updateReviewPoint(dto.getFicnic_no());
         if(check > 0){
+            // 피크닉 평점 수정
+            this.fdao.updateReviewPoint(dto.getFicnic_no());
+
         	// 피크닉 리뷰 갯수 수정
         	this.fdao.updateReviewCont(dto.getFicnic_no());
-            out.println("<script>location.href='review_list.do';</script>");
+
+        	out.println("<script>location.href='review_list.do';</script>");
         }else{
             out.println("<script>alert('리뷰 등록에 실패했습니다.'); history.back();</script>");
-        }        
-        
+        }
+
     }    
     
     

@@ -137,10 +137,9 @@
 	<!--검색 해당 피크닉 개수  -->
 	<select id="adminFicnicSearchCount" parameterType="map" resultType="int">		
 		select count(*) from ficnic_list where ficnic_no > 0
-		<if test="category_no != ''"> and ficnic_category_no = #{category_no}</if>
-		<if test="location != ''"> and ficnic_location like '%'|| #{location} || '%' </if>
-		<if test="addr != ''"> and ficnic_address like '%' || #{addr} || '%'</if>
-		<if test="name != ''"> and ficnic_name like '%' || #{name} || '%'</if>		
+        <if test="search_location != ''"> and ficnic_location like '%'|| #{search_location} || '%' </if>
+        <if test="search_category != ''"> and (substr(ficnic_category_no,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub1,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub2,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub3,1,2) = substr(#{search_category},0,2))</if>
+        <if test="search_name != ''"> and ficnic_name like '%' || #{search_name} || '%'</if>
 	</select>
 	
 
@@ -153,10 +152,9 @@
                             b.*
                       from (
                             select * from ficnic_list where ficnic_no > 0
-							<if test="category_no !=''"> and ficnic_category_no = #{category_no}</if>
-							<if test="location !=''"> and ficnic_location like '%' || #{location} || '%' </if>
-							<if test="addr !=''"> and ficnic_address like '%' || #{addr} || '%'</if>
-							<if test="name !=''"> and ficnic_name like '%' || #{name} || '%'</if>
+					        <if test="search_location != ''"> and ficnic_location like '%'|| #{search_location} || '%' </if>
+					        <if test="search_category != ''"> and (substr(ficnic_category_no,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub1,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub2,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub3,1,2) = substr(#{search_category},0,2))</if>
+					        <if test="search_name != ''"> and ficnic_name like '%' || #{search_name} || '%'</if>
                       ) b
         )
         <![CDATA[

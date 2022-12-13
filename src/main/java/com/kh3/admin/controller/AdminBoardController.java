@@ -41,9 +41,13 @@ public class AdminBoardController {
 
 
 
-    // 게시판 설정 목록 페이지
+
+    // =====================================================================================
+    // 게시판 설정 목록
+    // =====================================================================================
     @RequestMapping("admin/board/board_list.do")
     public String board_list(Model model, HttpServletRequest request) {
+
         // 검색 처리
         String keyword = request.getParameter("keyword");
         if (keyword == null) keyword = "";
@@ -65,7 +69,6 @@ public class AdminBoardController {
         // 페이지 이동 URL
         String pageUrl = request.getContextPath() + "/admin/board/board_list.do?keyword=" + keyword;
 
-
         model.addAttribute("List", this.board_ConfDao.getConfBoardList(dto.getStartNo(), dto.getEndNo(), keyword));
 
         model.addAttribute("totalCount", totalRecord);
@@ -78,28 +81,33 @@ public class AdminBoardController {
 
 
 
-    // 환경설정_게시판설정_게시판추가 페이지
+
+    // =====================================================================================
+    // 게시판 설정 게시판 추가
+    // =====================================================================================
     @RequestMapping("admin/board/board_write.do")
     public String board_write() {
         return "/admin/board/board_write";
     }
-    
 
 
 
-    // 환경설정_게시판설정_게시판추가 받은 데이터 처리
+
+    // =====================================================================================
+    // 게시판 설정 게시판 추가 처리
+    // =====================================================================================
     @RequestMapping("admin/board/board_write_ok.do")
-    public void board_writeOk(BoardConfDTO confdto ,HttpServletRequest request ,HttpServletResponse response) throws IOException {
+    public void board_writeOk(BoardConfDTO confdto, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
-        
-		/* 데이터 폴더 경로설정  */
-        String homedir = request.getSession().getServletContext().getRealPath("/")+"resources\\data\\board\\"+confdto.getBoard_id();
-       
+
+        /* 데이터 폴더 경로설정 */
+        String homedir = request.getSession().getServletContext().getRealPath("/") + "resources\\data\\board\\" + confdto.getBoard_id();
+
         File path = new File(homedir);
-       
+
         if (this.board_ConfDao.writeBoard(confdto) > 0) {
-     		path.mkdirs();
+            path.mkdirs();
             out.println("<script>alert('게시판 생성 완료'); location.href='board_list.do';</script>");
         } else {
             out.println("<script>alert('게시판 생성 실패'); history.back();</script>");
@@ -108,6 +116,10 @@ public class AdminBoardController {
 
 
 
+
+    // =====================================================================================
+    // 게시판 설정 수정
+    // =====================================================================================
     @RequestMapping("admin/board/board_modify.do")
     public String board_content(@RequestParam("board_no") int board_no, Model model) {
         model.addAttribute("Cont", this.board_ConfDao.getCont(board_no));
@@ -118,9 +130,12 @@ public class AdminBoardController {
 
 
 
+
+    // =====================================================================================
+    // 게시판 설정 수정 처리
+    // =====================================================================================
     @RequestMapping("admin/board/board_modify_ok.do")
     public void board_modify_ok(BoardConfDTO dto, HttpServletResponse response) throws IOException {
-
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
 
@@ -129,26 +144,28 @@ public class AdminBoardController {
         } else {
             out.println("<script>alert('게시판 수정 실패'); history.back();</script>");
         }
-
     }
 
 
 
+
+    // =====================================================================================
+    // 게시판 설정 게시판 삭제 처리
+    // =====================================================================================
     @RequestMapping("admin/board/board_delete.do")
     public void board_delete(@RequestParam("board_no") int board_no, HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
-        
+
         String config_id = request.getParameter("bbs_id");
-        
-        /* 데이터 폴더 경로설정  */
-        String homedir = request.getSession().getServletContext().getRealPath("/")+"resources\\data\\board\\"+config_id;
-       
+
+        /* 데이터 폴더 경로설정 */
+        String homedir = request.getSession().getServletContext().getRealPath("/") + "resources\\data\\board\\" + config_id;
+
         File path = new File(homedir);
 
         if (this.board_ConfDao.deleteBoard(board_no) > 0) {
-        	path.delete();
+            path.delete();
             out.println("<script>alert('게시판 삭제 완료'); location.href='board_list.do';</script>");
         } else {
             out.println("<script>alert('게시판 삭제 실패'); history.back();</script>");
@@ -157,7 +174,10 @@ public class AdminBoardController {
 
 
 
-    // 게시판 카테고리 목록
+
+    // =====================================================================================
+    // 게시판 설정 카테고리 목록
+    // =====================================================================================
     @RequestMapping("admin/board/board_category.do")
     public String board_category(@RequestParam("board_id") String board_id, Model model) {
         List<BoardCategoryDTO> list = this.bcate_dao.getBoardCategoryList(board_id);
@@ -167,7 +187,11 @@ public class AdminBoardController {
     }
 
 
-    // 게시판 카테고리 수정
+
+
+    // =====================================================================================
+    // 게시판 설정 카테고리 수정 처리
+    // =====================================================================================
     @RequestMapping("admin/board/board_category_modify.do")
     public void bcate_modify(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=utf-8");
@@ -177,43 +201,51 @@ public class AdminBoardController {
         String[] bcate_no = request.getParameterValues("bcate_no[]");
         String[] bcate_name = request.getParameterValues("bcate_name[]");
 
-        for(int i=0; i<bcate_no.length; i++) {
-            bcate_dao.boardCategoryModify(board_id, bcate_no[i], i+1, bcate_name[i]);
+        for (int i = 0; i < bcate_no.length; i++) {
+            bcate_dao.boardCategoryModify(board_id, bcate_no[i], i + 1, bcate_name[i]);
         }
 
-        out.println("<script>location.href='board_category.do?board_id="+board_id+"';</script>");
+        out.println("<script>location.href='board_category.do?board_id=" + board_id + "';</script>");
     }
 
 
-    // 게시판 카테고리 추가
+
+
+    // =====================================================================================
+    // 게시판 설정 카테고리 추가 처리
+    // =====================================================================================
     @RequestMapping("admin/board/board_category_write.do")
     public void bcate_write(@RequestParam("board_id") String board_id, @RequestParam("bcate_name") String bcate_name, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
 
         int check = this.bcate_dao.boardCategoryWrite(board_id, bcate_name);
-        if(check > 0){
-            out.println("<script>location.href='board_category.do?board_id="+board_id+"';</script>");
-        }else{
+        if (check > 0) {
+            out.println("<script>location.href='board_category.do?board_id=" + board_id + "';</script>");
+        } else {
             out.println("<script>alert('게시판 카테고리 등록 중 에러가 발생하였습니다.'); history.back();</script>");
         }
     }
 
 
-    // 게시판 카테고리 삭제
+
+
+    // =====================================================================================
+    // 게시판 설정 카테고리 삭제 처리
+    // =====================================================================================
     @RequestMapping("admin/board/board_category_delete.do")
-    public void bcate_delete(@RequestParam("board_id") String board_id, @RequestParam("bcate_no") int bcate_no, HttpServletResponse response) throws IOException {
+    public void bcate_delete(@RequestParam("board_id") String board_id, @RequestParam("bcate_no") int bcate_no,
+            HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
 
         int check = this.bcate_dao.boardCategoryDelete(board_id, bcate_no);
-        if(check > 0){
+        if (check > 0) {
             this.bcate_dao.boardCategorySeqUpdate(board_id, bcate_no);
-            out.println("<script>location.href='board_category.do?board_id="+board_id+"';</script>");
-        }else{
+            out.println("<script>location.href='board_category.do?board_id=" + board_id + "';</script>");
+        } else {
             out.println("<script>alert('게시판 카테고리 삭제 중 에러가 발생하였습니다.'); history.back();</script>");
         }
     }
-
 
 }

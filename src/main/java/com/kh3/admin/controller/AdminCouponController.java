@@ -53,6 +53,7 @@ public class AdminCouponController {
 
 
 
+
     // =====================================================================================
     // 쿠폰 목록 페이지
     // =====================================================================================
@@ -60,12 +61,10 @@ public class AdminCouponController {
     public String couponList(Model model, HttpServletRequest request) {
         // 검색 처리
         String search_type = request.getParameter("search_type");
-        if (search_type == null)
-            search_type = "";
+        if (search_type == null) search_type = "";
 
         String search_name = request.getParameter("search_name");
-        if (search_name == null)
-            search_name = "";
+        if (search_name == null) search_name = "";
 
         Map<String, Object> searchMap = new HashMap<String, Object>();
         searchMap.put("search_type", search_type);
@@ -84,8 +83,7 @@ public class AdminCouponController {
         PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
         // 페이지 이동 URL
-        String pageUrl = request.getContextPath() + "/admin/coupon/coupon_list.do?search_type=" + search_type
-                + "&search_name=" + search_name;
+        String pageUrl = request.getContextPath() + "/admin/coupon/coupon_list.do?search_type=" + search_type + "&search_name=" + search_name;
 
         List<CouponDTO> list = this.dao.getCouponList(dto.getStartNo(), dto.getEndNo(), searchMap);
         model.addAttribute("List", list);
@@ -98,6 +96,7 @@ public class AdminCouponController {
 
         return "admin/coupon/coupon_list";
     }
+
 
 
 
@@ -146,6 +145,7 @@ public class AdminCouponController {
 
 
 
+
     // =====================================================================================
     // 쿠폰 등록 페이지
     // =====================================================================================
@@ -166,6 +166,7 @@ public class AdminCouponController {
 
         return "admin/coupon/coupon_write";
     }
+
 
 
 
@@ -242,6 +243,7 @@ public class AdminCouponController {
 
 
 
+
     // =====================================================================================
     // 쿠폰 수정 페이지
     // =====================================================================================
@@ -288,6 +290,7 @@ public class AdminCouponController {
 
         return "admin/coupon/coupon_modify";
     }
+
 
 
 
@@ -365,6 +368,7 @@ public class AdminCouponController {
 
 
 
+
     // =====================================================================================
     // 쿠폰 삭제
     // =====================================================================================
@@ -384,6 +388,7 @@ public class AdminCouponController {
 
         }
     }
+
 
 
 
