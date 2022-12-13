@@ -70,6 +70,12 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<ReviewDTO> getNumList(int ficnic_no) {
 		return this.sqlSession.selectList("SiteFicnicNumList",ficnic_no);
 	}
+
+	// 리뷰 등록
+	@Override
+	public int writeOkReview(ReviewDTO dto) {
+        return this.sqlSession.insert("adminReviewWriteOk", dto);
+	}
     
 
 }

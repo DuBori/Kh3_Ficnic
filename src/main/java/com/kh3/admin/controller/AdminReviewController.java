@@ -2,9 +2,13 @@ package com.kh3.admin.controller;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kh3.model.coupon.CouponDTO;
+import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
+import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.model.review.ReviewDAO;
 import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
@@ -157,7 +164,7 @@ public class AdminReviewController {
     }
 
 
-
+    // 리뷰 삭제
     @RequestMapping("admin/review/review_delete.do")
     public void delete(@RequestParam("review_no") int review_no, @RequestParam("ficnic_no") int ficnic_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
@@ -180,7 +187,7 @@ public class AdminReviewController {
 
         if (check > 0) {
             this.dao.updateSeq(review_no);
-            this.fdao.updateReviewPoint(ficnic_no);
+            this.fdao.updateReviewPoint(ficnic_no);	
             out.println("<script>alert('리뷰가 삭제되었습니다.'); location.href='review_list.do';</script>");
 
         } else {
@@ -188,5 +195,59 @@ public class AdminReviewController {
 
         }
     }
+    
+    // 리뷰 등록 페이지 이동
+    @RequestMapping("admin/review/review_write.do")	
+    public String reviewWrite(Model model) {
+        LocalDate startNowDate = LocalDate.now();
+        String startDate = startNowDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    	List<FicnicDTO> fdto = this.fdao.getFicnicList();
+    	
+    	String randomId=UUID.randomUUID().toString().replace("-", "");//-를 제거
+    	randomId = randomId.substring(0,10);//randomId를 앞에서부터 10자리 잘라줌
+        
+    	model.addAttribute("randomId", randomId);
+    	model.addAttribute("fdto", fdto);
+    	model.addAttribute("startDate", startDate);
+        return "admin/review/review_write";
+    }    
+    
+    
+    // 리뷰 등록하기
+    @RequestMapping("admin/review/review_write_ok.do")
+    public void reviewWriteOk(ReviewDTO dto, MultipartHttpServletRequest mRequest, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();    	
+    	System.out.println("값 ================ " + dto);
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        List<String> upload_list = UploadFile.fileUpload(mRequest, reviewFolder, reviewSaveName);        
+        for(int i=0; i<upload_list.size(); i++){
+            switch (i) {
+                case 0:
+                    dto.setReview_photo1(upload_list.get(0));
+                    break;
+                case 1:
+                	dto.setReview_photo2(upload_list.get(1));
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        // 리뷰 등록
+        int check = this.dao.writeOkReview(dto);
 
+        // 피크닉 평점 수정
+        this.fdao.updateReviewPoint(dto.getFicnic_no());
+        if(check > 0){
+        	// 피크닉 리뷰 갯수 수정
+        	this.fdao.updateReviewCont(dto.getFicnic_no());
+            out.println("<script>alert('리뷰가 등록되었습니다.'); location.href='review_list.do';</script>");
+        }else{
+            out.println("<script>alert('리뷰 등록에 실패했습니다.'); history.back();</script>");
+        }        
+        
+    }    
+    
+    
 }
