@@ -21,7 +21,7 @@ create table ficnic_list(
     ficnic_photo4 varchar2(200),
     ficnic_photo5 varchar2(200),
     ficnic_info varchar2(3000),
-    ficnic_detail varchar2(3000),
+    ficnic_detail clob,
     ficnic_curriculum varchar2(3000),
     ficnic_etc varchar2(1000),
     ficnic_location varchar2(100),
