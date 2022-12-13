@@ -44,7 +44,7 @@
 
 	<!-- 비밀번호 찾기 / 둘다 맞는 경우 -->
     <select id="siteMemberFindPwAll" resultType="int">
-    select member_pw
+    select count(*)
 	from member_list
 	where member_email = #{member_email} and member_id = #{member_id}
     </select>
@@ -77,6 +77,17 @@
 	<select id="loginSession" resultType="memberDTO">
 	   select * from member_list where member_id = #{member_id}
 	</select>
+	
+	    <!-- 회원 메일 중복 체크 -->
+	<select id="memberEmail" resultType="memberDTO">
+		select * from member_list where member_email = #{member_email}
+	</select>
+	
+	
+	<!-- 비밀번호 변경 -->
+	<update id="siteMemberUpdatePw" parameterType="memberDTO">
+		update member_list set member_pw = #{member_pw} where member_id = #{member_id}
+	</update>
 
 
 </mapper>

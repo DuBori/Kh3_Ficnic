@@ -6,8 +6,10 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.commons.mail.HtmlEmail;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
@@ -140,7 +142,7 @@ public class MemberDAOImpl implements MemberDAO {
         return this.sqlSession.selectOne("checkEmail", userEmail);
 	}
 
-
+	
 	@Override
 	public MemberDTO loginSession(String id) {
 		return this.sqlSession.selectOne("loginSession", id);
@@ -152,6 +154,11 @@ public class MemberDAOImpl implements MemberDAO {
         return this.sqlSession.selectOne("adminReservMember", member_id);
 	}
 
+	// 비번 업데이트
+	@Override
+	public int updatePw(MemberDTO dto) {
+		return this.sqlSession.update("siteMemberUpdatePw", dto);
+	}
 
 
 }
