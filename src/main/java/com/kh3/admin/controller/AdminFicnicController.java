@@ -65,11 +65,8 @@ public class AdminFicnicController {
             @RequestParam(value = "page", required = false, defaultValue = "1") int page, Model model,
             HttpServletRequest request) {
 
-        // 피크닉 데이터가 존재하는 지역
-        List<String> locationList = dao.getFicnicLocationList();
+        List<CategoryDTO> cList = cdao.getCategoryList();
 
-        // 피크닉 데이터가 존재하는 카테고리
-        List<FicnicDTO> cList = cdao.getExistCategoryList();
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("category_no", finic_category_no);
@@ -89,11 +86,9 @@ public class AdminFicnicController {
 
         model.addAttribute("flist", fList);
         model.addAttribute("clist", cList);
-        model.addAttribute("locationList", locationList);
         model.addAttribute("totalCount", totalRecord);
         model.addAttribute("paging", dto);
-        model.addAttribute("pagingWrite",
-                Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
+        model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 
         model.addAttribute("category_no", finic_category_no);
         model.addAttribute("location", ficnic_location);
@@ -110,76 +105,143 @@ public class AdminFicnicController {
     // 피크닉 보기 페이지
     // =====================================================================================
     @RequestMapping("admin/ficnic/ficnic_view.do")
-    public String ficnicView(Model model, @RequestParam("no") int no) {
+    public String ficnicView(@RequestParam("no") int no, Model model) {
         int cnt = 0;
-        FicnicDTO fdto = dao.getFicnicCont(no);
-        List<CategoryDTO> clist = cdao.getCategoryList();
 
-        String[] optionTitle = null;
-        if (fdto.getFicnic_option_title() != null)
-            optionTitle = fdto.getFicnic_option_title().split("★");
-        Object[] optionPrice = null;
-        if (fdto.getFicnic_option_price() != null)
-            optionPrice = fdto.getFicnic_option_price().split("★");
+        // 기존에 있던 해당 피크닉 상품 정보 불러와야한다.
+        FicnicDTO fdto = this.dao.getFicnicCont(no);
+        List<CategoryDTO> cList = cdao.getCategoryList();
 
-        String[] selectTitle = null;
-        if (fdto.getFicnic_select_title() != null)
-            selectTitle = fdto.getFicnic_select_title().split("★");
-        Object[] selectPrice = null;
-        if (fdto.getFicnic_select_price() != null)
-            selectPrice = fdto.getFicnic_select_price().split("★");
 
-        List<HashMap<String, Object>> optionList = new ArrayList<HashMap<String, Object>>();
 
         /* 앞단 보여질 option 처리 */
+        List<HashMap<String, Object>> optionList = new ArrayList<HashMap<String, Object>>();
+
+        String[] optionTitle = null;
+        if (fdto.getFicnic_option_title() != null) optionTitle = fdto.getFicnic_option_title().split("★");
+
+        Object[] optionPrice = null;
+        if (fdto.getFicnic_option_price() != null) optionPrice = fdto.getFicnic_option_price().split("★");
+
         if (optionTitle != null && optionPrice != null) {
             cnt = 0;
             for (String value : optionTitle) {
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("title", value);
                 map.put("price", Integer.parseInt((String) optionPrice[cnt]));
+
+                if(cnt == 0) {
+                    map.put("cls", "info");
+                    map.put("btn", "plus");
+                }else{
+                    map.put("cls", "danger");
+                    map.put("btn", "minus");
+                }
+
                 optionList.add(map);
                 cnt++;
             }
         }
 
+
+
+        /* 앞단 보여질 select_option 처리 */
         List<HashMap<String, Object>> selectList = new ArrayList<HashMap<String, Object>>();
 
-        /* 앞단 보여질 option 처리 */
-        /* 앞단 보여질 select_option 처리 */
+        String[] selectTitle = null;
+        if (fdto.getFicnic_select_title() != null) selectTitle = fdto.getFicnic_select_title().split("★");
+
+        Object[] selectPrice = null;
+        if (fdto.getFicnic_select_price() != null) selectPrice = fdto.getFicnic_select_price().split("★");
+
         if (selectTitle != null && selectPrice != null) {
             cnt = 0;
             for (String value : selectTitle) {
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("title", value);
                 map.put("price", Integer.parseInt((String) selectPrice[cnt]));
+
+                if(cnt == 0) {
+                    map.put("cls", "info");
+                    map.put("btn", "plus");
+                }else{
+                    map.put("cls", "danger");
+                    map.put("btn", "minus");
+                }
+
                 selectList.add(map);
                 cnt++;
             }
         }
 
-        /* 앞단 보여질 info 처리 */
-        String[] list = null;
-        if (fdto.getFicnic_info() != null)
-            list = fdto.getFicnic_info().split("★");
 
+
+        /* 앞단 보여질 info 처리 */
         List<HashMap<String, Object>> infoList = new ArrayList<HashMap<String, Object>>();
-        if (list != null) {
+
+        String[] infoAll = null;
+        if (fdto.getFicnic_info() != null) infoAll = fdto.getFicnic_info().split("★");
+
+        if(infoAll != null) {
             cnt = 0;
-            for (String value : list) {
-                String[] valueList = value.split(",");
+            for (String ilist : infoAll) {
+                String[] infoEpd = ilist.split("○");
+
                 HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("title", valueList[0]);
-                map.put("cont", valueList[1]);
+                map.put("title", infoEpd[0]);
+                map.put("cont", infoEpd[1]);
+
+                if(cnt == 0) {
+                    map.put("cls", "info");
+                    map.put("btn", "plus");
+                }else{
+                    map.put("cls", "danger");
+                    map.put("btn", "minus");
+                }
+
                 infoList.add(map);
+                cnt++;
             }
         }
 
-        model.addAttribute("dto", fdto);
-        model.addAttribute("clist", clist);
+
+
+        /* 앞단 보여질 curriculum 처리 */
+        List<HashMap<String, Object>> currList = new ArrayList<HashMap<String, Object>>();
+
+        String[] currAll = null;
+        if (fdto.getFicnic_curriculum() != null) currAll = fdto.getFicnic_curriculum().split("★");
+
+        if(currAll != null) {
+            cnt = 0;
+            for (String clist : currAll) {
+                String[] currEpd = clist.split("○");
+
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                map.put("time", currEpd[0]);
+                map.put("cont", currEpd[1]);
+
+                if(cnt == 0) {
+                    map.put("cls", "info");
+                    map.put("btn", "plus");
+                }else{
+                    map.put("cls", "danger");
+                    map.put("btn", "minus");
+                }
+
+                currList.add(map);
+                cnt++;
+            }
+        }
+
+
+        model.addAttribute("clist", cList);
+        model.addAttribute("fdto", fdto);
+
         model.addAttribute("optionList", optionList);
         model.addAttribute("selectList", selectList);
         model.addAttribute("infoList", infoList);
+        model.addAttribute("currList", currList);
 
         return "admin/ficnic/ficnic_view";
     }
