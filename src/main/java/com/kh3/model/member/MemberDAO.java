@@ -57,8 +57,11 @@ public interface MemberDAO {
     // 세션 로그인
     MemberDTO loginSession(String id);
     
-    
     // 예약 상세내역 회원정보 
     MemberDTO getReservMember(String id);
+
+    // 비밀번호 업데이트
+    int updatePw(MemberDTO dto);
+    
     
 }
