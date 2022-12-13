@@ -404,7 +404,7 @@
 
                         <div class="form-group">
                             <label for="ficnic_location">진행 지역</label>
-                            <select name="${fdto.getFicnic_location()}" class="custom-select">
+                            <select name="${fdto.getFicnic_location()}" class="custom-select w-50">
                                 <option value="서울" <c:if test="${fdto.getFicnic_location() eq '서울'}"> selected="selected"</c:if>> 서울</option>
                                 <option value="경기" <c:if test="${fdto.getFicnic_location() eq '경기'}"> selected="selected"</c:if>> 경기</option>
                                 <option value="인천" <c:if test="${fdto.getFicnic_location() eq '인천'}"> selected="selected"</c:if>> 인천</option>
@@ -536,7 +536,7 @@
 
 						<c:if test="${!empty cate.getSub_category()}">
 						<!-- 중 카테고리 반복 -->
-						<ul class="sort-list">
+						<ul class="sort-list displaynone">
 							<c:forEach var="subc" items="${cate.getSub_category()}">
 							<c:choose>
 								<c:when test="${subc.getCategory_show() eq 'N'}">
