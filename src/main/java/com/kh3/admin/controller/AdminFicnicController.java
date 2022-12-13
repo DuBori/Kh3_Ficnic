@@ -91,6 +91,7 @@ public class AdminFicnicController {
         model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 
         model.addAttribute("category_no", finic_category_no);
+        model.addAttribute("page", page);
         model.addAttribute("location", ficnic_location);
         model.addAttribute("addr", ficnic_address);
         model.addAttribute("name", ficnic_name);
@@ -411,7 +412,13 @@ public class AdminFicnicController {
     // 피크닉 수정 페이지
     // =====================================================================================
     @RequestMapping("admin/ficnic/ficnic_modify.do")
-    public String ficnicModify(@RequestParam("no") int no, Model model) {
+    public String ficnicModify(
+            @RequestParam(value = "finic_category_no", required = false, defaultValue = "") String finic_category_no,
+            @RequestParam(value = "ficnic_location", required = false, defaultValue = "") String ficnic_location,
+            @RequestParam(value = "ficnic_address", required = false, defaultValue = "") String ficnic_address,
+            @RequestParam(value = "ficnic_name", required = false, defaultValue = "") String ficnic_name,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,    		
+    		@RequestParam("no") int no, Model model) {
         int cnt = 0;
 
         // 기존에 있던 해당 피크닉 상품 정보 불러와야한다.
@@ -543,6 +550,12 @@ public class AdminFicnicController {
 
         model.addAttribute("clist", cList);
         model.addAttribute("fdto", fdto);
+        
+        model.addAttribute("finic_category_no", finic_category_no);
+        model.addAttribute("ficnic_location", ficnic_location);
+        model.addAttribute("ficnic_address", ficnic_address);
+        model.addAttribute("ficnic_name", ficnic_name);
+        model.addAttribute("page", page);
 
         model.addAttribute("optionList", optionList);
         model.addAttribute("selectList", selectList);
