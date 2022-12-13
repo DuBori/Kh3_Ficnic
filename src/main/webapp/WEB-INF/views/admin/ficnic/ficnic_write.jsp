@@ -404,7 +404,24 @@
 
                         <div class="form-group">
                             <label for="ficnic_location">진행 지역</label>
-                            <input type="text" name="ficnic_location" id="ficnic_location" value="${fdto.getFicnic_location()}" class="form-control" />
+                            <select name="${fdto.getFicnic_location()}" class="custom-select">
+                                <option value="서울" <c:if test="${fdto.getFicnic_location() eq '서울'}"> selected="selected"</c:if>> 서울</option>
+                                <option value="경기" <c:if test="${fdto.getFicnic_location() eq '경기'}"> selected="selected"</c:if>> 경기</option>
+                                <option value="인천" <c:if test="${fdto.getFicnic_location() eq '인천'}"> selected="selected"</c:if>> 인천</option>
+                                <option value="강원" <c:if test="${fdto.getFicnic_location() eq '강원'}"> selected="selected"</c:if>> 강원</option>
+                                <option value="부산" <c:if test="${fdto.getFicnic_location() eq '부산'}"> selected="selected"</c:if>> 부산</option>
+                                <option value="충남" <c:if test="${fdto.getFicnic_location() eq '충남'}"> selected="selected"</c:if>> 충남</option>
+                                <option value="충북" <c:if test="${fdto.getFicnic_location() eq '충북'}"> selected="selected"</c:if>> 충북</option>
+                                <option value="경남" <c:if test="${fdto.getFicnic_location() eq '경남'}"> selected="selected"</c:if>> 경남</option>
+                                <option value="경북" <c:if test="${fdto.getFicnic_location() eq '경북'}"> selected="selected"</c:if>> 경북</option>
+                                <option value="전남" <c:if test="${fdto.getFicnic_location() eq '전남'}"> selected="selected"</c:if>> 전남</option>
+                                <option value="전북" <c:if test="${fdto.getFicnic_location() eq '전북'}"> selected="selected"</c:if>> 전북</option>
+                                <option value="광주" <c:if test="${fdto.getFicnic_location() eq '광주'}"> selected="selected"</c:if>> 광주</option>
+                                <option value="대전" <c:if test="${fdto.getFicnic_location() eq '대전'}"> selected="selected"</c:if>> 대전</option>
+                                <option value="대구" <c:if test="${fdto.getFicnic_location() eq '대구'}"> selected="selected"</c:if>> 대구</option>
+                                <option value="울산" <c:if test="${fdto.getFicnic_location() eq '울산'}"> selected="selected"</c:if>> 울산</option>
+                                <option value="제주" <c:if test="${fdto.getFicnic_location() eq '제주'}"> selected="selected"</c:if>> 제주</option>
+                            </select>
                         </div>
 
                         <div class="w-100"></div>

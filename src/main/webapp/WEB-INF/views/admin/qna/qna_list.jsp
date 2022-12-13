@@ -119,7 +119,7 @@
 
 							<c:otherwise>
                             <tr>
-                                <td colspan="5" class="nodata">No Data</td>
+                                <td colspan="6" class="nodata">No Data</td>
                             </tr>
                         	</c:otherwise>
                         	</c:choose>

@@ -37,7 +37,7 @@ public class FicnicDTO {
 	private String ficnic_notinclude;
 	private String ficnic_prepare;
 	private String ficnic_caution;
-	private int ficnic_review_point;
+	private double ficnic_review_point;
 	private int ficnic_review_count;
 	private int ficnic_hit;
 	private int ficnic_sale;
