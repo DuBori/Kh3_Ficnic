@@ -57,9 +57,10 @@
   		<![CDATA[update review_list set review_no = review_no - 1 where review_no > #{review_no}]]>
 	</update>
 	
+
     <insert id="adminReviewWriteOk" parameterType="reviewDTO">
         <selectKey resultType="int" keyProperty="review_no" order="BEFORE">
-            select max(review_no) from review_list
+            select nvl(max(review_no),0) from review_list
         </selectKey>
         insert into review_list values(#{review_no} + 1, #{ficnic_no},
         #{review_point}, #{review_cont}, #{review_photo1}, #{review_photo2},

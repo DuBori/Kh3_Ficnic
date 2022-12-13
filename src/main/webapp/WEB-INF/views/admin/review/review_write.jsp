@@ -24,36 +24,28 @@
             <div class="card input-form">
                 <div class="card-body p-4">
                     <div class="row form my-4 view-limit">
-                        <div class="form-group col mb-2">
+                        <div class="form-group col">
                             <label for="member_id">작성자 아이디</label>
-                            <input type="text" name="member_id" id="member_id" class="form-control d-inline w-30" value="${randomId }" onkeydown="EngNumInput(this);" required />
+                            <input type="text" name="member_id" id="member_id" class="form-control" value="${randomId}" onkeydown="EngNumInput(this);" required />
                         </div>
-                        <div class="form-group col mb-2">
+                        <div class="form-group col">
                             <label for="review_name">작성자 이름</label>
-                            <input type="text" name="review_name" id="review_name" class="form-control w-30" required />
+                            <input type="text" name="review_name" id="review_name" class="form-control" required autofocus />
                         </div>
 
-                        <div class="w-100 border-bottom"></div>
+                        <div class="w-100 border-bottom mt-2"></div>
 
-                        <div class="form-group join-form">
-                            <label>피크닉</label>
-                            <div class="jf-input">
-                                <div class="row"><!-- 여기 일단 셀렉트 박스로 피크닉 리스트 가져오기 -->
-                                    <div class="col pt-1 pb-2">
-	                                    <div class="input-group">
-	                                        <div class="input-group-prepend">
-	                                            <label class="input-group-text" for="search_type">목록</label>
-	                                        </div>
-	                                        <select id="search_type" name="ficnic_no" class="custom-select">
-                    							<c:forEach var="fdto" items="${fdto}">
-	                                            <option value="${fdto.getFicnic_no() }">${fdto.getFicnic_name() }</option>
-	                                        	</c:forEach>
-	                                        </select>
-	                                    </div>                                    
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group col">
+                            <label for="ficnic_no">피크닉 선택</label>
+                            <select id="search_type" name="ficnic_no" id="ficnic_no" class="custom-select">
+                                <c:forEach var="fdto" items="${fdto}">
+                                <option value="${fdto.getFicnic_no() }">${fdto.getFicnic_name() }</option>
+                                </c:forEach>
+                            </select>
                         </div>
+
+                        <w class="-100"></w>
+
                         <div class="form-group join-form">
                             <label>리뷰 평점</label>
                             <div class="jf-input">
@@ -69,13 +61,15 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="w-100"></div>
-                        <div class="form-group col mb-2">
+
+                        <div class="form-group col">
                             <label for="review_cont" style="padding: 60px 0;">리뷰 내용</label>
                             <textarea name="review_cont" id="review_cont" cols="20" rows="5" class="form-control">${dto.review_cont}</textarea>
                         </div>
 
-                        <div class="w-100 border-bottom"></div>
+                        <div class="w-100 border-bottom mt-2"></div>
 
                         <div class="form-group join-form">
                             <label for="board_list_num">리뷰 사진 1</label>
@@ -106,21 +100,12 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="w-100"></div>
-                        
-                        <div class="form-group join-form">
-                            <label for="board_list_num">작성 일자</label>
-                            <div class="jf-input">
-                                <div class="row">
-			                        <div class="input-group col pb-2">
-				                        <div class="input-group-prepend">
-				                        	<span class="input-group-text"><i class="fa fa-calendar"></i></span>
-				                        </div>
-			                        	<input type="text" name="review_date" id="review_date" class="form-control w-30" required value="${startDate }"/>
-			                        </div>                    
-                                </div>
-                            </div>
+
+                        <div class="form-group col">
+                            <label for="review_date">작성 일자</label>
+                            <input type="text" name="review_date" id="review_date" value="${reviewDate}" class="form-control w-100" required />
                         </div>
                     </div>
                 </div>

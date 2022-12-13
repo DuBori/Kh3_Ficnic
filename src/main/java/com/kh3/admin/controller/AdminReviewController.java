@@ -3,8 +3,8 @@ package com.kh3.admin.controller;
 import java.io.File;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.kh3.model.coupon.CouponDTO;
-import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.model.review.ReviewDAO;
@@ -199,17 +197,23 @@ public class AdminReviewController {
     // 리뷰 등록 페이지 이동
     @RequestMapping("admin/review/review_write.do")	
     public String reviewWrite(Model model) {
-        LocalDate startNowDate = LocalDate.now();
-        String startDate = startNowDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-    	List<FicnicDTO> fdto = this.fdao.getFicnicList();
+        LocalDate getDate = LocalDate.now();
+        String reviewDate = getDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+
+        LocalTime getTime = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String nowTime = getTime.format(formatter);
+
+        List<FicnicDTO> fdto = this.fdao.getFicnicList();
     	
-    	String randomId=UUID.randomUUID().toString().replace("-", "");//-를 제거
+    	String randomId = UUID.randomUUID().toString().replace("-", "");//-를 제거
     	randomId = randomId.substring(0,10);//randomId를 앞에서부터 10자리 잘라줌
         
     	model.addAttribute("randomId", randomId);
     	model.addAttribute("fdto", fdto);
-    	model.addAttribute("startDate", startDate);
-        return "admin/review/review_write";
+    	model.addAttribute("reviewDate", reviewDate + " " + nowTime);
+
+    	return "admin/review/review_write";
     }    
     
     
@@ -217,8 +221,8 @@ public class AdminReviewController {
     @RequestMapping("admin/review/review_write_ok.do")
     public void reviewWriteOk(ReviewDTO dto, MultipartHttpServletRequest mRequest, HttpServletResponse response) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();    	
-    	System.out.println("값 ================ " + dto);
+        PrintWriter out = response.getWriter();
+
         // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
         List<String> upload_list = UploadFile.fileUpload(mRequest, reviewFolder, reviewSaveName);        
         for(int i=0; i<upload_list.size(); i++){
@@ -242,7 +246,7 @@ public class AdminReviewController {
         if(check > 0){
         	// 피크닉 리뷰 갯수 수정
         	this.fdao.updateReviewCont(dto.getFicnic_no());
-            out.println("<script>alert('리뷰가 등록되었습니다.'); location.href='review_list.do';</script>");
+            out.println("<script>location.href='review_list.do';</script>");
         }else{
             out.println("<script>alert('리뷰 등록에 실패했습니다.'); history.back();</script>");
         }        

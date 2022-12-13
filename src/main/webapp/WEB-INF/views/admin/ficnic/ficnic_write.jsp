@@ -404,7 +404,7 @@
 
                         <div class="form-group">
                             <label for="ficnic_location">진행 지역</label>
-                            <select name="${fdto.getFicnic_location()}" class="custom-select w-50">
+                            <select name="ficnic_location" id="ficnic_location" class="custom-select w-50">
                                 <option value="서울" <c:if test="${fdto.getFicnic_location() eq '서울'}"> selected="selected"</c:if>> 서울</option>
                                 <option value="경기" <c:if test="${fdto.getFicnic_location() eq '경기'}"> selected="selected"</c:if>> 경기</option>
                                 <option value="인천" <c:if test="${fdto.getFicnic_location() eq '인천'}"> selected="selected"</c:if>> 인천</option>
