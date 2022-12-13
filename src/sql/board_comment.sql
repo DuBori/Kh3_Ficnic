@@ -5,7 +5,7 @@ create table board_comment_faq(
     bcomm_no number(5) primary key,
     bdata_no number(5) not null,
     bcomm_id varchar2(50),
-    bcomm_pw varchar2(50),
+    bcomm_pw varchar2(100),
     bcomm_name varchar2(100),
     bcomm_cont varchar2(2000),
     bcomm_date date default sysdate

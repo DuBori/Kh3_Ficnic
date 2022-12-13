@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/layout_header.jsp" %>
+<c:if test="${!empty sess_id}"><script type="text/javascript">alert('이미 로그인 되어 있습니다.'); history.back();</script></c:if>
 
-<c:set var="dto" value="${dto}" />
+
 
 
 <div class="page-info w1100" align="center">
@@ -18,7 +19,12 @@
 
 
 	<form name="form1" method="post" action="${path}/member/member_login_check.do">
+		
 		<table border="1" width="400px">
+		
+
+			<input type="hidden" name="member_name" value="${dto.getMember_name()}">
+			
 			<tr>
 				<td>아이디</td>
 				<td><input id="member_id" name="member_id" required="required" placeholder="회원 아이디"></td>

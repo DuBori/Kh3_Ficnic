@@ -4,6 +4,7 @@ drop table reserv_list purge;
 create table reserv_list(
     reserv_no number(5) primary key,
     reserv_sess varchar2(30) not null,
+    reserv_status varchar2(50) default 'reserv' not null,
     ficnic_no number(5) not null,
     reserv_ficnic_name varchar2(100) not null,
     reserv_ficnic_sale_price number(11) default '0' not null,
@@ -26,6 +27,7 @@ create table reserv_list(
 
 comment on column reserv_list.reserv_no is '예약 no';
 comment on column reserv_list.reserv_sess is '예약 번호';
+comment on column reserv_list.reserv_status is '예약 상태 (reserv/confirm/done/cancel)';
 comment on column reserv_list.ficnic_no is '피크닉 번호';
 comment on column reserv_list.reserv_ficnic_name is '피크닉 이름';
 comment on column reserv_list.reserv_ficnic_sale_price is '피크닉 가격';
@@ -46,6 +48,6 @@ comment on column reserv_list.reserv_name is '회원 이름';
 comment on column reserv_list.reserv_date is '예약 일자';
 
 
-insert into reserv_list values(1, '221212-123456', 1, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)', 30000, '[11세~대인] 제주고사리파스타', 30000, '13:30 타임', 0, null, sysdate, 0, 0, 0, 'toss', 30000, 'alone', 'test1', '테스트회원1', sysdate);
+insert into reserv_list values(1, '221212-123456', 'reserv', 1, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)', 30000, '[11세~대인] 제주고사리파스타', 30000, '13:30 타임', 0, null, sysdate, 0, 0, 0, 'toss', 30000, 'alone', 'test1', '테스트회원1', sysdate);
 
 commit;

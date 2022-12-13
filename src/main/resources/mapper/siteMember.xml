@@ -44,7 +44,7 @@
 
 	<!-- 비밀번호 찾기 / 둘다 맞는 경우 -->
     <select id="siteMemberFindPwAll" resultType="int">
-    select count(*) 
+    select member_pw
 	from member_list
 	where member_email = #{member_email} and member_id = #{member_id}
     </select>
@@ -57,8 +57,8 @@
     </select>
 
 
-      <!-- 회원 가입 -->    
-    	<insert id="siteMemberJoin" parameterType="memberDTO">
+    <!-- 회원 가입 -->
+    <insert id="siteMemberJoin" parameterType="memberDTO">
 		<selectKey resultType="int" keyProperty="member_no" order="BEFORE">
 			select max(member_no) from member_list
 		</selectKey>
@@ -67,16 +67,16 @@
 		#{member_phone}, 1000, sysdate)
 	</insert>
 	
-		<!-- 회원 메일 중복 체크 -->
+    <!-- 회원 메일 중복 체크 -->
 	<select id="checkEmail" resultType="int">
 		select count(*) from member_list where member_email = #{member_email}
 	</select>
 	
-		<!-- 세션 -->
-	<select id="siteMemberSessionCheck" resultType="int">
-		select * from member_list where member_id = #{member_id}
+
+    <!-- 세션 -->
+	<select id="loginSession" resultType="memberDTO">
+	   select * from member_list where member_id = #{member_id}
 	</select>
-			
-			
-    
+
+
 </mapper>

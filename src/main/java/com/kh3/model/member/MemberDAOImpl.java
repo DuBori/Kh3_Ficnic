@@ -18,7 +18,7 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public int getMemberCount(Map<String, Object> searchMap) {
-        return this.sqlSession.selectOne("adminMemberCount", searchMap);
+        return this.sqlSession.selectOne("adminMemberTotalCount", searchMap);
     }
 
 
@@ -42,7 +42,7 @@ public class MemberDAOImpl implements MemberDAO {
     // 회원 상세내역 리스트 가져오기
     @Override
     public MemberDTO getMemberView(int no) {
-        return this.sqlSession.selectOne("adminMemberView", no);
+        return this.sqlSession.selectOne("adminMemberCont", no);
     }
 
 
@@ -142,9 +142,14 @@ public class MemberDAOImpl implements MemberDAO {
 
 
 	@Override
-	public int sessionMember(MemberDTO dto) {
-		return this.sqlSession.selectOne("siteMemberSessionCheck", dto);
-		
+	public MemberDTO loginSession(String id) {
+		return this.sqlSession.selectOne("loginSession", id);
+	}
+
+    // 예약 상세내역 회원정보 
+	@Override
+	public MemberDTO getReservMember(String member_id) {
+        return this.sqlSession.selectOne("adminReservMember", member_id);
 	}
 
 

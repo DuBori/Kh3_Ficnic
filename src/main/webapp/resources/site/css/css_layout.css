@@ -53,7 +53,7 @@ span.noimg {
 }
 #header .navbar .navbar-brand a span {
     margin-left: 5px;
-    background-image: -webkit-linear-gradient(60deg, #ef365c, #1975b8);
+    background-image: -webkit-linear-gradient(60deg, #ff005a, #1975b8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-animation: hue 5s infinite linear;

@@ -150,6 +150,24 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 
+///////////////////////////////////////////////////////////////////////////////////
+	
+
+	@Override
+	public List<String> getChildList(String ficnic_category_no) {
+		
+		return this.sqlSession.selectList("SiteFicnicChildCategory", ficnic_category_no);
+	}
+
+
+
+	@Override
+	public String getCategoryName(String ficnic_name) {
+		// TODO Auto-generated method stub
+		return this.sqlSession.selectOne("siteFicnicName",ficnic_name);
+	}
+
+
 
 
 

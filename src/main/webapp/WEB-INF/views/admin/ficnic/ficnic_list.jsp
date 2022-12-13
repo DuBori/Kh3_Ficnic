@@ -60,9 +60,7 @@
                     </div>
                     </form>
                 </div>
-
 </div>
-
 <div class="card-body px-4 pt-0 member-list">
        <table class="table-list mb-2">
            <thead>

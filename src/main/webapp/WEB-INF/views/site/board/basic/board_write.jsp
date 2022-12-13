@@ -13,7 +13,7 @@
 </c:if>
 
 	<c:if test="${!empty m }">
-		<c:set var="tag" value="/site/board/board_modify_ok.do"/>
+		<c:set var="tag" value="/board/board_modify_ok.do"/>
 		<c:set var="category" value="${Cont.getBdata_category() }"/>
 		<c:set var="title" value="${Cont.getBdata_title() }"/>
 		<c:set var="cont" value="${Cont.getBdata_cont() }"/>
@@ -33,7 +33,7 @@
 		<c:set var="bbs_id" value="${Cont.getBoard_id() }"/>
 	</c:if>
 	<c:if test="${empty m}">
-		<c:set var="tag" value="/site/board/board_write_ok.do"/>
+		<c:set var="tag" value="/board/board_write_ok.do"/>
 	</c:if>
 
 
@@ -59,7 +59,7 @@
 			</c:if>
 			<input type="hidden" value="${conf.getBoard_id() }" name="board_id">
 			
-			<c:if test="${!empty session_id }"> <input type="hidden" name="bdata_writer_id" value="${bdata_writer_id}" ></c:if>
+			<c:if test="${!empty sess_id }"> <input type="hidden" name="bdata_writer_id" value="${sess_id}" ></c:if>
 		<table border="1" cellspacing="0">
 		
 			<!-- 게시물 카테고리 설정  -->
@@ -80,14 +80,24 @@
 			<tr>
 				<th>글작성 옵션</th>
 				 <td>
-				 	<!-- 관리자 게시글 작성 시 공지사항  -->
-				 	<c:if test="${session_id eq'admin' }">
+				 <c:choose>
+				 	<c:when test="${sess_id eq'admin'}">
 				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
-				 	</c:if> 
-				 	<!-- 로그인 계정이 관리자 x-->
-				 	<c:if test="${session_id ne'admin'}">
-				 		<input type="hidden" value="N" name="bdata_use_notice">
-				 	</c:if> 
+				 	</c:when>
+				 	<c:when test="${empty conf.getBoard_level_notice() and sess_id ne 'admin' }">
+				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
+				 	</c:when>
+				 	<c:when test="${conf.getBoard_level_notice() eq 'user' and !empty sess_id}">
+				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
+				 	</c:when>
+				 	<c:otherwise>
+				 	
+				 	</c:otherwise>
+				 </c:choose>
+				 
+				 	<c:if test="${!empty m and notice eq 'Y' }">
+				 		<input type="checkbox" value="Y" name="bdata_use_notice" checked="checked">공지사항
+				 	</c:if>
 				 	
 				 	<!-- 게시판 비밀글 설정 -->
 				 	<c:if test="${conf.getBoard_use_only_secret() eq 'Y'}">
@@ -111,10 +121,12 @@
 				
 				<!-- 게시글 작성 글 작성권한(모든사람) || 로그인 | 비로그인 || // 게시글 수정   -->	
 				<c:choose>			
-					<c:when test="${!empty session_id and empty m}">
-						<td><input name="bdata_writer_name" disabled="disabled">${session_writer_name}</td>
+					<c:when test="${!empty sess_id and empty m}">
+						<td><input name="bdata_writer_name" disabled="disabled" value="${sess_name}"></td>
+						<input type="hidden"  name="bdata_writer_name" value="${sess_name}">
+						<input type="hidden"  name="bdata_writer_pw" value="${sess_pw}">
 					</c:when>
-					<c:when test="${!empty m}">
+					<c:when test="${!empty m}">	
 						<td><input name="bdata_writer_name" value="${name}" disabled="disabled"></td>
 					</c:when>
 					<c:otherwise>
@@ -196,7 +208,7 @@
 					<c:if test="${empty m }">
 						<input type="submit" value="등록하기">
 					</c:if>
-					<input type="button" value="목록보기" onclick="location.href='<%=request.getContextPath()%>/site/board/board_list.do?bbs_id=${conf.getBoard_id()}'">
+					<input type="button" value="목록보기" onclick="location.href='${path}/board/board_list.do?bbs_id=${conf.getBoard_id()}'">
 				</td>
 			</tr>	
 			

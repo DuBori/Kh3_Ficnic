@@ -51,6 +51,7 @@
 
 
 
+    <c:if test="${!empty sess_id}">
     <!-- 로그아웃 Modal // START -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -65,6 +66,7 @@
         </div>
     </div>
     <!-- 로그아웃 Modal // END -->
+    </c:if>
 
 
 
@@ -84,10 +86,20 @@
 
                 <ul class="navmenu">
                     <li><a href="${path}/ficnic/category_list.do"><i class="icon-list"></i><p>카테고리</p></a></li>
-                    <li><a href="#"><i class="icon-heart"></i><p>위시리스트</p></a></li>
-                    <li><a href="#"><i class="icon-user"></i><p>마이페이지</p></a></li>
-                    <li><button type="button" data-toggle="modal" data-target="#logoutModal"><i class="icon-logout"></i><p>로그아웃</p></button></li>
-                    <li class="ml-5"><a href="${path}/admin/main.do" target="_blank"><i class="icon-rocket"></i><p>관리자</p></a></li>
+                    <c:choose>
+                        <c:when test="${!empty sess_id}">
+                            <li><a href="#"><i class="icon-heart"></i><p>위시리스트</p></a></li>
+                            <li><a href="#"><i class="icon-user"></i><p>마이페이지</p></a></li>
+                            <li><button type="button" data-toggle="modal" data-target="#logoutModal"><i class="icon-logout"></i><p>로그아웃</p></button></li>
+                            <c:if test="${sess_type eq 'admin'}"><li class="ml-5"><a href="${path}/admin/main.do" target="_blank"><i class="icon-rocket"></i><p>관리자</p></a></li></c:if>
+                        </c:when>
+
+                        <c:otherwise>
+                            <li><a href="${path}/member/member_login.do"><i class="icon-login"></i><p>로그인</p></a></li>
+                            <li><a href="${path}/member/member_join.do"><i class="icon-emotsmile"></i><p>회원가입</p></a></li>
+                            <li><a href="#"><i class="icon-user"></i><p>마이페이지</p></a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
         </nav>

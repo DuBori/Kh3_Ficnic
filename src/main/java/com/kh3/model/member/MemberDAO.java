@@ -54,7 +54,11 @@ public interface MemberDAO {
     
     int joinMember(MemberDTO dto);
     
-    // 세션
-    int sessionMember(MemberDTO dto);
+    // 세션 로그인
+    MemberDTO loginSession(String id);
+    
+    
+    // 예약 상세내역 회원정보 
+    MemberDTO getReservMember(String id);
     
 }

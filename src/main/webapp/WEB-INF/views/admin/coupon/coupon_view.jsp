@@ -4,9 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="layout_none" value="Y" />
 <%@ include file="../layout/layout_header.jsp" %>
-
-<c:set var="dto" value="${dto}" />
-<c:set var="category" value="${fn:split(category,'☆')}" />
 <c:if test="${empty dto}"><script type="text/javascript">alert('존재하지 않는 데이터입니다.'); window.close();</script></c:if>
 
 
@@ -39,29 +36,33 @@
 							</div>
                         </div>
 
+                        <c:if test="${dto.getCoupon_use_type() ne 'cart'}">
                         <div class="w-100"></div>
 
                         <div class="form-group join-form">
-                            <c:choose>
-                            <c:when test="${dto.getCoupon_use_type() eq 'goods'}"><label>사용 상품</label></c:when>
-                            <c:when test="${dto.getCoupon_use_type() eq 'category'}"><label>사용 카테고리</label></c:when>
-                            <c:otherwise></c:otherwise>
-                            </c:choose>
+                            <label>사용 <c:choose><c:when test="${dto.getCoupon_use_type() eq 'category'}">카테고리</c:when><c:otherwise>상품</c:otherwise></c:choose></label>
                             <div class="jf-input">
                                 <div class="row">
                                     <div class="col pb-2">
                                         <ul class="list-view">
-			                            <c:choose>
-			                            	<c:when test="${dto.getCoupon_use_type() eq 'cart'}"></c:when>
-			                           		<c:otherwise>
-			                           		<c:forEach items="${category}" var="category"><li>${category}</li></c:forEach>
-			                           		</c:otherwise>
-			                            </c:choose>                                            
+                                            <c:choose>
+                                            <c:when test="${dto.getCoupon_use_type() eq 'category'}">
+                                                <c:forEach var="cate" items="${cateList}">
+                                                <li>${cate.cate_path}</li>
+                                                </c:forEach>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:forEach var="goods" items="${goodsList}">
+                                                <li>${goods.ficnic_name}</li>
+                                                </c:forEach>
+                                            </c:otherwise>
+                                            </c:choose>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        </c:if>
 
                         <div class="w-100"></div>
 
@@ -114,7 +115,7 @@
                             	<c:choose>
                             	<c:when test="${dto.getCoupon_date_type() eq 'free'}">제한없음</c:when>
                            		<c:when test="${dto.getCoupon_date_type() eq 'after'}">발급 후 ${dto.getCoupon_date_value() }일</c:when>
-                           		<c:otherwise>${dto.getCoupon_start_date()}~<br>${dto.getCoupon_end_date()}</c:otherwise>
+                           		<c:otherwise>${dto.getCoupon_start_date()} ~ ${dto.getCoupon_end_date()}</c:otherwise>
                              	</c:choose>
                             </div>
                         </div>

@@ -879,7 +879,7 @@ main .input-form .row > .form-group #idchk_result.no {
 
 
 
-main .input-form .row > .form-group .cate-show {
+main .input-form .form-group .cate-show {
     position: relative;
     width: 100%;
     min-height: 34px;
@@ -893,7 +893,7 @@ main .input-form .row > .form-group .cate-show {
     -moz-border-radius: .25rem;
     border-radius: .25rem;
 }
-main .input-form .row > .form-group .cate-show li {
+main .input-form .form-group .cate-show li {
     position: relative;
     width: 100%;
     padding: 5px 0 5px 7px;
@@ -902,18 +902,18 @@ main .input-form .row > .form-group .cate-show li {
     list-style-type: disc !important;
     list-style-position: inside !important;
 }
-main .input-form .row > .form-group .cate-show li button {
+main .input-form .form-group .cate-show li button {
     float: right;
     color: #666;
     border: 1px solid #eee;
 }
-main .input-form .row > .form-group .cate-show li button:hover {
+main .input-form .form-group .cate-show li button:hover {
     border-color: #666;
 }
-main .input-form .row > .form-group .cate-show li i {
+main .input-form .form-group .cate-show li i {
     padding: 2px 3px;
 }
-main .input-form .row > .form-group .cate-show p {
+main .input-form .form-group .cate-show p {
     margin: 4px 0 0 2px;
     color: #888;
 }
@@ -1361,8 +1361,14 @@ main .view-form .exchange-goods-footer b {
 /*************************/
 .bootstrap-tagsinput {
     display: inline-block;
-    width: calc(100% - 130px) !important;
-    margin: 0 5px 0 7px;
+    width: calc(100% - 30px) !important;
+    margin: 0 5px 0 10px;
+    padding: .375rem .275rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    box-shadow: none;
 }
 
 

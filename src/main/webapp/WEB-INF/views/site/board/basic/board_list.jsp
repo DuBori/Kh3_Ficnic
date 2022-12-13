@@ -4,6 +4,27 @@
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_board.css" />
 
 
+<script type="text/javascript">
+	
+
+	function chkpw(no,pwd){
+		if('<%=session.getAttribute("sess_pw")%>' == pwd){
+			location.href="${path}/board/board_view.do?bbs_id=${bbs_id}&bdata_no="+no;
+		}else if('<%=session.getAttribute("sess_id")%>' === 'admin' ){
+			location.href="${path}/board/board_view.do?bbs_id=${bbs_id}&bdata_no="+no;
+		}else{
+			if(prompt('비밀번호를 입력하세요.') != pwd){
+				alert('비밀번호가 틀렸습니다.');
+				return false;
+			}else{
+				location.href="${path}/board/board_view.do?bbs_id=${bbs_id}&bdata_no="+no;
+			}
+		}
+		
+		
+	}
+	
+</script>
 
 <%@ include file="../../layout/layout_csmenu.jsp" %>
 
@@ -33,10 +54,10 @@
 
 <!-- Content 시작부 -->
 <c:choose>
-	<c:when test="${level_list ne 'null' and empty session_id  }">
+	<c:when test="${level_list ne 'null' and empty sess_id  }">
 		게시판 권한이 부족합니다.
 	</c:when>
-	<c:when test="${level_list eq 'admin' and session_id ne 'admin' }">
+	<c:when test="${level_list eq 'admin' and sess_id ne 'admin' }">
 		게시판 권한이 부족합니다.
 	</c:when>
 	<c:otherwise>
@@ -63,9 +84,9 @@
 					<tr>
 						<td><c:if test="${dto.getBdata_use_notice() eq 'Y' }">공지🔔</c:if><c:if test="${dto.getBdata_use_notice() ne 'Y' }">${dto.getBdata_no()}</c:if></td>
 						<c:if test="${dto.getBdata_use_secret() eq 'Y' }">
-							<td>🔒비밀글 입니다.</td>
+							<td onclick="chkpw(${dto.getBdata_no()},'${dto.getBdata_writer_pw()}')">🔒비밀글 입니다.</td>
 						</c:if>
-						<c:if test="${dto.getBdata_use_secret() eq 'N' or session_id eq 'admin'}">
+						<c:if test="${dto.getBdata_use_secret() eq 'N' or sess_id eq 'admin'}">
 							<td><a href="<%=request.getContextPath()%>/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}">[${level}]회원 ${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
 						</c:if>
 						
@@ -119,9 +140,9 @@
 				             <c:otherwise>
 				             	<a href="<%=request.getContextPath()%>/board/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"  
 				             	
-				             	<c:if test="${boardConfig.getBoard_level_write() ne 'null' and empty session_id}"> 
+				             	<c:if test="${boardConfig.getBoard_level_write() ne 'null' and empty sess_id}"> 
 				             	onclick="alert('권한이 없습니다.'); return false;" </c:if>
-				             	<c:if test="${boardConfig.getBoard_level_write() eq 'admin' and session_id ne 'admin' }">
+				             	<c:if test="${boardConfig.getBoard_level_write() eq 'admin' and sess_id ne 'admin' }">
 				             	onclick="alert('권한이 없습니다.'); return false;" </c:if>
 				             	>
 				             	<i class="fa fa-pencil mr-1"></i> 새로운 글쓰기</a>
