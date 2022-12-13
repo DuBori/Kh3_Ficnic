@@ -132,4 +132,13 @@ public class FicnicDAOImpl implements FicnicDAO {
         return this.sqlSession.selectList("adminFicnicPopSearchList", search_keyword);
     }
 
+
+    /* 리뷰 등록시 갯수 추가 수정 */
+	@Override
+	public void updateReviewCont(int ficnic_no) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("ficnic_no", ficnic_no);
+        this.sqlSession.update("adminFicnicUpdateReviewCont", map);
+	}
+
 }

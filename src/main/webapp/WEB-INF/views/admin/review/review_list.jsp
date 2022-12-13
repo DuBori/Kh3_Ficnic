@@ -142,7 +142,7 @@
     <div class="col-md-4 text-right mt-3">
         <c:choose>
         <c:when test="${!empty keyword}"><a href="${path}/admin/member/member_list.do" class="btn btn-outline-secondary"><i class="fa fa-list"></i> 회원 목록</a></c:when>
-        <c:otherwise><a href="${path}/admin/member/member_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 회원 추가</a></c:otherwise>
+        <c:otherwise><a href="${path}/admin/review/review_write.do" class="btn btn-primary"><i class="fa fa-plus"></i> 리뷰 추가</a></c:otherwise>
         </c:choose>
     </div>
 </div>

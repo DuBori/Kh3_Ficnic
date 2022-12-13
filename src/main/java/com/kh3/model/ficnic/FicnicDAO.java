@@ -47,5 +47,8 @@ public interface FicnicDAO {
 
     /* 피크닉 지정 검색 리스트 (임시) */
     public List<FicnicDTO> getFicnicPopList(String search_keyword);
+    
+    /* 리뷰 등록시 리뷰 갯수 수정 */
+	void updateReviewCont(int ficnic_no);
 
 }

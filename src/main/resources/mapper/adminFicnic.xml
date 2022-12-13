@@ -9,7 +9,7 @@
 
     <!-- 피크닉 목록 -->
     <select id="adminFicnicList" resultType="ficnicDTO">
-    	select * from ficnic_list order by ficnic_no desc
+    	select * from ficnic_list order by ficnic_date desc
     </select>
     
 
@@ -190,6 +190,14 @@
         order by ficnic_no desc
     </select>
 
+
+    <!-- 리뷰 등록시 리뷰 갯수 수정 -->
+    <update id="adminFicnicUpdateReviewCont" parameterType="java.util.Map">
+        <selectKey resultType="String" keyProperty="set_review_point" order="BEFORE">
+           select avg(nvl(review_point, 1)) from review_list where ficnic_no = #{ficnic_no}
+       </selectKey>
+        update ficnic_list set ficnic_review_point = #{set_review_point} where ficnic_no = #{ficnic_no}
+    </update>
 
 
 </mapper>
