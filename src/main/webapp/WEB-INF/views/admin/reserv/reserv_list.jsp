@@ -115,11 +115,10 @@
                         <thead>
                             <tr>
                                 <th style="width: 6.5%; min-width: 50px;" class="table-list-hide-mob">상태</th>
-                                <th style="width: 10%; min-width: 100px;">예약번호</th>
-                                <th style="width: 15%; min-width: 180px;" class="table-list-hide">상품기간/시간</th>
-                                <th>상품명</th>
-                                <th style="width: 10%; min-width: 180px;" class="table-list-hide">결제금액</th>
-                                <th style="width: 10%; min-width: 100px;" class="table-list-hide">예약자</th>
+                                <th style="width: 15%; min-width: 100px;">예약번호</th>
+                                <th>상품명/옵션</th>
+                                <th style="width: 15%; min-width: 180px;" class="table-list-hide">결제수단/결제금액</th>
+                                <th style="width: 15%; min-width: 100px;" class="table-list-hide">예약자</th>
                                 <th style="width: 13%; min-width: 120px;" class="table-list-hide-mob">예약일자</th>
                             </tr>
                         </thead>
@@ -143,21 +142,29 @@
                                     </c:choose>
                                 </td>
                                 <td ${showLink} class="py-4 table-list-hide-mob"><c:choose><c:when test="${search_no != ''}">${dto.getReserv_sess().replace(search_no, result_no)}</c:when><c:otherwise>${dto.getReserv_sess()}</c:otherwise></c:choose></td>
-                                <td ${showLink} class="eng table-list-hide-mob"><c:if test="${dto.getReserv_ficnic_date() != null}">${dto.getReserv_ficnic_date().substring(0,10)}<br /></c:if>(${dto.getReserv_ficnic_select_title() })</td>
                                 <td ${showLink}>
                                     <p><b><c:choose><c:when test="${search_name != ''}">${dto.getReserv_ficnic_name().replace(search_name, result_name)}</c:when><c:otherwise>${dto.getReserv_ficnic_name()}</c:otherwise></c:choose></b></p>
                                     <p class="eng">${dto.getReserv_ficnic_option_title()}</p>
                                 </td>
-                                <td ${showLink} class="eng table-list-hide"><fmt:formatNumber value="${dto.getReserv_total_price()}" /></td>
-                                <td ${showLink} class="eng table-list-hide"><c:choose><c:when test="${search_id != ''}">${dto.getReserv_name().replace(search_id, result_id)}</c:when><c:otherwise>${dto.getReserv_name()}</c:otherwise></c:choose></td>
-                                <td ${showLink} class="eng table-list-hide">${dto.getReserv_date()}</td>
+                                <td ${showLink} class="eng table-list-hide">
+                                <c:choose>
+                                <c:when test="${dto.getReserv_payment() eq 'naver'}">네이버페이</c:when>
+                                <c:when test="${dto.getReserv_payment() eq 'kakao'}">카카오페이</c:when>
+                                <c:when test="${dto.getReserv_payment() eq 'nobankbook'}">무통장 입금</c:when>
+                                <c:when test="${dto.getReserv_payment() eq 'toss'}">실시간 계좌이체</c:when>
+                                <c:otherwise>카드결제</c:otherwise>
+                                </c:choose><br>
+                                <fmt:formatNumber value="${dto.getReserv_total_price()}" />
+                                </td>
+                                <td ${showLink} class="eng table-list-hide"><c:choose><c:when test="${search_id != ''}">${dto.getReserv_name().replace(search_id, result_id)}</c:when><c:otherwise>${dto.getReserv_name()}</c:otherwise></c:choose><br>${dto.getMember_id() }</td>
+                                <td ${showLink} class="table-list-hide-mob">${dto.getReserv_date()}</td>
                             </tr>
                             </c:forEach>
                             </c:when>
 
                             <c:otherwise>
                             <tr>
-                                <td colspan="7" class="nodata">No Data</td>
+                                <td colspan="6" class="nodata">No Data</td>
                             </tr>
                             </c:otherwise>
                             </c:choose>

@@ -18,7 +18,7 @@ public interface FicnicDAO {
     FicnicDTO getFicnicCont(int no);
 
     /* 피크닉 수정 */
-    int modifyFicnic(FicnicDTO dto, List<String> upload_list);
+    int modifyFicnic(FicnicDTO dto);
 
     /* 피크닉 삭제 */
     int deleteFicnic(int no);
@@ -31,9 +31,6 @@ public interface FicnicDAO {
 
     /* 피크닉 검색 상품 개수 */
     int getListCount(Map<String, Object> map);
-
-    /* 피크닉 데이터 존재 위치 리스트 */
-    List<String> getFicnicLocationList();
 
     /* 쿠폰 상세 내역에서 상품 정보 찾기 */
     String checkFicnic(String string);

@@ -116,6 +116,13 @@
 		    <version>20160810</version>
 		</dependency>
 
+<!-- 메일 관련 api -->    
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.5</version>
+		</dependency>
+
 		<!-- jackson-databind -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
