@@ -336,7 +336,7 @@
                             <label>사진 3</label>
                             <div class="jf-input">
                                 <div class="row">
-                                    <div class="col pt-1 pb-2 pl-3"><img src="${path}${fdto.getFicnic_photo2()}" style="max-width: 100%;" alt="" /></div>
+                                    <div class="col pt-1 pb-2 pl-3"><img src="${path}${fdto.getFicnic_photo3()}" style="max-width: 100%;" alt="" /></div>
                                 </div>
                             </div>
                         </div>
