@@ -56,5 +56,15 @@
 	<update id="adminReviewSeq">
   		<![CDATA[update review_list set review_no = review_no - 1 where review_no > #{review_no}]]>
 	</update>
+	
+    <insert id="adminReviewWriteOk" parameterType="reviewDTO">
+        <selectKey resultType="int" keyProperty="review_no" order="BEFORE">
+            select max(review_no) from review_list
+        </selectKey>
+        insert into review_list values(#{review_no} + 1, #{ficnic_no},
+        #{review_point}, #{review_cont}, #{review_photo1}, #{review_photo2},
+        #{member_id}, #{review_pw}, #{review_name}, TO_DATE(#{review_date}, 'YYYY/MM/DD HH24:MI:SS'))
+    </insert>	
+	
 
 </mapper>
