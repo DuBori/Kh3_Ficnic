@@ -497,6 +497,12 @@ span.noimg {
 }
 
 
+@media (max-width: 520px) {
+    #header .navbar-header .d-name {
+        display: none;
+    }
+}
+
 
 
 /*************************/

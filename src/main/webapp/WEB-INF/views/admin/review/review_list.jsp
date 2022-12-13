@@ -93,15 +93,15 @@
 							<c:set var="result_writer" value="<span class=\"search\">${search_writer}</span>"></c:set>
                             <tr>
                                 <td ${showLink} class="py-4 table-list-hide">${dto.getReview_no()}</td>
-								<td class="photo" ${showLink}>
+								<td class="photo px-3" ${showLink}>
 				                    <c:choose>
 				                    <c:when test="${!empty dto.getReview_photo1() }"><img src="${path}${dto.getReview_photo1()}" alt="" /></c:when>
-				                    <c:otherwise><span class="noimg">no img</span></c:otherwise>
+				                    <c:otherwise><span class="noimg" style="height: 98px; padding-top: 42px;">no img</span></c:otherwise>
 				                    </c:choose>
 								</td>
-								<td ${showLink} class="px-3 table-list-hide"><c:choose><c:when test="${search_ficnic != ''}">${dto.getFicnic_name().replace(search_ficnic, result_ficnic)}</c:when><c:otherwise>${dto.getFicnic_name()}</c:otherwise></c:choose></td>
+								<td ${showLink} class="text-left table-list-hide"><c:choose><c:when test="${search_ficnic != ''}">${dto.getFicnic_name().replace(search_ficnic, result_ficnic)}</c:when><c:otherwise>${dto.getFicnic_name()}</c:otherwise></c:choose></td>
 								<td ${showLink} class="eng">${dto.review_point}</td>
-								<td ${showLink} class="px-2"><c:choose><c:when test="${dto.review_cont.length() > 30}">${dto.review_cont.substring(0,30)} ...</c:when><c:otherwise>${dto.review_cont}</c:otherwise></c:choose></td>
+								<td ${showLink} class="px-2"><c:choose><c:when test="${dto.review_cont.length() > 24}">${dto.review_cont.substring(0,24)} ...</c:when><c:otherwise>${dto.review_cont}</c:otherwise></c:choose></td>
 								<td ${showLink} class="table-list-hide">
                                     <p><b><c:choose><c:when test="${search_writer != ''}">${dto.getReview_name().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getReview_name()}</c:otherwise></c:choose></b></p>
                                     <p class="eng"><c:choose><c:when test="${search_writer != ''}">${dto.getMember_id().replace(search_writer, result_writer)}</c:when><c:otherwise>${dto.getMember_id()}</c:otherwise></c:choose></p>

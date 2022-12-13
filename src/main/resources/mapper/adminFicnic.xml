@@ -137,30 +137,43 @@
 	<!--검색 해당 피크닉 개수  -->
 	<select id="adminFicnicSearchCount" parameterType="map" resultType="int">		
 		select count(*) from ficnic_list where ficnic_no > 0
-        <if test="search_location != ''"> and ficnic_location like '%'|| #{search_location} || '%' </if>
-        <if test="search_category != ''"> and (substr(ficnic_category_no,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub1,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub2,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub3,1,2) = substr(#{search_category},0,2))</if>
-        <if test="search_name != ''"> and ficnic_name like '%' || #{search_name} || '%'</if>
+         <if test="search_location != ''"> and ficnic_location like '%'|| #{search_location} || '%' </if>
+         <if test="search_category != ''"> and (substr(ficnic_category_no,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub1,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub2,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub3,1,2) = substr(#{search_category},0,2))</if>
+         <if test="search_name != ''"> and ficnic_name like '%' || #{search_name} || '%'</if>
 	</select>
 	
 
 
-	<!-- 피크닉 검색 리스트  -->
-	<select id="adminFicnicSearchList" parameterType="map" resultType="ficnicDTO">
-		select * from(
-		              select
+	<!-- 피크닉 검색 리스트 -->
+    <resultMap id="ficnicListMap" type="ficnicDTO">
+        <result property="ficnic_category_no" column="ficnic_category_no" />
+        <collection property="ficnic_category_name" column="ficnic_category_no" select="adminFicnicListCategoryName" javaType="String" ofType="String" />
+    </resultMap>
+     
+    <select id="adminFicnicSearchList" parameterType="map" resultMap="ficnicListMap">
+        select * from(
+                      select
                             row_number() over(order by ficnic_no desc) rnum,
                             b.*
                       from (
                             select * from ficnic_list where ficnic_no > 0
-					        <if test="search_location != ''"> and ficnic_location like '%'|| #{search_location} || '%' </if>
-					        <if test="search_category != ''"> and (substr(ficnic_category_no,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub1,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub2,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub3,1,2) = substr(#{search_category},0,2))</if>
-					        <if test="search_name != ''"> and ficnic_name like '%' || #{search_name} || '%'</if>
+                            <if test="search_location != ''"> and ficnic_location like '%'|| #{search_location} || '%' </if>
+                            <if test="search_category != ''"> and (substr(ficnic_category_no,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub1,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub2,1,2) = substr(#{search_category},0,2) or substr(ficnic_category_sub3,1,2) = substr(#{search_category},0,2))</if>
+                            <if test="search_name != ''"> and ficnic_name like '%' || #{search_name} || '%'</if>
                       ) b
         )
         <![CDATA[
             where rnum >= #{startNo} and rnum <= #{endNo}
         ]]>
-	</select>
+    </select>
+
+    <select id="adminFicnicListCategoryName" resultType="String">
+        select substr(sys_connect_by_path(category_name, ' > '), 4)
+        from ficnic_category
+        where category_id = #{ficnic_category_no}
+        start with category_id_up = 'M'
+        connect by prior category_id = category_id_up
+    </select>
 
 
 
