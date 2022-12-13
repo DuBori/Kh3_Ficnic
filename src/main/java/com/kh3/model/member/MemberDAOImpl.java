@@ -6,10 +6,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.commons.mail.HtmlEmail;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
