@@ -112,9 +112,12 @@
                             <c:when test="${!empty flist}">
                             <c:forEach var="dto" items="${flist}">
                             <c:set var="showLink" value="onclick=\"popWindow('ficnic_view.do?no=${dto.getFicnic_no()}', '700', '900');\"" />
+                            <c:set var="result_location" value="<span class=\"search\">${search_location}</span>"></c:set>
+                            <c:set var="result_category" value="<span class=\"search\">${search_category}</span>"></c:set>
+                            <c:set var="result_name" value="<span class=\"search\">${search_name}</span>"></c:set>
                             <tr>
                                 <td ${showLink} class="py-4">${dto.getFicnic_no()}</td>
-                                <td ${showLink}>${dto.getFicnic_location()}</td>
+                                <td ${showLink}><c:choose><c:when test="${search_location != ''}">${dto.getFicnic_location().replace(search_location, result_location)}</c:when><c:otherwise>${dto.getFicnic_location()}</c:otherwise></c:choose></td>
                                 <td ${showLink} class="photo px-3" style="width: 120px;">
                                     <c:choose>
                                         <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" alt="" /></c:when>
@@ -126,8 +129,8 @@
                                     </c:choose>
                                 </td>
                                 <td ${showLink} class="text-left">
-                                    <p>[${dto.getFicnic_category_name()}]</p>
-                                    <p>${dto.getFicnic_name()}</p>
+                                    <p class="mb-1">[${dto.getFicnic_category_name()}]</p>
+                                    <p><b><c:choose><c:when test="${search_name != ''}">${dto.getFicnic_name().replace(search_name, result_name)}</c:when><c:otherwise>${dto.getFicnic_name()}</c:otherwise></c:choose></b></p>
                                 </td>
                                 <td ${showLink}>
                                     <p>

@@ -54,7 +54,7 @@ $(function() {
 						new_comment += "\t\t<p><b>"+get_comment_writer_name+"</b></p>\n";
 						new_comment += "\t\t<p class=\"eng\">("+get_member_id+")</p>\n";
 						new_comment += "\t</td>\n";
-						new_comment += "\t<td class=\"text-left pl-4\">"+get_comment_content+"</td>\n";
+						new_comment += "\t<td class=\"text-left pl-4\">"+get_comment_content.replace("\n", "<br />")+"</td>\n";
 						new_comment += "\t<td>\n";
 						new_comment += "\t<p class=\"eng\">"+year+"-"+month+"-"+day+"<br />"+hours+":"+minutes+":"+seconds+"</p>\n";
 						new_comment += "\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-1 px-1 py-0 deleteBtn\" name=\"comment_no\" value=\""+data+"\"><i class=\"fa fa-trash-o\"></i> 삭제</button>\n";
@@ -151,7 +151,7 @@ $(function() {
                                 <div class="row align-items-center">
                                 	<div class="col-auto pb-1 pr-0">
 					                    <c:choose>
-					                    <c:when test="${!empty fdto.getFicnic_photo1() }"><img src="${path}${fdto.getFicnic_photo1()}" alt="" /></c:when>
+					                    <c:when test="${!empty fdto.getFicnic_photo1() }"><img src="${path}${fdto.getFicnic_photo1()}" alt="" width="80" /></c:when>
 					                    <c:otherwise><span class="noimg">no img</span></c:otherwise>
 					                    </c:choose>
                                 	</div>
