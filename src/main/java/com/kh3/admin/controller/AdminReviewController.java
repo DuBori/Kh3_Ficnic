@@ -239,9 +239,9 @@ public class AdminReviewController {
 
         // 피크닉 평점 수정
         this.fdao.updateReviewPoint(dto.getFicnic_no());
-        // 피크닉 리뷰 갯수 수정
-        this.fdao.updateReviewCont(dto.getFicnic_no());
         if(check > 0){
+        	// 피크닉 리뷰 갯수 수정
+        	this.fdao.updateReviewCont(dto.getFicnic_no());
             out.println("<script>alert('리뷰가 등록되었습니다.'); location.href='review_list.do';</script>");
         }else{
             out.println("<script>alert('리뷰 등록에 실패했습니다.'); history.back();</script>");
