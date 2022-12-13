@@ -99,7 +99,7 @@
                                     <c:otherwise>상품</c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td ${showLink} class="eng"><c:choose><c:when test="${search_name != ''}">${dto.getCoupon_name().replace(search_name, result_name)}</c:when><c:otherwise>${dto.getCoupon_name()}</c:otherwise></c:choose></td>
+                                <td ${showLink}><c:choose><c:when test="${search_name != ''}">${dto.getCoupon_name().replace(search_name, result_name)}</c:when><c:otherwise>${dto.getCoupon_name()}</c:otherwise></c:choose></td>
                                 <td ${showLink} class="eng">
                                     <c:choose>
                                     <c:when test="${dto.getCoupon_price_type() eq 'price'}"><fmt:formatNumber value="${dto.getCoupon_price()}" />원</c:when>

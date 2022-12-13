@@ -18,7 +18,7 @@ public interface FicnicDAO {
     FicnicDTO getFicnicCont(int no);
 
     /* 피크닉 수정 */
-    int modifyFicnic(FicnicDTO dto, List<String> upload_list);
+    int modifyFicnic(FicnicDTO dto);
 
     /* 피크닉 삭제 */
     int deleteFicnic(int no);
