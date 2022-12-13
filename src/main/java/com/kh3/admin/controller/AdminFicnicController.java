@@ -114,12 +114,6 @@ public class AdminFicnicController {
 
 
 
-        List<HashMap<String, Object>> optionList = new ArrayList<HashMap<String, Object>>();
-        cnt = 0;
-        /* 앞단 보여질 option 처리 */
-        if (optionTitle != null && optionPrice != null) {          
-
-
         /* 앞단 보여질 option 처리 */
         List<HashMap<String, Object>> optionList = new ArrayList<HashMap<String, Object>>();
 
@@ -131,7 +125,6 @@ public class AdminFicnicController {
 
         if (optionTitle != null && optionPrice != null) {
             cnt = 0;
-
             for (String value : optionTitle) {
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("title", value);
@@ -155,9 +148,6 @@ public class AdminFicnicController {
         /* 앞단 보여질 select_option 처리 */
         List<HashMap<String, Object>> selectList = new ArrayList<HashMap<String, Object>>();
 
-        /* 앞단 보여질 option 처리 */
-        /* 앞단 보여질 select_option 처리 */
-        cnt = 0;
         String[] selectTitle = null;
         if (fdto.getFicnic_select_title() != null) selectTitle = fdto.getFicnic_select_title().split("★");
 
@@ -165,6 +155,7 @@ public class AdminFicnicController {
         if (fdto.getFicnic_select_price() != null) selectPrice = fdto.getFicnic_select_price().split("★");
 
         if (selectTitle != null && selectPrice != null) {
+            cnt = 0;
             for (String value : selectTitle) {
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("title", value);
@@ -183,16 +174,6 @@ public class AdminFicnicController {
             }
         }
 
-        /* 앞단 보여질 info 처리 */
-        String[] list = null;
-        if (fdto.getFicnic_info() != null)
-            list = fdto.getFicnic_info().split("★");
-        
-        List<HashMap<String, Object>> infoList = new ArrayList<HashMap<String, Object>>();
-        cnt = 0;
-        if (list != null) {    
-            for (String value : list) {
-                String[] valueList = value.split(",");
 
 
         /* 앞단 보여질 info 처리 */
