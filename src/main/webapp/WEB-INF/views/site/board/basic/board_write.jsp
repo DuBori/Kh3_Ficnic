@@ -84,16 +84,13 @@
 				 	<c:when test="${sess_id eq'admin'}">
 				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
 				 	</c:when>
-				 	<c:when test="${empty conf.getBoard_level_notice() and sess_id ne 'admin' }">
+				 	<c:when test="${conf.getBoard_level_notice() eq 'null' and sess_id ne 'admin' }">
 				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
 				 	</c:when>
 				 	<c:when test="${conf.getBoard_level_notice() eq 'user' and !empty sess_id}">
 				 		<input type="checkbox" value="Y" name="bdata_use_notice">공지사항
 				 	</c:when>
-				 	<c:otherwise>
-				 	
-				 	</c:otherwise>
-				 </c:choose>
+				 </c:choose> 
 				 
 				 	<c:if test="${!empty m and notice eq 'Y' }">
 				 		<input type="checkbox" value="Y" name="bdata_use_notice" checked="checked">공지사항
@@ -132,7 +129,7 @@
 					<c:otherwise>
 						<td>작성자 이름<input name="bdata_writer_name" required="required"><br>
 						작성자 비밀번호<input name="bdata_writer_pw" required="required">
-						<input type="hidden" name="bdata_writer_id" value="trash">
+						
 						</td>
 					</c:otherwise>
 				</c:choose>

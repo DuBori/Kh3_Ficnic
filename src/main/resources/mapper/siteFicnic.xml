@@ -30,9 +30,11 @@
 	                    b.*
 	                from (
 	                select * from ficnic_list where ficnic_no > 0
-					<if test="category_no !='' and subcategory_no ==''"> and ficnic_category_no in (select category_id from ficnic_category where category_id_up = #{category_no} or category_id = #{category_no} <if test="sub1 != ''">or category_id = #{sub1} </if><if test="sub2 != ''">or category_id = #{sub2} </if><if test="sub3 != ''">or category_id = #{sub3} </if> )</if>
-					<if test="category_no !='' and subcategory_no !=''"> and ficnic_category_no = #{subcategory_no}</if>
-					
+					<if test="category_no !='' and subcategory_no ==''"> and ficnic_category_no in (select category_id from ficnic_category where category_id_up = #{category_no}) or ficnic_category_no in (</if>
+					<if test="category_no !='' and subcategory_no !=''"> and ficnic_category_no = #{subcategory_no} or ficnic_category_no in( </if>
+					(select ficnic_category_sub1 from ficnic_list where ficnic_category_no = #{category_no})
+					,(select ficnic_category_sub2 from ficnic_list where ficnic_category_no = #{category_no})
+					,(select ficnic_category_sub3 from ficnic_list where ficnic_category_no = #{category_no}) ) 
 			)b
 			)
 			 <![CDATA[

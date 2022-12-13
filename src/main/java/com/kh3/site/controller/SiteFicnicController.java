@@ -66,7 +66,7 @@ public class SiteFicnicController {
     	
 		map.put("category_no", ficnic_category_no);
 		map.put("subcategory_no", ficnic_sub);
-	
+		
 		
 		totalRecord = fdao.getSiteListCount(map);
 
