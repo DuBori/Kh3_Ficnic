@@ -49,6 +49,7 @@ $(function(){
 	// 이메일 정규표현식
 	$("input[name='member_email']").keyup(function(){
         let userEmail = $(this).val();
+        console.log(userEmail);
         
         if(!mailJ.test($(this).val())) {
              $("#mailchk-txt").html("<span style=\"color:red\">이메일을 확인해주세요. :)</span>");

@@ -34,9 +34,9 @@
                         <div class="form-group col d-flex align-items-center">
                             <label>판매 가격</label>
                             <div class="px-3">
-                                <c:if test="${fdto.getFicnic_market_price() > 0}"><b class="eng text-secondary"><fmt:formatNumber value="${fdto.getFicnic_market_price()}" />원</b> <i class="fa fa-arrow-right mx-2"></i></c:if>
-                                <b class="eng text-primary"><fmt:formatNumber value="${fdto.getFicnic_sale_price()}" />원</b>
-                                <c:if test="${fdto.getFicnic_market_price() > 0}"><b class="eng text-danger ml-1">(<fmt:formatNumber value="${fdto.getFicnic_sale_price() / fdto.getFicnic_market_price()}" type="percent" /> 할인)</b></c:if>
+                                <c:if test="${fdto.getFicnic_market_price() > 0}"><b class="engnum text-secondary"><fmt:formatNumber value="${fdto.getFicnic_market_price()}" />원</b> <i class="fa fa-arrow-right mx-2"></i></c:if>
+                                <b class="engnum text-primary"><fmt:formatNumber value="${fdto.getFicnic_sale_price()}" />원</b>
+                                <c:if test="${fdto.getFicnic_market_price() > 0}"><b class="engnum text-danger ml-1">(<fmt:formatNumber value="${fdto.getFicnic_sale_price() / fdto.getFicnic_market_price()}" type="percent" /> 할인)</b></c:if>
                             </div>
                         </div>
 
