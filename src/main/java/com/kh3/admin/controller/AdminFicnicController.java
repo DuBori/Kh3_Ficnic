@@ -500,77 +500,155 @@ public class AdminFicnicController {
     // =====================================================================================
     @RequestMapping("admin/ficnic/ficnic_modify_ok.do")
     public void ficnicModifyOk(FicnicDTO dto, MultipartHttpServletRequest mRequest, HttpServletResponse response) throws Exception {
-        response.setContentType("text/html; charset=utf-8");
-        PrintWriter out = response.getWriter();
 
-        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
-        String ficnic_image1 = mRequest.getParameter("ori_ficnic_image1");
-        String ficnic_image2 = mRequest.getParameter("ori_ficnic_image2");
-        String ficnic_image3 = mRequest.getParameter("ori_ficnic_image3");
-        String ficnic_image4 = mRequest.getParameter("ori_ficnic_image4");
-        String ficnic_image5 = mRequest.getParameter("ori_ficnic_image5");
-
-        List<String> upload_list = UploadFile.fileUpload(mRequest, ficnicFolder, ficnicSaveName);
-
-        int cnt = 0;
-        for (int i = 0; i < upload_list.size(); i++) {
-            String check_photo = mRequest.getParameter("ori_ficnic_image" + (i + 1));
-            if (check_photo != null && upload_list.get(i) != "") {
-                File del_pimage = new File(mRequest.getSession().getServletContext().getRealPath(check_photo));
-                if (del_pimage.exists())
-                    del_pimage.delete();
+        /* 다중 카테고리 처리 */
+        String[] getCategorySub = null;
+        if(mRequest.getParameterValues("ficnic_category_sub[]") != null){
+            getCategorySub = mRequest.getParameterValues("ficnic_category_sub[]");
+            for(int i=0; i<getCategorySub.length; i++){
+                switch (i) {
+                case 0:
+                    dto.setFicnic_category_sub1(getCategorySub[i]);
+                    break;
+                case 1:
+                    dto.setFicnic_category_sub2(getCategorySub[i]);
+                    break;
+                case 2:
+                    dto.setFicnic_category_sub3(getCategorySub[i]);
+                    break;
+                default:
+                    break;
+                }
             }
         }
 
-        if (upload_list.get(0) != "")
-            ficnic_image1 = upload_list.get(0);
-        if (upload_list.get(1) != "")
-            ficnic_image2 = upload_list.get(1);
-        if (upload_list.get(2) != "")
-            ficnic_image3 = upload_list.get(2);
-        if (upload_list.get(3) != "")
-            ficnic_image4 = upload_list.get(3);
-        if (upload_list.get(4) != "")
-            ficnic_image5 = upload_list.get(4);
 
-        dto.setFicnic_photo1(ficnic_image1);
-        dto.setFicnic_photo2(ficnic_image2);
-        dto.setFicnic_photo3(ficnic_image3);
-        dto.setFicnic_photo4(ficnic_image4);
-        dto.setFicnic_photo5(ficnic_image5);
+        /* 선택 옵션 처리 */
+        String setOptionTitle = "";
+        String setOptionPrice = "";
+        if (dto.getFicnic_option_title() != null) {
+            String[] getOptionTitle = dto.getFicnic_option_title().split(",");
+            String[] getOptionPrice = dto.getFicnic_option_price().split(",");
+            for(int i=0; i<getOptionTitle.length; i++){
+                setOptionTitle += getOptionTitle[i] + "★";
+                if(Integer.parseInt(getOptionPrice[i]) > 0){
+                    setOptionPrice += getOptionPrice[i] + "★";
+                }else{
+                    setOptionPrice += "0★";
+                }
+            }
+        }
+        dto.setFicnic_option_title(setOptionTitle);
+        dto.setFicnic_option_price(setOptionPrice);
 
-        // 들어온 구분자 ',' 처리하기
-        if (dto.getFicnic_option_title() != null)
-            dto.setFicnic_option_title(dto.getFicnic_option_title().replace(",", "★"));
-        if (dto.getFicnic_option_price() != null)
-            dto.setFicnic_option_price(dto.getFicnic_option_price().replace(",", "★"));
-        if (dto.getFicnic_select_title() != null)
-            dto.setFicnic_select_title(dto.getFicnic_option_title().replace(",", "★"));
-        if (dto.getFicnic_select_price() != null)
-            dto.setFicnic_option_price(dto.getFicnic_option_price().replace(",", "★"));
-        String res = "";
 
-        /* 앞단 보여질 info 처리 */
+        /* 추가 선택 처리 */
+        String setSelectTitle = "";
+        String setSelectPrice = "";
+        if (dto.getFicnic_select_title() != null) {
+            String[] getSelectTitle = dto.getFicnic_select_title().split(",");
+            String[] getSelectPrice = dto.getFicnic_select_price().split(",");
+            for(int i=0; i<getSelectTitle.length; i++){
+                setSelectTitle += getSelectTitle[i] + "★";
+                if(Integer.parseInt(getSelectPrice[i]) > 0){
+                    setSelectPrice += getSelectPrice[i] + "★";
+                }else{
+                    setSelectPrice += "0★";
+                }
+            }
+        }
+        dto.setFicnic_select_title(setSelectTitle);
+        dto.setFicnic_select_price(setSelectPrice);
+
+
+        /* 피크닉 정보 처리 */
+        String setInfoData = "";
         if (dto.getFicnic_info() != null) {
-            String[] infoList = dto.getFicnic_info().split(",");
-            cnt = 0;
-            for (String info : infoList) {
+            String[] getInfoData = dto.getFicnic_info().split(",");
+
+            int cnt = 0;
+            for (String info : getInfoData) {
                 if (cnt % 2 == 0) {
-                    res += info + ",";
+                    setInfoData += info + "○";
                 } else {
-                    res += info;
-                    if (cnt != infoList.length - 1)
-                        res += "★";
+                    setInfoData += info;
+                    if (cnt != getInfoData.length - 1) setInfoData += "★";
                 }
                 cnt++;
             }
         }
+        dto.setFicnic_info(setInfoData);
 
-        dto.setFicnic_info(res);
 
-        if (this.dao.modifyFicnic(dto, upload_list) > 0) {
-            out.println(
-                    "<script>location.href='" + mRequest.getContextPath() + "/admin/ficnic/ficnic_list.do'</script>");
+        /* 피크닉 커리큘럼 처리 */
+        String setCurrData = "";
+        if (dto.getFicnic_curriculum() != null) {
+            String[] getCurr = dto.getFicnic_curriculum().split(",");
+
+            int cnt = 0;
+            for (String info : getCurr) {
+                if (cnt % 2 == 0) {
+                    setCurrData += info + "○";
+                } else {
+                    setCurrData += info;
+                    if (cnt != getCurr.length - 1) setCurrData += "★";
+                }
+                cnt++;
+            }
+        }
+        dto.setFicnic_curriculum(setCurrData);
+
+
+
+        String ficnic_image1 = mRequest.getParameter("ori_ficnic_photo1");
+        String ficnic_image2 = mRequest.getParameter("ori_ficnic_photo2");
+        String ficnic_image3 = mRequest.getParameter("ori_ficnic_photo3");
+        String ficnic_image4 = mRequest.getParameter("ori_ficnic_photo4");
+        String ficnic_image5 = mRequest.getParameter("ori_ficnic_photo5");
+
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        List<String> upload_list = UploadFile.fileUpload(mRequest, ficnicFolder, ficnicSaveName);
+        for(int i=0; i<upload_list.size(); i++){
+
+            // 기존 사진 있으면 삭제 처리
+            String check_photo = mRequest.getParameter("ori_ficnic_photo" + (i+1));
+            if (check_photo != null && upload_list.get(i) != "") {
+                File del_pimage = new File(mRequest.getSession().getServletContext().getRealPath(check_photo));
+                if(del_pimage.exists()) del_pimage.delete();
+            }
+
+            switch (i) {
+                case 0:
+                    if (upload_list.get(0) != "") ficnic_image1 = upload_list.get(0);
+                    dto.setFicnic_photo1(ficnic_image1);
+                    break;
+                case 1:
+                    if (upload_list.get(1) != "") ficnic_image2 = upload_list.get(1);
+                    dto.setFicnic_photo2(ficnic_image2);
+                    break;
+                case 2:
+                    if (upload_list.get(2) != "") ficnic_image3 = upload_list.get(2);
+                    dto.setFicnic_photo3(ficnic_image3);
+                    break;
+                case 3:
+                    if (upload_list.get(3) != "") ficnic_image4 = upload_list.get(3);
+                    dto.setFicnic_photo4(ficnic_image4);
+                    break;
+                case 4:
+                    if (upload_list.get(4) != "") ficnic_image5 = upload_list.get(4);
+                    dto.setFicnic_photo5(ficnic_image5);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
+
+        if (this.dao.modifyFicnic(dto) > 0) {
+            out.println("<script>location.href='" + mRequest.getContextPath() + "/admin/ficnic/ficnic_list.do'</script>");
         } else {
             out.println("<script>alert('피크닉 수정 실패'); history.back()</script>");
         }
