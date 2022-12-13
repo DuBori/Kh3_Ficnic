@@ -153,7 +153,6 @@ public class AdminMemberController {
     public void writeOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto, HttpServletResponse response) throws IOException {
     	response.setContentType("text/html; charset=UTF-8");
     	PrintWriter out = response.getWriter();
-		System.out.println("=============dto는111?" + dto);
     	// 비밀번호 일치 확인
     	if(!dto.getMember_pw().equals(dto.getMember_pw_re())) {
 			out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
@@ -181,9 +180,7 @@ public class AdminMemberController {
                 } 
 			}
     	}else {		// 이상 없을 때 실행
-    		System.out.println("=============dto는?" + dto);
     		int check = this.dao.writeOkMember(dto);
-    		System.out.println("============check는?" + check);
     		if (check > 0) {
     			// 회원 가입 포인트 적립
     			this.pdao.joinPoint(pdto);
