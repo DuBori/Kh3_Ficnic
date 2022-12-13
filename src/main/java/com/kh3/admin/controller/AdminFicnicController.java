@@ -58,10 +58,9 @@ public class AdminFicnicController {
     // =====================================================================================
     @RequestMapping("admin/ficnic/ficnic_list.do")
     public String ficnicList(
-            @RequestParam(value = "finic_category_no", required = false, defaultValue = "") String finic_category_no,
-            @RequestParam(value = "ficnic_location", required = false, defaultValue = "") String ficnic_location,
-            @RequestParam(value = "ficnic_address", required = false, defaultValue = "") String ficnic_address,
-            @RequestParam(value = "ficnic_name", required = false, defaultValue = "") String ficnic_name,
+            @RequestParam(value = "search_location", required = false, defaultValue = "") String search_location,
+            @RequestParam(value = "search_category", required = false, defaultValue = "") String search_category,
+            @RequestParam(value = "search_name", required = false, defaultValue = "") String search_name,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page, Model model,
             HttpServletRequest request) {
 
@@ -69,18 +68,16 @@ public class AdminFicnicController {
 
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("category_no", finic_category_no);
-        map.put("location", ficnic_location);
-        map.put("addr", ficnic_address);
-        map.put("name", ficnic_name);
+        map.put("search_location", search_location);
+        map.put("search_category", search_category);
+        map.put("search_name", search_name);
 
         totalRecord = dao.getListCount(map);
 
         PageDTO dto = new PageDTO(page, rowsize, totalRecord, map);
 
         // 페이지 이동 URL
-        String pageUrl = request.getContextPath() + "/admin/ficnic/ficnic_list.do?category_no=" + finic_category_no
-                + "&location=" + ficnic_location + "&name" + ficnic_name;
+        String pageUrl = request.getContextPath() + "/admin/ficnic/ficnic_list.do?search_location=" + search_location + "&search_category=" + search_category + "&search_name=" + search_name;
 
         List<FicnicDTO> fList = dao.getFicnicList(dto.getStartNo(), dto.getEndNo(), map);
 
@@ -90,11 +87,10 @@ public class AdminFicnicController {
         model.addAttribute("paging", dto);
         model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 
-        model.addAttribute("category_no", finic_category_no);
+        model.addAttribute("search_location", search_location);
+        model.addAttribute("search_category", search_category);
+        model.addAttribute("search_name", search_name);
         model.addAttribute("page", page);
-        model.addAttribute("location", ficnic_location);
-        model.addAttribute("addr", ficnic_address);
-        model.addAttribute("name", ficnic_name);
 
         return "admin/ficnic/ficnic_list";
     }
