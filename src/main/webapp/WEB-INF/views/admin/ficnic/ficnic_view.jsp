@@ -204,6 +204,7 @@
                         <div class="w-100"></div>
                         </c:if>
 
+                        <c:if test="${!empty fdto.getFicnic_etc()}">
                         <div class="form-group join-form">
                             <label>기타사항</label>
                             <div class="jf-input">
@@ -214,6 +215,7 @@
                         </div>
 
                         <div class="w-100 border-bottom mt-2"></div>
+                        </c:if>
 
                         <div class="form-group col d-flex align-items-center">
                             <label>진행 지역</label>
