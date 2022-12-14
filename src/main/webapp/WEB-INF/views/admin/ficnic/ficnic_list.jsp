@@ -97,13 +97,13 @@
                     <table class="table-list hover mb-2">
                         <thead>
                             <tr>
-                                <th style="width: 70px;">No.</th>
-                                <th style="width: 100px;" class="table-list-hide">진행지역</th>
+                                <th style="width: 6.35%; min-width: 70px;">No.</th>
+                                <th style="width: 9%; min-width: 100px;" class="table-list-hide">진행지역</th>
                                 <th colspan="2">피크닉 이름</th>
-                                <th style="width: 200px;" class="table-list-hide-mob">판매가격</th>
-                                <th style="width: 110px;" class="table-list-hide-mob">리뷰</th>
-                                <th style="width: 80px;" class="table-list-hide">판매갯수</th>
-                                <th style="width: 110px;">기능</th>
+                                <th style="width: 18%; min-width: 200px;" class="table-list-hide-mob">판매가격</th>
+                                <th style="width: 10%; min-width: 110px;" class="table-list-hide-mob">리뷰</th>
+                                <th style="width: 7.25%; min-width: 80px;" class="table-list-hide">판매갯수</th>
+                                <th style="width: 10%; min-width: 110px;">기능</th>
                             </tr>
                         </thead>
 

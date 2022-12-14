@@ -65,7 +65,6 @@ insert into ficnic_category values(8, 'Y', '07000000', 1, 'M', 7, '자기계발'
 insert into ficnic_category values(9, 'Y', '08000000', 1, 'M', 8, '온라인', null);
 insert into ficnic_category values(10, 'Y', '09000000', 1, 'M', 9, '뷰티', null);
 insert into ficnic_category values(11, 'Y', '10000000', 1, 'M', 10, '모임', null);
-insert into ficnic_category values(12, 'Y', '11000000', 1, 'M', 11, '스토어', null);
 insert into ficnic_category values(13, 'Y', '12000000', 1, 'M', 12, '심리·상담', null);
 insert into ficnic_category values(14, 'Y', '13000000', 1, 'M', 13, '수상레포츠', null);
 insert into ficnic_category values(15, 'Y', '14000000', 1, 'M', 14, '음료', null);

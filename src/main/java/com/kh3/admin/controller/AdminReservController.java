@@ -22,15 +22,15 @@ import com.kh3.model.reserv.ReservDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
 
-
 @Controller
 public class AdminReservController {
 
     @Autowired
     private ReservDAO dao;
-    
+
     @Autowired
     private MemberDAO mdao;
+
 
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
@@ -40,28 +40,21 @@ public class AdminReservController {
 
 
 
-    // 예약 전체리스트 메핑
+
+    // =====================================================================================
+    // 예약 목록 페이지
+    // =====================================================================================
     @RequestMapping("admin/reserv/reserv_list.do")
-    public String list(HttpServletRequest request, Model model) {
-        // 검색 처리
-        String search_type = request.getParameter("search_type");
-        if (search_type == null) search_type = "";
+    public String list(
+            @RequestParam(value = "search_type", required = false, defaultValue = "") String search_type,
+            @RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
+            @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate,
+            @RequestParam(value = "search_no", required = false, defaultValue = "") String search_no,
+            @RequestParam(value = "search_id", required = false, defaultValue = "") String search_id,
+            @RequestParam(value = "search_name", required = false, defaultValue = "") String search_name,
+            HttpServletRequest request, Model model) {
 
-        String startDate = request.getParameter("startDate");
-        if (startDate == null) startDate = "";
-
-        String endDate = request.getParameter("endDate");
-        if (endDate == null) endDate = "";
-
-        String search_no = request.getParameter("search_no");
-        if (search_no == null) search_no = "";
-
-        String search_id = request.getParameter("search_id");
-        if (search_id == null) search_id = "";
-        
-        String search_name = request.getParameter("search_name");
-        if (search_name == null) search_name = "";
-        
+        // 검색 설정
         Map<String, Object> searchMap = new HashMap<String, Object>();
         searchMap.put("search_type", search_type);
         searchMap.put("startDate", startDate);
@@ -70,7 +63,6 @@ public class AdminReservController {
         searchMap.put("search_id", search_id);
         searchMap.put("search_name", search_name);
 
-
         // 페이징 처리
         int page; // 현재 페이지 변수
         if (request.getParameter("page") != null && request.getParameter("page") != "") {
@@ -78,13 +70,15 @@ public class AdminReservController {
         } else {
             page = 1;
         }
-        totalRecord = this.dao.getReservCount(searchMap);	// 총갯수
+        totalRecord = this.dao.getReservCount(searchMap); // 총갯수
 
         // 페이징 DTO
         PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
         // 페이지 이동 URL
-        String pageUrl = request.getContextPath() + "/admin/reserv/reserv_list.do?search_type="+search_type+"&startDate="+startDate+"&endDate="+endDate+"&search_no="+search_no+"&search_id="+search_id+"&search_name="+search_name;
+        String pageUrl = request.getContextPath() + "/admin/reserv/reserv_list.do?search_type=" + search_type
+                + "&startDate=" + startDate + "&endDate=" + endDate + "&search_no=" + search_no + "&search_id="
+                + search_id + "&search_name=" + search_name;
 
         List<ReservDTO> list = this.dao.getReservList(dto.getStartNo(), dto.getEndNo(), searchMap);
         model.addAttribute("List", list);
@@ -93,8 +87,7 @@ public class AdminReservController {
         String startDay = startNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate endNowDate = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()); // 오늘로부터 30일후 까지
         String endDay = endNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        
-        
+
         model.addAttribute("startDay", startDay);
         model.addAttribute("endDay", endDay);
         model.addAttribute("totalCount", totalRecord);
@@ -112,22 +105,20 @@ public class AdminReservController {
 
 
 
+
+
+    // =====================================================================================
     // 예약 상세내역 메핑
+    // =====================================================================================
     @RequestMapping("admin/reserv/reserv_view.do")
-    public String view(Model model, @RequestParam("no") int no, @RequestParam("id") String id) {
-    	
-    	System.out.println("여기 ====== "+no);
+    public String view(@RequestParam("no") int no, @RequestParam("id") String id, Model model) {
         ReservDTO dto = this.dao.getReservView(no);
-        
-        System.out.println("여기 ====== "+id);
         MemberDTO mdto = this.mdao.getReservMember(id);
-        
+
         model.addAttribute("dto", dto);
         model.addAttribute("mdto", mdto);
 
-        
         return "admin/reserv/reserv_view";
     }
-    
-    
+
 }
