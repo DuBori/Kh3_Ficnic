@@ -17,15 +17,24 @@
                 <div class="card-body p-4">
                     <h4>예약 정보</h4>
                     <div class="row form">
-                        <div class="form-group col d-flex align-items-center">
-                            <label>상태</label>
-                            <div class="px-3">
-                                <c:choose>
-                                    <c:when test="${dto.getReserv_status() eq 'reserv'}"><span class="text-info">신청</span></c:when>
-                                    <c:when test="${dto.getReserv_status() eq 'confirm'}"><span class="text-primary">예약확정</span></c:when>
-                                    <c:when test="${dto.getReserv_status() eq 'done'}"><span class="text-secondary">체험완료</span></c:when>
-                                    <c:otherwise><span class="text-danger">예약취소</span></c:otherwise>
-                                </c:choose>
+                        <div class="form-group join-form">
+                            <label style="padding-top: 22px;">예약 상태</label>
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2">
+                                        <form name="form_status" method="post" action="${path}/admin/reserv/reserv_status_ok.do" onsubmit="return confirm('예약 상태를 변경하시겠습니까?');">
+                                        <input type="hidden" name="reserv_no" value="${dto.getReserv_no()}" />
+                                        <input type="hidden" name="reserv_sess" value="${dto.getReserv_sess()}" />
+                                        <select name="reserv_status" class="custom-select w-auto mr-2">
+                                            <option value="reserv" class="text-info"<c:if test="${dto.getReserv_status() eq 'reserv'}"> selected="selected"</c:if>>체험신청</option>
+                                            <option value="confirm" class="text-primary"<c:if test="${dto.getReserv_status() eq 'confirm'}"> selected="selected"</c:if>>예약확정</option>
+                                            <option value="done" class="text-secondary"<c:if test="${dto.getReserv_status() eq 'done'}"> selected="selected"</c:if>>체험완료</option>
+                                            <option value="cancel" class="text-danger"<c:if test="${dto.getReserv_status() eq 'cancel'}"> selected="selected"</c:if>>예약취소</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-outline-primary"><i class="fa fa-refresh"></i> 상태 변경</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -121,7 +130,10 @@
                         <c:if test="${dto.getReserv_ficnic_date() != null}">
                         <div class="form-group col d-flex align-items-center">
                             <label>피크닉 날짜</label>
-                            <div class="px-3 engnum">${dto.getReserv_ficnic_date()}</div>
+                            <div class="px-3 engnum">
+                                ${dto.getReserv_ficnic_date().substring(0, 10)}
+                                <button type="button" class="btn btn-sm btn-outline-info ml-2" data-toggle="modal" data-target="#modalFicnicDate"><i class="fa fa-calendar"></i> 날짜 변경</button>
+                            </div>
                         </div> 
 
                         <div class="w-100"></div>
@@ -210,6 +222,41 @@
     <button type="button" class="btn btn-outline-secondary" onclick="window.print();"><i class="fa fa-print"></i> 인쇄하기</button>
     <button type="button" class="btn btn-secondary ml-2" onclick="window.close();"><i class="fa fa-times"></i> 창닫기</button>
 </div>
+
+
+
+<c:if test="${dto.getReserv_ficnic_date() != null}">
+<style type="text/css">#ui-datepicker-div { z-index: 1051 !important; }</style>
+<!-- 피크닉 날짜 변경 //START -->
+<div class="modal fade" id="modalFicnicDate" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-exclamation"></i> 피크닉 날짜 변경</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body py-5 text-center">
+                <form name="form_ficnicdate" method="post" action="${path}/admin/reserv/reserv_date_ok.do" onsubmit="return confirm('피크닉 날짜를 변경하시겠습니까?');">
+                <input type="hidden" name="reserv_no" value="${dto.getReserv_no()}" />
+                <input type="hidden" name="reserv_sess" value="${dto.getReserv_sess()}" />
+                <div class="row justify-content-center">
+                    <div class="col-sm-6 mb-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-calendar mr-1"></i> 변경일자</span>
+                            </div>
+                            <input type="text" name="ficnic_date" value="${dto.getReserv_ficnic_date().substring(0, 10)}" id="startDt" class="form-control text-center eng" />
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-info"><i class="fa fa-save"></i> 변경하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 피크닉 날짜 변경 //END -->
+</c:if>
 
 
 

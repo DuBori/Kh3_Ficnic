@@ -16,4 +16,12 @@ public interface ReservDAO {
     // 예약 상세 내역
     ReservDTO getReservView(int reserv_no, String reserv_sess);
 
+
+    // 예약 상태 변경
+    int modifyReservStatus(int reserv_no, String reserv_sess, String reserv_status);
+
+
+    // 예약 피크닉 날짜 변경
+    int modifyReservFicnicDate(int reserv_no, String reserv_sess, String ficnic_date);
+
 }

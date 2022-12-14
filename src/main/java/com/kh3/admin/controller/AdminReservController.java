@@ -1,5 +1,7 @@
 package com.kh3.admin.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh3.model.member.MemberDAO;
-import com.kh3.model.member.MemberDTO;
 import com.kh3.model.reserv.ReservDAO;
 import com.kh3.model.reserv.ReservDTO;
 import com.kh3.util.PageDTO;
@@ -27,9 +28,6 @@ public class AdminReservController {
 
     @Autowired
     private ReservDAO dao;
-
-    @Autowired
-    private MemberDAO mdao;
 
 
     // 한 페이지당 보여질 게시물의 수
@@ -110,7 +108,7 @@ public class AdminReservController {
 
 
     // =====================================================================================
-    // 예약 상세내역 메핑
+    // 예약 상세 보기
     // =====================================================================================
     @RequestMapping("admin/reserv/reserv_view.do")
     public String view(@RequestParam("no") int no, @RequestParam("sess") String sess, Model model) {
@@ -119,6 +117,54 @@ public class AdminReservController {
         model.addAttribute("dto", dto);
 
         return "admin/reserv/reserv_view";
+    }
+
+
+
+
+
+    // =====================================================================================
+    // 예약 상태 변경 처리
+    // =====================================================================================
+    @RequestMapping("admin/reserv/reserv_status_ok.do")
+    public void modify_status_ok(
+                HttpServletResponse response,
+                @RequestParam("reserv_no") int reserv_no,
+                @RequestParam("reserv_sess") String reserv_sess,
+                @RequestParam("reserv_status") String reserv_status) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int result = this.dao.modifyReservStatus(reserv_no, reserv_sess, reserv_status);
+        if(result > 0) {
+            out.println("<script>location.href='reserv_view.do?no=" + reserv_no + "&sess=" + reserv_sess + "';</script>");
+        }else{
+            out.println("<script>alert('예약 상태 변경 중 에러가 발생하였습니다.'); history.back();</script>");
+        }
+    }
+
+
+
+
+
+    // =====================================================================================
+    // 예약 피크닉 날짜 변경 처리
+    // =====================================================================================
+    @RequestMapping("admin/reserv/reserv_date_ok.do")
+    public void modify_date_ok(
+                HttpServletResponse response,
+                @RequestParam("reserv_no") int reserv_no,
+                @RequestParam("reserv_sess") String reserv_sess,
+                @RequestParam("ficnic_date") String ficnic_date) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        int result = this.dao.modifyReservFicnicDate(reserv_no, reserv_sess, ficnic_date);
+        if(result > 0) {
+            out.println("<script>location.href='reserv_view.do?no=" + reserv_no + "&sess=" + reserv_sess + "';</script>");
+        }else{
+            out.println("<script>alert('예약 피크닉 날짜 변경 중 에러가 발생하였습니다.'); history.back();</script>");
+        }
     }
 
 }
