@@ -17,7 +17,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 
 
-    // 카테고리 목록
+    // 카테고리 목록 (관리자)
     @Override
     public List<CategoryDTO> getCategoryList() {
         return this.sqlSession.selectList("adminCategoryList");
@@ -142,12 +142,21 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 
 
-///////////////////////////////////////////////////////////////////////////////////
-	
+
+	///////////////////////////////////////////////////////////////////////////////////
+
+
+
+    // 카테고리 목록 (사이트)
+    @Override
+    public List<CategoryDTO> getSiteCategoryList() {
+        return this.sqlSession.selectList("siteCategoryList");
+    }
+
+
 
 	@Override
 	public List<String> getChildList(String ficnic_category_no) {
-		
 		return this.sqlSession.selectList("SiteFicnicChildCategory", ficnic_category_no);
 	}
 
@@ -155,7 +164,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public String getCategoryName(String ficnic_name) {
-		// TODO Auto-generated method stub
 		return this.sqlSession.selectOne("siteFicnicName",ficnic_name);
 	}
 

@@ -85,7 +85,7 @@
                 </form>
 
                 <ul class="navmenu">
-                    <li><a href="${path}/ficnic/category_list.do"><i class="icon-list"></i><p>카테고리</p></a></li>
+                    <li><a href="${path}/ficnic/ficnic_category.do"><i class="icon-list"></i><p>카테고리</p></a></li>
                     <c:choose>
                         <c:when test="${!empty sess_id}">
                             <li><a href="#"><i class="icon-heart"></i><p>위시리스트</p></a></li>

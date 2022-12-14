@@ -8,7 +8,16 @@
 <mapper namespace="categoryDAO">
 
     <!-- 카테고리 목록 -->
-    <select id="siteCategoryList" resultType="categoryDTO">
+    <resultMap id="siteCateListMap" type="categoryDTO">
+        <result property="category_id" column="category_id" />
+        <collection property="sub_category" column="category_id" select="siteCategoryListSub" javaType="java.util.ArrayList" ofType="categoryDTO" />
+    </resultMap>
+     
+    <select id="siteCategoryList" resultMap="siteCateListMap">
+        select * from ficnic_category where category_depth > 0 and category_id_up = 'M' and category_show = 'Y' order by category_rank asc
+    </select>
+    <select id="siteCategoryListSub" resultType="categoryDTO">
+        select * from ficnic_category where category_depth = '2' and category_id_up = #{category_id} order by category_rank asc
     </select>
 
 

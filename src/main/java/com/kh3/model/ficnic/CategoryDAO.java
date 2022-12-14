@@ -6,6 +6,8 @@ public interface CategoryDAO {
 
     List<CategoryDTO> getCategoryList();
 
+    List<CategoryDTO> getSiteCategoryList();
+
     void setCategoryRank(String cateid, int rank);
 
     int addCategory(String ps_ctid, String category_show, String category_name, String category_image);
