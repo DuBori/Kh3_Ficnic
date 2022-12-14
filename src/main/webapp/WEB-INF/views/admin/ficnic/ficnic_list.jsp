@@ -97,11 +97,11 @@
                     <table class="table-list hover mb-2">
                         <thead>
                             <tr>
-                                <th style="width: 6.35%; min-width: 70px;">No.</th>
+                                <th style="width: 6.35%; min-width: 70px;" class="table-list-hide-mob">No.</th>
                                 <th style="width: 9%; min-width: 100px;" class="table-list-hide">진행지역</th>
                                 <th colspan="2">피크닉 이름</th>
                                 <th style="width: 18%; min-width: 200px;" class="table-list-hide-mob">판매가격</th>
-                                <th style="width: 10%; min-width: 110px;" class="table-list-hide-mob">리뷰</th>
+                                <th style="width: 10%; min-width: 110px;" class="table-list-hide">리뷰</th>
                                 <th style="width: 7.25%; min-width: 80px;" class="table-list-hide">판매갯수</th>
                                 <th style="width: 10%; min-width: 110px;">기능</th>
                             </tr>
@@ -116,8 +116,8 @@
                             <c:set var="result_category" value="<span class=\"search\">${search_category}</span>"></c:set>
                             <c:set var="result_name" value="<span class=\"search\">${search_name}</span>"></c:set>
                             <tr>
-                                <td ${showLink} class="py-4">${dto.getFicnic_no()}</td>
-                                <td ${showLink}><c:choose><c:when test="${search_location != ''}">${dto.getFicnic_location().replace(search_location, result_location)}</c:when><c:otherwise>${dto.getFicnic_location()}</c:otherwise></c:choose></td>
+                                <td ${showLink} class="py-4 table-list-hide-mob">${dto.getFicnic_no()}</td>
+                                <td ${showLink} class="table-list-hide"><c:choose><c:when test="${search_location != ''}">${dto.getFicnic_location().replace(search_location, result_location)}</c:when><c:otherwise>${dto.getFicnic_location()}</c:otherwise></c:choose></td>
                                 <td ${showLink} class="photo px-3" style="width: 120px;">
                                     <c:choose>
                                         <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" alt="" /></c:when>
@@ -132,14 +132,14 @@
                                     <p class="mb-1">[${dto.getFicnic_category_name()}]</p>
                                     <p><b><c:choose><c:when test="${search_name != ''}">${dto.getFicnic_name().replace(search_name, result_name)}</c:when><c:otherwise>${dto.getFicnic_name()}</c:otherwise></c:choose></b></p>
                                 </td>
-                                <td ${showLink}>
+                                <td ${showLink} class="table-list-hide-mob">
                                     <p>
                                         <c:if test="${dto.getFicnic_market_price() > 0}"><span class="text-secondary"><b class="eng"><fmt:formatNumber value="${dto.getFicnic_market_price()}" /></b>원</span> <i class="fa fa-arrow-right mx-1"></i></c:if>
                                         <span class="text-primary"><b class="eng"><fmt:formatNumber value="${dto.getFicnic_sale_price()}" /></b>원</span>
                                     </p>
                                     <c:if test="${dto.getFicnic_market_price() > 0}"><p class="text-danger">(<b class="eng"><fmt:formatNumber value="${dto.getFicnic_sale_price() / dto.getFicnic_market_price()}" type="percent" /></b> 할인)</p></c:if>
                                 </td>
-                                <td ${showLink} class="table-list-hide-mob eng">
+                                <td ${showLink} class="table-list-hide eng">
                                     <p><fmt:formatNumber value="${dto.getFicnic_review_point()}" pattern="0.0" />점</p>
                                     <p>(<fmt:formatNumber value="${dto.getFicnic_review_count()}" />개)</p>
                                 </td>
