@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +41,7 @@ public class AdminMemberController {
     @Autowired
     private McouponDAO cdao;
 
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
@@ -180,6 +182,9 @@ public class AdminMemberController {
             out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
         }
 
+        // 암호화 설정
+        dto.setMember_pw(passwordEncoder.encode(dto.getMember_pw()));
+
         // 유효성 검사
         if (result.hasErrors()) {
             List<ObjectError> list = result.getAllErrors();
@@ -254,8 +259,9 @@ public class AdminMemberController {
             out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
 
         } else if (member_pw.length() > 0) {
-            // 새로운 비밀번호로 수정
-            dto.setMember_pw(member_pw);
+        	
+        	// 새로운 비밀번호로 수정,  암호화 설정
+            dto.setMember_pw(passwordEncoder.encode(member_pw));
 
             // 유효성 검사
             if (result.hasErrors()) {
