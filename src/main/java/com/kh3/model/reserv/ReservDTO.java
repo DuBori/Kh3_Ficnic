@@ -25,6 +25,8 @@ public class ReservDTO {
 	private String reserv_with;
 	private String member_id;
 	private String reserv_name;
+	private String reserv_phone;
+	private String reserv_email;
 	private String reserv_date;
 	
 }
