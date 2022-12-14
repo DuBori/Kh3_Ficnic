@@ -27,14 +27,14 @@
                                 <div class="col-md-4 mb-2">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <label class="input-group-text" for="search_type">예약상태</label>
+                                            <label class="input-group-text" for="search_status">예약상태</label>
                                         </div>
-                                        <select id="search_type" name="search_type" class="custom-select">
+                                        <select id="search_status" name="search_status" class="custom-select">
                                             <option value="">- 전체보기 -</option>
-                                            <option value="reserv"<c:if test="${search_type eq 'reserv'}"> selected="selected"</c:if>>신청</option>
-                                            <option value="confirm"<c:if test="${search_type eq 'confirm'}"> selected="selected"</c:if>>예약확정</option>
-                                            <option value="done"<c:if test="${search_type eq 'done'}"> selected="selected"</c:if>>체험완료</option>
-                                            <option value="cancel"<c:if test="${search_type eq 'cancel'}"> selected="selected"</c:if>>예약취소</option>
+                                            <option value="reserv"<c:if test="${search_status eq 'reserv'}"> selected="selected"</c:if>>신청</option>
+                                            <option value="confirm"<c:if test="${search_status eq 'confirm'}"> selected="selected"</c:if>>예약확정</option>
+                                            <option value="done"<c:if test="${search_status eq 'done'}"> selected="selected"</c:if>>체험완료</option>
+                                            <option value="cancel"<c:if test="${search_status eq 'cancel'}"> selected="selected"</c:if>>예약취소</option>
                                         </select>
                                     </div>
                                 </div>
@@ -42,17 +42,17 @@
                                 <div class="col-md-4 mb-2">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fa fa-calendar mr-1"></i> 예약일</span>
+                                            <span class="input-group-text"><i class="fa fa-calendar mr-1"></i> 예약일자</span>
                                         </div>
-                                        <input type="text" name="startDate" value="${startDay}" id="startDt" class="form-control text-center eng" />
+                                        <input type="text" name="search_date_start" value="${search_date_start}" id="startDt" class="form-control text-center eng" />
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                         <span class="input-group-text"><i class="fa fa-calendar mr-1"></i> 예약일</span>
+                                         <span class="input-group-text"><i class="fa fa-calendar mr-1"></i> 예약일자</span>
                                         </div>
-                                        <input type="text" name="endDate" value="${endDay}" id="endDt" class="form-control text-center eng" />
+                                        <input type="text" name="search_date_end" value="${search_date_end}" id="endDt" class="form-control text-center eng" />
                                     </div>
                                 </div>
                             </div>
@@ -67,27 +67,27 @@
                                 <div class="col-md-4 mb-2">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <label class="input-group-text" for="search_name">예약번호</label>
+                                            <label class="input-group-text" for="search_sess">예약번호</label>
                                         </div>
-                                        <input type="text" id="search_no" name="search_no" value="${search_no}" class="form-control">
+                                        <input type="text" id="search_sess" name="search_sess" value="${search_sess}" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4 mb-2">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <label class="input-group-text" for="search_id">피크닉 이름</label>
+                                            <label class="input-group-text" for="search_ficnic">피크닉 이름</label>
+                                        </div>
+                                        <input type="text" id="search_ficnic" name="search_ficnic" value="${search_ficnic}" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-2">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="search_name">예약자 이름</label>
                                         </div>
                                         <input type="text" id="search_name" name="search_name" value="${search_name}" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 mb-2">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <label class="input-group-text" for="search_id">예약자 이름</label>
-                                        </div>
-                                        <input type="text" id="search_id" name="search_id" value="${search_id}" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -113,12 +113,13 @@
                     <table class="table-list hover mb-2">
                         <thead>
                             <tr>
-                                <th style="width: 6.5%; min-width: 50px;" class="table-list-hide-mob">상태</th>
-                                <th style="width: 15%; min-width: 100px;">예약번호</th>
-                                <th>상품명/옵션</th>
-                                <th style="width: 15%; min-width: 180px;" class="table-list-hide">결제수단/결제금액</th>
-                                <th style="width: 15%; min-width: 100px;" class="table-list-hide">예약자</th>
-                                <th style="width: 13%; min-width: 120px;" class="table-list-hide-mob">예약일자</th>
+                                <th style="width: 110px;" class="table-list-hide-mob">예약상태</th>
+                                <th style="width: 120px;">예약번호</th>
+                                <th colspan="2">피크닉</th>
+                                <th style="width: 130px;" class="table-list-hide">결제금액</th>
+                                <th style="width: 100px;" class="table-list-hide">예약자</th>
+                                <th style="width: 110px;" class="table-list-hide-mob">예약일자</th>
+                                <th style="width: 70px;">기능</th>
                             </tr>
                         </thead>
 
@@ -126,44 +127,54 @@
                             <c:set var="list" value="${List}" />
                             <c:choose>
                             <c:when test="${!empty list}">
-                            <c:forEach items="${list}" var="dto">
-                            <c:set var="showLink" value="onclick=\"popWindow('reserv_view.do?no=${dto.getReserv_no()}&id=${dto.getMember_id()}', '700', '900');\"" />
-                            <c:set var="result_no" value="<span class=\"search\">${search_no}</span>"></c:set>
-                            <c:set var="result_id" value="<span class=\"search\">${search_id}</span>"></c:set>
+                            <c:forEach var="dto" items="${list}">
+                            <c:set var="showLink" value="onclick=\"popWindow('reserv_view.do?no=${dto.getReserv_no()}&sess=${dto.getReserv_sess()}', '700', '900');\"" />
+                            <c:set var="result_sess" value="<span class=\"search\">${search_sess}</span>"></c:set>
                             <c:set var="result_name" value="<span class=\"search\">${search_name}</span>"></c:set>
+                            <c:set var="result_ficnic" value="<span class=\"search\">${search_ficnic}</span>"></c:set>
                             <tr>
-                                <td ${showLink}>
+                                <td ${showLink} class="py-5">
                                     <c:choose>
-                                    <c:when test="${dto.getReserv_status() eq 'reserv'}">신청</c:when>
-                                    <c:when test="${dto.getReserv_status() eq 'confirm'}">예약확정</c:when>
-                                    <c:when test="${dto.getReserv_status() eq 'done'}">체험완료</c:when>
-                                    <c:otherwise>예약취소</c:otherwise>
+                                        <c:when test="${dto.getReserv_status() eq 'reserv'}"><span class="text-info">신청</span></c:when>
+                                        <c:when test="${dto.getReserv_status() eq 'confirm'}"><span class="text-primary">예약확정</span></c:when>
+                                        <c:when test="${dto.getReserv_status() eq 'done'}"><span class="text-secondary">체험완료</span></c:when>
+                                        <c:otherwise><span class="text-danger">예약취소</span></c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td ${showLink} class="py-4 table-list-hide-mob"><c:choose><c:when test="${search_no != ''}">${dto.getReserv_sess().replace(search_no, result_no)}</c:when><c:otherwise>${dto.getReserv_sess()}</c:otherwise></c:choose></td>
-                                <td ${showLink}>
-                                    <p><b><c:choose><c:when test="${search_name != ''}">${dto.getReserv_ficnic_name().replace(search_name, result_name)}</c:when><c:otherwise>${dto.getReserv_ficnic_name()}</c:otherwise></c:choose></b></p>
-                                    <p class="eng">${dto.getReserv_ficnic_option_title()}</p>
+                                <td ${showLink} class="eng table-list-hide-mob"><c:choose><c:when test="${search_sess != ''}">${dto.getReserv_sess().replace(search_sess, result_sess)}</c:when><c:otherwise>${dto.getReserv_sess()}</c:otherwise></c:choose></td>
+                                <td ${showLink} class="photo px-3" style="width: 100px;">
+                                    <c:choose>
+                                        <c:when test="${!empty dto.getReserv_ficnic_photo()}"><img src="${path}${dto.getReserv_ficnic_photo()}" onerror="this.src='${path}/resources/admin/images/noimg.gif'" alt="" /></c:when>
+                                        <c:otherwise><span class="noimg" style="width: 100%;">no img</span></c:otherwise>
+                                    </c:choose>
                                 </td>
-                                <td ${showLink} class="eng table-list-hide">
-                                <c:choose>
-                                <c:when test="${dto.getReserv_payment() eq 'naver'}">네이버페이</c:when>
-                                <c:when test="${dto.getReserv_payment() eq 'kakao'}">카카오페이</c:when>
-                                <c:when test="${dto.getReserv_payment() eq 'nobankbook'}">무통장 입금</c:when>
-                                <c:when test="${dto.getReserv_payment() eq 'toss'}">실시간 계좌이체</c:when>
-                                <c:otherwise>카드결제</c:otherwise>
-                                </c:choose><br>
-                                <fmt:formatNumber value="${dto.getReserv_total_price()}" />
+                                <td ${showLink} class="text-left">
+                                    <p class="mb-2"><b><c:choose><c:when test="${search_ficnic != ''}">${dto.getReserv_ficnic_name().replace(search_ficnic, result_ficnic)}</c:when><c:otherwise>${dto.getReserv_ficnic_name()}</c:otherwise></c:choose></b></p>
+                                    <p class="eng"> - ${dto.getReserv_ficnic_option_title()}</p>
                                 </td>
-                                <td ${showLink} class="eng table-list-hide"><c:choose><c:when test="${search_id != ''}">${dto.getReserv_name().replace(search_id, result_id)}</c:when><c:otherwise>${dto.getReserv_name()}</c:otherwise></c:choose><br>${dto.getMember_id()}</td>
-                                <td ${showLink} class="table-list-hide-mob">${dto.getReserv_date()}</td>
+                                <td ${showLink} class="table-list-hide">
+                                    <p>
+                                        <c:choose>
+                                            <c:when test="${dto.getReserv_payment() eq 'naverpay'}">네이버페이</c:when>
+                                            <c:when test="${dto.getReserv_payment() eq 'kakaopay'}">카카오페이</c:when>
+                                            <c:when test="${dto.getReserv_payment() eq 'sampay'}">삼성페이</c:when>
+                                            <c:when test="${dto.getReserv_payment() eq 'toss'}">토스</c:when>
+                                            <c:when test="${dto.getReserv_payment() eq 'bank'}">무통장 입금</c:when>
+                                            <c:when test="${dto.getReserv_payment() eq 'card'}">카드</c:when>
+                                        </c:choose>
+                                    </p>
+                                    <p class="text-primary"><b class="eng"><fmt:formatNumber value="${dto.getReserv_total_price()}" /></b>원</p>
+                                </td>
+                                <td ${showLink} class="eng table-list-hide"><c:choose><c:when test="${search_name != ''}">${dto.getReserv_name().replace(search_name, result_name)}</c:when><c:otherwise>${dto.getReserv_name()}</c:otherwise></c:choose><br>${dto.getMember_id()}</td>
+                                <td ${showLink} class="eng table-list-hide-mob">${dto.getReserv_date().substring(0,10)}<br />${dto.getReserv_date().substring(11)}</td>
+                                <td><a href="reserv_modify.do?no=${dto.getReserv_no()}&sess=${dto.getReserv_sess()}&search_ficnic=${search_ficnic}&search_status=${search_status}&search_date_start=${search_date_start}&search_date_end=${search_date_end}&search_sess=${search_sess}&search_ficnic=${search_ficnic}&search_name=${search_name}&page=${paging.getPage()}" class="btn btn-outline-success btn-sm m-1">수정</a></td>  
                             </tr>
                             </c:forEach>
                             </c:when>
 
                             <c:otherwise>
                             <tr>
-                                <td colspan="6" class="nodata">No Data</td>
+                                <td colspan="7" class="nodata">No Data</td>
                             </tr>
                             </c:otherwise>
                             </c:choose>

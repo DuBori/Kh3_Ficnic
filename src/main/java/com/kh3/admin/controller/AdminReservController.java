@@ -46,21 +46,31 @@ public class AdminReservController {
     // =====================================================================================
     @RequestMapping("admin/reserv/reserv_list.do")
     public String list(
-            @RequestParam(value = "search_type", required = false, defaultValue = "") String search_type,
-            @RequestParam(value = "startDate", required = false, defaultValue = "") String startDate,
-            @RequestParam(value = "endDate", required = false, defaultValue = "") String endDate,
-            @RequestParam(value = "search_no", required = false, defaultValue = "") String search_no,
-            @RequestParam(value = "search_id", required = false, defaultValue = "") String search_id,
+            @RequestParam(value = "search_status", required = false, defaultValue = "") String search_status,
+            @RequestParam(value = "search_sess", required = false, defaultValue = "") String search_sess,
+            @RequestParam(value = "search_ficnic", required = false, defaultValue = "") String search_ficnic,
             @RequestParam(value = "search_name", required = false, defaultValue = "") String search_name,
             HttpServletRequest request, Model model) {
 
+        LocalDate startNowDate = LocalDate.now().minusDays(30L); // 오늘로부터 30일전 부터
+        String startDay = startNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate endNowDate = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()); // 오늘로부터 30일후 까지
+        String endDay = endNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+
+        String search_date_start = "";
+        String search_date_end = "";
+        if(request.getParameter("search_date_start") != null){ search_date_start = request.getParameter("search_date_start").trim(); }else{ search_date_start = startDay; }
+        if(request.getParameter("search_date_end") != null){ search_date_end = request.getParameter("search_date_end").trim(); }else{ search_date_end = endDay; }
+
+
         // 검색 설정
         Map<String, Object> searchMap = new HashMap<String, Object>();
-        searchMap.put("search_type", search_type);
-        searchMap.put("startDate", startDate);
-        searchMap.put("endDate", endDate);
-        searchMap.put("search_no", search_no);
-        searchMap.put("search_id", search_id);
+        searchMap.put("search_status", search_status);
+        searchMap.put("search_date_start", search_date_start);
+        searchMap.put("search_date_end", search_date_end);
+        searchMap.put("search_sess", search_sess);
+        searchMap.put("search_ficnic", search_ficnic);
         searchMap.put("search_name", search_name);
 
         // 페이징 처리
@@ -76,27 +86,19 @@ public class AdminReservController {
         PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
         // 페이지 이동 URL
-        String pageUrl = request.getContextPath() + "/admin/reserv/reserv_list.do?search_type=" + search_type
-                + "&startDate=" + startDate + "&endDate=" + endDate + "&search_no=" + search_no + "&search_id="
-                + search_id + "&search_name=" + search_name;
+        String pageUrl = request.getContextPath() + "/admin/reserv/reserv_list.do?search_ficnic=" + search_ficnic + "&search_status=" + search_status + "&search_date_start=" + search_date_start + "&search_date_end=" + search_date_end + "&search_sess=" + search_sess + "&search_ficnic=" + search_ficnic + "&search_name=" + search_name;
 
         List<ReservDTO> list = this.dao.getReservList(dto.getStartNo(), dto.getEndNo(), searchMap);
+
         model.addAttribute("List", list);
-
-        LocalDate startNowDate = LocalDate.now().minusDays(30L); // 오늘로부터 30일전 부터
-        String startDay = startNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        LocalDate endNowDate = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()); // 오늘로부터 30일후 까지
-        String endDay = endNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        model.addAttribute("startDay", startDay);
-        model.addAttribute("endDay", endDay);
         model.addAttribute("totalCount", totalRecord);
         model.addAttribute("paging", dto);
-        model.addAttribute("search_type", search_type);
-        model.addAttribute("startDate", startDate);
-        model.addAttribute("endDate", endDate);
-        model.addAttribute("search_no", search_no);
-        model.addAttribute("search_id", search_id);
+
+        model.addAttribute("search_status", search_status);
+        model.addAttribute("search_date_start", search_date_start);
+        model.addAttribute("search_date_end", search_date_end);
+        model.addAttribute("search_sess", search_sess);
+        model.addAttribute("search_ficnic", search_ficnic);
         model.addAttribute("search_name", search_name);
         model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 
@@ -111,12 +113,10 @@ public class AdminReservController {
     // 예약 상세내역 메핑
     // =====================================================================================
     @RequestMapping("admin/reserv/reserv_view.do")
-    public String view(@RequestParam("no") int no, @RequestParam("id") String id, Model model) {
-        ReservDTO dto = this.dao.getReservView(no);
-        MemberDTO mdto = this.mdao.getReservMember(id);
+    public String view(@RequestParam("no") int no, @RequestParam("sess") String sess, Model model) {
+        ReservDTO dto = this.dao.getReservView(no, sess);
 
         model.addAttribute("dto", dto);
-        model.addAttribute("mdto", mdto);
 
         return "admin/reserv/reserv_view";
     }

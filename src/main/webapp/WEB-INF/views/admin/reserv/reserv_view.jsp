@@ -4,14 +4,13 @@
 <c:set var="layout_none" value="Y" />
 <%@ include file="../layout/layout_header.jsp" %>
 
-<c:set var="dto" value="${dto}" />
 <c:if test="${empty dto}"><script type="text/javascript">alert('존재하지 않는 데이터입니다.'); window.close();</script></c:if>
 
 
 <h2>예약 상세 정보 보기</h2>
 
-<div class="page-cont">
 
+<div class="page-cont">
     <div class="row mb-3">
         <div class="col">
             <div class="card view-form">
@@ -35,7 +34,9 @@
                             <label>예약번호</label>
                             <div class="px-3 engnum">${dto.getReserv_sess()}</div>
                         </div>
+
                         <div class="w-100"></div>
+
                         <div class="form-group col d-flex align-items-center">
                             <label>예약일자</label>
                             <div class="px-3">${dto.getReserv_date()}</div>
@@ -47,9 +48,8 @@
     </div>
 
 
+
 	<!-- 회원정보 시작  -->
-    <c:set var="mdto" value="${mdto}" />
-    <c:if test="${!empty mdto}">
     <div class="row mb-3">
         <div class="col">
             <div class="card view-form">
@@ -74,9 +74,10 @@
             </div>
         </div>
     </div>
-    </c:if>
 	<!-- 회원정보 끝  -->
-	
+
+
+
 	<!-- 상품 정보 시작 -->
     <div class="row mb-3">
         <div class="col">
@@ -127,7 +128,9 @@
         </div>
     </div>
 	<!-- 상품 정보 끝 -->
-	
+
+
+
 	<!-- 결제 정보 시작 -->
     <div class="row mb-3">
         <div class="col">
@@ -154,15 +157,13 @@
     </div>
 	<!-- 결제 정보 끝 -->	
 	
-	
-
 </div>
 
 
 
 <div class="my-2 text-center">
     <button type="button" class="btn btn-outline-secondary" onclick="window.print();"><i class="fa fa-print"></i> 인쇄하기</button>
-        <button type="button" class="btn btn-secondary ml-2" onclick="window.close();"><i class="fa fa-times"></i> 창닫기</button>
+    <button type="button" class="btn btn-secondary ml-2" onclick="window.close();"><i class="fa fa-times"></i> 창닫기</button>
 </div>
 
 
