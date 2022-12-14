@@ -1,7 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/layout_header.jsp" %>
 
-<div class="contents w1100">
+<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_ficnic.css" />
+<script language="javascript" src="${path}/resources/site/js/js_ficnic.js"></script>
+
+
+
+<div class="page-info w1100">
+    <h2>${ficnic_name}</h2>
+    <ol>
+        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li>피크닉</li>
+        <li><b>${ficnic_name}</b></li>
+    </ol>
+</div>
+
+
+
+<div class="contents w1100 ficnic-list">
+
+
+
 
 		<!-- 카테고리 리스트  -->
 		<div>
@@ -25,7 +44,7 @@
 	   </div>
 	   
 	   <div>
-	   	<h3><c:if test="${!empty ficnic_name}">${ficnic_name } 프립</c:if></h3>
+	   	<h3><c:if test="${!empty ficnic_name}">${ficnic_name}</c:if></h3>
 	   	<c:choose>
 	   	<c:when test="${!empty flist }">
 	   		<c:forEach items="${flist }" var="dto">
@@ -71,6 +90,8 @@
 	            </div>
 	    </c:if>
 	    <!-- 페이징 처리 end -->
+
+
 
 </div>
 
