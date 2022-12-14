@@ -296,9 +296,14 @@ public class AdminFicnicController {
             String[] getOptionPrice = dto.getFicnic_option_price().split(",");
             for(int i=0; i<getOptionTitle.length; i++){
                 setOptionTitle += getOptionTitle[i] + "★";
-                if(Integer.parseInt(getOptionPrice[i]) > 0){
-                    setOptionPrice += getOptionPrice[i] + "★";
-                }else{
+
+                try {
+                    if(Integer.parseInt(getOptionPrice[i]) > 0){
+                        setOptionPrice += getOptionPrice[i] + "★";
+                    }else{
+                        setOptionPrice += "0★";
+                    }
+                }catch(NumberFormatException e) {
                     setOptionPrice += "0★";
                 }
             }
@@ -315,9 +320,14 @@ public class AdminFicnicController {
             String[] getSelectPrice = dto.getFicnic_select_price().split(",");
             for(int i=0; i<getSelectTitle.length; i++){
                 setSelectTitle += getSelectTitle[i] + "★";
-                if(Integer.parseInt(getSelectPrice[i]) > 0){
-                    setSelectPrice += getSelectPrice[i] + "★";
-                }else{
+
+                try {
+                    if(Integer.parseInt(getSelectPrice[i]) > 0){
+                        setSelectPrice += getSelectPrice[i] + "★";
+                    }else{
+                        setSelectPrice += "0★";
+                    }
+                }catch(NumberFormatException e) {
                     setSelectPrice += "0★";
                 }
             }
