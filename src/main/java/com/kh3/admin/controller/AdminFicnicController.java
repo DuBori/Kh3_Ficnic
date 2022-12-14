@@ -307,6 +307,8 @@ public class AdminFicnicController {
                     setOptionPrice += "0★";
                 }
             }
+            setOptionTitle = setOptionTitle.substring(0, setOptionTitle.length() - 1);
+            setOptionPrice = setOptionPrice.substring(0, setOptionPrice.length() - 1);
         }
         dto.setFicnic_option_title(setOptionTitle);
         dto.setFicnic_option_price(setOptionPrice);
@@ -331,6 +333,8 @@ public class AdminFicnicController {
                     setSelectPrice += "0★";
                 }
             }
+            setSelectTitle = setSelectTitle.substring(0, setSelectTitle.length() - 1);
+            setSelectPrice = setSelectPrice.substring(0, setSelectPrice.length() - 1);
         }
         dto.setFicnic_select_title(setSelectTitle);
         dto.setFicnic_select_price(setSelectPrice);
