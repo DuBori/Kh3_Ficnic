@@ -91,7 +91,7 @@
                                 <div>
                                     <c:choose>
                                         <c:when test="${!empty dto.getReserv_ficnic_photo()}"><img src="${path}${dto.getReserv_ficnic_photo()}" onerror="this.src='${path}/resources/admin/images/noimg.gif'" alt="" width="60" /></c:when>
-                                        <c:otherwise><span style="width: 60px;">no img</span></c:otherwise>
+                                        <c:otherwise><span class="noimg" style="width: 60px;">no img</span></c:otherwise>
                                     </c:choose>
                                 </div>
                                 <div class="ml-2"><b>${dto.getReserv_ficnic_name()}</b></div>
