@@ -81,7 +81,7 @@ public class SiteFicnicController {
         PageDTO dto = new PageDTO(page, rowsize, totalRecord, map);
 
         // 페이지 이동 URL
-        String pageUrl = request.getContextPath() + "/ficnic/ficnic_list.do?category_no=" + ficnic_category_no + "&subcategory=" + ficnic_sub;
+        String pageUrl = request.getContextPath() + "/ficnic/ficnic_list.do?category=" + ficnic_category_no + "&subcategory=" + ficnic_sub;
 
         List<FicnicDTO> fList = fdao.getSiteFicnicList(dto.getStartNo(), dto.getEndNo(), map);
 
