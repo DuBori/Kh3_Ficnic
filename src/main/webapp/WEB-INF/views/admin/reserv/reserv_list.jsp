@@ -25,10 +25,9 @@
                         <div class="col-lg-9">
                             <div class="row justify-content-center">
                                 <div class="col-md-4 mb-2">
-                                
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <label class="input-group-text" for="search_type">유형</label>
+                                            <label class="input-group-text" for="search_type">예약상태</label>
                                         </div>
                                         <select id="search_type" name="search_type" class="custom-select">
                                             <option value="">- 전체보기 -</option>
@@ -38,43 +37,51 @@
                                             <option value="cancel"<c:if test="${search_type eq 'cancel'}"> selected="selected"</c:if>>예약취소</option>
                                         </select>
                                     </div>
-                                    
-                                    <div class="px-0 pt-1 pb-2 collapse show" id="date_layer">
-                                         <div class="col-5 d-inline-block px-0">
-                                             <div class="input-group">
-                                                 <div class="input-group-prepend">
-                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                                                 </div>
-                                                 <input type="text" name="startDate" value="${startDay }" id="startDt" class="form-control text-center eng" />
-                                             </div>
-                                         </div>
-                                         <div class="d-inline-block pt-2 px-2">~</div>
-                                         <div class="col-5 d-inline-block px-0">
-                                             <div class="input-group">
-                                                 <div class="input-group-prepend">
-                                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                                                 </div>
-                                                 <input type="text" name="endDate" value="${endDay }" id="endDt" class="form-control text-center eng" />
-                                             </div>
-                                         </div>
-                                     </div>
-                                                                         
+                                </div>
+
+                                <div class="col-md-4 mb-2">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-calendar mr-1"></i> 예약일</span>
+                                        </div>
+                                        <input type="text" name="startDate" value="${startDay}" id="startDt" class="form-control text-center eng" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                         <span class="input-group-text"><i class="fa fa-calendar mr-1"></i> 예약일</span>
+                                        </div>
+                                        <input type="text" name="endDate" value="${endDay}" id="endDt" class="form-control text-center eng" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="search-form-button col-lg-3"></div>
                     </div>
 
+
                     <div class="row justify-content-center">
-                        <div class="col-lg-6">
+                        <div class="col-lg-9">
                             <div class="row justify-content-center">
                                 <div class="col-md-4 mb-2">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <label class="input-group-text" for="search_name">예약 번호</label>
+                                            <label class="input-group-text" for="search_name">예약번호</label>
                                         </div>
                                         <input type="text" id="search_no" name="search_no" value="${search_no}" class="form-control">
                                     </div>
                                 </div>
+
+                                <div class="col-md-4 mb-2">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text" for="search_id">피크닉 이름</label>
+                                        </div>
+                                        <input type="text" id="search_name" name="search_name" value="${search_name}" class="form-control">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-4 mb-2">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -83,17 +90,9 @@
                                         <input type="text" id="search_id" name="search_id" value="${search_id}" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-2">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <label class="input-group-text" for="search_id">상품명</label>
-                                        </div>
-                                        <input type="text" id="search_name" name="search_name" value="${search_name}" class="form-control">
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <div class="search-form-button col-lg-auto text-center">
+                        <div class="search-form-button col-lg-3">
                             <button type="submit" class="btn btn-secondary mb-2"><i class="fa fa-search"></i> 검색하기</button>
                             <a href="${path}/admin/reserv/reserv_list.do" class="btn btn-outline-secondary ml-1 mb-2"><i class="fa fa-refresh"></i> 초기화</a>
                         </div>
@@ -128,7 +127,7 @@
                             <c:choose>
                             <c:when test="${!empty list}">
                             <c:forEach items="${list}" var="dto">
-                            <c:set var="showLink" value="onclick=\"popWindow('reserv_view.do?no=${dto.getReserv_no()}&id=${dto.getMember_id() }', '700', '900');\"" />
+                            <c:set var="showLink" value="onclick=\"popWindow('reserv_view.do?no=${dto.getReserv_no()}&id=${dto.getMember_id()}', '700', '900');\"" />
                             <c:set var="result_no" value="<span class=\"search\">${search_no}</span>"></c:set>
                             <c:set var="result_id" value="<span class=\"search\">${search_id}</span>"></c:set>
                             <c:set var="result_name" value="<span class=\"search\">${search_name}</span>"></c:set>
@@ -156,7 +155,7 @@
                                 </c:choose><br>
                                 <fmt:formatNumber value="${dto.getReserv_total_price()}" />
                                 </td>
-                                <td ${showLink} class="eng table-list-hide"><c:choose><c:when test="${search_id != ''}">${dto.getReserv_name().replace(search_id, result_id)}</c:when><c:otherwise>${dto.getReserv_name()}</c:otherwise></c:choose><br>${dto.getMember_id() }</td>
+                                <td ${showLink} class="eng table-list-hide"><c:choose><c:when test="${search_id != ''}">${dto.getReserv_name().replace(search_id, result_id)}</c:when><c:otherwise>${dto.getReserv_name()}</c:otherwise></c:choose><br>${dto.getMember_id()}</td>
                                 <td ${showLink} class="table-list-hide-mob">${dto.getReserv_date()}</td>
                             </tr>
                             </c:forEach>
