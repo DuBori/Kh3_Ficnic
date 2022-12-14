@@ -48,7 +48,7 @@ public class SiteFicnicController {
     // =====================================================================================
     @RequestMapping("ficnic/ficnic_category.do")
     public String categoryList(Model model) {
-        List<CategoryDTO> list = cdao.getCategoryList();
+        List<CategoryDTO> list = cdao.getSiteCategoryList();
         model.addAttribute("cList", list);
 
         return "site/ficnic/ficnic_category";
