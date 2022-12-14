@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../../layout/layout_header.jsp" %>
 
+<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_board.css" />
+<script language="javascript" src="${path}/resources/site/js/js_board.js"></script>
 
-<div class="contents w1100 board-list">
+
+<%@ include file="../../layout/layout_csmenu.jsp" %>
+
+
+<div class="contents w1100 board-pwcheck">
 	
 	<div class="page-cont" align="center">
 
@@ -29,4 +35,7 @@
 	
 	
 </div>
+
+
+
 <%@ include file="../../layout/layout_footer.jsp" %>

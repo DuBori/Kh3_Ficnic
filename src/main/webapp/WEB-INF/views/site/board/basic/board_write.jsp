@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../layout/layout_header.jsp" %>
 
+<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_board.css" />
+<script language="javascript" src="${path}/resources/site/js/js_board.js"></script>
 
-<div class="contents w1150">
+
+<%@ include file="../../layout/layout_csmenu.jsp" %>
+
+
+<div class="contents w1100 board-write">
 
 
 

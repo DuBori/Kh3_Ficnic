@@ -2,6 +2,10 @@
 <%@ include file="../layout/layout_header.jsp" %>
 <c:if test="${!empty sess_id}"><script type="text/javascript">alert('이미 로그인 되어 있습니다.'); history.back();</script></c:if>
 
+<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_member.css" />
+<script language="javascript" src="${path}/resources/site/js/js_member.js"></script>
+
+
 
 
 <div class="page-info w1100" align="center">
@@ -15,10 +19,12 @@
 
 
 
-<div class="contents w1100">
+<div class="contents w1100 member-find">
 
-<div align="center">
-    <form name="find_form" method="post" action="<%=request.getContextPath()%>/member/member_find_pw_result.do">
+
+
+        <div align="center">
+        <form name="find_form" method="post" action="<%=request.getContextPath()%>/member/member_find_pw_result.do">
     		
             <a href="<%=request.getContextPath()%>/member/member_find.do" class="login-tab-list__item active" role="tab" aria-controls="tab-panel1">아이디 찾기</a>
             <a href="javascript:location.reload();" class="login-tab-list__item" role="tab" aria-controls="tab-panel2">비밀번호 찾기</a>
@@ -32,5 +38,10 @@
             </form>
         </div>
 
-        
+
+
+</div>
+
+
+
 <%@ include file="../layout/layout_footer.jsp" %>
