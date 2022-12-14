@@ -52,6 +52,29 @@ public class ReservDAOImpl implements ReservDAO {
 
 
 
+	// 예약 상태 변경
+    @Override
+    public int modifyReservStatus(int reserv_no, String reserv_sess, String reserv_status) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("reserv_no", reserv_no);
+        map.put("reserv_sess", reserv_sess);
+        map.put("reserv_status", reserv_status);
+
+        return this.sqlSession.update("adminReservModifyStatus", map);
+    }
+
+
+
+    // 예약 피크닉 날짜 변경
+    @Override
+    public int modifyReservFicnicDate(int reserv_no, String reserv_sess, String ficnic_date) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("reserv_no", reserv_no);
+        map.put("reserv_sess", reserv_sess);
+        map.put("ficnic_date", ficnic_date);
+
+        return this.sqlSession.update("adminReservModifyFicnicDate", map);
+    }
 
 
 }
