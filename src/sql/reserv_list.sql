@@ -22,6 +22,8 @@ create table reserv_list(
     reserv_with varchar2(100),
     member_id varchar2(30) not null,
     reserv_name varchar2(50) not null,
+    reserv_phone varchar2(14) not null,
+    reserv_email varchar2(200) not null,
     reserv_date date default sysdate
 );
 
@@ -45,9 +47,11 @@ comment on column reserv_list.reserv_total_price is '최종 결제 금액';
 comment on column reserv_list.reserv_with is '누구와 함께';
 comment on column reserv_list.member_id is '회원 아이디';
 comment on column reserv_list.reserv_name is '회원 이름';
+comment on column reserv_list.reserv_phone is '회원 연락처';
+comment on column reserv_list.reserv_email is '회원 이메일';
 comment on column reserv_list.reserv_date is '예약 일자';
 
 
-insert into reserv_list values(1, '221212-123456', 'reserv', 1, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)', 30000, '[11세~대인] 제주고사리파스타', 30000, '13:30 타임', 0, null, sysdate, 0, 0, 0, 'toss', 30000, 'alone', 'test1', '테스트회원1', sysdate);
+insert into reserv_list values(1, '221212-123456', 'reserv', 1, '[제주] 제주로컬푸드 이용한 셀프 베이킹 (예약 가능)', 30000, '[11세~대인] 제주고사리파스타', 30000, '13:30 타임', 0, null, sysdate, 0, 0, 0, 'toss', 30000, 'alone', 'test1', '테스트회원1', '010-1234-5678', 'awdknlawd@awdawd.com', sysdate);
 
 commit;
