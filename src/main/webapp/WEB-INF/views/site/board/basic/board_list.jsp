@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../../layout/layout_header.jsp" %>
+<c:if test="${level.list ne 'Y'}"><script>alert('게시물 목록 접근 권한이 없습니다.'); history.back();</script></c:if>
 
 
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_board.css" />
@@ -7,22 +8,6 @@
 
 
 <%@ include file="../../layout/layout_csmenu.jsp" %>
-
-
-
-<!-- 게시판 권한 설정값 불러오기  -->
-<c:set var="level_list" value="${boardConfig.getBoard_level_list()}"/>
-
-<c:if test="${level_list eq 'user' or level_list eq 'admin'}">
-    <c:choose>
-        <c:when test="${empty sess_id}">
-            <script>alert('게시물 목록 접근 권한이 없습니다.'); history.back();</script>
-        </c:when>
-        <c:when test="${level_list eq 'admin' and sess_type ne 'admin'}">
-            <script>alert('게시물 목록 접근 권한이 없습니다.'); history.back();</script>
-        </c:when>
-    </c:choose>
-</c:if>
 
 
 
@@ -125,7 +110,7 @@
         </div>
 
         <div class="col-md-4 text-right">
-            <a href="${path}/board/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 글쓰기</a>
+            <c:if test="${level.write eq 'Y'}"><a href="${path}/board/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 글쓰기</a></c:if>
         </div>
     </div>
 

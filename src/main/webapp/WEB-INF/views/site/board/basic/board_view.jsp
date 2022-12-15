@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../../layout/layout_header.jsp" %>
+<c:if test="${level.view ne 'Y'}"><script>alert('게시물 보기 권한이 없습니다.'); history.back();</script></c:if>
 
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_board.css" />
 <script language="javascript" src="${path}/resources/site/js/js_board.js"></script>

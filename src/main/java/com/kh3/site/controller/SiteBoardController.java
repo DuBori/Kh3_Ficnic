@@ -34,6 +34,7 @@ import com.kh3.model.board.BoardDAO;
 import com.kh3.model.board.BoardDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
+import com.kh3.util.UploadFile;
 
 @Controller
 public class SiteBoardController {
@@ -64,78 +65,81 @@ public class SiteBoardController {
 
 
     // =====================================================================================
-    // 게시물 파일 처리
+    // 게시판 권한 가져오기
     // =====================================================================================
-    private void FileProcess(MultipartHttpServletRequest mrequest, String bbs_id, BoardDTO beforedto, BoardDTO Currentdto, String uploadPath) {
-        /* 파일처리 START */
-        int cnt = 1;
-        Iterator<String> FileList = mrequest.getFileNames();
+    public Map<String, Object> getBoardLevel(BoardConfDTO dto, String sess_type) {
+        Map<String, Object> map = new HashMap<String, Object>();
 
-        while (FileList.hasNext()) {
+        String getList = dto.getBoard_level_list();
+        String getView = dto.getBoard_level_view();
+        String getWrite = dto.getBoard_level_write();
+        String getComment = dto.getBoard_level_comment();
+        String getNotice = dto.getBoard_level_notice();
+        String getModify = dto.getBoard_level_modify();
+        String getDelete = dto.getBoard_level_delete();
 
-            // 파일 유무 확인
-            String uploadFileName = FileList.next();
-            MultipartFile mFile = mrequest.getFile(uploadFileName);
+        String levelList = "Y";
+        String levelView = "Y";
+        String levelWrite = "Y";
+        String levelComment = "Y";
+        String levelNotice = "Y";
+        String levelModify = "Y";
+        String levelDelete = "Y";
 
-            if (!mFile.getOriginalFilename().equals("")) {
 
-                // 파일 이름 정리
-                String uploadFileExt = FilenameUtils.getExtension(mFile.getOriginalFilename());
-                int extLength = uploadFileExt.length() + 1;
-                String realFileName = bbs_id + "_"
-                        + mFile.getOriginalFilename().substring(0, mFile.getOriginalFilename().length() - extLength)
-                        + "_" + System.currentTimeMillis() + "." + uploadFileExt;
-
-                switch (cnt) {
-                case 1:
-                    if (Currentdto != null) {
-                        new File(uploadPath + beforedto.getBdata_file1()).delete();
-                        Currentdto.setBdata_file1(realFileName);
-                    } else {
-                        beforedto.setBdata_file1(realFileName);
-                    }
-                    break;
-                case 2:
-                    if (Currentdto != null) {
-                        new File(uploadPath + beforedto.getBdata_file2()).delete();
-                        Currentdto.setBdata_file2(realFileName);
-                    } else {
-                        beforedto.setBdata_file2(realFileName);
-                    }
-                    break;
-                case 3:
-                    if (Currentdto != null) {
-                        new File(uploadPath + beforedto.getBdata_file3()).delete();
-                        Currentdto.setBdata_file3(realFileName);
-                    } else {
-                        beforedto.setBdata_file3(realFileName);
-                    }
-                    break;
-                case 4:
-                    if (Currentdto != null) {
-                        new File(uploadPath + beforedto.getBdata_file4()).delete();
-                        Currentdto.setBdata_file4(realFileName);
-                    } else {
-                        beforedto.setBdata_file4(realFileName);
-                    }
-                    break;
-                default:
-                    break;
-                }
-                try {
-                    File origin = new File(uploadPath + realFileName);
-                    // 파일 데이터를 지정한 폴더로 실제로 이동시키는 메서드 --> 경로 설정임.
-                    mFile.transferTo(origin);
-
-                } catch (Exception e) { // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-            } // 사용자가 파일을 등록 하였을 때 end
-            cnt++;
-
+        // 목록보기
+        if(getList.equals("user") || getList.equals("admin")) {
+            if(sess_type == null) levelList = "N";
+            if(getList.equals("admin") && sess_type != null && !sess_type.equals("admin")) levelList = "N";
         }
 
+        // 글보기
+        if(getView.equals("user") || getView.equals("admin")) {
+            if(sess_type == null) levelView = "N";
+            if(getView.equals("admin") && sess_type != null && !sess_type.equals("admin")) levelView = "N";
+        }
+
+        // 모든 글 수정
+        if(getModify.equals("user") || getModify.equals("admin")) {
+            if(sess_type == null) levelModify = "N";
+            if(getModify.equals("admin") && sess_type != null && !sess_type.equals("admin")) levelModify = "N";
+        }
+
+        // 글쓰기
+        if(getWrite.equals("user") || getWrite.equals("admin")) {
+            if(sess_type == null) levelWrite = "N";
+            if(getList.equals("admin") && sess_type != null && !sess_type.equals("admin")) levelWrite = "N";
+            if(levelModify.equals("Y")) levelWrite = "Y";
+        }
+
+        // 댓글쓰기
+        if(getComment.equals("user") || getComment.equals("admin")) {
+            if(sess_type == null) levelComment = "N";
+            if(getComment.equals("admin") && sess_type != null && !sess_type.equals("admin")) levelComment = "N";
+        }
+
+        // 공지사항 쓰기
+        if(getNotice.equals("user") || getNotice.equals("admin")) {
+            if(sess_type == null) levelNotice = "N";
+            if(getNotice.equals("admin") && sess_type != null && !sess_type.equals("admin")) levelNotice = "N";
+        }
+
+        // 모든 글 삭제
+        if(getDelete.equals("user") || getDelete.equals("admin")) {
+            if(sess_type == null) levelDelete = "N";
+            if(getDelete.equals("admin") && sess_type != null && !sess_type.equals("admin")) levelDelete = "N";
+        }
+
+
+        map.put("list", levelList);
+        map.put("view", levelView);
+        map.put("write", levelWrite);
+        map.put("comment", levelComment);
+        map.put("notice", levelNotice);
+        map.put("modify", levelModify);
+        map.put("delete", levelDelete);
+
+        return map;
     }
 
 
@@ -156,12 +160,19 @@ public class SiteBoardController {
         BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
         board_skin = BoardConfdto.getBoard_skin();
 
+
+        // 게시판 권한 가져오기
+        HttpSession session = request.getSession();
+        String sess_type = null;
+        if(session.getAttribute("sess_type") != null) sess_type = (String) session.getAttribute("sess_type");
+        Map<String, Object> bbs_level = getBoardLevel(BoardConfdto, sess_type);
+
+
         // 게시판 카테고리 가져오기
         List<BoardCategoryDTO> BoardCategory = null;
         if(BoardConfdto.getBoard_use_category().equals("Y")){
             BoardCategory = board_CateDao.getBoardCategoryList(bbs_id);
         }
-        
 
 
         // 한 페이지당 보여질 게시물의 수
@@ -203,6 +214,7 @@ public class SiteBoardController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("category", category);
         model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
+        model.addAttribute("level", bbs_level);  
 
         return "/site/board/" + board_skin + "/board_list";
     }
@@ -215,15 +227,32 @@ public class SiteBoardController {
     // 게시물 작성 페이지
     // =====================================================================================
     @RequestMapping("/board/board_write.do")
-    public String board_write(HttpSession session, HttpServletRequest request, Model model) {
+    public String board_write(HttpServletRequest request, Model model) {
         String bbs_id = request.getParameter("bbs_id");
-        if (bbs_id == null)
-            bbs_id = "";
+        if (bbs_id == null) bbs_id = "";
 
         BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
         board_skin = BoardConfdto.getBoard_skin();
 
-        model.addAttribute("boardConfig", BoardConfdto);
+
+        // 게시판 권한 가져오기
+        HttpSession session = request.getSession();
+        String sess_type = null;
+        if(session.getAttribute("sess_type") != null) sess_type = (String) session.getAttribute("sess_type");
+        Map<String, Object> bbs_level = getBoardLevel(BoardConfdto, sess_type);
+
+
+        // 게시판 카테고리 가져오기
+        List<BoardCategoryDTO> BoardCategory = null;
+        if(BoardConfdto.getBoard_use_category().equals("Y")){
+            BoardCategory = board_CateDao.getBoardCategoryList(bbs_id);
+        }
+
+
+        model.addAttribute("conf", BoardConfdto);
+        model.addAttribute("BoardCate", BoardCategory);
+        model.addAttribute("level", bbs_level);
+
         return "/site/board/" + board_skin + "/board_write";
     }
 
@@ -243,26 +272,47 @@ public class SiteBoardController {
             dto.setBdata_use_secret("N");
         }
 
+
+        // 비밀번호 암호화 처리
+        dto.setBdata_writer_pw(passwordEncoder.encode(dto.getBdata_writer_pw()));
+
+
         // config 테이블 id
         String bbs_id = mrequest.getParameter("board_id");
-        String uploadPath = mrequest.getSession().getServletContext()
-                .getRealPath("/resources/data/board/" + bbs_id + "/");
+        String uploadPath = "/resources/data/board/" + bbs_id + "/";
 
-        /* 파일처리 시작 */
-        FileProcess(mrequest, bbs_id, dto, null, uploadPath);
-        /* 파일처리 END */
 
-        /* 게시글 작성 작업 START */
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        List<String> upload_list = UploadFile.fileUpload(mrequest, uploadPath, bbs_id);
+        for(int i=0; i<upload_list.size(); i++){
+            switch (i) {
+                case 0:
+                    dto.setBdata_file1(upload_list.get(0));
+                    break;
+                case 1:
+                    dto.setBdata_file2(upload_list.get(1));
+                    break;
+                case 2:
+                    dto.setBdata_file3(upload_list.get(2));
+                    break;
+                case 3:
+                    dto.setBdata_file4(upload_list.get(3));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("bbs_id", bbs_id);
         map.put("dto", dto);
+
         if (this.board_Dao.insertBoardCont(map) > 0) {
-            out.println("<script>location.href='" + mrequest.getContextPath() + "/board/board_list.do?bbs_id=" + bbs_id
-                    + "';</script>");
+            out.println("<script>location.href='" + mrequest.getContextPath() + "/board/board_list.do?bbs_id=" + bbs_id + "';</script>");
         } else {
             out.println("<script>alert('게시글 작성 실패'); history.back();</script>");
         }
-        /* 게시글 작성 작업 END */
     }
 
 
@@ -279,13 +329,27 @@ public class SiteBoardController {
         BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
         board_skin = BoardConfdto.getBoard_skin();
 
+
+        // 게시판 권한 가져오기
+        HttpSession session = request.getSession();
+        String sess_type = null;
+        if(session.getAttribute("sess_type") != null) sess_type = (String) session.getAttribute("sess_type");
+        Map<String, Object> bbs_level = getBoardLevel(BoardConfdto, sess_type);
+
+
+        // 게시판 카테고리 가져오기
+        List<BoardCategoryDTO> BoardCategory = null;
+        if(BoardConfdto.getBoard_use_category().equals("Y")){
+            BoardCategory = board_CateDao.getBoardCategoryList(bbs_id);
+        }
+
+
         int bdata_no = 0;
         if (request.getParameter("bdata_no") != null) {
             bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
         }
 
-        if (bbs_id == null)
-            bbs_id = "";
+        if (bbs_id == null) bbs_id = "";
 
         /* 게시글 리스트 출력 */
         Map<String, Object> map = new HashMap<String, Object>();
@@ -294,8 +358,10 @@ public class SiteBoardController {
 
         BoardDTO boardCont = board_Dao.getBoardCont(map);
 
+        model.addAttribute("conf", BoardConfdto);
+        model.addAttribute("BoardCate", BoardCategory);
         model.addAttribute("Cont", boardCont);
-        model.addAttribute("boardConfig", BoardConfdto);
+        model.addAttribute("level", bbs_level);
         model.addAttribute("m", "m");
 
         return "/site/board/" + board_skin + "/board_write";
@@ -314,8 +380,7 @@ public class SiteBoardController {
         PrintWriter out = response.getWriter();
 
         String bbs_id = mrequest.getParameter("bbs_id");
-        if (bbs_id == null)
-            bbs_id = "";
+        if (bbs_id == null) bbs_id = "";
 
         BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
         board_skin = BoardConfdto.getBoard_skin();
@@ -329,24 +394,60 @@ public class SiteBoardController {
             Modifydto.setBdata_use_secret("N");
         }
 
+
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("bbs_id", bbs_id);
         map.put("bdata_no", bdata_no);
         map.put("dto", Modifydto);
         BoardDTO boardCont = board_Dao.getBoardCont(map);
 
-        String uploadPath = mrequest.getSession().getServletContext()
-                .getRealPath("/resources/data/board/" + bbs_id + "/");
 
-        /* 기존에 파일 안에 존재하는 파일을 제거해야함 */
-        /* 파일처리 시작 */
-        FileProcess(mrequest, bbs_id, boardCont, Modifydto, uploadPath);
-        /* 파일처리 END */
+
+        String uploadPath = "/resources/data/board/" + bbs_id + "/";
+
+        String ori_file1 = mrequest.getParameter("ori_file1");
+        String ori_file2 = mrequest.getParameter("ori_file2");
+        String ori_file3 = mrequest.getParameter("ori_file3");
+        String ori_file4 = mrequest.getParameter("ori_file4");
+
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        List<String> upload_list = UploadFile.fileUpload(mrequest, uploadPath, bbs_id);
+        for(int i=0; i<upload_list.size(); i++){
+
+            // 기존 파일 있으면 삭제 처리
+            String check_file = mrequest.getParameter("ori_file" + (i+1));
+            if (check_file != null && upload_list.get(i) != "") {
+                File del_pimage = new File(mrequest.getSession().getServletContext().getRealPath(check_file));
+                if(del_pimage.exists()) del_pimage.delete();
+            }
+
+            switch (i) {
+                case 0:
+                    if (upload_list.get(0) != "") ori_file1 = upload_list.get(0);
+                    Modifydto.setBdata_file1(ori_file1);
+                    break;
+                case 1:
+                    if (upload_list.get(1) != "") ori_file2 = upload_list.get(1);
+                    Modifydto.setBdata_file2(ori_file2);
+                    break;
+                case 2:
+                    if (upload_list.get(2) != "") ori_file3 = upload_list.get(2);
+                    Modifydto.setBdata_file3(ori_file3);
+                    break;
+                case 3:
+                    if (upload_list.get(3) != "") ori_file4 = upload_list.get(3);
+                    Modifydto.setBdata_file4(ori_file4);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
 
         /* 수정된 내용 업데이트 */
         if (board_Dao.modifyBoard(map) > 0) {
-            out.println("<script>location.href='" + mrequest.getContextPath() + "/board/board_view.do?bbs_id=" + bbs_id
-                    + "&bdata_no=" + bdata_no + "';</script>");
+            out.println("<script>location.href='" + mrequest.getContextPath() + "/board/board_view.do?bbs_id=" + bbs_id + "&bdata_no=" + bdata_no + "';</script>");
         } else {
             out.println("<script>alert('게시글 수정 실패'); history.back()</script>");
         }
@@ -404,18 +505,24 @@ public class SiteBoardController {
             @RequestParam(value = "bbs_id", required = false, defaultValue = "") String bbs_id,
             HttpServletRequest request, Model model) {
 
-        /* 해당 게시판 설정 DTO */
-        // 해당 게시물 설정값 가져오기
         BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
         board_skin = BoardConfdto.getBoard_skin();
+
+
+        // 게시판 권한 가져오기
+        HttpSession session = request.getSession();
+        String sess_type = null;
+        if(session.getAttribute("sess_type") != null) sess_type = (String) session.getAttribute("sess_type");
+        Map<String, Object> bbs_level = getBoardLevel(BoardConfdto, sess_type);
+
 
         // 한 페이지당 보여질 게시물의 수 -> 해당 게시물 설정값 가져와야한다.
         int rowsize = BoardConfdto.getBoard_list_num();
 
-        if (field == null)
-            field = "";
-        if (keyword == null)
-            keyword = "";
+        // 검색 설정
+        if (field == null) field = "";
+        if (keyword == null) keyword = "";
+        if (category == null) category = "";
 
         // 페이징 처리
         int page; // 현재 페이지 변수
@@ -470,8 +577,8 @@ public class SiteBoardController {
         model.addAttribute("paging", dto);
         model.addAttribute("field", field);
         model.addAttribute("keyword", keyword);
-        model.addAttribute("pagingWrite",
-                Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
+        model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
+        model.addAttribute("level", bbs_level);
 
         return "/site/board/" + board_skin + "/board_view";
     }

@@ -5,7 +5,6 @@ import java.util.List;
 public interface BoardConfDAO {
 
     int getBoardConfCount(String keyword);
-
     
     List<BoardConfDTO> getConfBoardList(int startNo, int endNo, String keyword);
 
@@ -18,6 +17,5 @@ public interface BoardConfDAO {
     int deleteBoard(int board_no);
 
 	BoardConfDTO getBoardConfCont(String bbs_id);
-    
 
 }
