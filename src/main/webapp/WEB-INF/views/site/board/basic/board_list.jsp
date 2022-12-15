@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../../layout/layout_header.jsp" %>
 
+
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_board.css" />
 <script language="javascript" src="${path}/resources/site/js/js_board.js"></script>
 
@@ -9,130 +10,124 @@
 
 
 
-<div class="contents w1100 board-list">
-
-
-
-<!-- 게시판 보기 권한  -->
+<!-- 게시판 권한 설정값 불러오기  -->
 <c:set var="level_list" value="${boardConfig.getBoard_level_list()}"/>
 
-<!-- 게시물 보기 권한 -->
-<c:set var="level_view" value="${boardConfig.getBoard_level_view()}"/>
-<c:choose>
-	<c:when test="${level_view eq 'null'}">
-		<c:set var="level" value="모든"/>
-	</c:when>
-	<c:when test="${level_view eq 'user'}">
-		<c:set var="level" value="사이트"/>
-	</c:when>
-	<c:when test="${level_view eq 'admin' }">
-		<c:set var="level" value="관리자"/>
-	</c:when>
-</c:choose>
+<c:if test="${level_list eq 'user' or level_list eq 'admin'}">
+    <c:choose>
+        <c:when test="${empty sess_id}">
+            <script>alert('게시물 목록 접근 권한이 없습니다.'); history.back();</script>
+        </c:when>
+        <c:when test="${level_list eq 'admin' and sess_type ne 'admin'}">
+            <script>alert('게시물 목록 접근 권한이 없습니다.'); history.back();</script>
+        </c:when>
+    </c:choose>
+</c:if>
 
 
-<!-- Content 시작부 -->
-<c:choose>
-	<c:when test="${level_list ne 'null' and empty sess_id  }">
-		게시판 권한이 부족합니다.
-	</c:when>
-	<c:when test="${level_list eq 'admin' and sess_id ne 'admin' }">
-		게시판 권한이 부족합니다.
-	</c:when>
-	<c:otherwise>
-		<div class="page-cont" align="center">
 
-			<!-- 해당 게시글 리스트 출력부  -->
-			<table class="table-list mb-2" border="1">
-		      <thead>
-		          <tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>글쓴이</th>
-					<th>작성일</th>
-					<th>조회수</th>
-		         </tr>
-		   </thead>
-		   <tbody>
-				<c:forEach items="${List}" var="dto">
-				<c:if test="${!empty dto.getBdata_file1()}"><c:set var="file1" value="📷"/></c:if>
-				<c:if test="${!empty dto.getBdata_file2()}"><c:set var="file2" value="📷"/></c:if>
-				<c:if test="${!empty dto.getBdata_file3()}"><c:set var="file3" value="📷"/></c:if>
-				<c:if test="${!empty dto.getBdata_file4()}"><c:set var="file4" value="📷"/></c:if>
-				
-					<tr>
-						<td><c:if test="${dto.getBdata_use_notice() eq 'Y' }">공지🔔</c:if><c:if test="${dto.getBdata_use_notice() ne 'Y' }">${dto.getBdata_no()}</c:if></td>
-						<c:if test="${dto.getBdata_use_secret() eq 'Y' }">
-							<td onclick="location.href='${path}/board/board_pw_chk.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&bdata_writer_id=${dto.getBdata_writer_id()}'">🔒비밀글 입니다.</td>
-						</c:if>
-						<c:if test="${dto.getBdata_use_secret() eq 'N' or sess_id eq 'admin'}">
-							<td><a href="<%=request.getContextPath()%>/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}">[${level}]회원 ${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
-						</c:if>
-						
-						<td>${dto.getBdata_writer_name()}</td>
-						<td>${dto.getBdata_date().substring(0,10)}</td>
-						<td>${dto.getBdata_hit()}</td>
-					
-					</tr>
-				</c:forEach>
-			</tbody>
-			</table>
-			<!-- 해당 게시글 리스트 출력부 end -->
-			
-			<!-- 페이징 처리  -->
-			<c:if test="${!empty paging}">
-		            <div class="row list-bottom-util">
-		                <div class="col text-center">
-		                    ${pagingWrite}
-		                </div>
-		            </div>
-		    </c:if>
-		    <!-- 페이징 처리 end -->
-		    
-		    <!-- 검색 처리  -->
-		    <form name="search_form" method="get" action="<%=request.getContextPath()%>/board/board_list.do">
-			    <div class="row mt-2 list-bottom-util">
-			       <div class="col-6 mt-3">
-			               <input type="hidden" value="${bbs_id}" name="bbs_id">
-			               <div class="input-group w-80">
-			                   <div class="col-sm-4">
-			                       <select name="field" class="form-select">
-			                           <option value="title"<c:if test="${field eq 'title'}"> selected="selected"</c:if>>제목</option>
-			                           <option value="cont"<c:if test="${field eq 'cont'}"> selected="selected"</c:if>>내용</option>
-			                           <option value="writer"<c:if test="${field eq 'writer'}"> selected="selected"</c:if>>작성자</option>
-			                       </select>
-			                   </div>
-			                   <input type="text" name="keyword" value="${keyword}" class="form-control" />
-			                   <button type="submit" class="btn btn-secondary ml-1"><i class="fa fa-search"></i> 검색</button>
-			               </div>
-			           
-			       </div>
-				</div>
-				</form>
-				<!-- 검색 처리 end -->
-				
-				<div class="col-6 text-right mt-3">
-			             <c:choose>
-				             <c:when test="${!empty field}">
-				             	<a href="<%=request.getContextPath()%>/board/board_list.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-outline-secondary"><i class="fa fa-list mr-1"></i> 게시물 전체목록</a>
-				             </c:when>
-				             <c:otherwise>
-				             	<a href="<%=request.getContextPath()%>/board/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"  
-				             	
-				             	<c:if test="${boardConfig.getBoard_level_write() ne 'null' and empty sess_id}"> 
-				             	onclick="alert('권한이 없습니다.'); return false;" </c:if>
-				             	<c:if test="${boardConfig.getBoard_level_write() eq 'admin' and sess_id ne 'admin' }">
-				             	onclick="alert('권한이 없습니다.'); return false;" </c:if>
-				             	>
-				             	<i class="fa fa-pencil mr-1"></i> 새로운 글쓰기</a>
-				             </c:otherwise>
-			             </c:choose>
-				</div>	
-		</div>	
-	</c:otherwise>
-</c:choose>
+<div class="contents w1100 board-list">
+
+    <div class="row">
+        <div class="col-lg">
+            <div class="card border-0">
+                <div class="card-header bg-white border-0 pt-0 px-0 d-flex justify-content-between">
+                    <div class="pt-3">총 <b class="text-primary"><fmt:formatNumber value="${totalCount}" /></b> 개의 게시물</div>
+                    <c:if test="${boardConfig.getBoard_use_category() eq 'Y' and !empty BoardCate}">
+                    <div>
+                        <select name="category" class="custom-select" onchange="location.href='${path}/board/board_list.do?bbs_id=${param.bbs_id}&field=${field}&keyword=${keyword}&category='+this.value;">
+                            <option value="">- 전체보기 -</option>
+                            <c:forEach var="cateList" items="${BoardCate}">
+                            <option value="${cateList.getBcate_no()}"<c:if test="${category eq cateList.getBcate_no()}"> selected=\"selected\"</c:if>>${cateList.getBcate_name()}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    </c:if>
+                </div>
+
+                <div class="card-body p-0">
+                    <table class="table-list mb-2 board-list">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;" class="table-list-hide">No.</th>
+                                <th>제목</th>
+                                <th style="width: 120px;" class="table-list-hide-mob">글쓴이</th>
+                                <th style="width: 120px;">작성일</th>
+                                <th style="width: 80px;" class="table-list-hide-mob">조회수</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <c:choose>
+                                <c:when test="${!empty List}">
+                                <c:forEach var="dto" items="${List}">
+                                <c:if test="${!empty dto.getBdata_file1()}"><c:set var="file1" value="<i class=\"fa fa-picture-o mx-1\"></i>" /></c:if>
+                                <c:if test="${!empty dto.getBdata_file2()}"><c:set var="file2" value="<i class=\"fa fa-picture-o mx-1\"></i>" /></c:if>
+                                <c:if test="${!empty dto.getBdata_file3()}"><c:set var="file3" value="<i class=\"fa fa-picture-o mx-1\"></i>" /></c:if>
+                                <c:if test="${!empty dto.getBdata_file4()}"><c:set var="file4" value="<i class=\"fa fa-picture-o mx-1\"></i>" /></c:if>
+
+                                <c:set var="result_title" value="<span class=\"search\">${keyword}</span>"></c:set>
+                                <c:set var="result_writer" value="<span class=\"search\">${keyword}</span>"></c:set>
+                                <tr onclick="location.href='${path}/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}';">
+                                    <td class="text-center eng table-list-hide">
+                                        <c:choose>
+                                            <c:when test="${dto.getBdata_use_notice() eq 'Y'}"><i class="fa fa-bell-o"></i> 공지</c:when>
+                                            <c:otherwise>${dto.getBdata_no()}</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="text-left pl-3 subject">
+                                        <c:if test="${boardConfig.getBoard_use_category() eq 'Y' and !empty dto.getBdata_category_name()}"><span class="mr-2">[${dto.getBdata_category_name()}]</span></c:if>
+                                        <c:if test="${dto.getBdata_use_secret() eq 'Y'}"><i class="fa fa-lock"></i></c:if>
+                                        <c:choose><c:when test="${field eq 'title' and keyword != ''}">${dto.getBdata_title().replace(keyword, result_title)}</c:when><c:otherwise>${dto.getBdata_title()}</c:otherwise></c:choose>
+                                        ${file1}${file2}${file3}${file4} <span class="eng text-primary">(${dto.getBdata_comment()})</span>
+                                    </td>
+                                    <td class="text-center table-list-hide-mob"><c:choose><c:when test="${field eq 'writer' and keyword != ''}">${dto.getBdata_writer_name().replace(keyword, result_writer)}</c:when><c:otherwise>${dto.getBdata_writer_name()}</c:otherwise></c:choose></td>
+                                    <td class="text-center eng">${dto.getBdata_date().substring(0,10)}</td>
+                                    <td class="text-center eng table-list-hide-mob"><fmt:formatNumber value="${dto.getBdata_hit()}" /></td>
+                                </tr>
+                                </c:forEach>
+                                </c:when>
+
+                                <c:otherwise>
+                                <tr>
+                                    <td colspan="5" class="nodata">No Data</td>
+                                </tr>
+                                </c:otherwise>
+                            </c:choose>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
+
+    <div class="row mt-4 list-bottom-util">
+        <div class="col-md-4 text-left">
+            <form name="search_form" method="get" action="${path}/board/board_list.do">
+            <input type="hidden" name="bbs_id" value="${param.bbs_id}" />
+            <input type="hidden" name="category" value="${param.category}" />
+            <div class="input-group list-search-form w-80">
+                <select name="field" class="custom-select col-sm-4">
+                   <option value="title"<c:if test="${field eq 'title'}"> selected="selected"</c:if>>제목</option>
+                   <option value="cont"<c:if test="${field eq 'cont'}"> selected="selected"</c:if>>내용</option>
+                   <option value="writer"<c:if test="${field eq 'writer'}"> selected="selected"</c:if>>작성자</option>
+                </select>
+                <input type="text" name="keyword" value="${keyword}" class="form-control rounded-right" />
+                <button type="submit" class="btn btn-secondary ml-1"><i class="icon-magnifier"></i> 검색</button>
+            </div>
+            </form>
+        </div>
+
+        <div class="col-md-4 text-center">
+            ${pagingWrite}
+        </div>
+
+        <div class="col-md-4 text-right">
+            <a href="${path}/board/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 글쓰기</a>
+        </div>
+    </div>
 
 </div>
 

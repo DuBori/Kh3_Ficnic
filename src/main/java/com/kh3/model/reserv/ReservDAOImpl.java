@@ -77,4 +77,12 @@ public class ReservDAOImpl implements ReservDAO {
     }
 
 
+    // 해당 세션 예약 카운트
+	@Override
+	public int getSiteReservCount(Map<String, Object> searchMap) {
+		
+		return this.sqlSession.selectOne("siteReservCount", searchMap);
+	}
+
+
 }

@@ -9,7 +9,7 @@
 
     <!-- 게시판 설정 목록 총 갯수 -->
     <select id="adminBoardConfTotal" parameterType="java.util.Map" resultType="int">
-        select count(*) from board_config      
+        select count(*) from board_config
             <if test="keyword != ''"> where board_name like '%' || #{keyword} || '%'</if>
     </select>
 

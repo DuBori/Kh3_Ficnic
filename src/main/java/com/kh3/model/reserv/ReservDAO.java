@@ -24,4 +24,8 @@ public interface ReservDAO {
     // 예약 피크닉 날짜 변경
     int modifyReservFicnicDate(int reserv_no, String reserv_sess, String ficnic_date);
 
+    
+    // 해당 세션 예약 카운트
+	int getSiteReservCount(Map<String, Object> searchMap);
+
 }

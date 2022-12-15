@@ -2,20 +2,19 @@
 <%@ include file="../layout/layout_header.jsp" %>
 <c:if test="${empty sess_id}"><script type="text/javascript">alert('회원 로그인이 필요합니다.'); location.href='${path}/member/member_login.do';</script></c:if>
 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../layout/layout_header.jsp" %>
+<c:if test="${empty sess_id}"><script type="text/javascript">alert('회원 로그인이 필요합니다.'); location.href='${path}/member/member_login.do';</script></c:if>
+
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_mypage.css" />
 <script language="javascript" src="${path}/resources/site/js/js_mypage.js"></script>
 
 
+<c:set var="mypage_eng" value="qna" />
+<c:set var="mypage_kor" value="내 1:1 문의 확인" />
 
 
-<div class="page-info w1100">
-    <h2>내 1:1 문의 확인</h2>
-    <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
-        <li>마이페이지</li>
-        <li><b>내 1:1 문의 확인</b></li>
-    </ol>
-</div>
+<%@ include file="../layout/layout_mymenu.jsp" %>
 
 
 

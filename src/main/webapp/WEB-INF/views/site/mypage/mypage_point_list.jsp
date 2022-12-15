@@ -6,16 +6,11 @@
 <script language="javascript" src="${path}/resources/site/js/js_mypage.js"></script>
 
 
+<c:set var="mypage_eng" value="point" />
+<c:set var="mypage_kor" value="적립금 내역" />
 
 
-<div class="page-info w1100">
-    <h2>적립금 내역</h2>
-    <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
-        <li>마이페이지</li>
-        <li><b>적립금 내역</b></li>
-    </ol>
-</div>
+<%@ include file="../layout/layout_mymenu.jsp" %>
 
 
 
