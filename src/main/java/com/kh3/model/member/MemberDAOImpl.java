@@ -159,4 +159,11 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 
+	@Override
+	public int pwLength(MemberDTO dto) {
+		return this.sqlSession.selectOne("siteMemberPwLength", dto);
+	}
+
+	
+
 }
