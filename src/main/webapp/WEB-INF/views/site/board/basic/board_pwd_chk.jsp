@@ -9,31 +9,27 @@
 
 
 <div class="contents w1100 board-pwcheck">
-	
-	<div class="page-cont" align="center">
 
-	<form action="${path}/board/board_view_ok.do" method="post">
-		<input type="hidden" value="${bbs_id }" name="bbs_id">
-		<input type="hidden" value="${bdata_no }" name="bdata_no">
-		<input type="hidden" value="${bdata_writer_id }" name="bdata_writer_id">
-		<table>
-				<tr>
-					<th>비밀번호</th>
-					<td><input type="password" name="pwd" required="required"></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="비밀번호 확인">
-					</td>
-				</tr> 
-				
-		
-		</table>
-	</form>
-	
-	</div>
-	
-	
+    <div class="row justify-content-lg-center">
+        <div class="col-lg-auto">
+            <div class="card p-5">
+                <form name="form_input" method="post" action="${path}/board/board_view_ok.do" class="form-validate">
+		        <input type="hidden" name="bbs_id" value="${bbs_id}" />
+		        <input type="hidden" name="bdata_no" value="${bdata_no}" />
+		        <input type="hidden" name="bdata_writer_id" value="${bdata_writer_id}" />
+                <div class="card-body">
+
+                    <h4 class="display-1 text-secondary text-center my-3"><i class="icon-lock"></i></h4>
+				    <h5 class="text-center mb-4">글 작성시 입력한 비밀번호를 입력하세요.</h5>
+				    <p><input type="password" name="pwd" class="form-control text-center my-2" autofocus required /></p>
+				    <button type="submit" class="btn btn-info btn-lg btn-block"><i class="icon-check"></i> 비밀번호 확인</button>
+
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 

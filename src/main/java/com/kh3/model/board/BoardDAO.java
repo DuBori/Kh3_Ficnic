@@ -29,6 +29,10 @@ public interface BoardDAO {
 	// 해당 게시판 삭제
 	int deleteBoard(Map<String, Object> map);
 
-    
+    // 해당 게시판의 최소 헤드넘버 구하기
+    int getMinHeadnum(String bbs_id);
+
+    // 해당 게시판의 최소 헤드넘버 구하기 (공지글)
+    int getMinHeadnumNotice(String bbs_id);
 
 }

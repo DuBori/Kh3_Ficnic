@@ -75,5 +75,17 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 
+	/* 해당 게시판의 최소 헤드넘버 구하기 */
+    @Override
+    public int getMinHeadnum(String bbs_id) {
+        return this.sqlSession.selectOne("SiteBoardGetMinHeadnum", bbs_id);
+    }
+
+    /* 해당 게시판의 최소 헤드넘버 구하기 (공지글) */
+    @Override
+    public int getMinHeadnumNotice(String bbs_id) {
+        return this.sqlSession.selectOne("SiteBoardGetMinHeadnumNotice", bbs_id);
+    }
+
 
 }

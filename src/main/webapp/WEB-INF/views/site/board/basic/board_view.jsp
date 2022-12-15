@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../../layout/layout_header.jsp" %>
+<% pageContext.setAttribute("newLine", "\n"); %>
 <c:if test="${level.view ne 'Y'}"><script>alert('게시물 보기 권한이 없습니다.'); history.back();</script></c:if>
 
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_board.css" />
@@ -9,347 +10,141 @@
 <%@ include file="../../layout/layout_csmenu.jsp" %>
 
 
-<div class="contents w1100 board-view">
+<div class="contents w1100 view-form board-view">
+
+    <div class="row vf-body">
+        <div class="col-lg mb-4">
+            <div class="card border-0">
+                <div class="card-body p-0 pt-2">
+                    <h2>${BoardConDto.getBdata_title()}</h2>
+
+                    <div class="d-flex py-2 border-bottom vfb-info">
+                        <div class="col text-left">
+                            <p>${BoardConDto.getBdata_date()}</p>
+                            <p>조회수 : <fmt:formatNumber value="${BoardConDto.getBdata_hit()}" /></p>
+                        </div>
+
+                        <div class="col text-right pt-2">
+                        	<p class="writer">${BoardConDto.getBdata_writer_name()}<c:if test="${BoardConDto.getBdata_writer_id() ne 'null'}"> (${BoardConDto.getBdata_writer_id()})</c:if></p>
+                        </div>
+                    </div>
+
+                    <c:if test="${!empty BoardConDto.getBdata_link1()}">
+                    	<div class="d-flex py-2 border-bottom">
+            				<div class="col"><i class="fa fa-link"></i> 관련링크 #1 : <a href="${BoardConDto.getBdata_link1()}" target="_blank">${BoardConDto.getBdata_link1()}</a></div>
+            			</div>
+                    </c:if>
+                    <c:if test="${!empty BoardConDto.getBdata_link2()}">
+                    	<div class="d-flex py-2 border-bottom">
+            				<div class="col"><i class="fa fa-link"></i> 관련링크 #2 : <a href="${BoardConDto.getBdata_link2()}" target="_blank">${BoardConDto.getBdata_link2()}</a></div>
+            			</div>
+                    </c:if>
 
 
-<script type="text/javascript" >
-	$(function() {
-		
-		/* 댓글 삭제 시 Ajax 처리*/
-		$(document).on("click",".delbtn", function() {
-			if($(".chk").val() !="c"){
-				if (prompt('비밀번호를 입력하세요.') != $(".chk").val()){
-					alert('비밀번호가 틀립니다.');
-					return false;
-				}
-			}
-			
-		     $.ajax({
-		         type : "post",
-		         contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-		         url : "${path}/board/baord_comment_delete.do",
-		         data : {bcomm_no : $(this).attr("name"),
-		        	 	 bbs_id : '${bbs_id}',
-		        	 	 bdata_no : ${BoardConDto.getBdata_no()} },
-		     	 datatype : "text",
-		     success : function(data) {
-		 		$("#commList").html("");
-		 		$("#commList").html(data);
-		 		$(".Logininput").val("");
-		     },
-		     error : function(data) {
-		         alert("에러발생");
-		     }
-		 	});
-		});
-		
-		/* 댓글 입력시 Ajax 처리 */
-		$(".subbtn").on("click",function(){
-         $.ajax({
-	             type : "post",
-	             contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-	             url : "<%=request.getContextPath()%>/board/baord_comment_insert.do",
-	             data : $("#form1").serialize(),
-             	 datatype : "text",
-             success : function(data) {
-         		$("#commList").html("");
-         		$("#commList").html(data);
-         		$(".Logininput").val(""); 		
-             },
-             error : function(data) {
-                 alert(data);
-             }
-         });
-		});
-	});
-	
-	function chkpw(no,pwd){
-		if(prompt('비밀번호를 입력하세요.') != pwd){
-			alert('비밀번호가 틀렸습니다.');
-			return false;
-		}else{
-			location.href="${path}/board/board_view.do?bbs_id=${bbs_id}&bdata_no="+no;
-		}
-		
-	}
-	
-</script>
+					<c:if test="${!empty BoardConDto.getBdata_file1()}">
+						<p>첨부파일 #1 :<a href="<%=request.getContextPath()%>/site/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&file=${BoardConDto.getBdata_file1()}">${BoardConDto.getBdata_file1()}</a></p>
+					</c:if>
 
 
-<style type="text/css">
-	
-	.horizon{
-		display: flex;
-		justify-content: center;
-		align-content: center;
-	}
-	#viewDiv{
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-content: center;
-	}
-	
-</style>
+                    <?=$show_img_file1?>
+                    <?=$show_img_file2?>
+                    <?=$show_img_file3?>
+                    <?=$show_img_file4?>
+                    <?=$show_img_file5?>
 
+                    <div class="d-flex pt-4 pb-5 border-bottom">
+                        <div class="col">
+                            ${BoardConDto.getBdata_cont().replace(newLine, '<br />')}
+                        </div>
+                    </div>
 
-<c:set  var="level_view" value="${boardConf.getBoard_level_view() }"/>
-<c:choose>
-	<c:when test="${level_view eq 'null'}">
-		<c:set var="level" value="모든"/>
-	</c:when>
-	<c:when test="${level_view eq 'user'}">
-		<c:set var="level" value="사이트"/>
-	</c:when>
-	<c:when test="${level_view eq 'admin' }">
-		<c:set var="level" value="관리자"/>
-	</c:when>
-</c:choose>
-
-<!-- #container // START -->
-    <main id="container">
-      <div class="w1280">
-            <div class="page-info row mb-3">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h2>공지사항</h2>
-                    <ol class="m-0 p-2">
-                        <li>게시판</li>
-                        <li>공지사항</li>
-                        <li><b>게시물 내용보기</b></li>
-                    </ol>
-             </div>
+                    <?=$show_down_file1?>
+                    <?=$show_down_file2?>
+                    <?=$show_down_file3?>
+                    <?=$show_down_file4?>
+                    <?=$show_down_file5?>
+                </div>
+            </div>
         </div>
-       </div>
-	<c:choose>
-		<c:when test="${level_view ne 'null' and empty sess_id  }">
-			게시글 읽기 권한이 부족합니다.
-		</c:when>
-		<c:when test="${level_view eq 'admin' and sess_id ne 'admin' }">
-			게시글 읽기 권한이 부족합니다.
-		</c:when>
-		<c:otherwise>
-			<div class="page-cont view-form" align="center">
-			    <!-- 내용 //START -->
-			    <!-- 해당 게시글 정보 -->
-			    <div class="row vf-body">
-			    	<div>
-			    		<div>
-			    			<h3>${BoardConDto.getBdata_title()}</h3>
-			    		</div>	    			
-		    			<div>
-		    				<div>
-		    					<p>${BoardConDto.getBdata_date()}</p>
-		    					<p>${BoardConDto.getBdata_hit()}</p>	    					
-		    				</div>			
-		    				
-		    				<div>
-		    					<p>${BoardConDto.getBdata_writer_name() }(${BoardConDto.getBdata_writer_id()})</p>
-		    					<p>표시이름 : 작성자</p>
-		    				</div>
-		    			</div>
-		    			
-		    			<!-- 게시글 첨부 링크 -->
-		    			<div>
-			    			<hr>
-			    				<p>관련링크 #1 : : <c:if test="${!empty BoardConDto.getBdata_link1()}"><a href="${BoardConDto.getBdata_link1() }">${BoardConDto.getBdata_link1() }</a></c:if> </p>
-			    			<hr>
-			    				<p>관련링크 #2 : : <c:if test="${!empty BoardConDto.getBdata_link2()}"><a href="${BoardConDto.getBdata_link2() }">${BoardConDto.getBdata_link2() }</a></c:if> </p>
-			    			<hr>		
-			    		</div>
-			    		
-			    		<!-- 게시글 내용 -->
-			    		<div>
-			    			${BoardConDto.getBdata_cont() }
-			    		</div>
-			    		
-			    		<!-- 파일 다운로드 부분 -->
-			    		<div>
-			    			<hr>
-								<c:if test="${!empty BoardConDto.getBdata_file1() }"><p>첨부파일 #1 :<a href="<%=request.getContextPath()%>/site/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&file=${BoardConDto.getBdata_file1()}">${BoardConDto.getBdata_file1() }</a></p></c:if>
-								<c:if test="${!empty BoardConDto.getBdata_file2() }"><p>첨부파일 #2 :<a href="<%=request.getContextPath()%>/site/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&file=${BoardConDto.getBdata_file2()}">${BoardConDto.getBdata_file2() }</a></p></c:if>
-								<c:if test="${!empty BoardConDto.getBdata_file3() }"><p>첨부파일 #3 :<a href="<%=request.getContextPath()%>/site/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&file=${BoardConDto.getBdata_file3()}">${BoardConDto.getBdata_file3() }</a></p></c:if>
-								<c:if test="${!empty BoardConDto.getBdata_file4() }"><p>첨부파일 #4 :<a href="<%=request.getContextPath()%>/site/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&file=${BoardConDto.getBdata_file4()}">${BoardConDto.getBdata_file4() }</a></p></c:if>
-			    			<hr>
-			    		</div>  		
-			    	</div>
-		    	</div>
-		    </div>		
-		
-		
-				
+    </div>
+    <!-- 내용 //END -->
 
-			<c:set value="${boardConf.getBoard_level_modify() }" var="modify"/>
-			<c:set value="${boardConf.getBoard_level_delete() }" var="del"/>
-			
-			<!-- 버튼 //START -->
-			    <div class="d-flex justify-content-center mb-4" align="center">
-			    	<!-- 관리자인 경우 || 자신의 게시글인 경우  ||자신의 게시글 x, 3자인 경우  -->
-			    	<c:if test="${modify eq 'null'  }"> <a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a></c:if>
-			    	<c:if test="${modify eq 'user' and BoardConDto.getBdata_writer_id() eq sess_id or BoardCondto.getBdata_writer_pw() eq sess_pw }"> <a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a></c:if>
-			    	<c:if test="${modify eq 'admin' and sess_id eq 'admin'  }"> <a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a></c:if>
-			    	<c:if test="${del eq 'null'} "> <a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a></c:if>
-			    	<c:if test="${del eq 'user' and BoardConDto.getBdata_writer_id() eq sess_id  or BoardCondto.getBdata_writer_pw() eq sess_pw  }"> <a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a></c:if>
-			    	<c:if test="${del eq 'admin' and sess_id eq 'admin'  }"> <a href="${path}/board/board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="fa fa-trash-o"></i> 삭제하기</a></c:if>
-		   			<a href="${path}/board/board_list.do?bbs_id=${BoardConDto.getBoard_id() }" class="btn btn-secondary"><i class="fa fa-bars"></i> 목록보기</a>	
-		    	</div>
-		    	<!-- 버튼 //END -->
-		    		<!-- 댓글 작업 시작 //START  -->
-					<div align="center">
-						<h5>댓글 </h5>
-						<!-- 댓글 리스트 출력부 -->
-						<c:if test="${!empty boardCommentList }">
-							<div id="commList">
-								<c:forEach items="${boardCommentList}" var="comment">	
-									<div class="horizon">
-									
-										<!-- 댓글 작성 계정 부분 -->
-										<div>	
-												<img alt="이미지 없음" src="">
-												
-												<div>
-													<p>${comment.getBcomm_name() }</p>
-												</div>
-											</div>
-											
-											<div>
-												<textarea rows="7" cols="25" readonly="readonly">${comment.getBcomm_cont() }</textarea>
-											</div>
-											
-											<div>
-												
-												<div>
-													<p>${comment.getBcomm_date() }</p>
-												</div>
-												
-												<div>
-												<!-- 자신의 댓글인 경우 || 관리자인 경우 || 자신의 댓글 x, 3자인 경우  -->
-														<c:if test="${!empty comment.getBcomm_id() and comment.getBcomm_id() eq sess_id or sess_id eq 'admin' }">
-															<input type="hidden" value="c" class="chk">
-															<input type="button" class="delbtn" value="삭제"  name="${comment.getBcomm_no() }">
-														</c:if>
-														<c:if test="${empty comment.getBcomm_id() }">
-															<input type="hidden" value="${comment.getBcomm_pw() }" class="chk">
-															<input type="button" class="delbtn" value="삭제" name="${comment.getBcomm_no()}">
-														</c:if>
-												</div>
-											</div>
-									</div>			
-								</c:forEach>
-							
-							</div>
-						</c:if>
-						<!-- 댓글 리스트 출력부 end -->
-						<!-- 댓글 작성 부분  -->
-						<hr>
-						<c:choose>
-							<c:when test="${boardConf.getBoard_level_comment() ne 'null' and empty sess_id  }"> 댓글 작성 권한이 부족합니다.<hr></c:when>
-							<c:when test="${boardConf.getBoard_level_comment() eq 'admin' and sess_id ne 'admin' }">댓글 작성 권한이 부족합니다.<hr></c:when>
-							<c:otherwise>
-								<h5>댓글 작성</h5>
-								<form  method="post" id="form1" >
-									
-									<!-- 해당 게시판 ||해당 게시글 번호  -->				
-									<input type="hidden" value="${bbs_id}" name="bbs_id">
-									<input type="hidden" value="${BoardConDto.getBdata_no()}" name="bdata_no">
-									<!--회원 || 비회원-->
-									<c:choose>
-										<c:when test="${!empty sess_id }">
-											<input type="hidden" value="${sess_id }" name="bcomm_id">
-											<input type="hidden" value="${sess_pw }" name="bcomm_pw">
-											<input type="hidden" value="${sess_name }" name="bcomm_name">
-											<div class="horizon">
-												
-												<!-- 세션 계정 부분 -->
-												<div>	
-													<img alt="이미지 없음" src="${session_src}">
-													
-													<div>
-														<p>회원 이름<input disabled="disabled" name="bcomm_name" value="${sess_name}"></p>
-													</div>
-												</div>
-												
-												<div>
-													<textarea rows="7" cols="25" name="bcomm_cont" class="Logininput" required="required"></textarea>
-												</div>
-												
-												<div>
-													<!-- 권한 작성  -->
-													<input type="button" value="댓글 등록"  class="subbtn">
-												</div>
-											</div>	
-										</c:when>			
-										<c:otherwise>
-											<div>
-												<h3>현재 비회원</h3>
-												<div>
-													작성자 이름<input name="bcomm_name"  required="required" class="Logininput">
-													비밀번호<input type="password" name="bcomm_pw" required="required" class="Logininput">	
-												</div>
-												<div class="horizon">								
-													<div>
-														<textarea rows="7" cols="25" name="bcomm_cont" required="required" class="Logininput"></textarea>
-													</div>
-													
-													<div>
-														<input type="button" value="댓글 등록" class="subbtn">
-													</div>
-												</div>		
-											</div>			
-										</c:otherwise>
-									</c:choose>
-									
-								</form>
-							</c:otherwise>
-						</c:choose>
-					</div>  
-					<!-- 댓글 작성 부분 end  -->
-			            
-						
-						<!-- 게시물 목록 출력부분  -->
-						<div id="viewDiv" align="center">
-							<table border="1" cellspacing="0" width="600" align="center">
-								<c:forEach items="${List}" var="dto">
-								<c:if test="${!empty dto.getBdata_file1()}"><c:set var="file1" value="📷"/></c:if>
-								<c:if test="${!empty dto.getBdata_file2()}"><c:set var="file2" value="📷"/></c:if>
-								<c:if test="${!empty dto.getBdata_file3()}"><c:set var="file3" value="📷"/></c:if>
-								<c:if test="${!empty dto.getBdata_file4()}"><c:set var="file4" value="📷"/></c:if>
-								
-									<tr>
-										<td><c:if test="${dto.getBdata_use_notice() eq 'Y' }">공지🔔</c:if><c:if test="${dto.getBdata_use_notice() ne 'Y' }">${dto.getBdata_no() }</c:if></td>
-										<c:if test="${dto.getBdata_use_secret() eq 'Y'}">
-											<td onclick="location.href='${path}/board/board_pw_chk.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&bdata_writer_id=${dto.getBdata_writer_id()}'">🔒비밀글 입니다.</td>
-										</c:if>
-										<c:if test="${dto.getBdata_use_secret() eq 'N' or sess_id eq 'admin'}">
-											<td><a href="${path }/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no() }&field=${field}&keyword=${keyword}&page=${paging.getPage()}">${dto.getBdata_title()}</a>${file1}${file2}${file3}${file4}(${dto.getBdata_comment()})</td>
-										</c:if>
-										
-										<td>${dto.getBdata_writer_name() }</td>
-										<td>${dto.getBdata_date().substring(0,10) }</td>
-										<td>${dto.getBdata_hit() }</td>
-									
-									</tr>
-								</c:forEach>
-							</table>
-							</div>
-					
-					
-						<!-- 페이징 처리  -->
-						<c:if test="${!empty paging}">
-					            <div class="row list-bottom-util">
-					                <div class="col text-center">
-					                    ${pagingWrite}
-					                </div>
-					            </div>
-					    </c:if>
-			    		<!-- 페이징 처리 end -->		
-	    <!-- 게시물 목록 출력부분 end -->
-		</c:otherwise>
-	</c:choose>
-	 <!-- 내용 //END -->
-    </main>
- 
+
+
+    <!-- 버튼 //START -->
+    <div class="d-flex justify-content-center mb-4">
+        <? if($b_data["board_writer_id"] == $gw_check_id){ ?><a href="board_ok.php?ps_mode=board_delete&b_id=<?=$b_id?>&b_no=<?=$b_no?>&ps_search=<?=$ps_search?>&ps_keyword=<?=$ps_keyword?>&ps_page=<?=$ps_page?>" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="icon-trash mr-1"></i> 삭제하기</a><? } ?>
+        <? if($b_data["board_writer_id"] == $gw_check_id){ ?><a href="/board/board_write.php?b_id=<?=$b_id?>&amp;b_no=<?=$b_no?>&amp;ps_search=<?=$ps_search?>&amp;ps_keyword=<?=$ps_keyword?>&amp;ps_page=<?=$ps_page?>" class="btn btn-primary mx-2"><i class="icon-note mr-1"></i> 수정하기</a><? } ?>
+        <a href="/board/board.php?b_id=<?=$b_id?>&amp;ps_search=<?=$ps_search?>&amp;ps_keyword=<?=$ps_keyword?>&amp;ps_page=<?=$ps_page?>" class="btn btn-secondary"><i class="icon-list mr-1"></i> 목록보기</a>
+    </div>
+    <!-- 버튼 //END -->
+
+
+
+
+    <!-- 댓글 //START -->
+    <div class="row vf-comment">
+        <div class="col-lg">
+            <div class="card border input-form">
+                <div class="card-body pt-3 pb-4">
+                    <ul class="vfc-list">
+                        <?
+                            while($c_list = gw_fetch($c_result)){
+                                $c_no = $c_list["uid"];
+                                $c_body = auto_link(nl2br(settings_re($c_list["comment_body"])));
+                                $c_date = date("Y.m.d", $c_list["register_date"])."<br />".date("H:i:s", $c_list["register_date"]);
+
+                                $writer_data = gw_fetch(gw_query("select * from gw_member_list where member_id = '$c_list[comment_id]'"));
+                                if($writer_data["member_class"] >= 9){
+                                    $c_writer = "<b><img src=\"".$skin_dir."/images/company_logo_small.png\" /> 관리자</b>";
+                                }else{
+                                    $c_writer = "<b>".$c_list["comment_name"]."</b><span>(".$c_list["comment_id"].")</span>";
+                                }
+                        ?>
+                        <li class="d-flex border-bottom py-3">
+                            <div class="vfcl-writer"><?=$c_writer?></div>
+                            <div class="vfcl-body px-3"><?=$c_body?></div>
+                            <div class="vfcl-date text-center">
+                                <p><?=$c_date?></p>
+                                <? if($c_list["comment_id"] == $gw_check_id){ ?><a href="board_ok.php?ps_mode=comment_delete&b_id=<?=$b_id?>&b_no=<?=$b_no?>&c_no=<?=$c_no?>&ps_search=<?=$ps_search?>&ps_keyword=<?=$ps_keyword?>&ps_page=<?=$ps_page?>" class="btn btn-sm btn-outline-danger py-0 mt-2" onclick="return confirm('이 댓글을 삭제하시겠습니까?');"><i class="icon-close mr-1"></i> 삭제</a><? } ?>
+                            </div>
+                        </li>
+                        <? } ?>
+                    </ul>
+
+
+                    <? if($bbs_config["board_class_comment"] <= $gw_check_class){ ?>
+                    <form name="comment_form" method="post" action="board_ok.php">
+                    <input type="hidden" name="ps_mode" value="comment_write" />
+                    <input type="hidden" name="b_id" value="<?=$b_id?>" />
+                    <input type="hidden" name="b_no" value="<?=$b_no?>" />
+                    <input type="hidden" name="comment_id" value="<?=$gw_check_id?>" />
+                    <input type="hidden" name="comment_pw" value="<?=$gw_check_pw?>" />
+                    <input type="hidden" name="comment_name" value="<?=$gw_check_name?>" />
+                    <input type="hidden" name="ps_page" value="<?=$ps_page?>" />
+                    <input type="hidden" name="ps_search" value="<?=$ps_search?>" />
+                    <input type="hidden" name="ps_keyword" value="<?=$ps_keyword?>" />
+                    <div class="d-flex justify-content-center vfc-form">
+                        <div class="vfcf-writer"><?=$gw_check_name?></div>
+                        <div class="vfcf-input"><textarea name="comment_body" class="form-control" rows="4"></textarea></div>
+                        <div class="vfcf-btn">
+                            <button type="button" class="btn btn-info" onclick="form_comment(this)">
+                                <i class="icon-pencil mr-1"></i> 댓글 등록
+                            </button>
+                        </div>
+                    </div>
+                    </form>
+                    <? } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 댓글 //END -->
+
 
 </div>
+
+
 
 
 <%@ include file="../../layout/layout_footer.jsp" %>

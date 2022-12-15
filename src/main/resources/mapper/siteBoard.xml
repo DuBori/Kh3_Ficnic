@@ -9,7 +9,7 @@
 
     <!-- 게시판 목록 -->
     <select id="siteBoardList" resultType="boardDTO">
-    	select * from board_data_${value} order by bdata_use_notice desc, bdata_no desc
+    	select * from board_data_${value} order by bdata_headnum asc
     </select>
 
 
@@ -36,7 +36,7 @@
     <select id="SiteBoardList" parameterType="java.util.Map" resultMap="siteBdataListMap">
         select * from(
                       select
-                            row_number() over(order by bdata_use_notice desc, bdata_no desc) rnum,
+                            row_number() over(order by bdata_headnum asc) rnum,
                             b.*
                       from (
                             select * from board_data_${bbs_id} where bdata_no > 0
@@ -82,7 +82,7 @@
        </selectKey>
 		insert into board_data_${bbs_id} values(#{dto.bdata_no}+1,
 		#{bbs_id},
-		default,
+		#{dto.bdata_headnum},
 		#{dto.bdata_category},
 		#{dto.bdata_title},
 		#{dto.bdata_cont},
@@ -131,6 +131,21 @@
 	<delete id="SiteBoardDelete" parameterType="map">
 		delete from board_data_${bbs_id} where bdata_no= #{bdata_no}
 	</delete>
+
+
+
+    <!-- 해당 게시판의 최소 헤드넘버 구하기 -->
+    <select id="SiteBoardGetMinHeadnum" parameterType="String" resultType="int">
+        select nvl(min(bdata_headnum),0) from board_data_${value} where bdata_headnum > 1000
+    </select>
+
+
+    <!-- 해당 게시판의 최소 헤드넘버 구하기 (공지글) -->
+    <select id="SiteBoardGetMinHeadnumNotice" parameterType="String" resultType="int">
+        select nvl(min(bdata_headnum),0) from board_data_${value}
+        <![CDATA[where bdata_headnum < 1000 and bdata_headnum > 1]]>
+    </select>
+
 
 
 </mapper>

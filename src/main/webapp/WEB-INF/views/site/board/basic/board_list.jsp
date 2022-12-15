@@ -18,7 +18,7 @@
             <div class="card border-0">
                 <div class="card-header bg-white border-0 pt-0 px-0 d-flex justify-content-between">
                     <div class="pt-3">총 <b class="text-primary"><fmt:formatNumber value="${totalCount}" /></b> 개의 게시물</div>
-                    <c:if test="${boardConfig.getBoard_use_category() eq 'Y' and !empty BoardCate}">
+                    <c:if test="${conf.getBoard_use_category() eq 'Y' and !empty BoardCate}">
                     <div>
                         <select name="category" class="custom-select" onchange="location.href='${path}/board/board_list.do?bbs_id=${param.bbs_id}&field=${field}&keyword=${keyword}&category='+this.value;">
                             <option value="">- 전체보기 -</option>
@@ -34,11 +34,11 @@
                     <table class="table-list mb-2 board-list">
                         <thead>
                             <tr>
-                                <th style="width: 80px;" class="table-list-hide">No.</th>
+                                <th style="width: 7.25%; min-width: 80px;" class="table-list-hide">No.</th>
                                 <th>제목</th>
-                                <th style="width: 120px;" class="table-list-hide-mob">글쓴이</th>
-                                <th style="width: 120px;">작성일</th>
-                                <th style="width: 80px;" class="table-list-hide-mob">조회수</th>
+                                <th style="width: 11%; min-width: 120px;" class="table-list-hide-mob">글쓴이</th>
+                                <th style="width: 11%; min-width: 120px;">작성일</th>
+                                <th style="width: 7.25%; min-width: 80px;" class="table-list-hide-mob">조회수</th>
                             </tr>
                         </thead>
 
@@ -61,10 +61,11 @@
                                         </c:choose>
                                     </td>
                                     <td class="text-left pl-3 subject">
-                                        <c:if test="${boardConfig.getBoard_use_category() eq 'Y' and !empty dto.getBdata_category_name()}"><span class="mr-2">[${dto.getBdata_category_name()}]</span></c:if>
+                                        <c:if test="${conf.getBoard_use_category() eq 'Y' and !empty dto.getBdata_category_name()}"><span class="mr-2">[${dto.getBdata_category_name()}]</span></c:if>
                                         <c:if test="${dto.getBdata_use_secret() eq 'Y'}"><i class="fa fa-lock"></i></c:if>
                                         <c:choose><c:when test="${field eq 'title' and keyword != ''}">${dto.getBdata_title().replace(keyword, result_title)}</c:when><c:otherwise>${dto.getBdata_title()}</c:otherwise></c:choose>
-                                        ${file1}${file2}${file3}${file4} <span class="eng text-primary">(${dto.getBdata_comment()})</span>
+                                        ${file1}${file2}${file3}${file4}
+                                        <c:if test="${dto.getBdata_comment() > 0}"><span class="eng text-primary">(${dto.getBdata_comment()})</span></c:if>
                                     </td>
                                     <td class="text-center table-list-hide-mob"><c:choose><c:when test="${field eq 'writer' and keyword != ''}">${dto.getBdata_writer_name().replace(keyword, result_writer)}</c:when><c:otherwise>${dto.getBdata_writer_name()}</c:otherwise></c:choose></td>
                                     <td class="text-center eng">${dto.getBdata_date().substring(0,10)}</td>
@@ -110,7 +111,7 @@
         </div>
 
         <div class="col-md-4 text-right">
-            <c:if test="${level.write eq 'Y'}"><a href="${path}/board/board_write.do?bbs_id=${boardConfig.getBoard_id()}" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 글쓰기</a></c:if>
+            <c:if test="${level.write eq 'Y'}"><a href="${path}/board/board_write.do?bbs_id=${conf.getBoard_id()}" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 글쓰기</a></c:if>
         </div>
     </div>
 
