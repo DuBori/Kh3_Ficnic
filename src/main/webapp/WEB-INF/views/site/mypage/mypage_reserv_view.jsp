@@ -6,16 +6,11 @@
 <script language="javascript" src="${path}/resources/site/js/js_mypage.js"></script>
 
 
+<c:set var="mypage_eng" value="reserv" />
+<c:set var="mypage_kor" value="피크닉 예약 정보" />
 
 
-<div class="page-info w1100">
-    <h2>피크닉 예약 정보</h2>
-    <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
-        <li>마이페이지</li>
-        <li><b>피크닉 예약 정보</b></li>
-    </ol>
-</div>
+<%@ include file="../layout/layout_mymenu.jsp" %>
 
 
 

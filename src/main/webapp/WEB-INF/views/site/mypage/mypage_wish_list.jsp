@@ -6,15 +6,15 @@
 <script language="javascript" src="${path}/resources/site/js/js_mypage.js"></script>
 
 
-<c:set var="mypage_eng" value="point" />
-<c:set var="mypage_kor" value="적립금 내역" />
+<c:set var="mypage_eng" value="wish" />
+<c:set var="mypage_kor" value="위시 리스트" />
 
 
 <%@ include file="../layout/layout_mymenu.jsp" %>
 
 
 
-<div class="contents w1100 mypage-point">
+<div class="contents w1100 mypage-reserv">
 
 
     내용
