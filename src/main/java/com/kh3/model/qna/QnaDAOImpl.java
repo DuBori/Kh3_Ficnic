@@ -47,4 +47,10 @@ public class QnaDAOImpl implements QnaDAO {
         return this.sqlSession.delete("adminQnaDelete", no);
     }
 
+    // 마이페이지 문의글 리스트
+	@Override
+	public List<QnaDTO> siteQnaList(String member_id) {
+		return this.sqlSession.selectList("siteQnaList", member_id);
+	}
+
 }

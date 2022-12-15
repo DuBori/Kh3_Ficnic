@@ -9,6 +9,7 @@
 
     <!-- 1:1 문의 목록 -->
     <select id="siteQnaList" resultType="qnaDTO">
+   		select * from qna_list where member_id = #{member_id}
     </select>
 
 
