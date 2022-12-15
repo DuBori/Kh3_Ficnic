@@ -1,15 +1,25 @@
 package com.kh3.site.controller;
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
@@ -19,6 +29,8 @@ import com.kh3.model.qna.QnaCommentDAO;
 import com.kh3.model.qna.QnaCommentDTO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
+import com.kh3.model.reserv.ReservDAO;
+
 
 @Controller
 public class SiteMypageController {
@@ -29,11 +41,39 @@ public class SiteMypageController {
     @Autowired
     private QnaDAO qdao;
 
+	@Inject
+	private ReservDAO reservDAO;
+
+	
+    // 한 페이지당 보여질 게시물의 수
+    private final int rowsize = 10;
+
+
+    // 전체 게시물의 수
+    private int totalRecord = 0;
+    
     // =====================================================================================
     // 마이페이지 - 예약 목록
     // =====================================================================================
     @RequestMapping("mypage/mypage_reserv_list.do")
-    public String reserv_list() {
+    public String reserv_list(
+    		@RequestParam( value = "page", required = false, defaultValue = "1") int page,
+    		@RequestParam( value = "field", required = false, defaultValue = "") String field,
+    		@RequestParam( value = "keyword", required = false, defaultValue = "") int keyword,
+    		HttpSession session) {
+    	
+    	String member_id = (String) session.getAttribute("sess_id");
+    	
+    	Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("field", field);
+		searchMap.put("keyword", keyword);
+		searchMap.put("member_id", member_id);
+		
+		totalRecord = this.reservDAO.getSiteReservCount(searchMap);
+
+    	
+    	//reservDAO.getSiteReservList(0, 0, null);
+    	
         return "site/mypage/mypage_reserv_list";
     }
 

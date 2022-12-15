@@ -78,31 +78,44 @@ public class SiteMemberController {
 
         // 비밀번호 체크
         int check = this.dao.pwCheck(dto);
-
+        
+        // 길이 체크
+        int pw_length = this.dao.pwLength(dto); 
+       
         // 일치하는 아이디 없음
         if (result == 0) {
+        	
             out.println("<script>alert('존재하지 않는 아이디입니다.'); history.back(); </script>");
 
-        } else if (check == 1) { // 아이디가 있으면 암호화된 비밀번호랑 입력된 비밀번호 비교
-            dto = this.dao.loginSession(id);
+		} // 아이디 일치하는 경우, 임시비밀번호 사용하는 경우 (길이가 20 아래) 로그인 가능함.
+       
+        else if (pw_length < 20 && check == 1) {
+        	
+        	 dto = this.dao.loginSession(id);
 
-            HttpSession session = request.getSession();
-            session.setAttribute("sess_id", dto.getMember_id());
-            session.setAttribute("sess_pw", dto.getMember_pw());
-            session.setAttribute("sess_type", dto.getMember_type());
-            session.setAttribute("sess_name", dto.getMember_name());
-            session.setAttribute("sess_email", dto.getMember_email());
-            session.setAttribute("sess_phone", dto.getMember_phone());
-            session.setAttribute("sess_point", dto.getMember_point());
+             HttpSession session = request.getSession();
+             session.setAttribute("sess_id", dto.getMember_id());
+             session.setAttribute("sess_pw", dto.getMember_pw());
+             session.setAttribute("sess_type", dto.getMember_type());
+             session.setAttribute("sess_name", dto.getMember_name());
+             session.setAttribute("sess_email", dto.getMember_email());
+             session.setAttribute("sess_phone", dto.getMember_phone());
+             session.setAttribute("sess_point", dto.getMember_point());
 
-            out.println("<script>alert('" + dto.getMember_name() + "님 안녕하세요 :)'); location.href='../main.do' </script>");
+             out.println("<script>alert('" + dto.getMember_name() + "님 안녕하세요 :)'); location.href='../main.do' </script>");
+        
+            // 암호화된 비밀번호인 경우
+        } else if (pw_length > 50){ // by.. 로 만든 암호화 비밀번호인 경우 기존 비밀번호랑 맞는지 비교
+        	
+        	isTrue = passwordEncoder.matches(dto.getMember_pw(), mdto.getMember_pw());
+        	
+        } else {
+           
+        	out.println("<script>alert('비밀번호를 다시 확인해주세요.'); history.back(); </script>");
 
-        } else { // by 어쩌구 암호화인 경우
-            isTrue = passwordEncoder.matches(dto.getMember_pw(), mdto.getMember_pw());
         }
 
-
-        if (isTrue == true) {
+          if (isTrue == true) {	// 기존이랑 암호화 비교해서 true인 경우
             dto = this.dao.loginSession(id);
 
             HttpSession session = request.getSession();
@@ -115,8 +128,11 @@ public class SiteMemberController {
             session.setAttribute("sess_point", dto.getMember_point());
 
             out.println("<script>alert('" + dto.getMember_name() + "님 안녕하세요 :)'); location.href='../main.do' </script>");
+            
         } else {
-            out.println("<script>alert('비밀번호를 다시 확인해주세요.'); history.back(); </script>");
+           
+        	out.println("<script>alert('비밀번호를 다시 확인해주세요.'); history.back(); </script>");
+        	
         }
 
     }

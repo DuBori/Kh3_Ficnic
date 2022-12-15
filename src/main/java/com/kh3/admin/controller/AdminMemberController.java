@@ -184,7 +184,8 @@ public class AdminMemberController {
 
         // 암호화 설정
         dto.setMember_pw(passwordEncoder.encode(dto.getMember_pw()));
-
+        dto.setMember_pw_re(passwordEncoder.encode(dto.getMember_pw_re()));
+        
         // 유효성 검사
         if (result.hasErrors()) {
             List<ObjectError> list = result.getAllErrors();
