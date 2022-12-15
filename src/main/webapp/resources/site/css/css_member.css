@@ -2,7 +2,9 @@
 /* 회원 관련
 /*************************/
 
-
+/*************************/
+/* 로그인
+/*************************/
 .member-login table {
 	text-align: center;
 	margin-top: 15px;
@@ -24,9 +26,7 @@
 	font-size: 25px;
 	font-weight: 200; /* 폰트 얇이 (낮을수록 얇음 */
 	line-height: 35px; /* 글씨체 상하 간격 */
-	
 }
-
 
 .member-login input {
 	font-size: 15px;
@@ -44,8 +44,8 @@
 }
 
 .member-login .btnLogin {
-margin-top: 80px; 
-	width : 300px;
+	margin-top: 80px;
+	width: 300px;
 	height: 48px;
 	font-size: 16px;
 	color: #fff;
@@ -57,8 +57,8 @@ margin-top: 80px;
 }
 
 .member-login .btnLogin:hover {
-margin-top: 80px; 
-	width : 300px;
+	margin-top: 80px;
+	width: 300px;
 	height: 48px;
 	font-size: 16px;
 	color: #fff;
@@ -74,9 +74,99 @@ margin-top: 80px;
 }
 
 .mf-find a {
-  color: black;
+	color: black;
 }
 
 .mf-find a:hover {
-	color:red;
+	color: red;
+}
+
+/*************************/
+/* 회원 가입
+/*************************/
+.member-join table {
+	margin-top: 15px;
+	font-size: 20px;
+	border-collapse: separate; /* 셀 간격 */
+	border-spacing: 20px;
+	margin: auto; /* 테이블 위치 중앙 정렬 */
+	margin-top: 120px;
+	margin-bottom: 150px;
+	border: 1px #eee solid;
+	width: 450px;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+.join_td {
+	text-align: center;
+	color: black;
+	font-size: 25px;
+	font-weight: 200; /* 폰트 얇이 (낮을수록 얇음) */
+	line-height: 35px; /* 글씨체 상하 간격 */
+	padding-bottom: 30px;
+}
+
+.member-join input {
+ 	margin: -3px 0px 0px 35px; 
+    vertical-align: middle;
+	font-size: 15px;
+	font-weight: 200;
+	color: #333;
+	text-align: left;
+	width: 78%; /* input 바깥과 크기 */
+	outline: none;
+	background: none;
+	padding: 0 5px;
+	height: 50px; /* 글자와 밑 줄 사이 간격 */
+	letter-spacing: 0.8px;
+	border: none;
+	border-bottom: 1px solid #eee;
 	
+}
+
+.member-join .btnJoin {
+	margin-top: 80px;
+	width: 300px;
+	height: 48px;
+	font-size: 16px;
+	color: #fff;
+	line-height: 48px;
+	background-color: #2d2d2d;
+	text-align: center;
+	width: 370px;
+	transition: background 0.2s ease-in-out;
+}
+
+.member-join .btnJoin:hover {
+	margin-top: 80px;
+	width: 300px;
+	height: 48px;
+	font-size: 16px;
+	color: #fff;
+	line-height: 48px;
+	background-color: #ff0045;
+	text-align: center;
+	width: 370px;
+	transition: background 0.2s ease-in-out;
+}
+
+.member-join a {
+	color: black;
+}
+
+.member-join a:hover {
+	color: red;
+}
+
+.member-join label {
+	font-size: 14px;
+	text-align: left;
+	padding-left: 40px;
+}
+
+.join_check {
+	font-size: 14px;
+	 margin: 5px 0px 0px 35px; 
+    vertical-align: middle;
+}
