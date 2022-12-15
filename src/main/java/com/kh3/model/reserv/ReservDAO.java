@@ -28,4 +28,10 @@ public interface ReservDAO {
     // 해당 세션 예약 카운트
 	int getSiteReservCount(Map<String, Object> searchMap);
 
+	// 해당 세션 예약 카운트
+	List<ReservDTO> getBoardList(int startNo, int endNo, Map<String, Object> searchMap);
+
+	// 회원 예약내용 상세 페이지
+	ReservDTO getResevCont(int reserv_no);
+
 }
