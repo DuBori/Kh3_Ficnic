@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,13 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh3.model.board.BoardCategoryDAO;
@@ -206,7 +203,7 @@ public class SiteBoardController {
 
         model.addAttribute("bbs_id", bbs_id);
         model.addAttribute("List", this.board_Dao.getBoardList(dto.getStartNo(), dto.getEndNo(), searchMap));
-        model.addAttribute("boardConfig", BoardConfdto);
+        model.addAttribute("conf", BoardConfdto);
         model.addAttribute("BoardCate", BoardCategory);
         model.addAttribute("totalCount", totalRecord);
         model.addAttribute("paging", dto);
@@ -268,6 +265,23 @@ public class SiteBoardController {
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
 
+
+        // 게시물 헤드넘버 정하기
+        int set_headnum = 0;
+
+        if(dto.getBdata_use_notice().equals("Y")){
+            set_headnum = 999;
+            int min_headnum = board_Dao.getMinHeadnumNotice(dto.getBoard_id());
+            if(min_headnum > 0) set_headnum = min_headnum - 1;
+        }else{
+            set_headnum = 2000000000;
+            int min_headnum = board_Dao.getMinHeadnum(dto.getBoard_id());
+            if(min_headnum > 0) set_headnum = min_headnum - 100;
+        }
+
+        dto.setBdata_headnum(set_headnum);
+
+
         if (mrequest.getParameter("bdata_use_secret") == null) {
             dto.setBdata_use_secret("N");
         }
@@ -326,6 +340,7 @@ public class SiteBoardController {
     public String board_modify(HttpServletRequest request, Model model) {
         String bbs_id = request.getParameter("bbs_id");
 
+        // 해당 게시물 설정값 가져오기
         BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
         board_skin = BoardConfdto.getBoard_skin();
 
@@ -503,17 +518,45 @@ public class SiteBoardController {
             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
             @RequestParam(value = "category", required = false, defaultValue = "") String category,
             @RequestParam(value = "bbs_id", required = false, defaultValue = "") String bbs_id,
-            HttpServletRequest request, Model model) {
+            HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
 
+        // 해당 게시물 설정값 가져오기
         BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
         board_skin = BoardConfdto.getBoard_skin();
 
 
         // 게시판 권한 가져오기
         HttpSession session = request.getSession();
-        String sess_type = null;
+        String sess_type = "nomem";
         if(session.getAttribute("sess_type") != null) sess_type = (String) session.getAttribute("sess_type");
         Map<String, Object> bbs_level = getBoardLevel(BoardConfdto, sess_type);
+
+
+        // 해당 게시판 해당 게시글 가져오기
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("bbs_id", bbs_id);
+        map.put("bdata_no", bdata_no);
+
+        board_Dao.updateBoardHit(map);
+        BoardDTO BoardConDto = board_Dao.getBoardCont(map);
+
+
+        // 비밀글 체크
+        if(BoardConDto.getBdata_use_secret().equals("Y")){
+            String sess_id = null;
+            String sess_pw = null;
+            String bdata_id = "nomem";
+
+            if(session.getAttribute("sess_id") != null) sess_id = (String) session.getAttribute("sess_id");
+            if(session.getAttribute("sess_pw") != null) sess_pw = (String) session.getAttribute("sess_pw");
+            if(BoardConDto.getBdata_writer_id() != null) bdata_id = BoardConDto.getBdata_writer_id();
+
+            if(!bdata_id.equals(sess_id) && !sess_type.equals("admin") && !BoardConDto.getBdata_writer_pw().equals(sess_pw)) {
+                PrintWriter out = response.getWriter();
+                out.println("<script>location.href='board_pw_chk.do?bbs_id=" + bbs_id + "&bdata_no=" + bdata_no + "';</script>");
+                return null;
+            }
+        }
 
 
         // 한 페이지당 보여질 게시물의 수 -> 해당 게시물 설정값 가져와야한다.
@@ -539,16 +582,6 @@ public class SiteBoardController {
         searchMap.put("keyword", keyword);
         searchMap.put("bbs_id", bbs_id);
 
-        /* 게시글 리스트 출력 */
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("bbs_id", bbs_id);
-        map.put("bdata_no", bdata_no);
-
-        /* 조회수 증가 */
-        board_Dao.updateBoardHit(map);
-
-        // 해당 게시판 해당 게시글 가져오기
-        BoardDTO BoardConDto = board_Dao.getBoardCont(map);
 
         // 해당 게시판 해당 게시글 해당 댓글 리스트 가져오기
         List<BoardCommentDTO> BoardCommentList = board_CommDao.getBoardCommList(map);
@@ -570,7 +603,7 @@ public class SiteBoardController {
 
         model.addAttribute("bbs_id", bbs_id);
         /* 게시글 설정값 DTO */
-        model.addAttribute("boardConf", BoardConfdto);
+        model.addAttribute("conf", BoardConfdto);
 
         /* 페이징처리 */
         model.addAttribute("totalCount", totalRecord);
@@ -775,11 +808,11 @@ public class SiteBoardController {
             @RequestParam(value = "bdata_no", required = false, defaultValue = "") int bdata_no,
             @RequestParam(value = "bdata_writer_id", required = false, defaultValue = "") String bdata_writer_id) {
 
-        /* 해당 게시판 설정 DTO */
         // 해당 게시물 설정값 가져오기
         BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
         board_skin = BoardConfdto.getBoard_skin();
 
+        model.addAttribute("conf", BoardConfdto);
         model.addAttribute("bbs_id", bbs_id);
         model.addAttribute("bdata_no", bdata_no);
         model.addAttribute("bdata_writer_id", bdata_writer_id);
@@ -813,31 +846,29 @@ public class SiteBoardController {
         response.setContentType("text/html; enctype=utf-8");
         PrintWriter out = response.getWriter();
 
+
+        // 세션에 저장된 비밀번호로 체크
+        if (session.getAttribute("sess_pw").equals(dto.getBdata_writer_pw())) {
+            out.println("<script>location.href='" + request.getContextPath() + "/board/board_view.do?bbs_id=" + bbs_id
+                    + "&bdata_no=" + bdata_no + "';</script>");
+
         // 비회원이 작성한 글인 경우
-        if (bdata_writer_id.equals("") || !session.getAttribute("sess_id").equals(dto.getBdata_writer_id())) {
+        }else if (bdata_writer_id.equals("") || !session.getAttribute("sess_id").equals(dto.getBdata_writer_id())) {
 
             // 암호화된 비밀번호 체크
-            if (dto.getBdata_writer_id() != null) {
-                isTrue = this.passwordEncoder.matches(pwd, dto.getBdata_writer_pw());
-            } else {
-                if (pwd.equals(dto.getBdata_writer_pw()))
-                    isTrue = true;
-            }
+            isTrue = this.passwordEncoder.matches(pwd, dto.getBdata_writer_pw());
 
-            if (isTrue) {
-                session.setAttribute("sess_pw", pwd);
+            if (isTrue == true) {
+                session.setAttribute("sess_pw", dto.getBdata_writer_pw());
                 out.println("<script>location.href='" + request.getContextPath() + "/board/board_view.do?bbs_id="
                         + bbs_id + "&bdata_no=" + bdata_no + "';</script>");
 
             } else {
-                out.println("<script>alert('비밀번호가 틀렸습니다.'); location.href='" + request.getContextPath()
-                        + "/board/board_list.do?bbs_id=" + bbs_id + "';</script>");
+                out.println("<script>alert('비밀번호가 틀렸습니다.'); history.back();</script>");
             }
-        } else if (session.getAttribute("sess_pw").equals(dto.getBdata_writer_pw())) {
-            // 해당 회원이 작성한 경우
-            out.println("<script>location.href='" + request.getContextPath() + "/board/board_view.do?bbs_id=" + bbs_id
-                    + "&bdata_no=" + bdata_no + "';</script>");
-        } else {
+
+        // 회원이 작성한 글인 경우
+        } else if(dto.getBdata_writer_id() != null && session.getAttribute("sess_id").equals(dto.getBdata_writer_id())) {
             out.println("<script>location.href='" + request.getContextPath() + "/board/board_view.do?bbs_id=" + bbs_id
                     + "&bdata_no=" + bdata_no + "';</script>");
         }
