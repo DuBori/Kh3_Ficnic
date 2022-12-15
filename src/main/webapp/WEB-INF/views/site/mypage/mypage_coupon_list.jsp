@@ -6,16 +6,11 @@
 <script language="javascript" src="${path}/resources/site/js/js_mypage.js"></script>
 
 
+<c:set var="mypage_eng" value="coupon" />
+<c:set var="mypage_kor" value="쿠폰 보관함" />
 
 
-<div class="page-info w1100">
-    <h2>쿠폰 보관함</h2>
-    <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
-        <li>마이페이지</li>
-        <li><b>쿠폰 보관함</b></li>
-    </ol>
-</div>
+<%@ include file="../layout/layout_mymenu.jsp" %>
 
 
 

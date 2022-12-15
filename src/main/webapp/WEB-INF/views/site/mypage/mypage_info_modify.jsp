@@ -6,16 +6,11 @@
 <script language="javascript" src="${path}/resources/site/js/js_mypage.js"></script>
 
 
+<c:set var="mypage_eng" value="info" />
+<c:set var="mypage_kor" value="회원정보 수정" />
 
 
-<div class="page-info w1100">
-    <h2>회원정보 수정</h2>
-    <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
-        <li>마이페이지</li>
-        <li><b>회원정보 수정</b></li>
-    </ol>
-</div>
+<%@ include file="../layout/layout_mymenu.jsp" %>
 
 
 
