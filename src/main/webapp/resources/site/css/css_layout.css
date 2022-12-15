@@ -27,6 +27,11 @@ span.noimg {
 }
 
 
+input[type='checkbox'].custom-control-input {
+    left: auto !important;
+}
+
+
 
 
 /*************************/
