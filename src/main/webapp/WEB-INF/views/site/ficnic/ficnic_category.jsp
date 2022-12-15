@@ -2,6 +2,7 @@
 <%@ include file="../layout/layout_header.jsp" %>
 
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_ficnic.css" />
+<script language="javascript" src="${path}/resources/site/js/js_ficnic.js"></script>
 
 
 

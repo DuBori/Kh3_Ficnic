@@ -49,6 +49,18 @@
 
 
 
+    <!-- 예약 상태 변경 -->
+    <update id="adminReservModifyStatus" parameterType="java.util.Map">
+        update reserv_list set reserv_status = #{reserv_status} where reserv_no = #{reserv_no} and reserv_sess = #{reserv_sess}
+    </update>
+
+
+
+    <!-- 예약 피크닉 날짜 변경 -->
+    <update id="adminReservModifyFicnicDate" parameterType="java.util.Map">
+        update reserv_list set reserv_ficnic_date = to_date(#{ficnic_date}) where reserv_no = #{reserv_no} and reserv_sess = #{reserv_sess}
+    </update>
+
 
 
 </mapper>

@@ -2,6 +2,9 @@
 <%@ include file="../layout/layout_header.jsp" %>
 <c:if test="${!empty sess_id}"><script type="text/javascript">alert('이미 로그인 되어 있습니다.'); history.back();</script></c:if>
 
+<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_member.css" />
+<script language="javascript" src="${path}/resources/site/js/js_member.js"></script>
+
 
 <script type="text/javascript">
 //모든 공백 체크 정규식
@@ -153,10 +156,13 @@ $(function(){
     </ol>
 </div>
 
-<div class="contents w1100">
 
 
-<form name="form_input" method="post" action="${path}/member/member_join_ok.do"> 
+<div class="contents w1100 member-join">
+
+
+
+			<form name="form_input" method="post" action="${path}/member/member_join_ok.do"> 
 			
 			<!-- 아이디 -->
 						
@@ -210,8 +216,9 @@ $(function(){
 		</form>
 
 
-</form>
 
 </div>
+
+
 
 <%@ include file="../layout/layout_footer.jsp" %>
