@@ -137,7 +137,7 @@
                                         <c:if test="${dto.getFicnic_market_price() > 0}"><span class="text-secondary"><b class="eng"><fmt:formatNumber value="${dto.getFicnic_market_price()}" /></b>원</span> <i class="fa fa-arrow-right mx-1"></i></c:if>
                                         <span class="text-primary"><b class="eng"><fmt:formatNumber value="${dto.getFicnic_sale_price()}" /></b>원</span>
                                     </p>
-                                    <c:if test="${dto.getFicnic_market_price() > 0}"><p class="text-danger">(<b class="eng"><fmt:formatNumber value="${dto.getFicnic_sale_price() / dto.getFicnic_market_price()}" type="percent" /></b> 할인)</p></c:if>
+                                    <c:if test="${dto.getFicnic_market_price() > 0}"><p class="text-danger">(<b class="eng"><fmt:formatNumber value="${1 - dto.getFicnic_sale_price() / dto.getFicnic_market_price()}" type="percent" /></b> 할인)</p></c:if>
                                 </td>
                                 <td ${showLink} class="table-list-hide eng">
                                     <p><fmt:formatNumber value="${dto.getFicnic_review_point()}" pattern="0.0" />점</p>
