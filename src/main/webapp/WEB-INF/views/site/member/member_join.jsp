@@ -164,55 +164,68 @@ $(function(){
 
 			<form name="form_input" method="post" action="${path}/member/member_join_ok.do"> 
 			
+			<table>
+				
+				<tr class="join_tr">
+				<td class="join_td">간편하게 가입하고 피크닉의<br style="user-select: auto;"> 다양한 클래스를 만나보세요.</h4>
+				</td> </tr>
+				<tr></tr>
 			<!-- 아이디 -->
-						
-			<div class="form-group">
+				<tr>	
+				<td>
 				<label for="member_id">아이디</label>
-				<input type="text" class="form-control" id="member_id" name="member_id" placeholder="6자 이상을 입력해주세요." onkeydown="EngNumInput(this);" required>
-<!-- 				<div class="check_font" id="id_check"></div> -->
-				<div id="idchk-txt" class="d-inline ml-2 check_font"></div>
-				<input type="hidden" name="idchk" value="false" />
-			</div>
+				<input type="text" class="form-control"  id="member_id" name="member_id" placeholder="6자 이상을 입력해주세요." onkeydown="EngNumInput(this);" required>
+				<div id="idchk-txt" class="join_check"></div>
+				<input type="hidden" class="join_check" name="idchk" value="false" />
+				</td>
+				</tr>
 			<!-- 비밀번호 -->
-			<div class="form-group">
+			<tr>
+			<td>
 				<label for="member_pw">비밀번호</label>
 				<input type="password" class="form-control" id="member_pw" name="member_pw" placeholder="8자 이상의 영문, 숫자, 특수문자 조합" required>
-				<div class="check_font" id="pw_check"></div>
-			</div>
+				<div class="check_font join_check" id="pw_check"></div>
+			</td>
+			</tr>
 			<!-- 비밀번호 재확인 -->
-			<div class="form-group">
+			<tr>
+			<td>
 				<label for="member_pw2">비밀번호 확인</label>
 				<input type="password" class="form-control" id="member_pw_re" name="member_pw_re" placeholder="비밀번호를 다시 입력해주세요." required>
-				<div class="check_font" id="pw_re_check"></div>
-			</div>
+				<div class="check_font join_check" id="pw_re_check"></div>
+			</td>
+			</tr>
 			<!-- 이름 -->
-			<div class="form-group">
+			<tr>
+			<td>
 				<label for="member_name">이름</label>
 				<input type="text" class="form-control" id="member_name" name="member_name" placeholder="이름을 입력해주세요." required>
-				<div class="check_font" id="name_check"></div>
-			</div>
+				<div class="check_font join_check" id="name_check"></div>
+			</td>
+			</tr>
 			<!-- 이메일 -->
-			<div class="form-group">
+			<tr>
+			<td>
 				<label for="member_email">이메일</label>
 				<input type="email" class="form-control" id="member_email" name="member_email" placeholder="이메일을 입력해주세요." onkeydown="EmailInput(this);" required>
-				<div id="mailchk-txt" class="d-inline ml-2 check_font"></div>
+				<div id="mailchk-txt" class="check_font join_check"></div>
 				<input type="hidden" name="mailchk" value="false" />
-			</div>
-			<!-- 휴대전화 -->
-			<div class="form-group">
+			</td>
+			</tr>
+			<!-- 연락처 -->
+			<tr>
+			<td>
 				<label for="member_phone">연락처</label>
-				<input type="text" class="form-control" id="member_phone" name="member_phone" placeholder="-을 포함한 전화번호를 입력해주세요." onkeydown="NumSpInput(this);" required>
-				<div class="check_font" id="phone_check"></div>
-			</div>
+				<input type="text" class="form-control join_check" id="member_phone" name="member_phone" placeholder="-을 포함한 전화번호를 입력해주세요." onkeydown="NumSpInput(this);" required>
+				<div class="check_font join_check" id="phone_check"></div>
+			</td>
+			</tr>
 			
-			<div class="reg_button">
-				<a class="btn btn-danger px-3" href="${pageContext.request.contextPath}">
-					<i class="fa fa-rotate-right pr-2" aria-hidden="true"></i>취소하기
-				</a>&emsp;&emsp;
-				<button class="btn btn-primary px-3" id="reg_submit">
-					<i class="fa fa-heart pr-2" aria-hidden="true"></i>가입하기
-				</button>
-			</div>
+			<td>
+				<a href="${pageContext.request.contextPath}">
+				<button class="btnJoin">가입하기</button>
+			</td>
+			</table>
 		</form>
 
 
