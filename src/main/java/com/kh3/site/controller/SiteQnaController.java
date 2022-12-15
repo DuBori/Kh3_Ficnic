@@ -51,61 +51,6 @@ public class SiteQnaController {
     
 
 
-    // =====================================================================================
-    // 1:1 문의 삭제 처리
-    // =====================================================================================
-    @RequestMapping("/site/mypage/mypage_qna_deleteOk.do")
-    public void delete(@RequestParam("qna_no") int no, HttpServletResponse response) throws Exception {
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        int check = this.qdao.qnaDelete(no);
-        if (check > 0) {
-            this.cdao.qnaCommentAllDelete(no);
-            out.println("<script>alert('문의글이 삭제되었습니다.'); location.href='qna_list.do';</script>");
-        } else {
-            out.println("<script>alert('문의글 삭제중 에러가 발생하였습니다.'); history.back();</script>");
-        }
-    }
-
-
-
-
-    // =====================================================================================
-    // 1:1 문의 댓글 작성 처리
-    // =====================================================================================
-    @RequestMapping("/site/mypage/mypage_qna_commentOk.do")
-    public void reply(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        QnaCommentDTO cdto = new QnaCommentDTO();
-
-        cdto.setComment_content(request.getParameter("comment_content"));
-        cdto.setComment_writer_name(request.getParameter("comment_writer_name"));
-        cdto.setComment_writer_pw(request.getParameter("comment_writer_pw"));
-        cdto.setMember_id(request.getParameter("member_id"));
-        
-        cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
-
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        int check = this.cdao.qnaReply(cdto);
-        out.println(check);
-    }
-
-
-
-
-    // =====================================================================================
-    // 1:1 문의 댓글 삭제 처리
-    // =====================================================================================
-    @RequestMapping("/site/mypage/mypage_qna_deleteOk.do")
-    public void commentDelete(@RequestParam("comment_no") int no, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        int res = this.cdao.qnaCommentDelete(no);
-        out.println(res);
-    } 
 
     
     
@@ -114,10 +59,11 @@ public class SiteQnaController {
     // 1:1 문의 수정 페이지
     // =====================================================================================
     @RequestMapping("/site/mypage/mypage_qna_modify.do")
-    public String info_modify() {
+    public String qna_modify(Model model, @RequestParam("qna_no") int no) {
     	
-    	
-        return "site/mypage/mypage_info_modify";
+    	QnaDTO dto = this.qdao.qnaView(no);
+    	model.addAttribute("dto", dto);
+        return "site/mypage/mypage_qna_modify";
     }
 
     
