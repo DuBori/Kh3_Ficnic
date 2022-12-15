@@ -17,7 +17,7 @@
 <div class="contents w1100 mypage-reserv">
 
 
-    내용
+    
 
 
 </div>

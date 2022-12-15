@@ -9,8 +9,15 @@
 
     <!-- 예약 목록 -->
     <select id="siteReservList" resultType="reservDTO">
+    
     </select>
-
+	
+	<!-- 검색 페이징 개수  -->
+	<select id="siteReservCount" parameterType="map">
+		select count(*) from reserv_list where reserv_no > 0
+		<if test="member_id != ''">and member_id = #{member_id}</if>
+		<if test="field"></if>
+	</select>
 
 
 
