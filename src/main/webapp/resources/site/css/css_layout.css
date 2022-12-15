@@ -264,10 +264,17 @@ span.noimg {
     font-size: 16px;
     color: var(--font-color);
 }
+#footer .fw-cs h4 {
+    font-family: 'Lato';
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+    margin-top: 4px;
+}
 #footer .fw-cs > div {
     font-size: 13px;
     color: #444;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 #footer .fw-cs > div > a {
     padding: 2px 6px 4px 4px;
@@ -1092,7 +1099,6 @@ main .table-list {
     padding: 0;
 }
 
-
 main .table-list th,
 main .table-list td {
     font-size: 14px;
@@ -1125,6 +1131,11 @@ main .table-list tbody td.eng {
     font-weight: 500;
     letter-spacing: -1px;
 }
+main .table-list tbody td span.search {
+    background: #fffc00;
+    color: #ff0000;
+}
+
 main .table-list tfoot td {
     padding: 10px 0;
     border-bottom: 0 none;
@@ -1156,6 +1167,9 @@ main .table-list.hover > tbody > tr:hover > td {
 }
 
 
+main .list-bottom-util .col-md-4 {
+    margin-bottom: 1rem !important;
+}
 main .list-bottom-util .col-md-4.text-center {
     order: 2;
 }
@@ -1172,7 +1186,7 @@ main .list-search-form .custom-select {
     font-size: 14px;
 }
 main .list-search-form input[type="text"] {
-    height: 38px;
+    height: 39px;
 }
 main .list-search-form button.btn {
     font-size: 14px;
@@ -1183,7 +1197,6 @@ main .list-search-form button.btn {
 @media (max-width: 992px) {
     main .list-bottom-util .col-md-4.text-center {
         order: 1;
-        margin-top: 0 !important;
     }
     main .list-bottom-util .col-md-4 {
         order: 2;
@@ -1207,7 +1220,6 @@ main .list-search-form button.btn {
 @media (min-width: 576px) {
     main .list-bottom-util .col-md-4.text-center {
         order: 2;
-        margin-top: 1rem !important;
     }
     main .list-bottom-util .col-md-4 {
         order: 1;
@@ -1302,10 +1314,13 @@ main .table-list.board-list tbody tr.notice td.subject {
     text-align: center;
     font-size: 0;
     line-height: 0;
+    vertical-align: top;
 }
 .page-paging ol {
     display: inline-block;
     vertical-align: top;
+    margin: 0;
+    padding: 0;
 }
 .page-paging span,
 .page-paging ol li {
@@ -1316,9 +1331,9 @@ main .table-list.board-list tbody tr.notice td.subject {
     letter-spacing: -1px;
     color: #6c757d;
     vertical-align: top;
-    border-top: 1px solid #dee2e6;
-    border-bottom: 1px solid #dee2e6;
-    border-left: 1px solid #dee2e6;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
 }
 
 .page-paging span {
@@ -1329,14 +1344,14 @@ main .table-list.board-list tbody tr.notice td.subject {
 .page-paging span.nolink {
     width: 38px;
     height: 38px;
-    padding-top: 11px;
     text-align: center;
+    box-sizing: border-box;
 }
 .page-paging span:first-child {
     margin-left: 0;
-    border-top: 1px solid #dee2e6;
-    border-bottom: 1px solid #dee2e6;
-    border-left: 1px solid #dee2e6;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
     -webkit-border-top-left-radius: 5px;
     -webkit-border-bottom-left-radius: 5px;
     -moz-border-radius-topleft: 5px;
@@ -1346,9 +1361,9 @@ main .table-list.board-list tbody tr.notice td.subject {
 }
 .page-paging span:last-child {
     margin-left: 0;
-    border-top: 1px solid #dee2e6;
-    border-bottom: 1px solid #dee2e6;
-    border-right: 1px solid #dee2e6;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
     -webkit-border-top-right-radius: 5px;
     -webkit-border-bottom-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
@@ -1363,17 +1378,20 @@ main .table-list.board-list tbody tr.notice td.subject {
     text-align: center;
     font-family: verdana;
     font-size: 14px;
-    color: #389ea8;
+    color: #007bff !important;
+    text-decoration: none;
+    letter-spacing: -1px;
 }
 .page-paging span a {
     width: 38px;
     height: 36px;
-    padding-top: 11px;
     font-size: 16px;
+    text-decoration: none;
+    letter-spacing: -1px;
 }
 .page-paging a:hover {
     color: #000;
-    background: #f3f3f3;
+    background: #f3f3f3 !important;
     text-decoration: none;
 }
 
@@ -1381,12 +1399,13 @@ main .table-list.board-list tbody tr.notice td.subject {
     width: 38px;
     height: 38px;
     color: #fff;
-    background: #389ea8;
-    border-top: 1px solid #389ea8;
-    border-bottom: 1px solid #389ea8;
+    background: #007bff !important;
+    border-top: 1px solid #007bff;
+    border-bottom: 1px solid #007bff;
     font-family: verdana;
     font-size: 13px;
     text-align: center;
+    box-sizing: border-box;
 }
 
 

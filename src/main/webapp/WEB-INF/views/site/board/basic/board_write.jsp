@@ -12,8 +12,11 @@
 
 
 
-<c:if test="${!empty boardConfig }">
+<c:if test="${!empty boardConfig}">
 	<c:set value="${boardConfig}" var="conf"/>
+
+    <c:if test="${boardConfig.getBoard_level_write() ne 'null' and empty sess_id}">권한이 없습니다.</c:if>
+    <c:if test="${boardConfig.getBoard_level_write() eq 'admin' and sess_id ne 'admin' }">권한이 없습니다.</c:if>
 </c:if>
 
 	<c:if test="${!empty m }">
