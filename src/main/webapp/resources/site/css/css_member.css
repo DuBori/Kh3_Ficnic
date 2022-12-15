@@ -2,17 +2,17 @@
 /* 회원 관련
 /*************************/
 
+
 /*************************/
 /* 로그인
 /*************************/
 .member-login table {
 	text-align: center;
-	margin-top: 15px;
+	margin-top: 20px;
 	font-size: 20px;
 	border-collapse: separate; /* 셀 간격 */
 	border-spacing: 20px;
 	margin: auto; /* 테이블 위치 중앙 정렬 */
-	margin-top: 120px;
 	margin-bottom: 150px;
 	border: 1px #eee solid;
 	width: 450px;
@@ -81,16 +81,18 @@
 	color: red;
 }
 
+
+
+
 /*************************/
 /* 회원 가입
 /*************************/
 .member-join table {
-	margin-top: 15px;
 	font-size: 20px;
 	border-collapse: separate; /* 셀 간격 */
 	border-spacing: 20px;
 	margin: auto; /* 테이블 위치 중앙 정렬 */
-	margin-top: 120px;
+	margin-top: 20px;
 	margin-bottom: 150px;
 	border: 1px #eee solid;
 	width: 450px;
@@ -110,7 +112,7 @@
 .member-join input {
  	margin: -3px 0px 0px 35px; 
     vertical-align: middle;
-	font-size: 15px;
+	font-size: 16px;
 	font-weight: 200;
 	color: #333;
 	text-align: left;
@@ -126,28 +128,28 @@
 }
 
 .member-join .btnJoin {
-	margin-top: 80px;
-	width: 300px;
+	margin: 5px 0px 0px 35px; 
+	margin-top: 30px;
 	height: 48px;
 	font-size: 16px;
 	color: #fff;
 	line-height: 48px;
 	background-color: #2d2d2d;
 	text-align: center;
-	width: 370px;
+	width: 320px;
 	transition: background 0.2s ease-in-out;
 }
 
 .member-join .btnJoin:hover {
-	margin-top: 80px;
-	width: 300px;
+	margin: 5px 0px 0px 35px; 
+	margin-top: 30px;
 	height: 48px;
 	font-size: 16px;
 	color: #fff;
 	line-height: 48px;
 	background-color: #ff0045;
 	text-align: center;
-	width: 370px;
+	width: 320px;
 	transition: background 0.2s ease-in-out;
 }
 
@@ -160,7 +162,7 @@
 }
 
 .member-join label {
-	font-size: 14px;
+	font-size: 13px;
 	text-align: left;
 	padding-left: 40px;
 }
@@ -170,3 +172,135 @@
 	 margin: 5px 0px 0px 35px; 
     vertical-align: middle;
 }
+
+
+
+/*************************/
+/* 아이디 찾기
+/*************************/
+
+.member-find table {
+	font-size: 20px;
+	border-collapse: separate; /* 셀 간격 */
+	border-spacing: 20px;
+	margin: auto; /* 테이블 위치 중앙 정렬 */
+	border: 1px #eee solid;
+	width: 450px;
+	margin-top: 20px;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+
+.member-find input {
+ 	margin: -3px 0px 0px 35px; 
+    vertical-align: middle;
+	font-size: 16px;
+	font-weight: 200;
+	color: #333;
+	text-align: left;
+	width: 78%; /* input 바깥과 크기 */
+	outline: none;
+	background: none;
+	padding: 0 5px;
+	height: 50px; /* 글자와 밑 줄 사이 간격 */
+	letter-spacing: 0.8px;
+	border: none;
+	border-bottom: 1px solid #eee;
+	
+}
+
+/* 버튼 */
+.member-find .btnFind {
+	margin: 5px 0px 0px 35px; 
+	height: 48px;
+	font-size: 16px;
+	color: #fff;
+	line-height: 48px;
+	background-color: #2d2d2d;
+	text-align: center;
+	width: 330px;
+	transition: background 0.2s ease-in-out;
+}
+
+/* 버튼 hover */
+.member-find .btnFind:hover {
+	margin: 5px 0px 0px 35px; 
+	height: 48px;
+	font-size: 16px;
+	color: #fff;
+	line-height: 48px;
+	background-color: #ff0045;
+	text-align: center;
+	width: 330px;
+	transition: background 0.2s ease-in-out;
+}
+
+/* 아이디찾기/ 비밀번호 찾기 a태그 */
+.member-find .findfind {
+	color: black;
+	padding-top: 100px;
+}
+
+.member-find .findfind:hover {
+	color: red;
+}
+
+.member-find .find_p {
+	padding-top: 10px;
+}
+
+
+
+/*************************/
+/* 비밀번호 찾기
+/*************************/
+
+.member-find table {
+	font-size: 20px;
+	border-collapse: separate; /* 셀 간격 */
+	border-spacing: 20px;
+	margin: auto; /* 테이블 위치 중앙 정렬 */
+	border: 1px #eee solid;
+	width: 450px;
+	margin-top: 20px;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+
+.member-find input {
+ 	margin: -3px 0px 0px 35px; 
+    vertical-align: middle;
+	font-size: 16px;
+	font-weight: 200;
+	color: #333;
+	text-align: left;
+	width: 78%; /* input 바깥과 크기 */
+	outline: none;
+	background: none;
+	padding: 0 5px;
+	height: 50px; /* 글자와 밑 줄 사이 간격 */
+	letter-spacing: 0.8px;
+	border: none;
+	border-bottom: 1px solid #eee;
+	
+}
+
+/* 버튼 */
+
+/* 아이디찾기/ 비밀번호 찾기 a태그 */
+.member-find .findfind {
+	color: black;
+	padding-top: 100px;
+}
+
+.member-find .findfind:hover {
+	color: red;
+}
+
+.member-find .find_p {
+	padding-top: 10px;
+}
+
+
