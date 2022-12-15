@@ -85,4 +85,21 @@ public class ReservDAOImpl implements ReservDAO {
 	}
 
 
+
+	@Override
+	public List<ReservDTO> getBoardList(int startNo, int endNo, Map<String, Object> searchMap) {
+		// TODO Auto-generated method stub
+		searchMap.put("startNo", startNo);
+		searchMap.put("endNo", endNo);
+		return this.sqlSession.selectList("siteReservList", searchMap);
+	}
+
+
+
+	@Override
+	public ReservDTO getResevCont(int reserv_no) {
+		return this.sqlSession.selectOne("siteReservCont",reserv_no );
+	}
+
+
 }
