@@ -8,6 +8,7 @@
 
 <c:set var="mypage_eng" value="qna" />
 <c:set var="mypage_kor" value="내 1:1 문의 내역" />
+<c:set var="qList" value="${qList}" />
 
 
 <%@ include file="../layout/layout_mymenu.jsp" %>
@@ -16,9 +17,43 @@
 
 <div class="contents w1100 mypage-qna">
 
+<div class="row">
+        <div class="col-lg">
+            <div class="card border-0">
+                <div class="card-header bg-white border-0 pt-0 pl-0">총 <b class="text-primary"><fmt:formatNumber value="${qList.size()}" /></b> 개의 게시물</div>
 
-    내용
+                <div class="card-body p-0">
+                    <table class="table-list mb-2 board-list">
+                        <thead>
+                            <tr>
+                                <th>제목</th>
+                                <th style="width: 200px;" class="table-list-hide-mob">등록일</th>
+                            </tr>
+                        </thead>
 
+                        <tbody>
+                            <c:choose>
+                                <c:when test="${!empty qList}">
+                                <c:forEach var="dto" items="${qList}">
+								<tr onclick="location.href='${path}/site/mypage/mypage_qna_view.do?no=${dto.getQna_no() }';">                                
+                                    <td ${showLink} class="text-center eng table-list-hide-mob">${dto.getQna_title() }</td>
+                                    <td ${showLink} class="text-center eng table-list-mob">${dto.getQna_date()}</td>
+                                </tr>
+                                </c:forEach>
+                                </c:when>
+
+                                <c:otherwise>
+                                <tr>
+                                    <td colspan="2" class="nodata">문의글 내역이 없습니다.</td>
+                                </tr>
+                                </c:otherwise>
+                            </c:choose>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

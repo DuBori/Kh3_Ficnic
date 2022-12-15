@@ -13,5 +13,7 @@ public interface QnaDAO {
     QnaDTO qnaView(int no);
 
     int qnaDelete(int no);
+    // 마이페이지 문의글 리스트
+	List<QnaDTO> siteQnaList(String id);
 
 }

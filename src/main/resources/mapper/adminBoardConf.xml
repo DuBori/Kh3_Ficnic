@@ -9,7 +9,7 @@
 
     <!-- 게시판 설정 목록 총 갯수 -->
     <select id="adminBoardConfTotal" parameterType="java.util.Map" resultType="int">
-        select count(*) from board_config      
+        select count(*) from board_config
             <if test="keyword != ''"> where board_name like '%' || #{keyword} || '%'</if>
     </select>
 
@@ -106,8 +106,8 @@
 			bdata_hit number(5) default '0' not null,
 			bdata_comment number(5) default '0' not null,
 			bdata_writer_id varchar2(50),
-			bdata_writer_pw varchar2(100) not null,
-			bdata_writer_name varchar2(50) not null,
+			bdata_writer_pw varchar2(200) not null,
+			bdata_writer_name varchar2(50),
 			bdata_date date default sysdate
         )
     </insert>

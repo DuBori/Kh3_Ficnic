@@ -23,11 +23,12 @@ public class BoardDAOImpl implements BoardDAO {
 
 	/* 해당 게시판 테이블 개수 카운트 */
 	@Override
-	public int getListCount(String field, String keyword,String bbs_id) {
-		 Map<String, Object> map = new HashMap<String, Object>();
-	        map.put("field", field);
-	        map.put("keyword", keyword);
-	        map.put("bbs_id", bbs_id);
+	public int getListCount(String field, String keyword, String category ,String bbs_id) {
+	    Map<String, Object> map = new HashMap<String, Object>();
+        map.put("field", field);
+        map.put("keyword", keyword);
+        map.put("category", category);
+        map.put("bbs_id", bbs_id);
 
 	   return this.sqlSession.selectOne("SiteBoardTotal", map);
 		
@@ -36,7 +37,6 @@ public class BoardDAOImpl implements BoardDAO {
 	/* 해당 게시판 검색 리스트 */
 	@Override
 	public List<BoardDTO> getBoardList(int startNo, int endNo, Map<String, Object> map) {
-		
 		map.put("startNo", startNo);
 		map.put("endNo", endNo);
 	   
@@ -74,6 +74,18 @@ public class BoardDAOImpl implements BoardDAO {
 		return this.sqlSession.delete("SiteBoardDelete", map);
 	}
 
+
+	/* 해당 게시판의 최소 헤드넘버 구하기 */
+    @Override
+    public int getMinHeadnum(String bbs_id) {
+        return this.sqlSession.selectOne("SiteBoardGetMinHeadnum", bbs_id);
+    }
+
+    /* 해당 게시판의 최소 헤드넘버 구하기 (공지글) */
+    @Override
+    public int getMinHeadnumNotice(String bbs_id) {
+        return this.sqlSession.selectOne("SiteBoardGetMinHeadnumNotice", bbs_id);
+    }
 
 
 }
