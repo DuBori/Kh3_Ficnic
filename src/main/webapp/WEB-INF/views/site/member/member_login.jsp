@@ -18,33 +18,35 @@
 
 
 
-<div class="contents w1100 member-login">
+<div class="contents w1100 member-login cont_login txtb">
 
 
-	<form name="form1" method="post" action="${path}/member/member_login_check.do">
+	<form class="login-form" name="form1" method="post" action="${path}/member/member_login_check.do">
 		
-		<table border="1" width="400px">
+		<table>
 		
-
+		<tr class="login_tr">
+		<td class="login_head">간편하게 로그인하고 피크닉의<br style="user-select: auto;"> 다양한 클래스를 만나보세요.</h4>
+		</td> </tr>
+		
 			<input type="hidden" name="member_name" value="${dto.getMember_name()}">
-			
+			<tr></tr>
 			<tr>
-				<td>아이디</td>
-				<td><input id="member_id" name="member_id" required="required" placeholder="회원 아이디"></td>
+				<td><input id="member_id" name="member_id" required="required" placeholder="아이디를 입력해 주세요"></td>
 			</tr>
 			<tr>
-				<td>비밀번호</td>
-				<td><input type="password" id="member_pw" name="member_pw" required="required" placeholder="비밀번호"></td>
+				<td><input type="password" id="member_pw" name="member_pw" required="required" placeholder="비밀번호를 입력해 주세요"></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<input type="submit" id="btnLogin" value="로그인"> 
-
+					<input type="submit" class="btnLogin" value="로그인">
+					
+		
 		<div class="mf-find"><a href="${path}/member/member_find.do">
 		<i class="fa fa-question-circle"></i> 아이디/비밀번호 찾기</a></div>
-
 				</td>
 			</tr>
+
 		</table>
 	</form>
 
