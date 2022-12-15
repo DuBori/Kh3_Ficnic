@@ -9,6 +9,7 @@ public class BoardDTO {
 	private String board_id;
 	private int bdata_headnum;
 	private int bdata_category;
+	private String bdata_category_name;
 	
 	private String bdata_title;
 	private String bdata_cont;
