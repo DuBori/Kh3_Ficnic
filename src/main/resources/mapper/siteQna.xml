@@ -13,6 +13,12 @@
     </select>
 
 
+	<!-- 문의글 수정 -->
+	<update id="siteQnaModifyOk" parameterType="qnaDTO">
+		update
+		qna_list set qna_cont = #{qna_cont}, qna_title = #{qna_title}, qna_file1 = #{qna_file1}, qna_file2 = #{qna_file2} where qna_no = #{qna_no}
+	</update>
+
 
 
 
