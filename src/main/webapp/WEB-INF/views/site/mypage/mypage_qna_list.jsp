@@ -20,7 +20,6 @@
 <div class="row">
         <div class="col-lg">
             <div class="card border-0">
-                <div class="card-header bg-white border-0 pt-0 pl-0">총 <b class="text-primary"><fmt:formatNumber value="${qList.size()}" /></b> 개의 게시물</div>
 
                 <div class="card-body p-0">
                     <table class="table-list mb-2 board-list">
@@ -54,6 +53,8 @@
             </div>
         </div>
     </div>
+    
+        <a href="${path}/site/mypage/mypage_qna_write.do" class="write">문의하기</a>
 
 </div>
 

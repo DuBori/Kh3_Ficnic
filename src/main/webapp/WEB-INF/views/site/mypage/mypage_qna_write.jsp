@@ -18,20 +18,19 @@
 
 
 
-			<form name="form_input" method="post" enctype="multipart/form-data" action="${path}/site/mypage/mypage_qna_modifyOk.do">
-			<input type="hidden"  name="qna_no" value="${dto.getQna_no()}">
+			<form name="form_input" method="post" enctype="multipart/form-data" action="${path}/site/mypage/mypage_qna_writeOk.do">
 			<table>
 			<tr>	
 			<td>
-            <label for="qna_title" class="title">제목</label>
-            <input type="text" name="qna_title" id="qna_title" value="${dto.getQna_title()}" maxlength="30" class="form-control-plaintext w-100" />
+            <label for="qna_title">제목</label>
+            <input type="text" name="qna_title" id="qna_title" value="" maxlength="30" class="form-control-plaintext w-100" />
 			</td>
 			</tr>
 			
 			<tr>
 			<td>
 				<label for="qna_cont" style="padding: 60px 0;">내용</label>
-                <textarea name="qna_cont" id="qna_cont" cols="20" rows="5" class="form-control">${dto.getQna_cont()}</textarea>
+                <textarea name="qna_cont" id="qna_cont" cols="20" rows="5" class="form-control"></textarea>
 			</td>
 			</tr>
 			
@@ -42,11 +41,7 @@
             <div class="jf-input">
             <div class="row">
             <div class="col pb-2">
-            <input type="file" name="qna_file_modi1" class="form-control" accept="image/jpeg, image/png, image/gif" />
-            <c:if test="${!empty dto.getQna_file1()}">
-            <p class="mt-2"><img src="${path}${dto.getQna_file1()}" style="max-width: 400px;" alt="" /></p>
-            <input type="hidden" name="ori_qna_file1" value="${dto.getQna_file1()}" />
-            </c:if>
+            <input type="file" name="qna_file1" class="form-control" accept="image/jpeg, image/png, image/gif" />
             </div>
             </div>
             </div>
@@ -61,11 +56,7 @@
             <div class="jf-input">
             <div class="row">
             <div class="col pb-2">
-            <input type="file" name="qna_file_modi2" class="form-control" accept="image/jpeg, image/png, image/gif" />
-            <c:if test="${!empty dto.getQna_file1()}">            
-            <p class="mt-2"><img src="${path}${dto.getQna_file2()}" style="max-width: 400px;" alt="" /></p>
-            <input type="hidden" name="ori_qna_file2" value="${dto.getQna_file2()}" />
-            </c:if>
+            <input type="file" name="qna_file2" class="form-control" accept="image/jpeg, image/png, image/gif" />
             </div>
             </div>
             </div>
@@ -75,7 +66,7 @@
 			
 			<tr>
 			<td>
-				<button class="btnJoin" type="submit">수정하기</button>
+				<button class="btnJoin" type="submit">추가하기</button>
 			</td>
 			</tr>
 			</table>
