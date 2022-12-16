@@ -42,13 +42,13 @@
 							    <p class="card-location">지역</p>
 							    <h5 class="card-text card-title">${dto.getReserv_ficnic_name() }</h5>
 							  </div>
-							  <ul ${move_ficnic_info } class="mypage-wish list-group list-group-flush">
-							    <li class="list-group-item card-text"> 예약 날짜 :${dto.getReserv_date().substring(0,10)}</li>
-							    <li class="list-group-item card-text">${dto.getReserv_total_price() }</li>
+							  <ul ${move_ficnic_info } class="mypage-wish">
+							    <li class="card-text"> 예약 날짜 :${dto.getReserv_date().substring(0,10)}</li>
+							    <li class="card-text"><fmt:formatNumber value="${dto.getReserv_total_price()}"/>원</li>
 							  </ul>
 							  <div class="mypage-wish card-body">
 							    <c:if test="${dto.getReserv_status() ne 'cancel'}"> <a href="${path}/mypage/mypage_reserv_view.do?reserv_no=${dto.getReserv_no()}" class="card-link card-text">상세내역 보기</a></c:if>
-							    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done'}"> <a class="btn-open-popup card-link card-text">리뷰 작성하기</a></c:if>
+							    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done'}"> <a class="btn-open-popup card-link card-text" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}">리뷰 작성하기</a></c:if>
 							    <c:if test="${dto.getReserv_status() eq 'cancel'}"> <a href="#" class="card-link card-text">예약취소</a></c:if>
 							  </div>
 						</div>	
@@ -69,32 +69,56 @@
     		
     		</c:choose>
 		</div>
+		      	<!-- 페이징 처리  -->
+		<c:if test="${!empty paging}">
+	        <div class="row list-bottom-util">
+	            	<div class="col text-center">
+	                    ${pagingWrite}
+	               </div>
+	        </div>
+	    </c:if>
+	    <!-- 페이징 처리 end -->
+
 	</div>
 	
 </div>
-<div class="modal2">
-      <div class="modal_body2">
-      	<div class="div-form" action="<%=request.getContextPath()%>/ficnic_review_Ok.do">
-      		<div align="right" id="watchadiv">
-      			<button type="button" class="btn-close" aria-label="Close">X</button>
-      		</div>
-      		<div id="modal_be">
-      			<span><b>${movie_dto.getMovie_title()}</b></span>
-      		</div>
-      		<div id="modal_input" class="ratio ratio-1x1">
-      			<textarea rows="10" cols="9" id="contdiv2" name="content">${coment_dto.getMovie_coment() }</textarea>
-      		</div>
-      		<div id="div4"> 
-				<c:if test="${!empty coment_dto }">
-      				<button type="submit" class="btn btn-danger">수정</button>
-				</c:if>
-				<c:if test="${empty coment_dto }">
-      				<button type="submit" class="btn btn-danger">등록</button>
-				</c:if>
-      		</div>
-      </div>
-      </div>
- </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <form action="${path}/#" method="post" enctype="multipart/form-data">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body p-3 m-1 ">
+	      	<label>리뷰 평점</label>
+            <div class="jf-input">
+                <div class="row">
+                    <div class="col py-1 text-nowrap">
+                        <c:forEach begin="1" end="10" var="i">
+                        <div class="form-check form-check-inline mx-2">
+                            <input class="form-check-input" type="radio" name="review_point" id="review_point" value="${i}" <c:if test="${i == 10}"> checked="checked"</c:if>/>
+                            <label class="form-check-label" for="review_point${i}">${i}</label>
+                        </div>
+                        </c:forEach>
+                    </div>
+                </div>
+           	</div>
+	      	<label>리뷰 내용</label>
+	        <textarea class="form-control form-control-lg" rows="5"></textarea>      		
+	        <input type="file" name="file1" class="form-control" accept="image/jpeg, image/png, image/gif">
+	        <input type="file" name="file2" class="form-control" accept="image/jpeg, image/png, image/gif">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary">작성 완료</button>
+	      </div>
+	    </div>
+	  </div>
+  </form>
+</div>
 
 
 <%@ include file="../layout/layout_footer.jsp" %>

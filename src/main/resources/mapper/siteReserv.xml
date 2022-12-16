@@ -11,7 +11,12 @@
 	<select id="siteReservCount" parameterType="map" resultType="int">
 		select count(*) from reserv_list where reserv_no > 0
 		<if test="member_id != ''">and member_id = #{member_id}</if>
-		<if test="field.equals('body') and keyword != ''">and reserv_ficnic_name like '%'|| #{keyword} || '%'</if>
+		<choose>
+			<when test="getType.equals('reserv')">and reserv_status = #{getType}</when>
+			<when test="getType.equals('confirm')">and reserv_status = #{getType}</when>
+			<when test="getType.equals('done')">and reserv_status = #{getType}</when>
+			<when test="getType.equals('cancel')">and reserv_status = #{getType}</when>
+		</choose>
 	</select>
 	
 	<!-- 예약 목록 --><!-- 해당 검색 페이징 리스트  -->
@@ -23,8 +28,12 @@
 	                from (
 	                select * from reserv_list where reserv_no > 0
 	                <if test="member_id != ''"> and member_id = #{member_id}</if>
-	                <if test="field.equals('body') and keyword != ''"> and reserv_ficnic_name like '%'|| #{keyword} || '%'</if>
-    
+			    	<choose>
+						<when test="getType.equals('reserv')">and reserv_status = #{getType}</when>
+						<when test="getType.equals('confirm')">and reserv_status = #{getType}</when>
+						<when test="getType.equals('done')">and reserv_status = #{getType}</when>
+						<when test="getType.equals('cancel')">and reserv_status = #{getType}</when>
+					</choose>
     )b
 			)
 			 <![CDATA[
