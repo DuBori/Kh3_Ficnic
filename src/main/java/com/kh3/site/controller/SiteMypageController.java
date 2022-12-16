@@ -24,8 +24,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
+import com.kh3.model.member.McouponDAO;
+import com.kh3.model.member.McouponDTO;
+import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.PointDAO;
 import com.kh3.model.member.PointDTO;
+import com.kh3.model.member.WishDAO;
+import com.kh3.model.member.WishDTO;
 import com.kh3.model.qna.QnaCommentDAO;
 import com.kh3.model.qna.QnaCommentDTO;
 import com.kh3.model.qna.QnaDAO;
@@ -44,9 +49,15 @@ public class SiteMypageController {
     @Autowired
     private QnaDAO qdao;
 
+  
+    @Inject
+    private WishDAO wdao;
+    
 	@Inject
 	private ReservDAO reservDAO;
 
+	@Inject
+	private McouponDAO mcouponDAO;
 	
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
@@ -106,7 +117,15 @@ public class SiteMypageController {
     // 마이페이지 - 위시 리스트
     // =====================================================================================
     @RequestMapping("mypage/mypage_wish_list.do")
-    public String wish_list() {
+    public String wish_list(
+    		HttpSession session,
+    		Model model
+    		) {
+    	
+    	List<WishDTO> List=wdao.getMemberWishList((String)session.getAttribute("sess_id"));
+   
+    	model.addAttribute("List", List);
+    	
         return "site/mypage/mypage_wish_list";
     }
 
@@ -118,7 +137,12 @@ public class SiteMypageController {
     // 마이페이지 - 쿠폰 보관함
     // =====================================================================================
     @RequestMapping("mypage/mypage_coupon_list.do")
-    public String coupon_list() {
+    public String coupon_list(
+    		HttpSession session, Model model) {
+    	
+    	List<McouponDTO> List =  this.mcouponDAO.getCouponView((String)session.getAttribute("sess_id"));
+    	
+    	model.addAttribute("List", List);
         return "site/mypage/mypage_coupon_list";
     }
 

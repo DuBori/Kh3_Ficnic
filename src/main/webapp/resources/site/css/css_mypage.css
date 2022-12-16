@@ -2,12 +2,13 @@
 /* 마이페이지 관련
 /*************************/
 
+
+/*************************/
+/* 예약목록 start
+/*************************/
 .mypage-reserv .now{
 	color: black;
 }
-
-
-
 
 .mypage-reserv-h{
 	
@@ -21,7 +22,7 @@
 }
 .mypage-wish .card-title{
 	
-	font-size: 0.6rem !important;
+	font-size: 0.7rem !important;
 }
 .card-text{	
 	font-size: 0.7rem !important;
@@ -60,4 +61,7 @@
 .modal_body2 div{
   	margin: 3% 0;
 }
+/*************************/
+/* 예약목록 end
+/*************************/
 

@@ -14,21 +14,46 @@
 
 
 
-<div class="contents w1100 mypage-reserv">
+<div class="contents w1100 mypage-coupon">
 
+<div class="row">
+        <div class="col-lg">
+            <div class="card border-0">
 
-    <div class="Coupon__Wrapper-n6zr15-0 FFiuI">
-    <div class="Coupon__ContentWrapper-n6zr15-1 iIvPMk">
-    <div class="Coupon__Description-n6zr15-3 jrcnBs">
-    <div class="Coupon__PriceWithExpireWrapper-n6zr15-4 bKHklM">
-    <div class="Coupon__DiscountPrice-n6zr15-5 gBYRSu">10,000원</div>
-    <div class="Coupon__ExpireDate-n6zr15-6 buKVoG">2022-12-22 만료</div>
-    </div><div class="Coupon__TitleWrapper-n6zr15-7 cVVClH">
-    <div class="Coupon__Title-n6zr15-8 eiBzGd">신규 가입 축하 | 상품 등록 대행 서비스 1만원 할인 쿠폰</div></div></div>
-    <div class="Coupon__ConditionsContainer-n6zr15-9 hGeOCx"><div class="Coupon__Condition-n6zr15-10 iwqtMd"></div>
-    <div class="Coupon__Condition-n6zr15-10 iwqtMd">0원 이상 프립에 사용 가능</div></div></div>
-    <div class="Coupon__CutoutWrapper-n6zr15-2 epiIba"></div></div>
+                <div class="card-body p-0">
+                    <table class="table-list mb-2 board-list">
+                        <thead>
+                            <tr>
+                                <th>쿠폰 이름</th>
+                                <th style="width: 120px;">쿠폰 유효기간</th>
+                                <th style="width: 80px;" class="table-list-hide-mob">발급 일자</th>
+                            </tr>
+                        </thead>
 
+                        <tbody>
+                            <c:choose>
+                                <c:when test="${!empty List}">
+                                <c:forEach var="dto" items="${List}">
+                                <tr>
+                                    <td class="text-center eng table-list-mob">${dto.getMcoupon_no()}</td>
+                                    <td class="text-center eng table-list-mob">${dto.getMcoupon_end_date().substring(0,10)}</td>
+                                    <td class="text-center eng table-list-mob">${dto.getMcoupon_date().substring(0,10)}</td>
+                                </tr>
+                                </c:forEach>
+                                </c:when>
+
+                                <c:otherwise>
+                                <tr>
+                                    <td colspan="3" class="nodata">쿠폰 내역이 없습니다.</td>
+                                </tr>
+                                </c:otherwise>
+                            </c:choose>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
