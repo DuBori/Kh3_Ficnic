@@ -75,8 +75,10 @@
                         <div class="form-group col mb-2">
                             <label for="board_skin">게시판 스킨</label>
                             <select id="board_skin" name="board_skin" class="custom-select w-30">
-								<option value="basic"<c:if test="${cnskin eq 'basic'}"> selected="selected"</c:if>>basic</option>
-								<option value="test"<c:if test="${cnskin eq 'test'}"> selected="selected"</c:if>>test</option>
+								<option value="basic"<c:if test="${conskin eq 'basic'}"> selected="selected"</c:if>>basic</option>
+                                <c:forEach var="skin" items="${skin_dir}">
+								<option value="${skin}"<c:if test="${skin eq conskin}"> selected="selected"</c:if>>${skin}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="w-100 border-bottom"></div>

@@ -1,13 +1,55 @@
 /*************************/
-/* .board-list (basic)
+/* .board-faq
 /*************************/
+.board-faq {}
+
+
+.board-faq .bf-search {}
+
+
+.board-faq .bf-category {
+    position: relative;
+    padding: 20px 0px;
+    white-space: nowrap;
+    overflow: auto;
+}
+.board-faq .bf-category li {
+    display: inline-block;
+    margin-right: 20px;
+}
+.board-faq .bf-category li a {
+    font-size: 14px;
+    color: #000;
+}
+.board-faq .bf-category li a:hover {
+    color: var(--font-color);
+}
+.board-faq .bf-category li.now a {
+    font-weight: bold;
+    color: var(--font-color);
+}
 
 
 
+.board-faq .bf-list {
+    position: relative;
+    width: 100%;
+    border-top: 1px solid rgb(230, 230, 230);
+}
+.board-faq .bf-list li {
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
 
-
-
-
+.board-faq .bf-list li.nodata {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 100px 0;
+    text-align: center;
+    font-family: 'Raleway';
+    font-weight: 500;
+    letter-spacing: 0;
+}
 
 
 
