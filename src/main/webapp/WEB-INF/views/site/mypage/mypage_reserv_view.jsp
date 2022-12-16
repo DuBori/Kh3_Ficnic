@@ -3,12 +3,16 @@
 <c:if test="${empty sess_id}"><script type="text/javascript">alert('회원 로그인이 필요합니다.'); location.href='${path}/member/member_login.do';</script></c:if>
 
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_mypage.css" />
-<script language="javascript" src="${path}/resources/site/js/js_mypage.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=05baaf0de0478dc909d89f4fbc30dcd1&libraries=services,clusterer,drawing&autoload=false" defer="defer" ></script>
+<script language="javascript" src="${path}/resources/site/js/js_mypage.js" defer="defer"></script>
 
 
 <c:set var="mypage_eng" value="reserv" />
 <c:set var="mypage_kor" value="피크닉 예약 정보" />
 
+
+<jsp:useBean id="currentDay" class="java.util.Date" />
+<fmt:formatDate value="${currentDay}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
 
 <%@ include file="../layout/layout_mymenu.jsp" %>
 
@@ -20,16 +24,18 @@
 <c:set var="reserv_phone" value="${reservDto.getReserv_phone() }"/>
 <c:set var="reserv_email" value="${reservDto.getReserv_email() }"/>
 <c:set var="reserv_ficnic_name" value="${reservDto.getReserv_ficnic_name() }"/>
+<c:set var="reserv_ficnic_img" value="${reservDto.getReserv_ficnic_photo() }"/>
 
 <div class="contents w1100 mypage-reserv">
 	
-	<div class="reserv-view">
+	<div class="mypage-reserv-view d-flex flex-column  border">
 
 
     <!-- 내용 //START -->
-    <div class="row rv-body">
-        <div class="col-lg mb-5">
-            <table class="table-form">
+    <div>
+    	<h4 class="mypage-reserv-h">피크닉 신청 내용</h4>
+        <div>
+            <table class="table">
                 <colgroup>
                     <col width="17%">
                     <col width="32%">
@@ -52,9 +58,9 @@
                     </tr>
                     <tr>
                         <th>예약번호</th>
-                        <td class="eng">${reserv_sess}</td>
+                        <td>${reserv_sess}</td>
                         <th>예약일자</th>
-                        <td class="eng">${reserv_date}</td>
+                        <td>${reserv_date}</td>
                     </tr>
                 </tbody>
             </table>
@@ -65,11 +71,11 @@
 
 
     <!-- 예약자 정보 //START -->
-    <div class="row rv-body">
-        <div class="col-lg mb-5">
-            <h4>예약자 정보</h4>
+    <div>
+        <div >
+            <h4 class="mypage-reserv-h">예약자 정보</h4>
 
-            <table class="table-form">
+            <table class="table">
                 <colgroup>
                     <col width="17%">
                     <col width="32%">
@@ -84,9 +90,9 @@
                     </tr>
                     <tr>
                         <th>전화번호</th>
-                        <td class="eng">${reserv_phone }</td>
+                        <td>${reserv_phone }</td>
                         <th>이메일</th>
-                        <td class="eng">${reserv_email}</td>
+                        <td>${reserv_email}</td>
                     </tr>
                 </tbody>
             </table>
@@ -97,11 +103,13 @@
 
 
     <!-- 숙소 정보 //START -->
-    <div class="row rv-body">
-        <div class="col-lg mb-5">
-            <h4>피크닉 정보</h4>
-
-            <table class="table-form">
+    <div>
+    	<h4 class="mypage-reserv-h">피크닉 정보</h4>
+        <div class="d-flex flex-row m-3 p-2 justify-content-center">
+            <div>
+            	<img alt="" src="${path}/${reserv_ficnic_img}" class="img-fluid">
+            </div>
+            <table class="table">
                 <colgroup>
                     <col width="17%">
                     <col width="32%">
@@ -112,14 +120,19 @@
                 <tbody>
                     <tr>
                         <th>피크닉 명</th>
-                        <td colspan="3">${reserv_ficnic_name }</td>
+                        <td colspan="3">${ficnicDto.getFicnic_name() }</td>
                     </tr>
                     <tr>
-                        <th>전화번호</th>
-                        <td class="eng">0504-0904-2668</td>
-                        <th>이메일</th>
-                        <td class="eng">yowoo1003@naver.com</td>
+                        <th>진행 장소</th>
+                        <td colspan="3" id="ficnic_addr">${ficnicDto.getFicnic_address()}</td>
                     </tr>
+                    <tr>
+                    <tr>
+                    	<td colspan="4">
+                    		<div id="map" style="height:320px;">
+	                        </div>
+                    	</td>
+                    </tr>                   
                 </tbody>
             </table>
         </div>
@@ -127,11 +140,10 @@
     <!-- 숙소 정보 //END -->
 
     <!-- 결제 정보 //START -->
-    <div class="row rv-body">
-        <div class="col-lg mb-5">
-            <h4>결제 정보</h4>
-
-            <table class="table-form">
+    <div>
+        <div>
+            <h4 class="mypage-reserv-h">결제 정보</h4>
+            <table class="table">
                 <colgroup>
                     <col width="17%">
                     <col>
@@ -159,9 +171,12 @@
 
 
     <!-- 버튼 //START -->
-    <div class="rv-btn">
-    	<button type="button" onclick="location.href='${path}/mypage/mypage_reserv_cancel.do?reserv_no=${reservDto.getReserv_no()}&reserv_sess=${reservDto.getReserv_sess() }'">예약취소</button>
-    	<button type="button" onclick="location.href='${path}/mypage/mypage_reserv_list.do'">목록보기</button>
+    <div class="d-flex p-1  m-3 justify-content-center">
+    	<c:if test="${today < reserv_date}">
+    		<button type="button" class="btn btn-outline-primary" onclick="if(confirm('정말로 취소하시겠습니까?\n돌이키실 수 없습니다.')){ location.href='${path}/mypage/mypage_reserv_cancel.do?reserv_no=${reservDto.getReserv_no()}&reserv_sess=${reservDto.getReserv_sess()}'; }else{ return false; }">예약취소</button>
+    	</c:if>
+    	
+    	<button type="button" class="btn btn-outline-primary" onclick="location.href='${path}/mypage/mypage_reserv_list.do'">목록보기</button>
     </div>
     <!-- 버튼 //END -->
 </div>
