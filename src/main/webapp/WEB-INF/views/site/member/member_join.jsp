@@ -19,7 +19,6 @@
 <div class="contents w1100 member-join">
 
 
-
 			<form name="form_input" method="post" action="${path}/member/member_join_ok.do"> 
 			
 			<table>
