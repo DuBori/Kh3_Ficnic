@@ -7,18 +7,34 @@
 <!-- 사이트 : 예약 관련 -->
 <mapper namespace="reservDAO">
 
-    <!-- 예약 목록 -->
-    <select id="siteReservList" resultType="reservDTO">
-    
-    </select>
-	
-	<!-- 검색 페이징 개수  -->
-	<select id="siteReservCount" parameterType="map">
+    <!-- 검색 페이징 개수  -->
+	<select id="siteReservCount" parameterType="map" resultType="int">
 		select count(*) from reserv_list where reserv_no > 0
 		<if test="member_id != ''">and member_id = #{member_id}</if>
-		<if test="field"></if>
+		<if test="field.equals('body') and keyword != ''">and reserv_ficnic_name like '%'|| #{keyword} || '%'</if>
 	</select>
-
+	
+	<!-- 예약 목록 --><!-- 해당 검색 페이징 리스트  -->
+    <select id="siteReservList" parameterType="map" resultType="reservDTO">
+    	select * from(
+	                select
+	                    row_number() over(order by reserv_no desc) rnum,
+	                    b.*
+	                from (
+	                select * from reserv_list where reserv_no > 0
+	                <if test="member_id != ''"> and member_id = #{member_id}</if>
+	                <if test="field.equals('body') and keyword != ''"> and reserv_ficnic_name like '%'|| #{keyword} || '%'</if>
+    
+    )b
+			)
+			 <![CDATA[
+	            where rnum >= #{startNo} and rnum <= #{endNo}
+	        ]]>
+    </select>
+	
+	<select id="siteReservCont" parameterType="int" resultType="reservDTO">
+		select * from reserv_list where reserv_no =#{value}
+	</select>
 
 
 
