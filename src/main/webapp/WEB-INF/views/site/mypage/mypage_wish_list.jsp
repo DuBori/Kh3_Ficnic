@@ -31,9 +31,9 @@
 					    <p class="card-location">${fdto.getFicnic_location() }</p>
 					    <h5 class="card-title">${fdto.getFicnic_name() }</h5>
 					  </div>
-					  <ul ${move_ficnic_info } class="mypage-wish list-group list-group-flush">
-					    <li class="list-group-item card-text">별점 ★★★★★ (${fdto.getFicnic_review_count() })</li>
-					    <li class="list-group-item card-text">${fdto.getFicnic_sale_price()}</li>
+					  <ul ${move_ficnic_info } class="mypage-wish">
+					    <li class="card-text">별점 ★★★★★ (${fdto.getFicnic_review_count() })</li>
+					    <li class="card-text"><fmt:formatNumber value="${fdto.getFicnic_sale_price()}"/>원</li>
 					  </ul>
 					  <div class="mypage-wish card-body">
 					    <a href="${path}/mypage/wish_cancel.do?ficnic_no=${fdto.getFicnic_no()}" class="card-link card-text">찜 취소하기</a>

@@ -25,8 +25,8 @@
                         <thead>
                             <tr>
                                 <th>쿠폰 이름</th>
-                                <th style="width: 120px;">쿠폰 유효기간</th>
                                 <th style="width: 80px;" class="table-list-hide-mob">발급 일자</th>
+                                <th style="width: 120px;">쿠폰 유효기간</th> 
                             </tr>
                         </thead>
 
@@ -35,9 +35,13 @@
                                 <c:when test="${!empty List}">
                                 <c:forEach var="dto" items="${List}">
                                 <tr>
-                                    <td class="text-center eng table-list-mob">${dto.getMcoupon_no()}</td>
-                                    <td class="text-center eng table-list-mob">${dto.getMcoupon_end_date().substring(0,10)}</td>
+                                	<c:forEach items="${dto.getCoupon_list() }" var="cdto">
+                                		<c:if test="${dto.getMcoupon_no() eq cdto.getCoupon_no() }">
+                                			<td class="text-center eng table-list-mob">${cdto.getCoupon_name()}</td>
+                                		</c:if>
+                                	</c:forEach>
                                     <td class="text-center eng table-list-mob">${dto.getMcoupon_date().substring(0,10)}</td>
+                                    <td class="text-center eng table-list-mob">${dto.getMcoupon_end_date().substring(0,10)}</td>
                                 </tr>
                                 </c:forEach>
                                 </c:when>

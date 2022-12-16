@@ -2,13 +2,8 @@
 	$(function(){
 		
 		$(".btn-open-popup").on("click",function(){  
-			$(".modal_body2").css("display","block");
-			$(".modal2").css("display","block");
-		});
-		
-		$(".btn-close").on("click",function(){
-			$(".modal_body2").css("display","none");
-			$(".modal2").css("display","none");
+			var name = $(this).data('name')+" 후기 작성";
+			$("#exampleModalLabel").html(name);
 		});
 	});
 	
@@ -53,6 +48,8 @@
 		    } 
 		});
 	});
+	
+	
 
 	
 	

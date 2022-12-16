@@ -87,8 +87,6 @@ public class SiteMypageController {
     @RequestMapping("mypage/mypage_reserv_list.do")
     public String reserv_list(
     		@RequestParam( value = "page", required = false, defaultValue = "1") int page,
-    		@RequestParam( value = "field", required = false, defaultValue = "") String field,
-    		@RequestParam( value = "keyword", required = false, defaultValue = "") String keyword,
     		@RequestParam( value = "getType", required = false, defaultValue = "") String getType,
     		Model model,
     		HttpServletRequest request,
@@ -98,8 +96,6 @@ public class SiteMypageController {
     	String member_id = (String) session.getAttribute("sess_id");
     	
     	Map<String, Object> searchMap = new HashMap<String, Object>();
-		searchMap.put("field", field);
-		searchMap.put("keyword", keyword);
 		searchMap.put("member_id", member_id);
 		searchMap.put("getType", getType);
 		
@@ -109,16 +105,12 @@ public class SiteMypageController {
 
 
 		// 페이지 이동 URL
-		String pageUrl = request.getContextPath()+"mypage/mypage_reserv_list.do?field=" + field + "&keyword=" + keyword+"&page="+page;
+		String pageUrl = request.getContextPath()+"mypage/mypage_reserv_list.do?+getType="+getType+"&page="+page;
 		
 		model.addAttribute("List", this.reservDAO.getBoardList(dto.getStartNo(), dto.getEndNo(), searchMap));
 		model.addAttribute("paging", dto);
-		model.addAttribute("field", field);
-		model.addAttribute("keyword", keyword);
 		model.addAttribute("page", page);
-		
 		model.addAttribute("getType", getType);
-		
 		model.addAttribute("pagingWrite",Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 		
         return "site/mypage/mypage_reserv_list";
