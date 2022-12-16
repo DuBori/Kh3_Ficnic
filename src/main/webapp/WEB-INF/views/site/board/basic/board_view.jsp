@@ -92,11 +92,58 @@
 
 
     <!-- 버튼 //START -->
-    <div class="d-flex justify-content-center mt-3 mb-5">
-        <a href="#" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="icon-trash mr-1"></i> 삭제하기</a>
-        <a href="#" class="btn btn-primary mx-2"><i class="icon-note mr-1"></i> 수정하기</a>
+    <div class="d-flex justify-content-center vf-btn mt-3 mb-5">
+    	<c:choose>
+    		<c:when test="${level.delete ne 'Y'}">
+    			<c:choose>
+    				<c:when test="${!empty BoardConDto.getBdata_writer_id()}">
+    					<c:if test="${BoardConDto.getBdata_writer_id() eq sess_id}"><a href="board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger mx-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="icon-trash mr-1"></i> 삭제하기</a></c:if>
+		    		</c:when>
 
-        <a href="board_list.do?bbs_id=${BoardConDto.getBoard_id()}&field=${param.field}&keyword=${param.keyword}&page=${param.page}" class="btn btn-secondary"><i class="icon-list mr-1"></i> 목록보기</a>
+		    		<c:otherwise>
+		    			<c:choose>
+		    				<c:when test="${BoardConDto.getBdata_writer_pw() eq sess_pw}">
+		    					<a href="board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger mx-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="icon-trash mr-1"></i> 삭제하기</a>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<button type="button" class="btn btn-danger mx-1" data-toggle="modal" data-target="#deleteModal"><i class="icon-trash mr-1"></i> 삭제하기</button>
+		    				</c:otherwise>
+		    			</c:choose>
+		    		</c:otherwise>
+		    	</c:choose>
+    		</c:when>
+    		<c:otherwise>
+        		<a href="board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger mx-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="icon-trash mr-1"></i> 삭제하기</a>
+    		</c:otherwise>
+    	</c:choose>
+
+
+    	<c:choose>
+    		<c:when test="${level.modify ne 'Y'}">
+    			<c:choose>
+    				<c:when test="${!empty BoardConDto.getBdata_writer_id()}">
+    					<c:if test="${BoardConDto.getBdata_writer_id() eq sess_id}"><a href="board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-1"><i class="icon-note mr-1"></i> 수정하기</a></c:if>
+		    		</c:when>
+
+		    		<c:otherwise>
+		    			<c:choose>
+		    				<c:when test="${BoardConDto.getBdata_writer_pw() eq sess_pw}">
+		    					<a href="board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-1"><i class="icon-note mr-1"></i> 수정하기</a>
+		    				</c:when>
+		    				<c:otherwise>
+		    					<button type="button" class="btn btn-primary mx-1" data-toggle="modal" data-target="#modifyModal"><i class="icon-note mr-1"></i> 수정하기</button>
+		    				</c:otherwise>
+		    			</c:choose>
+		    		</c:otherwise>
+		    	</c:choose>
+    		</c:when>
+    		<c:otherwise>
+    			<a href="board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-primary mx-1"><i class="icon-note mr-1"></i> 수정하기</a>
+    		</c:otherwise>
+    	</c:choose>
+
+
+        <a href="board_list.do?bbs_id=${BoardConDto.getBoard_id()}&field=${param.field}&keyword=${param.keyword}&category=${param.category}&page=${param.page}" class="btn btn-secondary mx-1"><i class="icon-list mr-1"></i> 목록보기</a>
     </div>
     <!-- 버튼 //END -->
 
@@ -109,53 +156,73 @@
             <div class="card border input-form">
                 <div class="card-body pt-3 pb-4">
                     <ul class="vfc-list">
-                        <?
-                            while($c_list = gw_fetch($c_result)){
-                                $c_no = $c_list["uid"];
-                                $c_body = auto_link(nl2br(settings_re($c_list["comment_body"])));
-                                $c_date = date("Y.m.d", $c_list["register_date"])."<br />".date("H:i:s", $c_list["register_date"]);
-
-                                $writer_data = gw_fetch(gw_query("select * from gw_member_list where member_id = '$c_list[comment_id]'"));
-                                if($writer_data["member_class"] >= 9){
-                                    $c_writer = "<b><img src=\"".$skin_dir."/images/company_logo_small.png\" /> 관리자</b>";
-                                }else{
-                                    $c_writer = "<b>".$c_list["comment_name"]."</b><span>(".$c_list["comment_id"].")</span>";
-                                }
-                        ?>
-                        <li class="d-flex border-bottom py-3">
-                            <div class="vfcl-writer"><?=$c_writer?></div>
-                            <div class="vfcl-body px-3"><?=$c_body?></div>
+                		<c:if test="${!empty boardCommentList }">
+                        <c:forEach var="comment" items="${boardCommentList}">
+                        <li id="comment-${comment.getBcomm_no()}" class="d-flex border-bottom py-3">
+                            <div class="vfcl-writer">
+                            	<c:choose>
+                            		<c:when test="${comment.getBcomm_type() eq 'admin'}"><img src="${path}/resources/site/images/admin_icon.png" alt="" /><b>관리자</b></c:when>
+                            		<c:otherwise>${comment.getBcomm_name()}</c:otherwise>
+                            	</c:choose>
+                        	</div>
+                            <div class="vfcl-body px-3">${comment.getBcomm_cont().replace(newLine, '<br />')}</div>
                             <div class="vfcl-date text-center">
-                                <p><?=$c_date?></p>
-                                <? if($c_list["comment_id"] == $gw_check_id){ ?><a href="board_ok.php?ps_mode=comment_delete&b_id=<?=$b_id?>&b_no=<?=$b_no?>&c_no=<?=$c_no?>&ps_search=<?=$ps_search?>&ps_keyword=<?=$ps_keyword?>&ps_page=<?=$ps_page?>" class="btn btn-sm btn-outline-danger py-0 mt-2" onclick="return confirm('이 댓글을 삭제하시겠습니까?');"><i class="icon-close mr-1"></i> 삭제</a><? } ?>
+                                <p>${comment.getBcomm_date().substring(0,10)}<br />${comment.getBcomm_date().substring(11)}</p>
+
+                                <c:choose>
+                                	<c:when test="${sess_type eq 'admin'}">
+                                		<button type="button" class="btn btn-sm btn-outline-danger py-0 mt-2" onclick="delComment('nochk', '${BoardConDto.getBoard_id()}', ${comment.getBdata_no()}, ${comment.getBcomm_no()});"><i class="icon-close mr-1"></i> 삭제</button>
+                                	</c:when>
+
+                                	<c:otherwise>
+		                                <c:choose>
+		                                	<c:when test="${!empty comment.getBcomm_id() and comment.getBcomm_id() eq sess_id}">
+		                                		<button type="button" class="btn btn-sm btn-outline-danger py-0 mt-2" onclick="delComment('nochk', '${BoardConDto.getBoard_id()}', ${comment.getBdata_no()}, ${comment.getBcomm_no()});"><i class="icon-close mr-1"></i> 삭제</button>
+		                                	</c:when>
+
+		                                	<c:otherwise>
+	                                			<c:if test="${comment.getBcomm_type() ne 'admin'}">
+	                                				<button type="button" class="btn btn-sm btn-outline-danger py-0 mt-2" onclick="setCommentDel('${BoardConDto.getBoard_id()}', ${comment.getBdata_no()}, ${comment.getBcomm_no()});"><i class="icon-close mr-1"></i> 삭제</button>
+	                                			</c:if>
+		                                	</c:otherwise>
+		                                </c:choose>
+                                	</c:otherwise>
+                                </c:choose>
                             </div>
                         </li>
-                        <? } ?>
+                    	</c:forEach>
+                		</c:if>
                     </ul>
 
 
-                    <? if($bbs_config["board_class_comment"] <= $gw_check_class){ ?>
-                    <form name="comment_form" method="post" action="board_ok.php">
-                    <input type="hidden" name="ps_mode" value="comment_write" />
-                    <input type="hidden" name="b_id" value="<?=$b_id?>" />
-                    <input type="hidden" name="b_no" value="<?=$b_no?>" />
-                    <input type="hidden" name="comment_id" value="<?=$gw_check_id?>" />
-                    <input type="hidden" name="comment_pw" value="<?=$gw_check_pw?>" />
-                    <input type="hidden" name="comment_name" value="<?=$gw_check_name?>" />
-                    <input type="hidden" name="ps_page" value="<?=$ps_page?>" />
-                    <input type="hidden" name="ps_search" value="<?=$ps_search?>" />
-                    <input type="hidden" name="ps_keyword" value="<?=$ps_keyword?>" />
+                    <c:if test="${level.comment eq 'Y'}">
+                    <form name="comment_form" method="post">
+                    <input type="hidden" name="bbs_id" value="${BoardConDto.getBoard_id()}" />
+    				<input type="hidden" name="bdata_no" value="${BoardConDto.getBdata_no()}" />
                     <div class="d-flex justify-content-center vfc-form">
-                        <div class="vfcf-writer"><?=$gw_check_name?></div>
-                        <div class="vfcf-input"><textarea name="comment_body" class="form-control" rows="4"></textarea></div>
+                        <div class="vfcf-writer">
+                    	    <c:choose>
+                    	    	<c:when test="${!empty sess_id}">
+        							<input type="hidden" name="bcomm_id" value="${sess_id}" />
+        							<input type="hidden" name="bcomm_pw" value="${sess_pw}" />
+        							<input type="hidden" name="bcomm_name" value="${sess_name}" />
+        							${sess_name}
+        						</c:when>
+        						<c:otherwise>
+		                        	<input type="text" name="bcomm_name" value="" class="form-control my-2" placeholder="이름" />
+		                        	<input type="password" name="bcomm_pw" value="" class="form-control my-2" placeholder="비번" />
+        						</c:otherwise>
+        					</c:choose>
+                        </div>
+                        <div class="vfcf-input"><textarea name="bcomm_cont" class="form-control" rows="4"></textarea></div>
                         <div class="vfcf-btn">
-                            <button type="button" class="btn btn-info" onclick="form_comment(this)">
+                            <button type="button" class="btn btn-info" onclick="addComment('comment_form')">
                                 <i class="icon-pencil mr-1"></i> 댓글 등록
                             </button>
                         </div>
                     </div>
                     </form>
-                    <? } ?>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -164,6 +231,69 @@
 
 
 </div>
+
+
+
+
+<c:if test="${level.delete ne 'Y'}">
+<!-- 삭제하기 Modal //START -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center p-5">
+                <h4 class="mt-5">게시물 비밀번호를 입력하세요.</h4>
+                <p>&nbsp;</p>
+                <form name="delete_form" method="post" action="board_delete.do">
+                <input type="hidden" name="bbs_id" value="${BoardConDto.getBoard_id()}" />
+                <input type="hidden" name="bdata_no" value="${BoardConDto.getBdata_no()}" />
+                <input type="password" name="input_pw" class="form-control rounded mb-2 w-50 m-auto text-center" required />
+                <button type="submit" class="btn btn-outline-danger w-50 mb-5"><i class="fa fa-trash-o"></i> 삭제하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 삭제하기 Modal //END -->
+</c:if>
+
+
+<c:if test="${level.delete ne 'Y'}">
+<!-- 수정하기 Modal //START -->
+<div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="modifyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center p-5">
+                <h4 class="mt-5">게시물 비밀번호를 입력하세요.</h4>
+                <p>&nbsp;</p>
+                <form name="delete_form" method="post" action="board_modify.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}">
+                <input type="password" name="input_pw" class="form-control rounded mb-2 w-50 m-auto text-center" required />
+                <button type="submit" class="btn btn-outline-primary w-50 mb-5"><i class="icon-note"></i> 비밀번호 확인</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 수정하기 Modal //END -->
+</c:if>
+
+
+
+<c:if test="${sess_type ne 'admin'}">
+<!-- 댓글삭제 Modal //START -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center p-2">
+                <h5 class="mt-4">댓글 비밀번호를 입력하세요.</h5>
+                <p>&nbsp;</p>
+                <input type="password" name="input_pw" class="form-control rounded mb-2 w-50 m-auto text-center" required />
+                <button type="button" class="btn btn-outline-danger w-50 mb-4" onclick=""><i class="fa fa-trash-o"></i> 댓글삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 댓글삭제 Modal //END -->
+</c:if>
 
 
 

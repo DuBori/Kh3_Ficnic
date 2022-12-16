@@ -53,7 +53,7 @@
 
                                 <c:set var="result_title" value="<span class=\"search\">${keyword}</span>"></c:set>
                                 <c:set var="result_writer" value="<span class=\"search\">${keyword}</span>"></c:set>
-                                <tr onclick="location.href='${path}/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}';">
+                                <tr onclick="location.href='${path}/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&category=${category}&page=${paging.getPage()}';">
                                     <td class="text-center eng table-list-hide">
                                         <c:choose>
                                             <c:when test="${dto.getBdata_use_notice() eq 'Y'}"><i class="fa fa-bell-o"></i> 공지</c:when>

@@ -935,11 +935,9 @@ main .view-form .vf-body .vfb-photo img {
 }
 
 
-main .view-form .vf-btn {
-    flex-wrap: wrap;
-}
+main .view-form .vf-btn {}
 main .view-form .vf-btn .btn {
-    margin-bottom: 6px;
+    font-size: 1rem;
 }
 
 
@@ -960,6 +958,7 @@ main .view-form .vf-comment .vfc-list li .vfcl-writer {
 main .view-form .vf-comment .vfc-list li .vfcl-writer img {
     height: 22px;
     vertical-align: middle;
+    margin: -2px 3px 0 0;
 }
 main .view-form .vf-comment .vfc-list li .vfcl-writer span {
     display: block;
@@ -992,17 +991,20 @@ main .view-form .vf-comment .vfc-form {
     align-items: center;
 }
 main .view-form .vf-comment .vfc-form .vfcf-writer {
-    width: 15%;
+    width: 20%;
     min-width: 120px;
     font-weight: bold;
     text-align: center;
+    box-sizing: border-box;
+    padding-right: 10px;
 }
 main .view-form .vf-comment .vfc-form .vfcf-input {
-    width: 71%;
+    width: 66%;
 }
 main .view-form .vf-comment .vfc-form .vfcf-input textarea {
     width: 100%;
     height: 80px;
+    resize: none;
 }
 main .view-form .vf-comment .vfc-form .vfcf-btn {
     width: 14%;
@@ -1023,13 +1025,6 @@ main .view-form .vf-article .board-list tbody td {
 
 
 @media (max-width: 992px) {
-    main .view-form .vf-comment .vfc-form .vfcf-writer {
-        display: none;
-    }
-    main .view-form .vf-comment .vfc-form .vfcf-input {
-        width: 86.9%;
-    }
-
     main .view-form .vf-comment .vfc-list li .vfcl-date {
         min-width: 80px;
     }

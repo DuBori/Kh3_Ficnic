@@ -17,6 +17,10 @@
 		        <input type="hidden" name="bbs_id" value="${bbs_id}" />
 		        <input type="hidden" name="bdata_no" value="${bdata_no}" />
 		        <input type="hidden" name="bdata_writer_id" value="${bdata_writer_id}" />
+                <input type="hidden" name="field" value="${field}" />
+                <input type="hidden" name="keyword" value="${keyword}" />
+                <input type="hidden" name="category" value="${category}" />
+                <input type="hidden" name="page" value="${page}" />
                 <div class="card-body">
 
                     <h4 class="display-1 text-secondary text-center my-3"><i class="icon-lock"></i></h4>
