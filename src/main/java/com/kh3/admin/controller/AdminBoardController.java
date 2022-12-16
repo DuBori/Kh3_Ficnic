@@ -3,6 +3,7 @@ package com.kh3.admin.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +88,19 @@ public class AdminBoardController {
     // 게시판 설정 게시판 추가
     // =====================================================================================
     @RequestMapping("admin/board/board_write.do")
-    public String board_write() {
+    public String board_write(HttpServletRequest request, Model model) {
+        String dirPath = request.getSession().getServletContext().getRealPath("/WEB-INF/views/site/board");
+
+        List<String> skinDirList = new ArrayList<String>();
+        File[] files = new File(dirPath).listFiles();
+        for(File f : files) {
+            if(f.isDirectory() && !f.getName().equals("basic")) {
+                skinDirList.add(f.getName());
+            }
+        }
+
+        model.addAttribute("skin_dir", skinDirList);
+
         return "/admin/board/board_write";
     }
 
@@ -135,7 +148,19 @@ public class AdminBoardController {
     // 게시판 설정 수정
     // =====================================================================================
     @RequestMapping("admin/board/board_modify.do")
-    public String board_content(@RequestParam("board_no") int board_no, Model model) {
+    public String board_content(@RequestParam("board_no") int board_no, HttpServletRequest request, Model model) {
+        String dirPath = request.getSession().getServletContext().getRealPath("/WEB-INF/views/site/board");
+
+        List<String> skinDirList = new ArrayList<String>();
+        File[] files = new File(dirPath).listFiles();
+        for(File f : files) {
+            if(f.isDirectory() && !f.getName().equals("basic")) {
+                skinDirList.add(f.getName());
+            }
+        }
+
+        model.addAttribute("skin_dir", skinDirList);
+
         model.addAttribute("Cont", this.board_ConfDao.getCont(board_no));
         model.addAttribute("modify", "m");
 
