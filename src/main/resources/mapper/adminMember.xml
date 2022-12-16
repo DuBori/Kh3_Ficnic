@@ -48,7 +48,7 @@
 	<!-- 회원 추가 -->
     <insert id="adminMemberwriteOk" parameterType="memberDTO">
         <selectKey resultType="int" keyProperty="member_no" order="BEFORE">
-            select max(member_no) from member_list
+            select nvl(max(member_no),0) from member_list
         </selectKey>
         insert into member_list values(#{member_no} + 1, #{member_type},
         #{member_id}, #{member_pw}, #{member_name}, #{member_email},

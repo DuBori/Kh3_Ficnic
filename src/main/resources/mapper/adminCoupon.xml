@@ -49,7 +49,7 @@
 	<!-- 쿠폰 등록 -->
 	<insert id="adminCouponWriteOk" parameterType="couponDTO">
 		<selectKey resultType="int" keyProperty="coupon_no" order="BEFORE">
-			select max(coupon_no) from coupon_list
+			select nvl(max(coupon_no),0) from coupon_list
 		</selectKey>
 		insert into coupon_list values(#{coupon_no} + 1, #{coupon_name}, #{coupon_use_type},
 		#{coupon_use_value}, #{coupon_price}, #{coupon_price_type}, #{coupon_price_over},

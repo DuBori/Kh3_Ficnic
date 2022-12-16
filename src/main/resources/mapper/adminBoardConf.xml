@@ -33,10 +33,20 @@
 
 
 
+    <!-- 게시판 생성시 게시판 아이디 중복 체크 -->
+    <select id="adminBoardCheckId" parameterType="String" resultType="int">
+        select count(*) from board_config where board_id = #{value}
+    </select>
+
+
     <!-- 게시판 설정 게시판 추가하기 -->
     <insert id="adminBoardConfWrite" parameterType="boardConfDTO">
+        <selectKey resultType="int" keyProperty="board_no" order="BEFORE">
+            select nvl(max(board_no),0) from board_config
+        </selectKey>
+
         insert into board_config values( 
-        (select max(board_no) from board_config )+1,
+        #{board_no} + 1,
         #{board_id},
         #{board_name},
         #{board_skin},
@@ -78,7 +88,7 @@
 			bcomm_no number(5) primary key,
 			bdata_no number(5) not null,
 			bcomm_id varchar2(50),
-			bcomm_pw varchar2(100),
+			bcomm_pw varchar2(200),
 			bcomm_name varchar2(100),
 			bcomm_cont varchar2(2000),
 			bcomm_date date default sysdate

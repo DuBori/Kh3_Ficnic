@@ -55,7 +55,7 @@ public class SiteBoardController {
     // 전체 게시물의 수
     private int totalRecord = 0;
 
-    String board_skin = "";
+    String board_skin = "basic";
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -149,14 +149,19 @@ public class SiteBoardController {
     // 게시판 목록 페이지
     // =====================================================================================
     @RequestMapping("/board/board_list.do")
-    public String board_list(HttpServletRequest request, Model model,
+    public String board_list(HttpServletRequest request, HttpServletResponse response, Model model,
         @RequestParam(value = "field", required = false, defaultValue = "") String field,
         @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
         @RequestParam(value = "category", required = false, defaultValue = "") String category,
-        @RequestParam(value = "bbs_id", required = false, defaultValue = "") String bbs_id) {
+        @RequestParam(value = "bbs_id", required = false, defaultValue = "") String bbs_id) throws IOException {
 
         // 해당 게시물 설정값 가져오기
         BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
+        if(BoardConfdto == null) {
+            response.setContentType("text/html; charset=utf-8");
+            PrintWriter out = response.getWriter();
+            out.print("<script>alert('잘못된 게시판 아이디입니다.'); history.back();</script>");
+        }
         board_skin = BoardConfdto.getBoard_skin();
 
 
@@ -273,7 +278,7 @@ public class SiteBoardController {
         // 게시물 헤드넘버 정하기
         int set_headnum = 0;
 
-        if(dto.getBdata_use_notice().equals("Y")){
+        if(dto.getBdata_use_notice() != null && dto.getBdata_use_notice().equals("Y")){
             set_headnum = 999;
             int min_headnum = board_Dao.getMinHeadnumNotice(dto.getBoard_id());
             if(min_headnum > 0) set_headnum = min_headnum - 1;
@@ -555,6 +560,25 @@ public class SiteBoardController {
         }
 
 
+        // 첨부파일 삭제
+        if(boardCont.getBdata_file1() != null){
+            File del_file1 = new File(request.getSession().getServletContext().getRealPath(boardCont.getBdata_file1()));
+            if(del_file1.exists()) del_file1.delete();
+        }
+        if(boardCont.getBdata_file2() != null){
+            File del_file2 = new File(request.getSession().getServletContext().getRealPath(boardCont.getBdata_file2()));
+            if(del_file2.exists()) del_file2.delete();
+        }
+        if(boardCont.getBdata_file3() != null){
+            File del_file3 = new File(request.getSession().getServletContext().getRealPath(boardCont.getBdata_file3()));
+            if(del_file3.exists()) del_file3.delete();
+        }
+        if(boardCont.getBdata_file4() != null){
+            File del_file4 = new File(request.getSession().getServletContext().getRealPath(boardCont.getBdata_file4()));
+            if(del_file4.exists()) del_file4.delete();
+        }
+
+
         /* 해당 게시글 삭제 */
         if (this.board_Dao.deleteBoard(map) > 0) {
             /* 해당 게시글 댓글 삭제 */
@@ -580,9 +604,14 @@ public class SiteBoardController {
             @RequestParam(value = "category", required = false, defaultValue = "") String category,
             @RequestParam(value = "bbs_id", required = false, defaultValue = "") String bbs_id,
             HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
 
         // 해당 게시물 설정값 가져오기
         BoardConfDTO BoardConfdto = board_ConfDao.getBoardConfCont(bbs_id);
+        if(BoardConfdto == null) {
+            out.print("<script>alert('잘못된 게시판 아이디입니다.'); history.back();</script>");
+        }
         board_skin = BoardConfdto.getBoard_skin();
 
 
@@ -613,7 +642,6 @@ public class SiteBoardController {
             if(BoardConDto.getBdata_writer_id() != null) bdata_id = BoardConDto.getBdata_writer_id();
 
             if(!bdata_id.equals(sess_id) && !sess_type.equals("admin") && !BoardConDto.getBdata_writer_pw().equals(sess_pw)) {
-                PrintWriter out = response.getWriter();
                 out.println("<script>location.href='board_pw_chk.do?bbs_id=" + bbs_id + "&bdata_no=" + bdata_no + "';</script>");
                 return null;
             }

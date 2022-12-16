@@ -17,7 +17,7 @@
     <!-- 게시판 카테고리 등록 -->
     <insert id="adminBoardCategoryWrite" parameterType="java.util.Map">
         <selectKey resultType="int" keyProperty="bcate_no" order="BEFORE">
-            select max(bcate_no) from board_category_${board_id}
+            select nvl(max(bcate_no),0) from board_category_${board_id}
         </selectKey>
         insert into board_category_${board_id} values(#{bcate_no} + 1, #{bcate_name}, default, default, sysdate)
     </insert>
