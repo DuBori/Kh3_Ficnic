@@ -16,9 +16,38 @@
 
 <div class="contents w1100 mypage-qna-modify">
 
+		    <!-- 피크닉 정보 //START -->
+		    <div class="row rv-body">
+		        <div class="col-lg mb-5">
+		            <table class="table-form">
+		                <colgroup>
+		                    <col width="17%" />
+		                    <col width="32%" />
+		                    <col width="17%" />
+		                    <col />
+		                </colgroup>
+		
+		                <tbody>
+		                    <tr>
+		                        <th>피크닉정보</th>
+		                        <td colspan="2">
+								    <c:choose>
+								    <c:when test="${!empty fdto.getFicnic_photo1() }"><img src="${path}${fdto.getFicnic_photo1()}" alt="" width="80" /></c:when>
+								    <c:otherwise><span class="noimg">no img</span></c:otherwise>
+								    </c:choose>                        
+					                <p><b>${fdto.getFicnic_name() }</b></p>
+					                <p class="engnum"><fmt:formatNumber value="${fdto.getFicnic_sale_price() }" />원</p>	                        
+		                        </td>
+		                    </tr>
+		                </tbody>
+		            </table>
+		        </div>
+		    </div>
+		    <!-- 피크닉 정보 //END -->
 
 
-			<form name="form_input" method="post" enctype="multipart/form-data" action="${path}/site/mypage/mypage_qna_modifyOk.do">
+
+			<form name="form_input" method="post" enctype="multipart/form-data" action="${path}/mypage/mypage_qna_modifyOk.do">
 			<input type="hidden"  name="qna_no" value="${dto.getQna_no()}">
 			<table>
 			<tr>	

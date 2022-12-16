@@ -143,7 +143,7 @@
                         <c:choose>
                         <c:when test="${dto.getMember_id() == cdto.getMember_id() }">
                        	<td class="text-center">
-                			<a href="${path}/site/mypage/mypage_qna_comment_deleteOk.do?comment_no=${cdto.getComment_no() }&qna_no=${dto.getQna_no() }" onclick="return confirm('정말 삭제하시겠습니까?');" class="delbtn">삭제</a>
+                			<a href="${path}/mypage/mypage_qna_comment_deleteOk.do?comment_no=${cdto.getComment_no() }&qna_no=${dto.getQna_no() }" onclick="return confirm('정말 삭제하시겠습니까?');" class="delbtn">삭제</a>
             			</td>
                         </c:when>
                         <c:otherwise>
@@ -166,7 +166,7 @@
             </table>
 
 
-            <form name="write_form" method="post" action="${path}/site/mypage/mypage_qna_commentOk.do?no=${dto.getQna_no()}">
+            <form name="write_form" method="post" action="${path}/mypage/mypage_qna_commentOk.do?no=${dto.getQna_no()}">
             <table class="table-form comment-write">
              	<colgroup>
                     <col width="120" />
@@ -189,8 +189,8 @@
 
 
     <!-- 버튼 //START -->
-        <a href="${path}/site/mypage/mypage_qna_deleteOk.do?qna_no=${dto.getQna_no()}" class="delete" onClick="return confirm('정말 삭제하시겠습니까?');">삭제하기</a>
-        <a href="${path}/site/mypage/mypage_qna_modify.do?qna_no=${dto.getQna_no()}" class="modify">수정하기</a>
+        <a href="${path}/mypage/mypage_qna_deleteOk.do?qna_no=${dto.getQna_no()}" class="delete" onClick="return confirm('정말 삭제하시겠습니까?');">삭제하기</a>
+        <a href="${path}/mypage/mypage_qna_modify.do?qna_no=${dto.getQna_no()}" class="modify">수정하기</a>
         <a href="${path}/mypage/mypage_qna_list.do">목록보기</a>
     <!-- 버튼 //END -->
     
