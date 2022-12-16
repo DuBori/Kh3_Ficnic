@@ -807,13 +807,17 @@ public class SiteBoardController {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter print = response.getWriter();
 
-        if(request.getParameter("bbs_id") != null || request.getParameter("bdata_file") != null || request.getParameter("bdata_no") != null){
+        int bdata_no = 0;
+        if(request.getParameter("bdata_no") != null){
+            bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
+        }
+
+        if(request.getParameter("bbs_id") != null || request.getParameter("bdata_file") != null || bdata_no == 0){
             print.println("<script>alert('다운로드에 실패했습니다.\\n(* 잘못된 파라미터)'); history.back();</script>");
         }
 
         String bbs_id = request.getParameter("bbs_id");
         int file_no = Integer.parseInt(request.getParameter("bdata_file"));
-        int bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("bbs_id", bbs_id);
