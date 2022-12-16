@@ -2,12 +2,126 @@
 /* 마이페이지 관련
 /*************************/
 
+
+/*************************/
+/* 예약목록 start
+/*************************/
 .mypage-reserv .now{
 	color: black;
 }
 
+.mypage-reserv-h{
+	
+	margin: 3px;
+	padding: 2px;
+}
+
+.mypage-wish .card-location{
+	
+	font-size: 0.5rem !important;
+}
+.mypage-wish .card-title{
+	
+	font-size: 0.7rem !important;
+}
+.card-text{	
+	font-size: 0.7rem !important;
+}
+
+/*************************/
+/* 예약목록 end
+/*************************/
 
 
+
+/*************************/
+/* 회원 수정
+/*************************/
+.mypage-info {
+	border: 1px #eee solid;
+	width: 1050px;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+
+.mypage-info input {
+	margin: 5px 0px 0px 150px; 
+	font-size: 17px;
+	font-weight: 400;
+	color: #333;
+	text-align: left;
+	width: 70%; /* input 바깥과 크기 */
+	outline: none;
+	background: none;
+	padding: 0 5px;
+	height: 30px; /* 글자와 밑 줄 사이 간격 */
+	letter-spacing: 0.8px;
+	border: none;
+	border-bottom: 1px solid #eee;
+	
+}
+
+.mypage-info input:focus {
+
+	border-bottom: 1px solid #757575;
+	outline: 0;
+
+  }
+
+.mypage-info .btnMod {
+	margin: 5px 0px 0px 150px; 
+	margin-top: 30px;
+	height: 48px;
+	font-size: 16px;
+	color: #fff;
+	line-height: 48px;
+	background-color: #2d2d2d;
+	text-align: center;
+	width: 320px;
+	transition: background 0.2s ease-in-out;
+}
+
+.mypage-info .btnMod:hover {
+	margin: 5px 0px 0px 150px; 
+	margin-top: 30px;
+	height: 48px;
+	font-size: 16px;
+	color: #fff;
+	line-height: 48px;
+	background-color: #ff0045;
+	text-align: center;
+	width: 320px;
+	transition: background 0.2s ease-in-out;
+}
+
+
+.mypage-info label {
+	margin: 5px 0px 0px 113px; 
+	font-size: 13px;
+	text-align: left;
+	padding-left: 40px;
+	font-weight: 400;
+}
+
+ /* 밑에 안내 문구 */
+.rowrow {
+	font-size: 14px;
+    vertical-align: middle;
+    padding-bottom: 45px;
+    
+}
+
+.mypage-info .placeholder_mod {
+	
+	font-size: 14px;
+	
+}
+
+.mypage-info .member_secession{
+	
+	margin: 5px 0px 0px 150px; 
+}
 
 
 

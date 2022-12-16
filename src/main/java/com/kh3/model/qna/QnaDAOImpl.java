@@ -53,4 +53,16 @@ public class QnaDAOImpl implements QnaDAO {
 		return this.sqlSession.selectList("siteQnaList", member_id);
 	}
 
+	// 마이페이지 문의글 수정
+	@Override
+	public int qnaModify(QnaDTO dto) {
+        return this.sqlSession.update("siteQnaModifyOk", dto);
+	}
+
+
+	@Override
+	public int qnaWriteOk(QnaDTO dto) {
+        return this.sqlSession.insert("siteQnaWriteOk", dto);
+	}
+
 }

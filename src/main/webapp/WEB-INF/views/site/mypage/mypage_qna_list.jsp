@@ -20,7 +20,6 @@
 <div class="row">
         <div class="col-lg">
             <div class="card border-0">
-                <div class="card-header bg-white border-0 pt-0 pl-0">총 <b class="text-primary"><fmt:formatNumber value="${qList.size()}" /></b> 개의 게시물</div>
 
                 <div class="card-body p-0">
                     <table class="table-list mb-2 board-list">
@@ -35,7 +34,7 @@
                             <c:choose>
                                 <c:when test="${!empty qList}">
                                 <c:forEach var="dto" items="${qList}">
-								<tr onclick="location.href='${path}/site/mypage/mypage_qna_view.do?no=${dto.getQna_no() }';">                                
+								<tr onclick="location.href='${path}/mypage/mypage_qna_view.do?no=${dto.getQna_no() }';">                                
                                     <td ${showLink} class="text-center eng table-list-hide-mob">${dto.getQna_title() }</td>
                                     <td ${showLink} class="text-center eng table-list-mob">${dto.getQna_date()}</td>
                                 </tr>
@@ -54,6 +53,8 @@
             </div>
         </div>
     </div>
+    
+        <a href="${path}/mypage/mypage_qna_write.do" class="write">문의하기</a>
 
 </div>
 
