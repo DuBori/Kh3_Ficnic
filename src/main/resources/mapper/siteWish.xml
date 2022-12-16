@@ -7,13 +7,23 @@
 <!-- 사이트 : 찜상품 관련 -->
 <mapper namespace="wishDAO">
 
+	<resultMap type="wishDTO" id="wishficnic">
+		<result property="ficnic_no" column="ficnic_no"/>
+		<collection property="ficnic_cont" column="ficnic_no" select="wishFicnicInfo" ofType="ficnicDTO" />
+	</resultMap>
+
+
     <!-- 찜 목록 -->
-    <select id="siteWishList" resultType="wishDTO">
+    <select id="siteWishList" parameterType="string" resultMap="wishficnic">
+    	select * from member_wish where member_id = #{value}
     </select>
-
-
-
-
-
-
+    
+    <select id="wishFicnicInfo" resultType="ficnicDTO">
+    	select * from ficnic_list where ficnic_no = #{ficnic_no}
+    </select>
+    
+    
+    <delete id="siteWishCancel" parameterType="map">
+    	delete from member_wish where member_id = #{sess_id} and ficnic_no= #{ficnic_no}
+    </delete>
 </mapper>

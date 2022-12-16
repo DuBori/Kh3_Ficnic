@@ -35,13 +35,14 @@
 				<c:when test="${!empty List }">
 				<c:forEach items="${List}" var="dto">
 					<c:if test="${getType eq dto.getReserv_status() or empty getType }">
+		    			<c:set var="move_ficnic_info" value="onclick=\"location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no()}'\""/>
 		    			<div class="mypage-wish card w-20 m-1 p-1 d-flex flex-column border justify-content-center align-items-center ">
-							  <img src="${path }${dto.getReserv_ficnic_photo()}" class="card-img-top" style="width:200px" alt="...">
-							  <div class="mypage-wish card-body">
+							  <img ${move_ficnic_info } src="${path }${dto.getReserv_ficnic_photo()}" class="card-img-top" style="width:200px" alt="...">
+							  <div ${move_ficnic_info } class="mypage-wish card-body">
 							    <p class="card-location">지역</p>
 							    <h5 class="card-text card-title">${dto.getReserv_ficnic_name() }</h5>
 							  </div>
-							  <ul class="mypage-wish list-group list-group-flush">
+							  <ul ${move_ficnic_info } class="mypage-wish list-group list-group-flush">
 							    <li class="list-group-item card-text"> 예약 날짜 :${dto.getReserv_date().substring(0,10)}</li>
 							    <li class="list-group-item card-text">${dto.getReserv_total_price() }</li>
 							  </ul>
@@ -79,7 +80,6 @@
       		</div>
       		<div id="modal_be">
       			<span><b>${movie_dto.getMovie_title()}</b></span>
-      			
       		</div>
       		<div id="modal_input" class="ratio ratio-1x1">
       			<textarea rows="10" cols="9" id="contdiv2" name="content">${coment_dto.getMovie_coment() }</textarea>

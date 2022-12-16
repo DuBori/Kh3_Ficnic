@@ -2,9 +2,68 @@
 /* 마이페이지 관련
 /*************************/
 
+
+/*************************/
+/* 예약목록 start
+/*************************/
 .mypage-reserv .now{
 	color: black;
 }
+
+.mypage-reserv-h{
+	
+	margin: 3px;
+	padding: 2px;
+}
+
+.mypage-wish .card-location{
+	
+	font-size: 0.5rem !important;
+}
+.mypage-wish .card-title{
+	
+	font-size: 0.7rem !important;
+}
+.card-text{	
+	font-size: 0.7rem !important;
+}
+
+.modal2 {
+    display: none; /* Hidden by default */
+	position: absolute; /* Stay in place */
+	 /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	padding-top: 60px;
+}
+.modal2.show {
+  display: block;
+}
+.modal_body2 {
+	border-radius: 10px;
+	width: 400px;
+	height: 380px;
+	z-index: 2;
+	position: absolute;
+	text-align: center;
+	background-color: #fff;
+	margin-top: -2%;
+	top:50%; 
+	left:50%;
+	transform: translate(-50%,-50%);
+	padding: 5px;
+	display: none;
+}
+.modal_body2 div{
+  	margin: 3% 0;
+}
+/*************************/
+/* 예약목록 end
+/*************************/
 
 
 
@@ -93,55 +152,5 @@
 	
 }
 
-.mypage-reserv-h{
-	
-	margin: 3px;
-	padding: 2px;
-}
 
-.mypage-wish .card-location{
-	
-	font-size: 0.5rem !important;
-}
-.mypage-wish .card-title{
-	
-	font-size: 0.6rem !important;
-}
-.card-text{	
-	font-size: 0.7rem !important;
-}
-
-.modal2 {
-    display: none; /* Hidden by default */
-	position: absolute; /* Stay in place */
-	 /* Sit on top */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	background-color: rgb(0,0,0); /* Fallback color */
-	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-	padding-top: 60px;
-}
-.modal2.show {
-  display: block;
-}
-.modal_body2 {
-	border-radius: 10px;
-	width: 400px;
-	height: 380px;
-	z-index: 2;
-	position: absolute;
-	text-align: center;
-	background-color: #fff;
-	margin-top: -2%;
-	top:50%; 
-	left:50%;
-	transform: translate(-50%,-50%);
-	padding: 5px;
-	display: none;
-}
-.modal_body2 div{
-  	margin: 3% 0;
-}
 

@@ -9,6 +9,7 @@
 
     <!-- 보유 쿠폰 목록 -->
     <select id="siteMcouponList" resultType="mcouponDTO">
+    	select * from member_mcoupon where member_id = #{id}
     </select>
 
 
