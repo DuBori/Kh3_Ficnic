@@ -29,11 +29,11 @@
 					    <h5 class="card-title">피크닉 제목</h5>
 					  </div>
 					  <ul class="mypage-wish list-group list-group-flush">
-					    <li class="list-group-item">별점 ★★★★★ (후기 개수자리)</li>
-					    <li class="list-group-item">가격 자리</li>
+					    <li class="list-group-item card-text">별점 ★★★★★ (후기 개수자리)</li>
+					    <li class="list-group-item card-text">가격 자리</li>
 					  </ul>
 					  <div class="mypage-wish card-body">
-					    <a href="#" class="card-link">찜 취소하기</a>
+					    <a href="#" class="card-link card-text">찜 취소하기</a>
 					  </div>
 				</div>
     						

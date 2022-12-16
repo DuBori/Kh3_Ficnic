@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh3.model.ficnic.FicnicDAO;
+import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.model.reserv.ReservDAO;
 import com.kh3.model.reserv.ReservDTO;
 
@@ -23,6 +25,9 @@ public class SiteReservController {
 	@Inject
 	private ReservDAO reservDAO;
 
+	@Inject
+	private FicnicDAO ficnicDAO;
+	
 	/* 회원 예약 상세 페이지 */
 	@RequestMapping("mypage/mypage_reserv_view.do")
 	public	void mypage_reserv_view(
@@ -47,9 +52,12 @@ public class SiteReservController {
 	public String mypage_reserv_viewOk( @RequestParam("reserv_no") int reserv_no
 			,Model model) {
 	
-		ReservDTO dto=reservDAO.getResevCont(reserv_no);
+		ReservDTO reservDTO=reservDAO.getResevCont(reserv_no);
 		
-		model.addAttribute("reservDto", dto);
+		FicnicDTO ficnicDTO =  ficnicDAO.getFicnicCont(reservDTO.getFicnic_no());
+		
+		model.addAttribute("reservDto", reservDTO);
+		model.addAttribute("ficnicDto", ficnicDTO);
 		
 		return "site/mypage/mypage_reserv_view";
 	}
@@ -65,7 +73,8 @@ public class SiteReservController {
 		PrintWriter out =  response.getWriter();
 		
 		if(this.reservDAO.modifyReservStatus(reserv_no, reserv_sess, "cancel")>0) {
-			out.println("<script>location.href='"+request.getContextPath()+"/mypage/mypage_reserv_view.do';</script>");
+			
+			out.println("<script>alert('예약취소 완료')location.href='"+request.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
 		}else {
 			out.println("<script>alert('예약취소 실패');history.back();</script>");
 		}
