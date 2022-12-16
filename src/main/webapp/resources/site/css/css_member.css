@@ -176,7 +176,7 @@
 
 
 /*************************/
-/* 아이디 찾기
+/* 아이디/ 비밀번호 찾기
 /*************************/
 
 .member-find table {
@@ -252,55 +252,62 @@
 
 
 
+
 /*************************/
-/* 비밀번호 찾기
+/* 아이디 / 비밀번호 찾기 결과
 /*************************/
 
-.member-find table {
-	font-size: 20px;
+
+.member-find-result {
+	font-size: 15px;
+	font-weight: 400; /* 폰트 얇이 (낮을수록 얇음) */
+	text-align: center;
+	margin: auto; /* 테이블 위치 중앙 정렬 */
+	margin-top: 20px;
 	border-collapse: separate; /* 셀 간격 */
 	border-spacing: 20px;
-	margin: auto; /* 테이블 위치 중앙 정렬 */
+	margin-bottom: 150px;
 	border: 1px #eee solid;
 	width: 450px;
-	margin-top: 20px;
-	padding-top: 35px;
-	padding-bottom: 35px;
+	padding-top: 120px;
+	padding-bottom: 120px; 
 }
 
 
-.member-find input {
- 	margin: -3px 0px 0px 35px; 
-    vertical-align: middle;
+.member-find-result strong {
+	color: #ff0045;
+	font-size: 18px;
+	font-weight: 300; /* 폰트 얇이 (낮을수록 얇음) */
+	line-height: 35px; /* 글씨체 상하 간격 */
+}
+
+.member-find-result a {
+		color: #fff;
+}
+
+ .pBtn {
+ 	margin: auto;
+	margin-top: 30px;
+	height: 48px;
 	font-size: 16px;
-	font-weight: 200;
-	color: #333;
-	text-align: left;
-	width: 78%; /* input 바깥과 크기 */
-	outline: none;
-	background: none;
-	padding: 0 5px;
-	height: 50px; /* 글자와 밑 줄 사이 간격 */
-	letter-spacing: 0.8px;
-	border: none;
-	border-bottom: 1px solid #eee;
-	
+	line-height: 48px;
+	background-color: #2d2d2d;
+	text-align: center;
+	width: 320px;
+	font-weight: 300;
+	transition: background 0.2s ease-in-out;
 }
 
-/* 버튼 */
-
-/* 아이디찾기/ 비밀번호 찾기 a태그 */
-.member-find .findfind {
-	color: black;
-	padding-top: 100px;
-}
-
-.member-find .findfind:hover {
-	color: red;
-}
-
-.member-find .find_p {
-	padding-top: 10px;
-}
-
+.pBtn:hover {
+	margin: auto;
+	margin-top: 30px;
+	height: 48px;
+	font-size: 16px;
+	line-height: 48px;
+	background-color: #ff0045;
+	text-align: center;
+	width: 320px;
+	font-weight: 300;
+	transition: background 0.2s ease-in-out;
+} 
 
