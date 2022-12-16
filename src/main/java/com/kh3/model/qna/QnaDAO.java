@@ -19,5 +19,8 @@ public interface QnaDAO {
 	
 	// 문의글 수정
 	int qnaModify(QnaDTO dto);
+	
+	// 문의글 추가
+	int qnaWriteOk(QnaDTO dto);
 
 }
