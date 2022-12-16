@@ -3,7 +3,7 @@
 <c:if test="${empty sess_id}"><script type="text/javascript">alert('회원 로그인이 필요합니다.'); location.href='${path}/member/member_login.do';</script></c:if>
 
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_mypage.css" />
-<script language="javascript" src="${path}/resources/site/js/js_mypage.js"></script>
+<script language="javascript" src="${path}/resources/site/js/js_qna.js"></script>
 
 <% pageContext.setAttribute("newLine", "\n"); %>
 
@@ -110,10 +110,9 @@
 
             <table class="table-form comment-list">
                 <colgroup>
-                    <col width="18%" />
+                    <col width="13%" />
                     <col />
-                    <col width="15%" />
-                    <col width="15%" />
+                    <col width="13%" />
                 </colgroup>	
 
                 <c:choose>
@@ -123,13 +122,12 @@
                         <th class="text-center">작성자</th>
                         <th class="text-center">내용</th>
                         <th class="text-center">작성일</th>
-                        <th class="text-center">기능</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <c:forEach items="${cdto}" var="cdto">
-                    <tr>
+                    <tr id="comment-${cdto.getComment_no()}">
                     	<c:choose>
                     	<c:when test="${dto.getMember_id() == cdto.getMember_id() }">
                         <td class="text-center"><b>${cdto.getComment_writer_name() }</b></td>
@@ -139,11 +137,11 @@
                         </c:otherwise>
                         </c:choose>
                         <td class="text-left">${cdto.getComment_content() }</td>
-                        <td class="text-center eng">${cdto.getComment_date() }</td>
                         <c:choose>
                         <c:when test="${dto.getMember_id() == cdto.getMember_id() }">
                        	<td class="text-center">
-                			<a href="${path}/mypage/mypage_qna_comment_deleteOk.do?comment_no=${cdto.getComment_no() }&qna_no=${dto.getQna_no() }" onclick="return confirm('정말 삭제하시겠습니까?');" class="delbtn">삭제</a>
+                            <p class="eng">${cdto.getComment_date().substring(0,10)}<br />${cdto.getComment_date().substring(11)}</p>
+                            <button type="button" class="btn btn-sm btn-outline-danger mt-1 px-1 py-0 qnaDeleteBtn" name="comment_no" value="${cdto.getComment_no()}"><i class="fa fa-trash-o"></i> 삭제</button>
             			</td>
                         </c:when>
                         <c:otherwise>
@@ -158,7 +156,7 @@
                 <c:otherwise>
                 <tbody>
                     <tr>
-                        <td colspan="4" class="nodata">답변 내역이 없습니다.</td>
+                        <td colspan="3" class="nodata">답변 내역이 없습니다.</td>
                     </tr>
                 </tbody>
                 </c:otherwise>
@@ -175,8 +173,8 @@
              	</colgroup>
 			    <tr> 
 			        <th>댓글 쓰기</th>										
-					<td><textarea name="comment_content" cols="20" rows="3" required></textarea></td>
-                    <td><button type="submit"><i class="fa fa-pencil"></i> 쓰기</button></td>
+					<td><textarea name="comment_content" class="comment_content-" cols="20" rows="3" ></textarea></td>
+                    <td><button type="submit"><i class="fa fa-pencil qnaWriteBtn"></i> 쓰기</button></td>
 			    </tr> 
 	   		</table>
 	   		</form>
