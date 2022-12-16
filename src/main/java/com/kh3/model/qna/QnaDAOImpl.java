@@ -59,4 +59,10 @@ public class QnaDAOImpl implements QnaDAO {
         return this.sqlSession.update("siteQnaModifyOk", dto);
 	}
 
+
+	@Override
+	public int qnaWriteOk(QnaDTO dto) {
+        return this.sqlSession.insert("siteQnaWriteOk", dto);
+	}
+
 }

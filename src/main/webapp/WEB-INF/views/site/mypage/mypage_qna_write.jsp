@@ -18,7 +18,7 @@
 
 
 
-			<form name="form_input" method="post" enctype="multipart/form-data" action="${path}/site/mypage/mypage_qna_writeOk.do">
+			<form name="form_input" method="post" enctype="multipart/form-data" action="${path}/mypage/mypage_qna_writeOk.do">
 			<table>
 			<tr>	
 			<td>
@@ -41,7 +41,7 @@
             <div class="jf-input">
             <div class="row">
             <div class="col pb-2">
-            <input type="file" name="qna_file1" class="form-control" accept="image/jpeg, image/png, image/gif" />
+            <input type="file" name="qna_file_modi1" class="form-control" accept="image/jpeg, image/png, image/gif" />
             </div>
             </div>
             </div>
@@ -56,7 +56,7 @@
             <div class="jf-input">
             <div class="row">
             <div class="col pb-2">
-            <input type="file" name="qna_file2" class="form-control" accept="image/jpeg, image/png, image/gif" />
+            <input type="file" name="qna_file_modi2" class="form-control" accept="image/jpeg, image/png, image/gif" />
             </div>
             </div>
             </div>

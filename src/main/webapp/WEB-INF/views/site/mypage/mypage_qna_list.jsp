@@ -34,7 +34,7 @@
                             <c:choose>
                                 <c:when test="${!empty qList}">
                                 <c:forEach var="dto" items="${qList}">
-								<tr onclick="location.href='${path}/site/mypage/mypage_qna_view.do?no=${dto.getQna_no() }';">                                
+								<tr onclick="location.href='${path}/mypage/mypage_qna_view.do?no=${dto.getQna_no() }';">                                
                                     <td ${showLink} class="text-center eng table-list-hide-mob">${dto.getQna_title() }</td>
                                     <td ${showLink} class="text-center eng table-list-mob">${dto.getQna_date()}</td>
                                 </tr>
@@ -54,7 +54,7 @@
         </div>
     </div>
     
-        <a href="${path}/site/mypage/mypage_qna_write.do" class="write">문의하기</a>
+        <a href="${path}/mypage/mypage_qna_write.do" class="write">문의하기</a>
 
 </div>
 
