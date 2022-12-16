@@ -21,22 +21,24 @@
     	<!-- 위시 리스트 출력  -->
     	<div class="mypage-wish-subDiv d-flex flex-row flex-wrap justify-content-center border">
     	
-    		<c:forEach begin="1" end="5">
-    			<div class="mypage-wish card w-20 m-1 p-1 d-flex flex-column border justify-content-center align-items-center ">
-					  <img src="${path }/resources/data/ficnic/ficnic_1_1670922773527.jpg" class="card-img-top" style="width:200px" alt="...">
-					  <div class="mypage-wish card-body">
-					    <p class="card-location">지역</p>
-					    <h5 class="card-title">피크닉 제목</h5>
+    		<c:forEach items="${List}" var="dto">
+    			<c:set var="fdto" value="${dto.getFicnic_cont() }"/>
+    			<c:set var="move_ficnic_info" value="onclick=\"location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${fdto.getFicnic_no()}'\""/>
+    			
+    			<div class="mypage-wish card w-20 m-1 p-1 d-flex flex-column border justify-content-center align-items-center " >
+					  <img ${move_ficnic_info } src="${path}/${fdto.getFicnic_photo1()}" class="card-img-top" style="width:200px" alt="...">
+					  <div ${move_ficnic_info } class="mypage-wish card-body">
+					    <p class="card-location">${fdto.getFicnic_location() }</p>
+					    <h5 class="card-title">${fdto.getFicnic_name() }</h5>
 					  </div>
-					  <ul class="mypage-wish list-group list-group-flush">
-					    <li class="list-group-item card-text">별점 ★★★★★ (후기 개수자리)</li>
-					    <li class="list-group-item card-text">가격 자리</li>
+					  <ul ${move_ficnic_info } class="mypage-wish list-group list-group-flush">
+					    <li class="list-group-item card-text">별점 ★★★★★ (${fdto.getFicnic_review_count() })</li>
+					    <li class="list-group-item card-text">${fdto.getFicnic_sale_price()}</li>
 					  </ul>
 					  <div class="mypage-wish card-body">
-					    <a href="#" class="card-link card-text">찜 취소하기</a>
+					    <a href="${path}/mypage/wish_cancel.do?ficnic_no=${fdto.getFicnic_no()}" class="card-link card-text">찜 취소하기</a>
 					  </div>
-				</div>
-    						
+				</div>		
     		</c:forEach>
     		
     	</div>

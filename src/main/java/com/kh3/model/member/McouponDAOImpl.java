@@ -16,7 +16,7 @@ public class McouponDAOImpl implements McouponDAO {
     // 회원 쿠폰내역 보여주기
 	@Override
 	public List<McouponDTO> getCouponView(String id) {
-		return this.sqlSession.selectList("couponView", id);
+		return this.sqlSession.selectList("siteMcouponList", id);
 	}
 
 
