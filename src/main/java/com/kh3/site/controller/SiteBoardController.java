@@ -804,19 +804,37 @@ public class SiteBoardController {
     // =====================================================================================
     @RequestMapping("/board/board_download.do")
     public void board_download(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /* 게시글 접근 변수, 해당 게시글 번호 변수 bdata_no 해당 댓글 번호 bcomm_no 필요 */
-        String bbs_id = request.getParameter("bbs_id");
-        String fileName = request.getParameter("bdata_file");
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter print = response.getWriter();
 
-        int bdata_no = 0;
-
-        if (request.getParameter("bdata_no") != null) {
-            bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
+        if(request.getParameter("bbs_id") != null || request.getParameter("bdata_file") != null || request.getParameter("bdata_no") != null){
+            print.println("<script>alert('다운로드에 실패했습니다.\\n(* 잘못된 파라미터)'); history.back();</script>");
         }
 
-        String uploadPath = request.getSession().getServletContext()
-                .getRealPath("/resources/data/board/" + bbs_id + "/");
-        String downloadFile = uploadPath + fileName;
+        String bbs_id = request.getParameter("bbs_id");
+        int file_no = Integer.parseInt(request.getParameter("bdata_file"));
+        int bdata_no = Integer.parseInt(request.getParameter("bdata_no"));
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("bbs_id", bbs_id);
+        map.put("bdata_no", bdata_no);
+        BoardDTO dto = board_Dao.getBoardCont(map);
+
+        String downloadFile = request.getContextPath();
+        String fileName = null;
+        switch(file_no){
+            case 1:
+                if(dto.getBdata_file1() != null) {
+                    downloadFile = downloadFile + "/" + dto.getBdata_file1();
+                    fileName = dto.getBdata_file1().replace("/resources/data/board/"+bbs_id+"/", "");
+                }else{
+                    print.println("<script>alert('다운로드에 실패했습니다.\\n(* 다운로드 할 파일이 없습니다.)'); history.back();</script>");
+                }
+                break;
+            default:
+                break;
+        }
+
 
         OutputStream out = response.getOutputStream();
 
