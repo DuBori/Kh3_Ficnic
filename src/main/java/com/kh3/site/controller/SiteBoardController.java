@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -559,6 +561,47 @@ public class SiteBoardController {
         }
 
 
+        // 첨부파일 정리
+        String[] imgArray = { "jpg", "jpeg", "gif", "bmp", "png", "JPG", "JPGE", "GIF", "BMP", "PNG", "tif" };
+        List<String> fileCheck = new ArrayList<>(Arrays.asList(imgArray));
+
+        if(BoardConDto.getBdata_file1() != null) {
+            String file1Ext = BoardConDto.getBdata_file1().substring(BoardConDto.getBdata_file1().lastIndexOf(".") + 1);
+            if(fileCheck.contains(file1Ext)){
+                BoardConDto.setBdata_file1_img(BoardConDto.getBdata_file1());
+            }else{
+                BoardConDto.setBdata_file1_file(BoardConDto.getBdata_file1());
+            }
+        }
+
+        if(BoardConDto.getBdata_file2() != null) {
+            String file2Ext = BoardConDto.getBdata_file2().substring(BoardConDto.getBdata_file2().lastIndexOf(".") + 1);
+            if(fileCheck.contains(file2Ext)){
+                BoardConDto.setBdata_file2_img(BoardConDto.getBdata_file2());
+            }else{
+                BoardConDto.setBdata_file2_file(BoardConDto.getBdata_file2());
+            }
+        }
+
+        if(BoardConDto.getBdata_file3() != null) {
+            String file3Ext = BoardConDto.getBdata_file3().substring(BoardConDto.getBdata_file3().lastIndexOf(".") + 1);
+            if(fileCheck.contains(file3Ext)){
+                BoardConDto.setBdata_file3_img(BoardConDto.getBdata_file3());
+            }else{
+                BoardConDto.setBdata_file3_file(BoardConDto.getBdata_file3());
+            }
+        }
+
+        if(BoardConDto.getBdata_file4() != null) {
+            String file4Ext = BoardConDto.getBdata_file4().substring(BoardConDto.getBdata_file4().lastIndexOf(".") + 1);
+            if(fileCheck.contains(file4Ext)){
+                BoardConDto.setBdata_file4_img(BoardConDto.getBdata_file4());
+            }else{
+                BoardConDto.setBdata_file4_file(BoardConDto.getBdata_file4());
+            }
+        }
+
+
         // 한 페이지당 보여질 게시물의 수 -> 해당 게시물 설정값 가져와야한다.
         int rowsize = BoardConfdto.getBoard_list_num();
 
@@ -763,7 +806,7 @@ public class SiteBoardController {
     public void board_download(HttpServletRequest request, HttpServletResponse response) throws IOException {
         /* 게시글 접근 변수, 해당 게시글 번호 변수 bdata_no 해당 댓글 번호 bcomm_no 필요 */
         String bbs_id = request.getParameter("bbs_id");
-        String fileName = request.getParameter("file");
+        String fileName = request.getParameter("bdata_file");
 
         int bdata_no = 0;
 
@@ -848,7 +891,7 @@ public class SiteBoardController {
 
 
         // 세션에 저장된 비밀번호로 체크
-        if (session.getAttribute("sess_pw").equals(dto.getBdata_writer_pw())) {
+        if (dto.getBdata_writer_pw().equals(session.getAttribute("sess_pw"))) {
             out.println("<script>location.href='" + request.getContextPath() + "/board/board_view.do?bbs_id=" + bbs_id
                     + "&bdata_no=" + bdata_no + "';</script>");
 
