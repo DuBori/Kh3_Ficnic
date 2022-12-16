@@ -337,17 +337,14 @@ public class SiteMemberController {
             List<ObjectError> list = result.getAllErrors();
 
             for (ObjectError error : list) {
-                if (error.getDefaultMessage().equals("idchk")) {
+                if (error.getDefaultMessage().equals("idchk_join")) {
                     out.println("<script>alert('사용 할수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); history.back();</script>");
                     break;
                 } else if (error.getDefaultMessage().equals("id")) {
                     out.println("<script>alert('아이디를 6자 이상 입력해주세요.'); history.back();</script>");
                     break;
-                } else if (error.getDefaultMessage().equals("mailchk")) {
+                } else if (error.getDefaultMessage().equals("mailchk_join")) {
                     out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력하주세요.'); history.back();</script>");
-                    break;
-                } else if (error.getDefaultMessage().equals("name")) {
-                    out.println("<script>alert('이름을 2~8자 사이로 입력해주세요.'); history.back(); </script>");
                     break;
                 } else if (error.getDefaultMessage().equals("pw")) {
                     out.println(

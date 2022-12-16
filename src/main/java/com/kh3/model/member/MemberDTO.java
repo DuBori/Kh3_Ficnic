@@ -32,12 +32,12 @@ public class MemberDTO {
     private String member_email;
     
     // DB 아이디 중복 체크 변수
-    @AssertTrue(message = "idchk")
-    private boolean idchk;
+    @AssertTrue(message = "idchk_join")
+    private boolean idchk_join;
     
     // DB 이메일 중복 체크 변수
-    @AssertTrue(message = "mailchk")
-    private boolean mailchk;
+    @AssertTrue(message = "mailchk_join")
+    private boolean mailchk_join;
     
     // 비밀번호 확인 체크 변수
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*\\W)(?=\\S+$).{6,12}", message = "pw_re")    
