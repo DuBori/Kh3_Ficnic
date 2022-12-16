@@ -29,56 +29,44 @@
 	<form name="form_input" method="post"
 		action="${path}/mypage/mypage_info_modifyOk.do">
 
-		<table>
-
 			<input type="hidden" name="pw" value="${dto.getMember_pw()}">
 		
 			<!-- 아이디 -->
-			<tr>
-				<td><label for="member_id">아이디</label>
-				<input class="join_id" id="member_id" name="member_id" value="${dto.getMember_id()}" readonly></td>
-			</tr>
-			
+				<p><label for="member_id">아이디</label></p>
+				<p><input class="join_id" id="member_id" name="member_id" value="${dto.getMember_id()}" readonly></p>
+					<div class="rowrow"></div>
 			<!-- 비밀번호 -->
-			<tr>
-				<td><label for="member_pw">변경할 비밀번호</label>
-				<input type="password" class="join_pw placeholder_mod" id="member_pw" name="member_pw" placeholder="8자 이상의 영문, 숫자, 특수문자 조합" required></td>
-					<div class="check_font join_check join_pw_check" id="pw_check"></div>
-			</tr>
+				<p><label for="member_pw">변경할 비밀번호</label></p>
+				<p><input type="password" class="join_pw placeholder_mod" id="member_pw" name="member_pw" placeholder="8자 이상의 영문, 숫자, 특수문자 조합"></p>
+					<div class="check_font join_check join_pw_check rowrow" id="pw_check"></div>
 			
 			<!-- 비밀번호 재확인 -->
-			<tr>
-				<td><label for="member_pw">비밀번호 재입력</label>
-				<input type="password" class="join_pw_re placeholder_mod" id="member_pw_re" name="member_pw_re" placeholder="비밀번호를 다시 입력해주세요." required></td>
-					<div class="check_font join_check join_pw_re_check" id="pw_re_check"></div>
-			</tr>
+				<p><label for="member_pw">비밀번호 재입력</label></p>
+				<p><input type="password" class="join_pw_re placeholder_mod" id="member_pw_re" name="member_pw_re" placeholder="비밀번호를 다시 입력해주세요."></p>
+					<div class="check_font join_check join_pw_re_check rowrow" id="pw_re_check"></div>
 			
 			<!-- 이름 -->
-			<tr>
-				<td><label for="member_name">이름</label>
-				<input id="member_name" name="member_name" value="${dto.getMember_name()}"></td>
-			</tr>
-			
+				<p><label for="member_name">이름</label>
+				<p><input id="member_name"  name="member_name" value="${dto.getMember_name()}"></p>
+					<div class="rowrow"></div>
+					
 			<!-- 이메일 -->
-			<tr>
-				<td><label for="member_email">이메일</label>
-				<input type="email" class="join_email" id="member_email" name="member_email" value="${dto.getMember_email()}" 
-				onkeydown="EmailInput(this);" required></td>
-					<div id="mailchk-txt" class="check_font join_check join_mail_check"></div>
+				<p><label for="member_email">이메일</label></p>
+				<p><input type="email" class="join_email" id="member_email" name="member_email" value="${dto.getMember_email()}" 
+				onkeydown="EmailInput(this);" required></p>
+					<div id="mailchk-txt" class="check_font join_check join_mail_check rowrow"></div>
 					<input type="hidden" name="mailchk_join" value="false" />
-			</tr>
 			
 			<!-- 연락처 -->
-			<tr>
-				<td><label for="member_phone">연락처</label>
-				<input class="join_check join_phone" id="member_phone" name="member_phone"
-					value="${dto.getMember_phone()}" onkeydown="NumSpInput(this);" required></td>
-					<div class="check_font join_check join_phone_check" id="phone_check"></div></td>
-			</tr>
-			
-			<tr>
-				<td><input type="submit" class="btnMod" value="수정하기"></td>
-			</tr>
+				<p><label for="member_phone">연락처</label></p>
+				<p><input class="join_check join_phone" id="member_phone" name="member_phone"
+					value="${dto.getMember_phone()}" onkeydown="NumSpInput(this);" required></p>
+					<div class="check_font join_check join_phone_check rowrow" id="phone_check"></div></td>
+
+
+				<p><input type="submit" class="btnMod" value="수정하기"></p>
+				<p><a href="<%=request.getContextPath()%>/member/member_secession.do" class="member_secession">회원 탈퇴</a></p>
+         
 			
 		</table>
 
