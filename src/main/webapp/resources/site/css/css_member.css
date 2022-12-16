@@ -43,6 +43,13 @@
 	border-bottom: 1px solid #eee;
 }
 
+.member-login input:focus {
+
+	border-bottom: 1px solid #757575;
+	outline: 0;
+
+  }
+  
 .member-login .btnLogin {
 	margin-top: 80px;
 	width: 300px;
@@ -112,20 +119,22 @@
 .member-join input {
  	margin: -3px 0px 0px 35px; 
     vertical-align: middle;
-	font-size: 16px;
-	font-weight: 200;
 	color: #333;
 	text-align: left;
 	width: 78%; /* input 바깥과 크기 */
-	outline: none;
-	background: none;
 	padding: 0 5px;
 	height: 50px; /* 글자와 밑 줄 사이 간격 */
 	letter-spacing: 0.8px;
 	border: none;
 	border-bottom: 1px solid #eee;
-	
 }
+
+.member-join input:focus {
+
+	border-bottom: 1px solid #757575;
+	outline: 0;
+
+  }
 
 .member-join .btnJoin {
 	margin: 5px 0px 0px 35px; 
@@ -209,6 +218,14 @@
 	border-bottom: 1px solid #eee;
 	
 }
+
+.member-find input:focus {
+
+	border-bottom: 1px solid #757575;
+	outline: 0;
+
+  }
+  
 
 /* 버튼 */
 .member-find .btnFind {
