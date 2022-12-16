@@ -17,14 +17,14 @@
 	<!-- 댓글 등록 -->
      <insert id="adminQnaCommentReply" parameterType="qnacommentDTO">
         <selectKey resultType="int" keyProperty="comment_no" order="BEFORE">
-            select max(comment_no) from qna_comment
+            select nvl(max(comment_no),0) from qna_comment
         </selectKey>
         insert into qna_comment values(#{comment_no} + 1, #{qna_no}, #{comment_content}, #{comment_writer_name}, #{member_id}, #{comment_writer_pw}, sysdate)
     </insert>
 
     <!-- 댓글 등록 후 방금 등록한 댓글 번호 가져오기 -->
     <select id="adminQnaCommentReplyNow" parameterType="qnacommentDTO" resultType="int">
-        select max(comment_no) from qna_comment where qna_no = #{qna_no} and member_id = #{member_id} order by comment_date desc
+        select nvl(max(comment_no),0) from qna_comment where qna_no = #{qna_no} and member_id = #{member_id} order by comment_date desc
     </select>
 
 

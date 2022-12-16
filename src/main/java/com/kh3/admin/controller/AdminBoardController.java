@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -101,14 +102,27 @@ public class AdminBoardController {
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        /* 데이터 폴더 경로설정 */
-        String homedir = request.getSession().getServletContext().getRealPath("/") + "resources\\data\\board\\" + confdto.getBoard_id();
 
-        File path = new File(homedir);
+        // 게시판 아이디 중복 체크
+        int chkBoardId = this.board_ConfDao.checkBoardId(confdto.getBoard_id());
+        if(chkBoardId > 0) {
+            out.println("<script>alert('이미 등록된 게시판 아이디입니다.\\n다른 게시판 아이디를 입력하세요.'); history.back();</script>");
+        }
 
-        if (this.board_ConfDao.writeBoard(confdto) > 0) {
-            path.mkdirs();
-            out.println("<script>alert('게시판 생성 완료'); location.href='board_list.do';</script>");
+        if (chkBoardId == 0 && this.board_ConfDao.writeBoard(confdto) > 0) {
+
+            // 데이터 폴더 생성
+            String dirPath = request.getSession().getServletContext().getRealPath("/resources/data/board/" + confdto.getBoard_id());
+            File dirDir = new File(dirPath);
+            dirDir.mkdirs();
+
+            // 데이터 폴더에 더미 txt파일 생성
+            File txtFile = new File(dirPath + "/" + confdto.getBoard_name() + "_게시판_업로드_폴더.txt");
+            System.out.println("txtFile >>> " + txtFile);
+            txtFile.createNewFile();
+
+            out.println("<script>location.href='board_list.do';</script>");
+
         } else {
             out.println("<script>alert('게시판 생성 실패'); history.back();</script>");
         }
@@ -160,12 +174,12 @@ public class AdminBoardController {
         String config_id = request.getParameter("bbs_id");
 
         /* 데이터 폴더 경로설정 */
-        String homedir = request.getSession().getServletContext().getRealPath("/") + "resources\\data\\board\\" + config_id;
+        String homedir = request.getSession().getServletContext().getRealPath("/resources/data/board/" + config_id);
 
         File path = new File(homedir);
 
         if (this.board_ConfDao.deleteBoard(board_no) > 0) {
-            path.delete();
+            FileUtils.deleteDirectory(path);
             out.println("<script>alert('게시판 삭제 완료'); location.href='board_list.do';</script>");
         } else {
             out.println("<script>alert('게시판 삭제 실패'); history.back();</script>");

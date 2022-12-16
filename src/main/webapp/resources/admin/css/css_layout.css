@@ -1526,6 +1526,12 @@ main .view-form .exchange-goods-footer b {
     color: #666;
 }
 
+#sort-list li.nodata {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
 
 .category-form .card-body {
     min-height: 250px;

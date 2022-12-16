@@ -4,6 +4,7 @@
     	<ul>
     		<li<c:if test="${conf.getBoard_id() eq 'notice'}"> class="now"</c:if>><a href="${path}/board/board_list.do?bbs_id=notice">공지사항</a></li>
     		<li<c:if test="${conf.getBoard_id() eq 'faq'}"> class="now"</c:if>><a href="${path}/board/board_list.do?bbs_id=faq">자주묻는 질문</a></li>
+            <li<c:if test="${conf.getBoard_id() eq 'event'}"> class="now"</c:if>><a href="${path}/board/board_list.do?bbs_id=event">이벤트</a></li>
     	</ul>
     </h2>
     <ol>

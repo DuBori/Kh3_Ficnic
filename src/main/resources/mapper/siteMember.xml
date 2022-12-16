@@ -67,7 +67,7 @@
     <!-- 회원 가입 -->
     <insert id="siteMemberJoin" parameterType="memberDTO">
 		<selectKey resultType="int" keyProperty="member_no" order="BEFORE">
-			select max(member_no) from member_list
+			select nvl(max(member_no),0) from member_list
 		</selectKey>
 		insert into member_list values(#{member_no} + 1, default,
 		#{member_id}, #{member_pw}, #{member_name}, #{member_email},
