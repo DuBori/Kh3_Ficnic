@@ -1,1 +1,1 @@
-<meta http-equiv="refresh" content="0; url=<%=request.getContextPath()%>/admin/main.do">
+<meta http-equiv="refresh" content="0; url=<%=request.getContextPath()%>/admin/reserv/reserv_list.do">

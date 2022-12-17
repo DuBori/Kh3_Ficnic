@@ -1,10 +1,128 @@
 /*************************/
 /* .main-page
 /*************************/
+.main-page {}
+.main-page > section {
+    position: relative;
+    width: 100%;
+    margin: 0 0 60px 0;
+    padding: 0;
+}
+
+
+
+/* 메인 슬라이드 */
+.main-page #main-slide {}
 
 
 
 
+
+
+
+/* 메인 아이콘 */
+.main-page #main-icon {}
+
+
+
+
+
+
+
+/* 메인 추천 */
+.main-page #main-recommend {}
+
+
+
+
+
+
+
+/* 메인 배너 */
+.main-page #main-banner {}
+.main-page #main-banner a {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.main-page #main-banner a img {
+    width: 100%;
+}
+
+
+
+
+
+
+
+/* 메인 인기 */
+.main-page #main-hot {}
+
+
+
+
+
+
+
+/* 메인 기획전 */
+.main-page #main-exhibition {}
+
+
+
+
+
+
+
+/* 메인 겨울나기 */
+.main-page #main-winter {}
+
+
+
+
+
+
+
+/* 메인 조용히 */
+.main-page #main-quite {}
+
+
+
+
+
+
+
+/* 메인 이벤트 */
+.main-page #main-event {}
+
+
+
+
+
+
+
+/* 메인 신규 */
+.main-page #main-new {}
+
+
+
+
+
+
+
+
+@media (min-width: 992px) {
+}
+
+
+
+@media (max-width: 992px) {
+}
+
+
+
+@media (max-width: 520px) {
+}
 
 
 
