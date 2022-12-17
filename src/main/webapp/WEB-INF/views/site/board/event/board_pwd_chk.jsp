@@ -8,7 +8,7 @@
 <%@ include file="../../layout/layout_csmenu.jsp" %>
 
 
-<div class="contents w1100 board-pwcheck board-faq">
+<div class="contents w1100 board-pwcheck board-event">
 
     <div class="row justify-content-lg-center">
         <div class="col-lg-auto">

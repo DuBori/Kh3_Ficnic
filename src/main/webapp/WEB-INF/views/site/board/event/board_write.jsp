@@ -40,7 +40,7 @@
 
 
 
-<div class="contents w1100 board-write">
+<div class="contents w1100 board-write board-event">
 
 	<form name="form_input" method="post" enctype="multipart/form-data" action="${tag}">
     <div class="row">
@@ -146,6 +146,13 @@
                             <label for="bdata_title"><span>*</span> 제목</label>
                             <input type="text" name="bdata_title" id="bdata_title" value="${title}" maxlength="255" class="form-control" required />
                         </div>
+
+                        <div class="w-100"></div>
+
+                        <div class="form-group">
+                            <label for="bdata_sub">간략 설명</label>
+                            <input type="text" name="bdata_sub" id="bdata_sub" value="${subcont}" maxlength="255" class="form-control" />
+                        </div>
                         <div class="w-100 mt-2 border-bottom"></div>
 
 
@@ -177,7 +184,7 @@
 
                     	<c:if test="${conf.getBoard_use_file1() eq 'Y' }">
 	                        <div class="form-group join-form">
-	                            <label for="file1">첨부파일 #1</label>
+	                            <label for="file1">목록이미지</label>
 	                            <div class="jf-input pb-1">
 	                                <div class="row">
 	                                    <div class="col-md-5"><input type="file" name="file1" id="file1" class="form-control" /></div>
@@ -195,7 +202,7 @@
 
                     	<c:if test="${conf.getBoard_use_file2() eq 'Y' }">
 	                        <div class="form-group join-form">
-	                            <label for="file2">첨부파일 #2</label>
+	                            <label for="file2">내용이미지 #1</label>
 	                            <div class="jf-input pb-1">
 	                                <div class="row">
 	                                    <div class="col-md-5"><input type="file" name="file2" id="file2" class="form-control" /></div>
@@ -213,7 +220,7 @@
 
                     	<c:if test="${conf.getBoard_use_file3() eq 'Y' }">
 	                        <div class="form-group join-form">
-	                            <label for="file3">첨부파일 #3</label>
+	                            <label for="file3">내용이미지 #2</label>
 	                            <div class="jf-input pb-1">
 	                                <div class="row">
 	                                    <div class="col-md-5"><input type="file" name="file3" id="file3" class="form-control" /></div>
@@ -231,7 +238,7 @@
 
                     	<c:if test="${conf.getBoard_use_file4() eq 'Y' }">
 	                        <div class="form-group join-form">
-	                            <label for="file4">첨부파일 #4</label>
+	                            <label for="file4">내용이미지 #3</label>
 	                            <div class="jf-input pb-1">
 	                                <div class="row">
 	                                    <div class="col-md-5"><input type="file" name="file4" id="file4" class="form-control" /></div>

@@ -1,4 +1,22 @@
 /////////////////////////////////////////////////////
+// 자주묻는 질문 목록 클릭
+/////////////////////////////////////////////////////
+$(function(){
+    $(".board-faq .bf-list li .bfl-tit").on("click", function(){
+        if($(this).parent().hasClass("open")){
+            $(this).parent().removeClass("open");
+        }else{
+            $(".board-faq .bf-list li.open").removeClass("open");
+            $(this).parent().addClass("open");
+        }
+    });
+});
+
+
+
+
+
+/////////////////////////////////////////////////////
 // 댓글 작성
 /////////////////////////////////////////////////////
 addComment = function(form) {
