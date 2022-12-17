@@ -22,21 +22,21 @@
                             <c:when test="${!empty List}">
                                 <c:forEach var="dto" items="${List}">
                                 <li>
-                                    <c:if test="${!empty dto.getBdata_file1()}">
-                                        <div class="pb-3 text-center bflc-photo"><img src="${path}${dto.getBdata_file1()}" alt="" /></div>
-                                    </c:if>
+                                    <a href="board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&category=${category}&page=${paging.getPage()}">
+                                        <c:if test="${!empty dto.getBdata_file1()}">
+                                        <div class="bel-photo"><img src="${path}${dto.getBdata_file1()}" alt="" /></div>
+                                        </c:if>
 
-                                <tr onclick="location.href='${path}/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&category=${category}&page=${paging.getPage()}';">
-                                    <td class="text-left pl-3 subject">
-                                        <p>${dto.getBdata_title()}</p>
-                                        <p>${dto.getBdata_sub()}</p>
-                                        <c:if test="${dto.getBdata_comment() > 0}"><span class="eng text-primary">(${dto.getBdata_comment()})</span></c:if>
-                                    </td>
-                                    <td class="text-center eng">
-                                        <p>${dto.getBdata_date().substring(0,10)}</p>
-                                        <p>${dto.getBdata_date().substring(11)}</p>
-                                    </td>
-                                </tr>
+                                        <div class="bel-cont">
+                                            <p><b>${dto.getBdata_title()}</b><c:if test="${dto.getBdata_comment() > 0}"><span class="eng text-primary">(${dto.getBdata_comment()})</span></c:if></p>
+                                            <p>${dto.getBdata_sub()}</p>
+                                        </div>
+
+                                        <div class="bel-date">
+                                            <p>${dto.getBdata_date().substring(0,10)}</p>
+                                            <p>${dto.getBdata_date().substring(11)}</p>
+                                        </div>
+                                    </a>
                                 </li>
                                 </c:forEach>
                             </c:when>

@@ -129,6 +129,59 @@
 /*************************/
 .board-event {}
 
+.board-event .be-list {
+    position: relative;
+    width: 100%;
+    border-top: 1px solid #eee;
+}
+.board-event .be-list li {}
+.board-event .be-list li a {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 30px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.board-event .be-list li .bel-photo {
+    width: 250px;
+    margin-right: 30px;
+}
+.board-event .be-list li .bel-photo img {
+    width: 100%;
+}
+
+.board-event .be-list li .bel-cont {
+    flex-grow: 1;
+    font-size: 14px;
+    color: #999;
+}
+.board-event .be-list li .bel-cont b {
+    font-size: 22px;
+    line-height: 34px;
+    font-weight: 500;
+    color: #000;
+}
+.board-event .be-list li:hover .bel-cont b {
+    color: var(--font-color);
+}
+.board-event .be-list li .bel-cont span {
+    font-family: 'verdana';
+    font-weight: 500;
+    letter-spacing: -1px;
+    vertical-align: top;
+    line-height: 34px;
+    margin-left: 5px;
+}
+
+.board-event .be-list li .bel-date {
+    font-family: 'verdana';
+    color: #999;
+    text-align: center;
+    letter-spacing: -1.5px;
+}
 
 
 
@@ -151,7 +204,7 @@
 
 .board-event.view-form .vf-body .vfb-photo {
     max-width: 800px;
-    margin: 5px auto;
+    margin: 0 auto;
 }
 .board-event.view-form .vf-body .vfb-photo img {
     width: 100%;
