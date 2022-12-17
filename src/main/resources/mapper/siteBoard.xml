@@ -30,7 +30,9 @@
     <resultMap id="siteBdataListMap" type="boardDto">
         <result property="bdata_category" column="bdata_category" />
         <result property="board_id" column="board_id" />
+        <result property="bdata_writer_id" column="bdata_writer_id" />
         <collection property="bdata_category_name" column="{bdata_category=bdata_category, board_id=board_id}" select="siteBoardCategoryName" javaType="String" ofType="String" />
+        <collection property="bdata_writer_type" column="bdata_writer_id" select="siteBoardWriterType" javaType="String" ofType="String" />
     </resultMap>
      
     <select id="SiteBoardList" parameterType="java.util.Map" resultMap="siteBdataListMap">
@@ -56,6 +58,11 @@
     <select id="siteBoardCategoryName" parameterType="java.util.Map" resultType="String">
         select bcate_name from board_category_${board_id} where bcate_no = #{bdata_category}
     </select>
+
+    <select id="siteBoardWriterType" parameterType="java.util.Map" resultType="String">
+        select member_type from member_list where member_id = #{bdata_writer_id}
+    </select>
+
 
 
 

@@ -40,7 +40,7 @@
 
 
 
-<div class="contents w1100 board-write">
+<div class="contents w1100 board-write board-faq">
 
 	<form name="form_input" method="post" enctype="multipart/form-data" action="${tag}">
     <div class="row">
@@ -151,7 +151,7 @@
 
                         <div class="form-group col">
                             <label for="bdata_cont" style="padding: 132px 0;"><span>*</span> 글 내용</label>
-                            <textarea name="bdata_cont" id="bdata_cont" class="form-control" rows="12">${cont}</textarea>
+                            <textarea name="bdata_cont" id="bdata_cont" class="form-control" rows="12" required>${cont}</textarea>
                         </div>
                         <div class="w-100 mt-2 border-bottom"></div>
 
@@ -180,7 +180,7 @@
 	                            <label for="file1">첨부파일 #1</label>
 	                            <div class="jf-input pb-1">
 	                                <div class="row">
-	                                    <div class="col-md-5"><input type="file" name="file1" id="file1" class="form-control" /></div>
+	                                    <div class="col-md-5"><input type="file" name="file1" id="file1" class="form-control" accept="image/jpeg, image/png, image/gif" /></div>
 
 	                                    <c:if test="${!empty file1}">
 	                                    <div class="col-md-auto align-self-center pl-0">
@@ -198,7 +198,7 @@
 	                            <label for="file2">첨부파일 #2</label>
 	                            <div class="jf-input pb-1">
 	                                <div class="row">
-	                                    <div class="col-md-5"><input type="file" name="file2" id="file2" class="form-control" /></div>
+	                                    <div class="col-md-5"><input type="file" name="file2" id="file2" class="form-control" accept="image/jpeg, image/png, image/gif" /></div>
 
 	                                    <c:if test="${!empty file2}">
 	                                    <div class="col-md-auto align-self-center pl-0">
@@ -216,7 +216,7 @@
 	                            <label for="file3">첨부파일 #3</label>
 	                            <div class="jf-input pb-1">
 	                                <div class="row">
-	                                    <div class="col-md-5"><input type="file" name="file3" id="file3" class="form-control" /></div>
+	                                    <div class="col-md-5"><input type="file" name="file3" id="file3" class="form-control" accept="image/jpeg, image/png, image/gif" /></div>
 
 	                                    <c:if test="${!empty file3}">
 	                                    <div class="col-md-auto align-self-center pl-0">
@@ -234,7 +234,7 @@
 	                            <label for="file4">첨부파일 #4</label>
 	                            <div class="jf-input pb-1">
 	                                <div class="row">
-	                                    <div class="col-md-5"><input type="file" name="file4" id="file4" class="form-control" /></div>
+	                                    <div class="col-md-5"><input type="file" name="file4" id="file4" class="form-control" accept="image/jpeg, image/png, image/gif" /></div>
 
 	                                    <c:if test="${!empty file4}">
 	                                    <div class="col-md-auto align-self-center pl-0">

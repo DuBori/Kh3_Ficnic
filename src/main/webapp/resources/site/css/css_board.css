@@ -4,12 +4,35 @@
 .board-faq {}
 
 
-.board-faq .bf-search {}
+.board-faq .bf-search {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    line-height: 24px;
+    border-bottom: 1px solid #000;
+}
+.board-faq .bf-search i {
+    flex: 0 0 auto;
+    font-size: 24px;
+    margin-right: 15px;
+}
+.board-faq .bf-search input[type='text'] {
+    width: 100%;
+    height: 38px;
+    -webkit-box-flex: 1;
+    flex: 1 1 auto;
+    border: 0 none;
+}
+.board-faq .bf-search button {
+    width: 100px;
+}
 
 
 .board-faq .bf-category {
     position: relative;
-    padding: 20px 0px;
+    padding: 25px 0px;
     white-space: nowrap;
     overflow: auto;
 }
@@ -18,7 +41,7 @@
     margin-right: 20px;
 }
 .board-faq .bf-category li a {
-    font-size: 14px;
+    font-size: 15px;
     color: #000;
 }
 .board-faq .bf-category li a:hover {
@@ -39,6 +62,50 @@
 .board-faq .bf-list li {
     border-bottom: 1px solid rgb(230, 230, 230);
 }
+.board-faq .bf-list li .bfl-tit {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    min-height: 60px;
+    line-height: 24px;
+    padding: 18px 0px;
+    font-size: 15px;
+    color: #000;
+    cursor: pointer;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+.board-faq .bf-list li .bfl-tit:hover {
+    color: var(--font-color);
+}
+.board-faq .bf-list li.open .bfl-tit {
+    font-weight: bold;
+}
+.board-faq .bf-list li .bfl-cont {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding: 0 1.5rem;
+    background: #f5f9fd;
+    overflow: hidden;
+    -webkit-transition: all 0.2s ease-out 0s;
+    -o-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+}
+.board-faq .bf-list li.open .bfl-cont {
+    height: auto;
+    padding: 1.5rem;
+}
+.board-faq .bf-list li .bfl-cont .bflc-photo {}
+.board-faq .bf-list li .bfl-cont .bflc-photo img {
+    max-width: 100%;
+}
+.board-faq .bf-list li .bfl-cont .bflc-body {
+    font-size: 15px;
+    color: #000;
+}
+.board-faq .bf-list li .bfl-cont .bflc-btn {
+    margin-top: 20px;
+}
 
 .board-faq .bf-list li.nodata {
     position: relative;
@@ -57,3 +124,49 @@
 
 
 
+/*************************/
+/* .board-event
+/*************************/
+.board-event {}
+
+
+
+
+
+.board-event.view-form .vf-body h2 {
+    letter-spacing: -1px;
+}
+.board-event.view-form .vf-body h2 p {
+    font-size: 34px;
+    font-weight: 500;
+    line-height: 37px;
+    margin-top: 5px;
+}
+.board-event.view-form .vf-body h2 sub {
+    display: inline-block;
+    font-size: 20px;
+    line-height: 30px;
+    margin-bottom: 10px;
+}
+
+.board-event.view-form .vf-body .vfb-photo {
+    max-width: 800px;
+    margin: 5px auto;
+}
+.board-event.view-form .vf-body .vfb-photo img {
+    width: 100%;
+}
+
+
+
+@media (min-width: 992px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 520px) {
+    .board-event.view-form .vf-body .vfb-photo {
+        width: 100%;
+    }
+}

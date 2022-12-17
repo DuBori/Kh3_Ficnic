@@ -11,78 +11,32 @@
 <%@ include file="../../layout/layout_csmenu.jsp" %>
 
 
-<div class="contents w1100 view-form board-view board-faq">
+<div class="contents w1100 view-form board-view board-event">
 
     <div class="row vf-body">
         <div class="col-lg mb-4">
             <div class="card border-0">
                 <div class="card-body p-0 pt-2">
-                    <h2>${BoardConDto.getBdata_title()}</h2>
-
-                    <div class="d-flex py-2 border-bottom vfb-info">
-                        <div class="col text-left">
-                            <p>${BoardConDto.getBdata_date()}</p>
-                            <p>조회수 : <fmt:formatNumber value="${BoardConDto.getBdata_hit()}" /></p>
-                        </div>
-
-                        <div class="col text-right pt-2">
-                        	<p class="writer">${BoardConDto.getBdata_writer_name()}<c:if test="${!empty BoardConDto.getBdata_writer_id()}"> (${BoardConDto.getBdata_writer_id()})</c:if></p>
-                        </div>
-                    </div>
-
-                    <c:if test="${!empty BoardConDto.getBdata_link1()}">
-                    	<div class="d-flex py-2 border-bottom">
-            				<div class="col"><i class="fa fa-link"></i> 관련링크 #1 : <a href="${BoardConDto.getBdata_link1()}" target="_blank">${BoardConDto.getBdata_link1()}</a></div>
-            			</div>
-                    </c:if>
-                    <c:if test="${!empty BoardConDto.getBdata_link2()}">
-                    	<div class="d-flex py-2 border-bottom">
-            				<div class="col"><i class="fa fa-link"></i> 관련링크 #2 : <a href="${BoardConDto.getBdata_link2()}" target="_blank">${BoardConDto.getBdata_link2()}</a></div>
-            			</div>
-                    </c:if>
+                    <h2>
+                        <p>${BoardConDto.getBdata_title()}</p>
+                        <sub>${BoardConDto.getBdata_sub()}</sub>
+                    </h2>
 
 
-					<c:if test="${!empty BoardConDto.getBdata_file1_img()}">
-						<div class="pt-3 text-center vfb-photo"><img src="${path}${BoardConDto.getBdata_file1_img()}" alt="" /></div>
-					</c:if>
+                    <div class="mb-5"></div>
+
 					<c:if test="${!empty BoardConDto.getBdata_file2_img()}">
-						<div class="pt-3 text-center vfb-photo"><img src="${path}${BoardConDto.getBdata_file2_img()}" alt="" /></div>
+						<div class="text-center vfb-photo"><img src="${path}${BoardConDto.getBdata_file2_img()}" alt="" /></div>
 					</c:if>
 					<c:if test="${!empty BoardConDto.getBdata_file3_img()}">
-						<div class="pt-3 text-center vfb-photo"><img src="${path}${BoardConDto.getBdata_file3_img()}" alt="" /></div>
+						<div class="text-center vfb-photo"><img src="${path}${BoardConDto.getBdata_file3_img()}" alt="" /></div>
 					</c:if>
 					<c:if test="${!empty BoardConDto.getBdata_file4_img()}">
-						<div class="pt-3 text-center vfb-photo"><img src="${path}${BoardConDto.getBdata_file4_img()}" alt="" /></div>
+						<div class="text-center vfb-photo"><img src="${path}${BoardConDto.getBdata_file4_img()}" alt="" /></div>
 					</c:if>
 
 
-                    <div class="d-flex pt-4 pb-5 border-bottom">
-                        <div class="col">
-                            ${BoardConDto.getBdata_cont().replace(newLine, '<br />')}
-                        </div>
-                    </div>
-
-
-					<c:if test="${!empty BoardConDto.getBdata_file1_file()}">
-						<div class="d-flex py-2 border-bottom">
-							<div class="col"><i class="fa fa-save"></i> 첨부파일 #1 : <a href="${path}/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&bdata_file=1">${BoardConDto.getBdata_file1_file().replace(folder, '')}</a></div>
-                    	</div>
-					</c:if>
-					<c:if test="${!empty BoardConDto.getBdata_file2_file()}">
-						<div class="d-flex py-2 border-bottom">
-							<div class="col"><i class="fa fa-save"></i> 첨부파일 #2 : <a href="${path}/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&bdata_file=2">${BoardConDto.getBdata_file2_file().replace(folder, '')}</a></div>
-                    	</div>
-					</c:if>
-					<c:if test="${!empty BoardConDto.getBdata_file3_file()}">
-						<div class="d-flex py-2 border-bottom">
-							<div class="col"><i class="fa fa-save"></i> 첨부파일 #3 : <a href="${path}/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&bdata_file=3">${BoardConDto.getBdata_file3_file().replace(folder, '')}</a></div>
-                    	</div>
-					</c:if>
-					<c:if test="${!empty BoardConDto.getBdata_file4_file()}">
-						<div class="d-flex py-2 border-bottom">
-							<div class="col"><i class="fa fa-save"></i> 첨부파일 #4 : <a href="${path}/board/board_download.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}&bdata_file=4">${BoardConDto.getBdata_file4_file().replace(folder, '')}</a></div>
-                    	</div>
-					</c:if>
+                    <div class="d-flex pt-4 pb-5 border-bottom"></div>
                 </div>
             </div>
         </div>
