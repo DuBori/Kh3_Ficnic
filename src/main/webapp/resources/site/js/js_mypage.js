@@ -2,7 +2,7 @@
 	$(function(){
 		
 		$(".btn-open-popup").on("click",function(){  
-			var name = $(this).data('name')+" 후기 작성";
+			var name = $(this).data('name')+"후기 작성";
 			$("#exampleModalLabel").html(name);
 		});
 	});
