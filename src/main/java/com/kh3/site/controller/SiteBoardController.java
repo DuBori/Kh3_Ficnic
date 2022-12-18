@@ -452,6 +452,23 @@ public class SiteBoardController {
 
 
 
+        // 게시물 헤드넘버 정하기
+        int set_headnum = 0;
+
+        if(boardCont.getBdata_headnum() > 0 && !boardCont.getBdata_use_notice().equals(Modifydto.getBdata_use_notice())) {
+            if(Modifydto.getBdata_use_notice() != null && Modifydto.getBdata_use_notice().equals("Y")){
+                set_headnum = 999;
+                int min_headnum = board_Dao.getMinHeadnumNotice(Modifydto.getBoard_id());
+                if(min_headnum > 0) set_headnum = min_headnum - 1;
+            }else{
+                set_headnum = 2000000000;
+                int min_headnum = board_Dao.getMinHeadnum(Modifydto.getBoard_id());
+                if(min_headnum > 0) set_headnum = min_headnum - 100;
+            }
+            Modifydto.setBdata_headnum(set_headnum);
+        }
+
+
         String uploadPath = "/resources/data/board/" + bbs_id + "/";
 
         String ori_file1 = mrequest.getParameter("ori_file1");

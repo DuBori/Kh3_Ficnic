@@ -115,7 +115,9 @@
 	<!-- 해당 게시판 게시글 업데이트 -->
 	<update id="SiteBoardUpdate" parameterType="map">
 		update
-		board_data_${bbs_id} set bdata_category = #{dto.bdata_category},
+		board_data_${bbs_id} set
+		bdata_headnum = #{dto.bdata_headnum},
+		bdata_category = #{dto.bdata_category},
 		bdata_use_secret = #{dto.bdata_use_secret},
 		bdata_title = #{dto.bdata_title},
 		bdata_cont = #{dto.bdata_cont},
