@@ -24,7 +24,7 @@
 	<!-- 문의글 추가 -->
     <insert id="siteQnaWriteOk" parameterType="qnaDTO">
         <selectKey resultType="int" keyProperty="qna_no" order="BEFORE">
-            select max(qna_no) from qna_list
+            select nvl(max(qna_no),0) from qna_list
         </selectKey>
         insert into qna_list values(#{qna_no} + 1, #{ficnic_no},
         #{qna_title}, #{qna_cont}, #{qna_file1}, #{qna_file2},

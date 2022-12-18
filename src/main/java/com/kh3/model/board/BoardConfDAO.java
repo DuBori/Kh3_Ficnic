@@ -10,6 +10,8 @@ public interface BoardConfDAO {
 
     int writeBoard(BoardConfDTO dto);
 
+    int checkBoardId(String board_id);
+
     BoardConfDTO getCont(int board_no);
 
     int updateBoard(BoardConfDTO dto);

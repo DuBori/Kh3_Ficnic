@@ -291,9 +291,9 @@ public class AdminFicnicController {
         /* 선택 옵션 처리 */
         String setOptionTitle = "";
         String setOptionPrice = "";
-        if (dto.getFicnic_option_title() != null) {
-            String[] getOptionTitle = dto.getFicnic_option_title().split(",");
-            String[] getOptionPrice = dto.getFicnic_option_price().split(",");
+        if (dto.getFicnic_option_title() != null && !dto.getFicnic_option_title().equals(",")) {
+            String[] getOptionTitle = mRequest.getParameterValues("ficnic_option_title");
+            String[] getOptionPrice = mRequest.getParameterValues("ficnic_option_price");
             for(int i=0; i<getOptionTitle.length; i++){
                 setOptionTitle += getOptionTitle[i] + "★";
 
@@ -317,9 +317,9 @@ public class AdminFicnicController {
         /* 추가 선택 처리 */
         String setSelectTitle = "";
         String setSelectPrice = "";
-        if (dto.getFicnic_select_title() != null) {
-            String[] getSelectTitle = dto.getFicnic_select_title().split(",");
-            String[] getSelectPrice = dto.getFicnic_select_price().split(",");
+        if (dto.getFicnic_select_title() != null && !dto.getFicnic_select_title().equals(",")) {
+            String[] getSelectTitle = mRequest.getParameterValues("ficnic_select_title");
+            String[] getSelectPrice = mRequest.getParameterValues("ficnic_select_price");
             for(int i=0; i<getSelectTitle.length; i++){
                 setSelectTitle += getSelectTitle[i] + "★";
 
@@ -342,8 +342,8 @@ public class AdminFicnicController {
 
         /* 피크닉 정보 처리 */
         String setInfoData = "";
-        if (dto.getFicnic_info() != null) {
-            String[] getInfoData = dto.getFicnic_info().split(",");
+        if (dto.getFicnic_info() != null && !dto.getFicnic_info().equals(",")) {
+            String[] getInfoData = mRequest.getParameterValues("ficnic_info");
 
             int cnt = 0;
             for (String info : getInfoData) {
@@ -361,8 +361,8 @@ public class AdminFicnicController {
 
         /* 피크닉 커리큘럼 처리 */
         String setCurrData = "";
-        if (dto.getFicnic_curriculum() != null) {
-            String[] getCurr = dto.getFicnic_curriculum().split(",");
+        if (dto.getFicnic_curriculum() != null && !dto.getFicnic_curriculum().equals(",")) {
+            String[] getCurr = mRequest.getParameterValues("ficnic_curriculum");
 
             int cnt = 0;
             for (String info : getCurr) {
@@ -611,9 +611,9 @@ public class AdminFicnicController {
         /* 선택 옵션 처리 */
         String setOptionTitle = "";
         String setOptionPrice = "";
-        if (dto.getFicnic_option_title() != null) {
-            String[] getOptionTitle = dto.getFicnic_option_title().split(",");
-            String[] getOptionPrice = dto.getFicnic_option_price().split(",");
+        if (dto.getFicnic_option_title() != null && !dto.getFicnic_option_title().equals(",")) {
+            String[] getOptionTitle = mRequest.getParameterValues("ficnic_option_title");
+            String[] getOptionPrice = mRequest.getParameterValues("ficnic_option_price");
             for(int i=0; i<getOptionTitle.length; i++){
                 setOptionTitle += getOptionTitle[i] + "★";
                 if(Integer.parseInt(getOptionPrice[i]) > 0){
@@ -630,9 +630,9 @@ public class AdminFicnicController {
         /* 추가 선택 처리 */
         String setSelectTitle = "";
         String setSelectPrice = "";
-        if (dto.getFicnic_select_title() != null) {
-            String[] getSelectTitle = dto.getFicnic_select_title().split(",");
-            String[] getSelectPrice = dto.getFicnic_select_price().split(",");
+        if (dto.getFicnic_select_title() != null && !dto.getFicnic_select_title().equals(",")) {
+            String[] getSelectTitle = mRequest.getParameterValues("ficnic_select_title");
+            String[] getSelectPrice = mRequest.getParameterValues("ficnic_select_price");
             for(int i=0; i<getSelectTitle.length; i++){
                 setSelectTitle += getSelectTitle[i] + "★";
                 if(Integer.parseInt(getSelectPrice[i]) > 0){
@@ -648,8 +648,8 @@ public class AdminFicnicController {
 
         /* 피크닉 정보 처리 */
         String setInfoData = "";
-        if (dto.getFicnic_info() != null) {
-            String[] getInfoData = dto.getFicnic_info().split(",");
+        if (dto.getFicnic_info() != null && !dto.getFicnic_info().equals(",")) {
+            String[] getInfoData = mRequest.getParameterValues("ficnic_info");
 
             int cnt = 0;
             for (String info : getInfoData) {
@@ -667,8 +667,8 @@ public class AdminFicnicController {
 
         /* 피크닉 커리큘럼 처리 */
         String setCurrData = "";
-        if (dto.getFicnic_curriculum() != null) {
-            String[] getCurr = dto.getFicnic_curriculum().split(",");
+        if (dto.getFicnic_curriculum() != null && !dto.getFicnic_curriculum().equals(",")) {
+            String[] getCurr = mRequest.getParameterValues("ficnic_curriculum");
 
             int cnt = 0;
             for (String info : getCurr) {
@@ -835,9 +835,10 @@ public class AdminFicnicController {
 
         if (del_pimage.exists()) {
             del_pimage.delete();
-            this.dao.deleteFicnicImage(ficnic_no, img_num);
             chkResult = "Y";
         }
+
+        this.dao.deleteFicnicImage(ficnic_no, img_num);
 
         out.println(chkResult);
     }

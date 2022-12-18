@@ -26,6 +26,7 @@
                 <div>운영시간<br />평일 10:00 ~ 17:00  점심 13:00 ~ 14:00</div>
                 <div>
                     <a href="${path}/board/board_list.do?bbs_id=faq">자주묻는 질문</a>
+                    <a href="${path}/board/board_list.do?bbs_id=notice">공지사항</a>
                 </div>
             </div>
         </div>

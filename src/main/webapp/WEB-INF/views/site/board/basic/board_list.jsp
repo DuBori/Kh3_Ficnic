@@ -53,7 +53,7 @@
 
                                 <c:set var="result_title" value="<span class=\"search\">${keyword}</span>"></c:set>
                                 <c:set var="result_writer" value="<span class=\"search\">${keyword}</span>"></c:set>
-                                <tr onclick="location.href='${path}/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&page=${paging.getPage()}';">
+                                <tr onclick="location.href='${path}/board/board_view.do?bbs_id=${dto.getBoard_id()}&bdata_no=${dto.getBdata_no()}&field=${field}&keyword=${keyword}&category=${category}&page=${paging.getPage()}';">
                                     <td class="text-center eng table-list-hide">
                                         <c:choose>
                                             <c:when test="${dto.getBdata_use_notice() eq 'Y'}"><i class="fa fa-bell-o"></i> 공지</c:when>
@@ -67,7 +67,12 @@
                                         ${file1}${file2}${file3}${file4}
                                         <c:if test="${dto.getBdata_comment() > 0}"><span class="eng text-primary">(${dto.getBdata_comment()})</span></c:if>
                                     </td>
-                                    <td class="text-center table-list-hide-mob"><c:choose><c:when test="${field eq 'writer' and keyword != ''}">${dto.getBdata_writer_name().replace(keyword, result_writer)}</c:when><c:otherwise>${dto.getBdata_writer_name()}</c:otherwise></c:choose></td>
+                                    <td class="text-center table-list-hide-mob">
+                                        <c:choose>
+                                            <c:when test="${dto.getBdata_writer_type() eq 'admin'}"><img src="${path}/resources/site/images/admin_icon.png" alt="" /><b>관리자</b></c:when>
+                                            <c:otherwise><c:choose><c:when test="${field eq 'writer' and keyword != ''}">${dto.getBdata_writer_name().replace(keyword, result_writer)}</c:when><c:otherwise>${dto.getBdata_writer_name()}</c:otherwise></c:choose></c:otherwise>
+                                        </c:choose>
+                                    </td>
                                     <td class="text-center eng">${dto.getBdata_date().substring(0,10)}</td>
                                     <td class="text-center eng table-list-hide-mob"><fmt:formatNumber value="${dto.getBdata_hit()}" /></td>
                                 </tr>
@@ -90,7 +95,7 @@
 
 
     <div class="row mt-4 list-bottom-util">
-        <div class="col-md-4 text-left">
+        <div class="col-sm-4 mb-3 text-left">
             <form name="search_form" method="get" action="${path}/board/board_list.do">
             <input type="hidden" name="bbs_id" value="${param.bbs_id}" />
             <input type="hidden" name="category" value="${param.category}" />
@@ -106,11 +111,11 @@
             </form>
         </div>
 
-        <div class="col-md-4 text-center">
+        <div class="col-sm-4 mb-3 text-center">
             ${pagingWrite}
         </div>
 
-        <div class="col-md-4 text-right">
+        <div class="col-sm-4 mb-3 text-right">
             <c:if test="${level.write eq 'Y'}"><a href="${path}/board/board_write.do?bbs_id=${conf.getBoard_id()}" class="btn btn-primary"><i class="fa fa-pencil mr-1"></i> 글쓰기</a></c:if>
         </div>
     </div>

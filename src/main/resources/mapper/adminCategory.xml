@@ -32,17 +32,17 @@
     <select id="adminCategoryIdMax" parameterType="java.util.Map" resultType="int">
         <choose>
             <when test="category_depth eq 1">
-            select max(substr(category_id,1,2)) + 1 from ficnic_category where category_depth = '1'
+            select nvl(max(substr(category_id,1,2)),0) + 1 from ficnic_category where category_depth = '1'
             </when>
             <otherwise>
-            select max(substr(category_id,3,2)) + 1 from ficnic_category where substr(category_id,1,2) = substr(#{ps_ctid},1,2)
+            select nvl(max(substr(category_id,3,2)),0) + 1 from ficnic_category where substr(category_id,1,2) = substr(#{ps_ctid},1,2)
             </otherwise>
         </choose>
     </select>
 
     <!-- 카테고리 정렬 순서 최대값 -->
     <select id="adminCategoryRankMax" resultType="int">
-        select max(category_rank) + 1 from ficnic_category
+        select nvl(max(category_rank),0) + 1 from ficnic_category
     </select>
 
 
@@ -50,7 +50,7 @@
     <!-- 카테고리 추가 -->
     <insert id="adminCategoryWrite" parameterType="CategoryDTO">
         <selectKey resultType="int" keyProperty="category_no" order="BEFORE">
-            select max(category_no) from ficnic_category
+            select nvl(max(category_no),0) from ficnic_category
         </selectKey>
         insert into ficnic_category values(#{category_no} + 1, #{category_show}, #{category_id}, #{category_depth}, #{category_id_up}, #{category_rank}, #{category_name}, #{category_image})
     </insert>

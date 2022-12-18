@@ -38,6 +38,7 @@ public class BoardDTO {
 	private int bdata_comment;
 	private String bdata_writer_id;
 	private String bdata_writer_pw;
+	private String bdata_writer_type;
 	private String bdata_writer_name;
 	private String bdata_date;
 	

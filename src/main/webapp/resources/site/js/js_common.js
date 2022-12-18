@@ -3,9 +3,7 @@
 /////////////////////////////////////////////////////
 (function($){
     $(window).on("load", function(){
-        setTimeout(function(){
-            $("#preloader").fadeOut("slow");
-        }, 500);
+        $("#preloader").fadeOut("slow");
     });
 
     var angle = 0;

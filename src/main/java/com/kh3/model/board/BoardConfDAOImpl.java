@@ -47,6 +47,11 @@ public class BoardConfDAOImpl implements BoardConfDAO {
     }
 
 
+    @Override
+    public int checkBoardId(String board_id) {
+        return sqlSession.selectOne("adminBoardCheckId", board_id);
+    }
+
 
     @Override
     public BoardConfDTO getCont(int board_no) {

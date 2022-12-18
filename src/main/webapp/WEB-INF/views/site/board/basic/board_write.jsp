@@ -151,7 +151,7 @@
 
                         <div class="form-group col">
                             <label for="bdata_cont" style="padding: 132px 0;"><span>*</span> 글 내용</label>
-                            <textarea name="bdata_cont" id="bdata_cont" class="form-control" rows="12">${cont}</textarea>
+                            <textarea name="bdata_cont" id="bdata_cont" class="form-control" rows="12" required>${cont}</textarea>
                         </div>
                         <div class="w-100 mt-2 border-bottom"></div>
 

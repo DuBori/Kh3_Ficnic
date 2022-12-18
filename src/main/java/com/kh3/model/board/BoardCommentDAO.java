@@ -17,4 +17,8 @@ public interface BoardCommentDAO {
 	void deleteBoardCommList(Map<String, Object> map);
 
 	void updateCommentNum(Map<String, Object> map);
+
+	BoardCommentDTO getNowComent(String bbs_id, int bdata_no, String bcomm_name);
+
+    BoardCommentDTO getThisComent(String bbs_id, int bdata_no, int bcomm_no);
 }
