@@ -38,8 +38,8 @@ public class QnaCommentDAOImpl implements QnaCommentDAO {
 
 
     @Override
-    public int qnaCommentAllDelete(int no) {
-        return this.sqlSession.delete("adminQnaCommentAllDelete", no);
+    public int qnaCommentAllDelete(int qna_no) {
+        return this.sqlSession.delete("adminQnaCommentAllDelete", qna_no);
     }
 
 }

@@ -79,7 +79,10 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 
 
-
+	@Override
+	public List<ReviewDTO> getListSession(String member_id) {
+		return this.sqlSession.selectList("SiteMypageReviewList", member_id);
+	}
 
     
 

@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
@@ -46,8 +47,11 @@ import com.kh3.model.qna.QnaCommentDTO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
 import com.kh3.model.reserv.ReservDAO;
+import com.kh3.model.review.ReviewDAO;
+import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
+import com.kh3.util.UploadFile;
 
 
 @Controller
@@ -71,6 +75,12 @@ public class SiteMypageController {
 
 	@Inject
 	private McouponDAO mcouponDAO;
+	
+	@Inject
+	private ReviewDAO rdao;
+	
+	@Inject
+	private FicnicDAO fdao;
     
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -80,6 +90,10 @@ public class SiteMypageController {
 
     // 전체 게시물의 수
     private int totalRecord = 0;
+    
+    // 리뷰 사진 업로드 설정
+    private String reviewFolder = "/resources/data/review/";
+    private String reviewSaveName = "review";
     
     // =====================================================================================
     // 마이페이지 - 예약 목록
@@ -103,17 +117,94 @@ public class SiteMypageController {
 
 		PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
-
+		List<ReviewDTO> sessionList =this.rdao.getListSession(member_id);
 		// 페이지 이동 URL
 		String pageUrl = request.getContextPath()+"mypage/mypage_reserv_list.do?+getType="+getType+"&page="+page;
 		
 		model.addAttribute("List", this.reservDAO.getBoardList(dto.getStartNo(), dto.getEndNo(), searchMap));
+		model.addAttribute("sList", sessionList);
 		model.addAttribute("paging", dto);
 		model.addAttribute("page", page);
 		model.addAttribute("getType", getType);
 		model.addAttribute("pagingWrite",Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
 		
         return "site/mypage/mypage_reserv_list";
+    }
+    
+    @RequestMapping("mypage/mypage_review_write.do")
+    public void myPage_review(MultipartHttpServletRequest mRequest, ReviewDTO dto, HttpServletResponse response) throws IOException {
+       
+    	response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+    	// 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        List<String> upload_list = UploadFile.fileUpload(mRequest, reviewFolder, reviewSaveName);        
+        for(int i=0; i<upload_list.size(); i++){
+            switch (i) {
+                case 0:
+                    dto.setReview_photo1(upload_list.get(0));
+                    break;
+                case 1:
+                	dto.setReview_photo2(upload_list.get(1));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // 리뷰 등록
+        int res = this.rdao.writeOkReview(dto);
+    	if(res>0) {
+    		
+            // 피크닉 평점 수정
+            this.fdao.updateReviewPoint(dto.getFicnic_no());
+
+        	// 피크닉 리뷰 갯수 수정
+        	this.fdao.updateReviewCont(dto.getFicnic_no());
+        	
+    		out.println("<script>alert('리뷰 작성 완료');location.href='"+mRequest.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
+    	}else {
+    		out.println("<script>alert('리뷰 작성 실패');history.back()</script>");
+    	}
+    }
+    
+    @RequestMapping("mypage/mypage_review_modify.do")
+    public void myPage_modify(MultipartHttpServletRequest mRequest, ReviewDTO dto, HttpServletResponse response) throws IOException {
+    	response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
+     // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        List<String> upload_list = UploadFile.fileUpload(mRequest, reviewFolder, reviewSaveName);
+
+        // 기존 파일 있으면 삭제 처리
+        for(int i=0; i<upload_list.size(); i++) {
+            String check_photo = mRequest.getParameter("ori_review_photo"+(i+1));
+            if(check_photo != null && upload_list.get(i) != ""){
+                File del_pimage = new File(mRequest.getSession().getServletContext().getRealPath(check_photo));
+                if(del_pimage.exists()) del_pimage.delete();
+            }
+        }
+
+        String modify_photo1 = mRequest.getParameter("ori_review_photo1");
+        String modify_photo2 = mRequest.getParameter("ori_review_photo2");
+
+        if(upload_list.get(0) != "") modify_photo1 = upload_list.get(0);
+        if(upload_list.get(1) != "") modify_photo2 = upload_list.get(1);
+
+        dto.setReview_photo1(modify_photo1);
+        dto.setReview_photo2(modify_photo2);
+    	dto.setReview_no(Integer.parseInt(mRequest.getParameter("rno")));
+    	
+        // 리뷰 수정
+        int check = this.rdao.reviewModify(dto);
+
+        // 피크닉 평점 수정
+        this.fdao.updateReviewPoint(dto.getFicnic_no());
+
+        if(check > 0){
+            out.println("<script>alert('리뷰가 수정되었습니다.');location.href='"+mRequest.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
+        }else{
+            out.println("<script>alert('리뷰 수정에 실패했습니다.'); history.back();</script>");
+        }
     }
 
 

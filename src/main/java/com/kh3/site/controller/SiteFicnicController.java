@@ -1,26 +1,35 @@
 package com.kh3.site.controller;
 
-import java.util.ArrayList;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
+import com.kh3.model.qna.QnaDAO;
+import com.kh3.model.qna.QnaDTO;
 import com.kh3.model.review.ReviewDAO;
 import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
+import com.kh3.util.UploadFile;
 
 @Controller
 public class SiteFicnicController {
@@ -33,6 +42,13 @@ public class SiteFicnicController {
 
     @Inject
     ReviewDAO rdao;
+    
+    @Inject
+    QnaDAO qdao;
+
+    // 문의 사진 업로드 설정
+    private String qnaFolder = "/resources/data/qna/";
+    private String qnaSaveName = "qna";
 
 
     // 한 페이지당 보여질 게시물의 수
@@ -308,13 +324,56 @@ public class SiteFicnicController {
     // =====================================================================================
     @RequestMapping("ficnic/ficnic_qna.do")
     public String ficnic_qna(@RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model) {
+    	FicnicDTO fdto = this.fdao.getFicnicCont(ficnic_no);
+    	
 
-
-
+    	model.addAttribute("fdto", fdto);
         return "site/ficnic/ficnic_qna_write";
     }
 
 
+    // =====================================================================================
+    // 1:1 문의 추가하기
+    // =====================================================================================
+    @RequestMapping("ficnic/mypage_qna_writeOk.do")
+    public void qna_writeOk(HttpServletResponse response, MultipartHttpServletRequest mRequest, QnaDTO dto, HttpServletRequest request, HttpSession session) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        session = request.getSession();
+        
+        String id = (String) session.getAttribute("sess_id");
+        String pw = (String) session.getAttribute("sess_pw");
+        String name = (String) session.getAttribute("sess_name");
+        
+        dto.setMember_id(id);
+    	dto.setQna_pw(pw);
+    	dto.setQna_name(name);
+        
+        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        List<String> upload_list = UploadFile.fileUpload(mRequest, qnaFolder, qnaSaveName);        
+        for(int i=0; i<upload_list.size(); i++){
+            switch (i) {
+                case 0:
+                    dto.setQna_file1(upload_list.get(0));
+                    break;
+                case 1:
+                	dto.setQna_file2(upload_list.get(1));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // 문의글 등록
+        int check = this.qdao.qnaWriteOk(dto);
+
+        if(check > 0){
+            out.println("<script>alert('문의글이 추가되었습니다.'); location.href='ficnic_view.do?ficnic_no="+dto.getFicnic_no()+"';</script>");
+        }else{
+            out.println("<script>alert('문의글 추가 중 에러가 발생하였습니다.'); history.back();</script>");
+        }
+    	
+    }
 
 
 

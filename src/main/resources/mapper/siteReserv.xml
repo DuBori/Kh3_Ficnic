@@ -15,7 +15,7 @@
 			<when test="getType.equals('reserv')">and reserv_status = #{getType}</when>
 			<when test="getType.equals('confirm')">and reserv_status = #{getType}</when>
 			<when test="getType.equals('done')">and reserv_status = #{getType}</when>
-			<when test="getType.equals('cancel')">and reserv_status = #{getType}</when>
+			<when test="getType.equals('cancel')">and not reserv_status in(#{getType})</when>
 		</choose>
 	</select>
 	
@@ -32,7 +32,7 @@
 						<when test="getType.equals('reserv')">and reserv_status = #{getType}</when>
 						<when test="getType.equals('confirm')">and reserv_status = #{getType}</when>
 						<when test="getType.equals('done')">and reserv_status = #{getType}</when>
-						<when test="getType.equals('cancel')">and reserv_status = #{getType}</when>
+						<when test="getType.equals('cancel')">and  not reserv_status in (#{getType}) </when>
 					</choose>
     )b
 			)

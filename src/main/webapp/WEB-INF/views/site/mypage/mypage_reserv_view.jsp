@@ -28,20 +28,35 @@
 
 <div class="contents w1100 mypage-reserv">
 	
-	<div class="mypage-reserv-view d-flex flex-column  border">
+	<div class="mypage-reserv-view d-flex flex-column m-4">
 
+	<!-- 숙소 정보 //START -->
+	    <div class="d-flex flex-column ">
+	    	<h4 class="mypage-reserv-h ">피크닉 정보</h4>
+			<div class="d-flex flex-row justify-content-between">
+	            <div class="mypage-reserv-divtop d-flex flex-column justify-content-between m-3">
+		            <div class="m-3">
+		            	피크닉 명 : ${ficnicDto.getFicnic_name() }
+		            </div>
+		             <div>
+		             	<div class="m-3">지역 : ${ficnicDto.getFicnic_location() }</div>
+		             	<div class="m-3">진행장소 :  ${ficnicDto.getFicnic_address() }</div> 
+		             	
+		             </div>
+	            </div>
+	            <div class="mypage-reserv-divimg m-3">					  
+					 <img src="${path}${ficnicDto.getFicnic_photo1()}" class="d-block" alt="...">	  					 
+	        	</div>
+	    	</div>
+	    </div>
+    <!-- 숙소 정보 //END -->
 
     <!-- 내용 //START -->
     <div>
     	<h4 class="mypage-reserv-h">피크닉 신청 내용</h4>
         <div>
             <table class="table">
-                <colgroup>
-                    <col width="17%">
-                    <col width="32%">
-                    <col width="17%">
-                    <col>
-                </colgroup>
+
 
                 <tbody>
                     <tr>
@@ -102,42 +117,7 @@
 
 
 
-    <!-- 숙소 정보 //START -->
-    <div>
-    	<h4 class="mypage-reserv-h">피크닉 정보</h4>
-        <div class="d-flex flex-row m-3 p-2 justify-content-center">
-            <div>
-            	<img alt="" src="${path}/${reserv_ficnic_img}" class="img-fluid">
-            </div>
-            <table class="table">
-                <colgroup>
-                    <col width="17%">
-                    <col width="32%">
-                    <col width="17%">
-                    <col>
-                </colgroup>
-
-                <tbody>
-                    <tr>
-                        <th>피크닉 명</th>
-                        <td colspan="3">${ficnicDto.getFicnic_name() }</td>
-                    </tr>
-                    <tr>
-                        <th>진행 장소</th>
-                        <td colspan="3" id="ficnic_addr">${ficnicDto.getFicnic_address()}</td>
-                    </tr>
-                    <tr>
-                    <tr>
-                    	<td colspan="4">
-                    		<div id="map" style="height:320px;">
-	                        </div>
-                    	</td>
-                    </tr>                   
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!-- 숙소 정보 //END -->
+    
 
     <!-- 결제 정보 //START -->
     <div>
@@ -162,6 +142,54 @@
                         <td colspan="3" class="text-primary"><b class="eng" style="font-size: 16px;"><fmt:formatNumber value="${reservDto.getReserv_total_price()}"/></b>원</td>
                     </tr>
                 </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 결제 정보 //END -->
+    <!-- 작성한 리뷰 //START -->
+    <div>
+        <div>
+            <h4 class="mypage-reserv-h">작성한 리뷰 정보</h4>
+            <table class="table">
+           				 <colgroup>
+		                    <col width="17%">
+		                    <col>
+		                </colgroup>	                
+           		<c:choose>
+            		<c:when test="${!empty rlist}">
+            			<c:forEach items="${rlist }" var="rdto">
+            				<c:if test="${rdto.getFicnic_no()  eq ficnicDto.getFicnic_no()}">
+            				<tbody>
+            					<tr>
+            						<th>사진</th>
+            						<th>평점</th>
+            						<th>리뷰 내용</th>
+            						<th>작성자</th>
+            					
+            					</tr>
+	            				<tr>	                      
+									<td class="photo px-3">
+					                    <span class="noimg" style="height: 98px; padding-top: 42px;">${rdto.getReview_photo1() }</span>
+									</td>
+									<td class="text-left table-list-hide">${rdto.getReview_point() }</td>
+									<td class="px-2">${rdto.getReview_cont() }</td>	
+									<td class="table-list-hide">
+	                                    <p><b>${rdto.getReview_name() }</b></p>
+	                                    <p class="eng">${rdto.getMember_id() }</p>
+	                                </td>
+	                            </tr>
+		               		 </tbody>
+            				
+            				</c:if>
+            			</c:forEach>
+	            		
+		                    	
+            		</c:when>
+            		<c:otherwise>
+            			작성한 리뷰가 없습니다.
+            		</c:otherwise>
+            	</c:choose>
+                
             </table>
         </div>
     </div>

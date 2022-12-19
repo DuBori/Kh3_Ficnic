@@ -21,35 +21,49 @@
 
 	<div>
 		<ul class="mypage-reserv d-flex flex-row">
-			<li class="btn btn-outline-light m-2 <c:if test="${getType == 'reserv'}">now</c:if>"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=reserv">체험 신청</a></li>
-			<li class="btn btn-outline-light m-2 <c:if test="${getType == 'confirm'}">now</c:if>"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=confirm">예약 확정</a></li>
-			<li class="btn btn-outline-light m-2 <c:if test="${getType == 'done'}">now</c:if>"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=done">체험 완료</a></li>
-			<li class="btn btn-outline-light m-2 <c:if test="${getType == 'cancel'}">now</c:if>"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=cancel">예약 취소</a></li>
+			<li class="btn btn-sm btn-outline-dark text-secondary m-2 <c:if test="${getType == 'confirm'}">now</c:if>"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=confirm">예약 확정만 보기</a></li>
+			<li class="btn btn-sm btn-outline-dark text-secondary m-2 <c:if test="${getType == 'cancel'}">now</c:if>"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=cancel">예약 취소 숨기기</a></li>
 		</ul>
 	</div>
 	
-	<div class="mypage-reserv-mainDiv d-flex flex-column w1000 border">
+	<div class="mypage-reserv-mainDiv d-flex flex-column w1000 ">
 		<!-- 예약 리스트 출력  -->
-		<div class="mypage-reserv-subDiv d-flex flex-row flex-wrap justify-content-center border">
+		<div class="mypage-reserv-subDiv d-flex flex-row flex-wrap justify-content-center">
 			<c:choose>
 				<c:when test="${!empty List }">
 				<c:forEach items="${List}" var="dto">
-					<c:if test="${getType eq dto.getReserv_status() or empty getType }">
+					<c:if test="${getType eq dto.getReserv_status() or empty getType or dto.getReserv_status() ne 'cancel' }">
 		    			<c:set var="move_ficnic_info" value="onclick=\"location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no()}'\""/>
-		    			<div class="mypage-wish card w-20 m-1 p-1 d-flex flex-column border justify-content-center align-items-center ">
+		    			<div class="mypage-wish w-20 m-1 p-1 d-flex flex-row justify-content-center align-items-center ">
 							  <img ${move_ficnic_info } src="${path }${dto.getReserv_ficnic_photo()}" class="card-img-top" style="width:200px" alt="...">
 							  <div ${move_ficnic_info } class="mypage-wish card-body">
 							    <p class="card-location">지역</p>
 							    <h5 class="card-text card-title">${dto.getReserv_ficnic_name() }</h5>
 							  </div>
-							  <ul ${move_ficnic_info } class="mypage-wish">
+							  <ul ${move_ficnic_info } class="mypage-wish d-flex  flex-column justify-content-center align-items-center">
 							    <li class="card-text"> 예약 날짜 :${dto.getReserv_date().substring(0,10)}</li>
 							    <li class="card-text"><fmt:formatNumber value="${dto.getReserv_total_price()}"/>원</li>
+							    <li class="card-text
+							    	<c:if test="${dto.getReserv_status() eq 'reserv'}"> text-warning" >예약 신청</c:if> 
+							    	<c:if test="${dto.getReserv_status() eq 'confirm'}"> text-primary" >예약 확인</c:if> 
+							    	<c:if test="${dto.getReserv_status() eq 'done'}"> text-success" >체험 완료</c:if> 
+							    	<c:if test="${dto.getReserv_status() eq 'cancle'}"> text-danger" >예약 취소</c:if> 							    
+							    </li>
 							  </ul>
-							  <div class="mypage-wish card-body">
-							    <c:if test="${dto.getReserv_status() ne 'cancel'}"> <a href="${path}/mypage/mypage_reserv_view.do?reserv_no=${dto.getReserv_no()}" class="card-link card-text">상세내역 보기</a></c:if>
-							    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done'}"> <a class="btn-open-popup card-link card-text" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}">리뷰 작성하기</a></c:if>
-							    <c:if test="${dto.getReserv_status() eq 'cancel'}"> <a href="#" class="card-link card-text">예약취소</a></c:if>
+							  <div class="mypage-wish d-flex flex-column justify-content-center align-items-center">
+							    <c:if test="${dto.getReserv_status() ne 'cancel'}"> <a href="${path}/mypage/mypage_reserv_view.do?reserv_no=${dto.getReserv_no()}" class="btn btn-sm  btn-outline-dark card-text  m-3">상세내역 보기</a></c:if>
+							    <c:forEach items="${sList }" var="sdto">
+							    	<c:if test="${sdto.getFicnic_no() eq dto.getFicnic_no() }">
+							    		<c:set var="revSession" value="t"/>
+							    		<c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and !empty revSession}">
+							    			<a class="btn btn-sm btn-outline-dark btn-open-popup  card-text  m-3" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no()}" data-cont="${sdto.getReview_cont()}" data-modi="m" data-avg="${sdto.getReview_point()}" data-photo1="${sdto.getReview_photo1() }" data-photo2="${sdto.getReview_photo2() }" data-rno="${sdto.getReview_no() }">리뷰 수정하기</a>
+							    		</c:if>
+							    	</c:if>
+							    </c:forEach>
+							    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and empty revSession}"> <a class="btn btn-sm btn-outline-dark btn-open-popup  card-text  m-3" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no() }">리뷰 작성하기</a></c:if>
+							    <c:remove var="revSession"/>
+							    <c:if test="${dto.getReserv_status() eq 'cancel'}"> <a href="#" class="btn btn-sm btn-outline-dark  card-text w-100  m-3">예약취소</a></c:if>
+							 
 							  </div>
 						</div>	
 					</c:if>
@@ -85,7 +99,13 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <form action="${path}/#" method="post" enctype="multipart/form-data">
+  <form id="mypage-form-div" action="${path}/mypage/mypage_review_write.do" method="post" enctype="multipart/form-data">
+  		<input type="hidden" name="member_id" value="${sess_id}">
+  		<input type="hidden" name="review_name" value="${sess_name}">
+  		<input type="hidden" name="review_pw" value="1111">
+  		<input type="hidden" name="review_date" value="${today}" class="form-control w-100" required />
+  		<input type="hidden" name="ficnic_no" class="form-control w-100" required />
+  		<input type="hidden" name="rno" class="form-control w-100" id="mypage-reserv-rno"/>
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -107,13 +127,19 @@
                 </div>
            	</div>
 	      	<label>리뷰 내용</label>
-	        <textarea class="form-control form-control-lg" rows="5"></textarea>      		
+	        <textarea class="form-control form-control-lg" rows="5" name="review_cont" id="review_con"></textarea>      		
+	        <div class="mypage-reserv-img">
+	        	<img alt="이미지 없음" src="" name="ori_review_photo1"  id="ori_review_photo1">
+	        </div>
 	        <input type="file" name="file1" class="form-control" accept="image/jpeg, image/png, image/gif">
+	        <div class="mypage-reserv-img">
+	        	<img alt="이미지 없음" src="" name="ori_review_photo2"  id="ori_review_photo2">
+	        </div>
 	        <input type="file" name="file2" class="form-control" accept="image/jpeg, image/png, image/gif">
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary">작성 완료</button>
+	        <input type="submit" class="btn btn-primary" id="mypage-reserv-subtn" value="작성 하기"/>
 	      </div>
 	    </div>
 	  </div>

@@ -53,8 +53,6 @@
             </div>
         </div>
     </div>
-    
-        <a href="${path}/mypage/mypage_qna_write.do" class="write">문의하기</a>
 
 </div>
 
