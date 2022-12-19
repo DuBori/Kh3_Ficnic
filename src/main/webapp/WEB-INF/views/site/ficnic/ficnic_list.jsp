@@ -19,35 +19,53 @@
 
 <div class="contents w1100 goods-list">
 
+	<c:if test="${!empty clist}">
 	<ul class="gl-category">
 		<li<c:if test="${param.category eq parent_category_no}"> class="now"</c:if>><a href="ficnic_list.do?category=${parent_category_no}">전체보기</a></li>
 	  	<c:forEach var="sub" items="${clist}">
 	  	<li<c:if test="${param.category eq sub.getCategory_id()}"> class="now"</c:if>><a href="ficnic_list.do?category=${sub.getCategory_id()}">${sub.getCategory_name()}</a></li>
 	  	</c:forEach>
 	</ul>
+	</c:if>
 
+
+
+	<ul class="gl-list ficnic-list">
+		<c:choose>
+			<c:when test="${!empty flist}">
+				<c:forEach items="${flist}" var="dto">
+					<li>
+						<a href="ficnic_view.do?ficnic_no=${dto.getFicnic_no()}">
+						</a>
+					</li>
+				</c:forEach>
+			</c:when>
+
+			<c:otherwise><li class="nodata">등록된 피크닉이 없어요...</li></c:otherwise>
+		</c:choose>
+	</ul>
 
 	   
 	   <div>
 	   	<c:choose>
-	   	<c:when test="${!empty flist }">
+	   	<c:when test="${!empty flist}">
 	   		<c:forEach items="${flist }" var="dto">
 	   			<c:set var="cnt" value="0"/>
-	   			<div class="border" onclick="location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no() }'">
-		   			<img alt="이미지없음" src="${dto.getFicnic_photo1() }">
+	   			<div class="border" onclick="location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no()}'">
+		   			<img alt="이미지없음" src="${dto.getFicnic_photo1()}">
 		   			<p>${dto.getFicnic_location()}</p>
 		   			<p>${dto.getFicnic_name()}</p>
 		   			<p>★★★★★ 후기 <c:forEach items="${rlist}" var="review" >
-		   								<c:if test="${dto.getFicnic_no() eq review.getFicnic_no() }" >
+		   								<c:if test="${dto.getFicnic_no() eq review.getFicnic_no()}" >
 		   									<c:set var="cnt" value="${cnt+1}"/>
 		   								</c:if>
 		   						  </c:forEach>
 		   						  ${cnt}
 		   			</p>
 		   			<c:choose>
-		   				<c:when test="${!empty dto.getFicnic_sale_price() }">
+		   				<c:when test="${!empty dto.getFicnic_sale_price()}">
 			   				<p>이전가격 : ${dto.getFicnic_market_price()}</p>
-			   				할인율 <fmt:formatNumber value="${dto.getFicnic_sale_price()/dto.getFicnic_market_price()*100}" type="percent" pattern="##" />% <fmt:formatNumber value="${dto.getFicnic_sale_price() }"></fmt:formatNumber>원
+			   				할인율 <fmt:formatNumber value="${dto.getFicnic_sale_price()/dto.getFicnic_market_price()*100}" type="percent" pattern="##" />% <fmt:formatNumber value="${dto.getFicnic_sale_price()}"></fmt:formatNumber>원
 		   				</c:when>
 		   				<c:otherwise>
 		   					Only  ${dto.getFicnic_market_price()}
