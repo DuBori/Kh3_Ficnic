@@ -374,6 +374,13 @@ public class SiteFicnicController {
         }
     	
     }
+    
+    
+    @RequestMapping("ficnic/ficnic_pay.do")
+    public String pay() {
+    	System.out.println("들어옴");
+    	return "site/ficnic/ficnic_pay";
+    }
 
 
 

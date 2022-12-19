@@ -21,8 +21,8 @@
 
 	<div>
 		<ul class="mypage-reserv d-flex flex-row">
-			<li class="btn btn-sm btn-outline-dark text-secondary m-2 <c:if test="${getType == 'confirm'}">now</c:if>"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=confirm">예약 확정만 보기</a></li>
-			<li class="btn btn-sm btn-outline-dark text-secondary m-2 <c:if test="${getType == 'cancel'}">now</c:if>"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=cancel">예약 취소 숨기기</a></li>
+			<li class="btn btn-sm text-dark text-secondary m-2 <c:if test="${getType == 'confirm'}">now</c:if>"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do">모두보기</a></li>
+			<li class="btn btn-sm text-dark text-secondary m-2 <c:if test="${getType == 'cancel'}">now</c:if>"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=cancel">예약 취소 모두보기</a></li>
 		</ul>
 	</div>
 	
@@ -31,49 +31,47 @@
 		<div class="mypage-reserv-subDiv d-flex flex-row flex-wrap justify-content-center">
 			<c:choose>
 				<c:when test="${!empty List }">
-				<c:forEach items="${List}" var="dto">
-					<c:if test="${getType eq dto.getReserv_status() or empty getType or dto.getReserv_status() ne 'cancel' }">
-		    			<c:set var="move_ficnic_info" value="onclick=\"location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no()}'\""/>
-		    			<div class="mypage-wish w-20 m-1 p-1 d-flex flex-row justify-content-center align-items-center ">
-							  <img ${move_ficnic_info } src="${path }${dto.getReserv_ficnic_photo()}" class="card-img-top" style="width:200px" alt="...">
-							  <div ${move_ficnic_info } class="mypage-wish card-body">
-							    <p class="card-location">지역</p>
-							    <h5 class="card-text card-title">${dto.getReserv_ficnic_name() }</h5>
-							  </div>
-							  <ul ${move_ficnic_info } class="mypage-wish d-flex  flex-column justify-content-center align-items-center">
-							    <li class="card-text"> 예약 날짜 :${dto.getReserv_date().substring(0,10)}</li>
-							    <li class="card-text"><fmt:formatNumber value="${dto.getReserv_total_price()}"/>원</li>
-							    <li class="card-text
-							    	<c:if test="${dto.getReserv_status() eq 'reserv'}"> text-warning" >예약 신청</c:if> 
-							    	<c:if test="${dto.getReserv_status() eq 'confirm'}"> text-primary" >예약 확인</c:if> 
-							    	<c:if test="${dto.getReserv_status() eq 'done'}"> text-success" >체험 완료</c:if> 
-							    	<c:if test="${dto.getReserv_status() eq 'cancle'}"> text-danger" >예약 취소</c:if> 							    
-							    </li>
-							  </ul>
-							  <div class="mypage-wish d-flex flex-column justify-content-center align-items-center">
-							    <c:if test="${dto.getReserv_status() ne 'cancel'}"> <a href="${path}/mypage/mypage_reserv_view.do?reserv_no=${dto.getReserv_no()}" class="btn btn-sm  btn-outline-dark card-text  m-3">상세내역 보기</a></c:if>
-							    <c:forEach items="${sList }" var="sdto">
-							    	<c:if test="${sdto.getFicnic_no() eq dto.getFicnic_no() }">
-							    		<c:set var="revSession" value="t"/>
-							    		<c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and !empty revSession}">
-							    			<a class="btn btn-sm btn-outline-dark btn-open-popup  card-text  m-3" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no()}" data-cont="${sdto.getReview_cont()}" data-modi="m" data-avg="${sdto.getReview_point()}" data-photo1="${sdto.getReview_photo1() }" data-photo2="${sdto.getReview_photo2() }" data-rno="${sdto.getReview_no() }">리뷰 수정하기</a>
-							    		</c:if>
-							    	</c:if>
-							    </c:forEach>
-							    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and empty revSession}"> <a class="btn btn-sm btn-outline-dark btn-open-popup  card-text  m-3" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no() }">리뷰 작성하기</a></c:if>
-							    <c:remove var="revSession"/>
-							    <c:if test="${dto.getReserv_status() eq 'cancel'}"> <a href="#" class="btn btn-sm btn-outline-dark  card-text w-100  m-3">예약취소</a></c:if>
-							 
-							  </div>
-						</div>	
-					</c:if>
-					</c:forEach>
-				</c:when>
+					<c:forEach items="${List}" var="dto">
+				    			<c:set var="move_ficnic_info" value="onclick=\"location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no()}'\""/>
+				    			<div class="mypage-wish w-20 m-1 p-1 d-flex flex-row justify-content-center align-items-center ">
+									  <img ${move_ficnic_info } src="${path }${dto.getReserv_ficnic_photo()}" class="card-img-top" style="width:200px" alt="...">
+									  <div ${move_ficnic_info } class="mypage-wish card-body">
+									    <p class="card-location">지역</p>
+									    <h5 class="card-text card-title">${dto.getReserv_ficnic_name() }</h5>
+									  </div>
+									  <ul ${move_ficnic_info } class="mypage-wish d-flex  flex-column justify-content-center align-items-center">
+									    <li class="card-text"> 예약 날짜 :${dto.getReserv_date().substring(0,10)}</li>
+									    <li class="card-text"><fmt:formatNumber value="${dto.getReserv_total_price()}"/>원</li>
+									    <li class="card-text
+									    	<c:if test="${dto.getReserv_status() eq 'reserv'}"> text-warning" >예약 신청</c:if> 
+									    	<c:if test="${dto.getReserv_status() eq 'confirm'}"> text-primary" >예약 확인</c:if> 
+									    	<c:if test="${dto.getReserv_status() eq 'done'}"> text-success" >체험 완료</c:if> 
+									    	<c:if test="${dto.getReserv_status() eq 'cancle'}"> text-danger" >예약 취소</c:if> 							    
+									    </li>
+									  </ul>
+									  <div class="mypage-wish d-flex flex-column justify-content-center align-items-center">
+									    <c:if test="${dto.getReserv_status() ne 'cancel'}"> <a href="${path}/mypage/mypage_reserv_view.do?reserv_no=${dto.getReserv_no()}" class="btn btn-sm  btn-outline-dark card-text  m-3">상세내역 보기</a></c:if>
+									    <c:forEach items="${sList }" var="sdto">
+									    	<c:if test="${sdto.getFicnic_no() eq dto.getFicnic_no() }">
+									    		<c:set var="revSession" value="t"/>
+									    		<c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and !empty revSession}">
+									    			<a class="btn btn-sm btn-outline-dark btn-open-popup  card-text  m-3" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no()}" data-cont="${sdto.getReview_cont()}" data-modi="m" data-avg="${sdto.getReview_point()}" data-photo1="${sdto.getReview_photo1() }" data-photo2="${sdto.getReview_photo2() }" data-rno="${sdto.getReview_no() }">리뷰 수정하기</a>
+									    		</c:if>
+									    	</c:if>
+									    </c:forEach>
+									    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and empty revSession}"> <a class="btn btn-sm btn-outline-dark btn-open-popup  card-text  m-3" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no() }">리뷰 작성하기</a></c:if>
+									    <c:remove var="revSession"/>
+									    <c:if test="${dto.getReserv_status() eq 'cancel'}"> <a href="#" class="btn btn-sm btn-outline-dark  card-text w-100  m-3">예약취소</a></c:if>
+									 
+									  </div>
+								</div>	
+						</c:forEach>
+					</c:when>
 				<c:otherwise>
 						<div class="w-20 m-1 p-1 d-flex flex-column align-items-center">
 							<img src="data:image/svg+xml,%3Csvg width='56' height='56' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M38 16H22M38 23H22M38 30H22M38 37H22' stroke='%23777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E %3Crect x='8' y='5' width='39' height='44' rx='4' stroke='%23777' stroke-width='2'/%3E %3Ccircle cx='16.5' cy='16' r='1.5' fill='%23777'/%3E %3Ccircle cx='16.5' cy='23' r='1.5' fill='%23777'/%3E %3Ccircle cx='16.5' cy='30' r='1.5' fill='%23777'/%3E %3Ccircle cx='16.5' cy='37' r='1.5' fill='%23777'/%3E %3Ccircle cx='42' cy='43' r='11' fill='%23fff' stroke='%23fff' stroke-width='2'/%3E %3Ccircle cx='42' cy='43' r='9' fill='%23fff' stroke='%23777' stroke-width='2'/%3E %3Cpath d='m39 46 6-6M45 46l-6-6' stroke='%23777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E %3C/svg%3E" alt="아직 결제내역이 없어요!" width="56px" height="56px">
 							<div class="Placeholder__Title-von7t2-1 dqGjWH">
-								아직 결제내역이 없어요!
+								아직 해당 피크닉 내역이 없어요!
 							</div>
 							<div class="Placeholder__SubTitle-von7t2-2 gSjDbY">
 								지금 바로 피크닉을 시작해보세요.
