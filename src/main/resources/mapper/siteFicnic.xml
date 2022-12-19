@@ -59,7 +59,7 @@
 	</select>
 	
 	<select id="SiteFicnicNumList" parameterType="int" resultType="reviewDTO">
-		select * from review_list where ficnic_no = #{ficnic_no}
+		select * from review_list where ficnic_no = #{ficnic_no} order by review_photo1 asc, review_date desc
 	</select>
 	
 	<select id="siteFicnicName" parameterType="string" resultType="string">
