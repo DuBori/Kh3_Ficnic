@@ -8,7 +8,8 @@
 <mapper namespace="reviewDAO">
 
     <!-- 리뷰 목록 -->
-    <select id="siteReviewList" resultType="reviewDTO">
+    <select id="SiteMypageReviewList" parameterType="string" resultType="reviewDTO">
+    	select * from review_list where member_id = #{member_id}
     </select>
 
 
