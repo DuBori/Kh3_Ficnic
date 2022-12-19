@@ -117,70 +117,9 @@
 }
 
 
-/*************************/
-/* 리뷰 보기
-/*************************/
 
 
-.ficnic-review .r_one {
-	
-	padding-top:50px;
-	font-size: 20px;
-}
 
-.ficnic-review p b {
-	
-	color: #5757ff;
-	
-}
-
-.ficnic-review .r_two {
-	
-	font-size: 20px;
-	padding-bottom: 10px;
-}
-
-.ficnic-review hr {
-	/* border-width:1px 0 0 0;  */
-	border-width: 0px;
-	border-style:solid; 
-	border-color:#f4f4f4;
-}
-
-.ficnic-review .rpoint {
-	
-	font-size: 20px;
-	padding-top:10px;
-	color: #8b17ff;
-}
-
-
-.ficnic-review .rname {
-	
-	font-size: 14px;
-}
-
-.ficnic-review .rdate {
-	
-	font-size: 11px;
-	color: #b8b8b8;
-	
-}
-
-.ficnic-review .rcont {
-	padding-top: 25px;
-	font-size: 12px;
-	
-}
-
-.ficnic-review .rfname{
-	padding-top: 25px;
-	
-}
-
-.ficnic-review .rimg1 {
-	padding-top: 35px;
-	}
 
 /*************************/
 /* .ficnic-view
@@ -190,6 +129,29 @@
 	position: relative;
 	width: 100%;
 	margin-bottom: 50px;
+	padding-top: 50px;
+	border-top: 1px solid #eee;
+}
+
+.ficnic-view > div > h3 {
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 24px;
+	margin: 0 0 24px 0;
+}
+.ficnic-view > div > h4 {
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 24px;
+	margin: 0 0 2px 0;
+}
+.ficnic-view > div > h5 {
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 18px;
+	color: #999;
+	white-space: pre-wrap;
+	margin-bottom: 20px;
 }
 
 
@@ -199,8 +161,6 @@
 	display: flex;
 	-webkit-box-pack: justify;
 	justify-content: space-between;
-	padding-bottom: 50px;
-	border-bottom: 1px solid #ddd;
 }
 .ficnic-view .fv-top .fvt-photo {
 	position: relative;
@@ -272,7 +232,7 @@
 .ficnic-view .fv-top .fvt-cont .fvtc-basic {
     font-family: 'Lato';
     letter-spacing: 0;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
 }
 .ficnic-view .fv-top .fvt-cont .fvtc-basic h2 {
 	font-size: 2rem;
@@ -306,8 +266,11 @@
 
 
 .ficnic-view .fv-top .fvt-cont .fvtc-review {}
-.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star {}
-.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star i {
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star {
+	position: relative;
+	width: 100%;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star > i {
     font-size: 20px;
     color: #ffdc00;
 }
@@ -339,6 +302,21 @@
 	line-height: 26px;
 	letter-spacing: -1px;
 }
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star a.link {
+	position: absolute;
+	top: 5px;
+	right: 0;
+	padding: 5px 8px;
+	font-size: 14px;
+	color: #666;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background: #fff;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star a.link:hover {
+	color: var(--font-color);
+	border-color: var(--border-color);
+}
 
 .ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list {
 	display: flex;
@@ -350,15 +328,52 @@
 }
 .ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.photo {
 	width: 100%;
-	margin-bottom: 8px;
+	margin-bottom: 5px;
 }
 .ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.photo img {
 	width: 100%;
 	object-fit: cover;
 	border-radius: 8px;
 }
-.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.writer {}
-.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.cont {}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.writer {
+	font-size: 14px;
+	font-weight: 500;
+	margin-bottom: 1px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.cont {
+	display: block;
+	max-height: 85px;
+	font-size: 13px;
+	line-height: 17px;
+	color: #777;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+}
+
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-noreview {}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-noreview p {
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 20px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-noreview p > b {
+	font-size: 18px;
+	font-weight: 700;
+	margin-bottom: 2px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-noreview p > b img {
+	vertical-align: top;
+	margin-top: -2px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-noreview p > span {
+	display: block;
+	padding-top: 10px;
+	font-size: 12px;
+	color: #aaa;
+}
 
 
 
@@ -367,30 +382,208 @@
 
 /* 피크닉 정보 */
 .ficnic-view .fv-info {}
+.ficnic-view .fv-info ul {}
+.ficnic-view .fv-info ul li {
+	display: flex;
+	font-size: 15px;
+}
+.ficnic-view .fv-info ul li b {
+	width: 75px;
+	color: #999;
+}
 
 
 
 
 /* 상세 정보 */
 .ficnic-view .fv-detail {}
-
+.ficnic-view .fv-detail .fvd-cont {
+	position: relative;
+	width: 100%;
+	height: 600px;
+	text-align: center;
+	overflow: hidden;
+	padding: 0 20px;
+	margin-bottom: 50px;
+}
+.ficnic-view .fv-detail .fvd-cont.show {
+	height: auto;
+	overflow: auto;
+}
+.ficnic-view .fv-detail .fvd-cont img {
+	max-width: 100%;
+}
+.ficnic-view .fv-detail .fvd-btn {
+	text-align: center;
+}
+.ficnic-view .fv-detail .fvd-btn button {
+	width: 327px;
+	height: 56px;
+	font-size: 18px;
+	text-align: center;
+	border: 1.5px solid #000;
+	background: #fff;
+}
+.ficnic-view .fv-detail .fvd-btn button:hover {
+	color: var(--font-color);
+	border-color: 1px solid var(--border-color);
+}
 
 
 
 /* 커리큘럼 */
 .ficnic-view .fv-curriculum {}
+.ficnic-view .fv-curriculum ul {
+	position: relative;
+	margin: 0;
+	list-style: none;
+	z-index: 10;
+}
+.ficnic-view .fv-curriculum ul:after {
+	content: "";
+	position: absolute;
+	left: 5px;
+	top: 0;
+	width: 1px;
+	height: calc(100% - 34px);
+	margin: 22px 0 0;
+	background: #ddd;
+	z-index: 1;
+}
+.ficnic-view .fv-curriculum ul li {
+	position: relative;
+	padding: 0 0 0 23px;
+	margin: 0 0 12px;
+}
+.ficnic-view .fv-curriculum ul li p.time {
+	font-size: 10px;
+	font-weight: 400;
+	line-height: 14px;
+	color: #999;
+}
+.ficnic-view .fv-curriculum ul li p.cont {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 20px;
+	color: #333;
+}
+.ficnic-view .fv-curriculum ul li p.cont:before {
+	content: "";
+	position: absolute;
+	top: 19px;
+	left: -1px;
+	width: 13px;
+	height: 13px;
+	background: #ddd;
+	border: 3px solid #fff;
+	border-radius: 50%;
+}
 
+
+
+/* 진행장소 */
+.ficnic-view .fv-map {}
+.ficnic-view .fv-map .fvm-box {
+	position: relative;
+	width: 100%;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background: #fff;
+}
+.ficnic-view .fv-map .fvm-box .fvmb-show {
+	position: relative;
+	width: 100%;
+	height: 400px;
+}
+.ficnic-view .fv-map .fvm-box .fvmb-addr {
+	position: relative;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 12px 20px;
+	border-top: 1px solid #dedede;
+}
 
 
 
 /* 필요 정보 */
 .ficnic-view .fv-required {}
+.ficnic-view .fv-required ul {
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+	margin-top: 8px;
+	margin-bottom: 25px;
+}
+.ficnic-view .fv-required ul li {
+	margin: 0 9px 12px 0;
+	padding: 6px 11px;
+	border-radius: 20px;
+	border: 1px solid #ddd;
+}
+.ficnic-view .fv-required ul.fvr-include li {
+	border-color: #9bd491;
+	color: #004518;
+}
+.ficnic-view .fv-required ul.fvr-notinclude li {
+	border-color: #d49991;
+	color: #4e0000;
+}
+.ficnic-view .fv-required ul.fvr-prepare li {
+	border-color: #ddd;
+	color: #666;
+}
 
 
 
 
 /* 이용 안내 */
-.ficnic-view .fv-tab {}
+.ficnic-view .fv-tab {
+	border-top: 0;
+	padding-top: 0;
+}
+.ficnic-view .fv-tab ul {
+	border-top: 1px solid #eee;
+}
+.ficnic-view .fv-tab ul li {}
+.ficnic-view .fv-tab ul li .fvt-tit {
+	display: flex;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	padding: 20px 20px 10px 20px;
+	font-size: 16px;
+	color: #333;
+	cursor: pointer;
+}
+.ficnic-view .fv-tab ul li:first-child .fvt-tit {
+	border-bottom: 1px solid #eee;
+	padding-bottom: 20px;
+}
+.ficnic-view .fv-tab ul li .fvt-tit > i {
+	color: #ddd;
+}
+.ficnic-view .fv-tab ul li .fvt-tit:hover {
+	color: var(--font-color);
+}
+.ficnic-view .fv-tab ul li .fvt-cont {
+	height: 0;
+	margin: 0;
+	transform-origin: left top;
+	overflow: hidden auto;
+	white-space: pre-line;
+	font-size: 14px;
+	line-height: 22px;
+	padding: 10px 24px 0 24px;
+	overflow: hidden;
+	border-bottom: 1px solid #eee;
+    -webkit-transition: all 0.2s ease-out 0s;
+    -o-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+}
+.ficnic-view .fv-tab ul li.open .fvt-cont {
+	height: auto;
+	padding: 24px;
+	border-top: 1px solid #eee;
+}
 
 
 
@@ -408,10 +601,64 @@
 
 
 
+
+
+
+
+/*************************/
+/* 리뷰 보기
+/*************************/
+.ficnic-review .r_one {
+	padding-top:50px;
+	font-size: 20px;
+}
+
+.ficnic-review p b {
+	color: #5757ff;
+	
+}
+
+.ficnic-review .r_two {
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+
+.ficnic-review hr {
+	border-width: 0px;
+	border-style:solid; 
+	border-color:#f4f4f4;
+}
+
+.ficnic-review .rpoint {
+	font-size: 20px;
+	padding-top:10px;
+	color: #8b17ff;
+}
+
+
+.ficnic-review .rname {
+	font-size: 14px;
+}
+
+.ficnic-review .rdate {
+	font-size: 11px;
+	color: #b8b8b8;
+}
+
+.ficnic-review .rcont {
+	padding-top: 25px;
+	font-size: 12px;
+}
+
+.ficnic-review .rfname{
+	padding-top: 25px;
+}
+
+.ficnic-review .rimg1 {
+	padding-top: 35px;
+	}
 .ficnic-review .rhr {
-	
 	margin-top: 40px;
-	
 }
 
 .ficnic-review {
