@@ -237,7 +237,7 @@ $(function() {
                             <tr id="comment-${cdto.getComment_no()}">
                                 <td>
                                 	<p><b>${cdto.getComment_writer_name()}</b></p>
-                                	<p class="eng">(${cdto.getMember_id()})</p>
+                                	<p>(${cdto.getMember_id()})</p>
                                 </td>
                                 <td class="text-left pl-4">${cdto.getComment_content().replace(newLine, "<br />")}</td>
                                 <td>
@@ -265,7 +265,7 @@ $(function() {
 									<input type="hidden" id="comment_writer_name" name="comment_writer_name" value="테스트회원1" /> 
 									<input type="hidden" id="comment_writer_pw" name="comment_writer_pw" value="1234" />
                         		</td>
-                        		<td class="pl-4"><textarea name="comment_content" id="comment_content" class="form-control rounded-0" required></textarea></td>
+                        		<td class="pl-4"><textarea name="comment_content" id="comment_content-" class="form-control rounded-0" required></textarea></td>
                         		<td colspan="2"><button type="button" class="btn btn-lg btn-primary rounded-0" id="replyBtn" style="padding: .94rem 1.1rem;"><i class="fa fa-pencil"></i> 댓글 쓰기</button></td>
                         	</tr>
                         </tfoot>
