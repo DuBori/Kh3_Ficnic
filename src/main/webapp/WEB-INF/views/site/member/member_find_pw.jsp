@@ -11,7 +11,7 @@
 <div class="page-info w1100" align="center">
     <h2>비밀번호 찾기</h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li><b>비밀번호 찾기</b></li>
     </ol>
 </div>

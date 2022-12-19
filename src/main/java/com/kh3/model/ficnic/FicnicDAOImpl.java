@@ -42,7 +42,6 @@ public class FicnicDAOImpl implements FicnicDAO {
 	}
 	@Override
 	public int getSiteListCount(Map<String, Object> map) {
-		
 		return this.sqlSession.selectOne("SiteFicnicSearchCount", map);
 	}
 

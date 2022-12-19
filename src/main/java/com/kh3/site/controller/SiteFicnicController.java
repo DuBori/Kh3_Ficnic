@@ -63,39 +63,45 @@ public class SiteFicnicController {
     @RequestMapping("ficnic/ficnic_list.do")
     public String ficnic_List(
         @RequestParam(value = "category", required = false, defaultValue = "") String ficnic_category_no,
-        @RequestParam(value = "subcategory", required = false, defaultValue = "") String ficnic_sub,
         @RequestParam(value = "page", required = false, defaultValue = "1") int page,
         HttpServletRequest request, Model model) {
 
-        List<CategoryDTO> cList = cdao.getCategoryList();
+        // 카테고리 정보
+        CategoryDTO cdto = cdao.getCategoryCont(ficnic_category_no);
+        String parent_category_no = (ficnic_category_no.substring(0, 2)) + "000000";
 
-        List<ReviewDTO> rList = rdao.getList();
+        // 카테고리 피크닉 불러오기 위한 설정
+        int next_num = cdto.getCategory_depth() * 2;
+        String parent_str = ficnic_category_no.substring(0, next_num);
+
 
         Map<String, Object> map = new HashMap<String, Object>();
-
         map.put("category_no", ficnic_category_no);
-        map.put("subcategory_no", ficnic_sub);
+        map.put("next_num", next_num);
+        map.put("parent_str", parent_str);
+
 
         totalRecord = fdao.getSiteListCount(map);
-
         PageDTO dto = new PageDTO(page, rowsize, totalRecord, map);
 
         // 페이지 이동 URL
-        String pageUrl = request.getContextPath() + "/ficnic/ficnic_list.do?category=" + ficnic_category_no + "&subcategory=" + ficnic_sub;
+        String pageUrl = request.getContextPath() + "/ficnic/ficnic_list.do?category=" + ficnic_category_no;
 
+
+        // 카테고리 피크닉 목록
         List<FicnicDTO> fList = fdao.getSiteFicnicList(dto.getStartNo(), dto.getEndNo(), map);
 
-        String ficnic_name = "";
-        if (!ficnic_sub.equals("")) {
-            ficnic_name = this.cdao.getCategoryName(ficnic_sub);
-        } else {
-            ficnic_name = this.cdao.getCategoryName(ficnic_category_no);
-        }
+        // 현재 카테고리 이름
+        String ficnic_name = this.cdao.getCategoryName(parent_category_no);
+
+        // 서브 카테고리 목록
+        List<CategoryDTO> cList = cdao.getSiteSubCategoryList(parent_category_no);
+
 
         model.addAttribute("flist", fList);
         model.addAttribute("clist", cList);
-        model.addAttribute("rlist", rList);
         model.addAttribute("category_no", ficnic_category_no);
+        model.addAttribute("parent_category_no", parent_category_no);
         model.addAttribute("ficnic_name", ficnic_name);
 
         model.addAttribute("totalCount", totalRecord);

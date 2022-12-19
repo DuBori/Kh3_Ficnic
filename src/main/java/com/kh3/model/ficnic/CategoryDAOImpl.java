@@ -152,6 +152,12 @@ public class CategoryDAOImpl implements CategoryDAO {
     public List<CategoryDTO> getSiteCategoryList() {
         return this.sqlSession.selectList("siteCategoryList");
     }
+    
+    // 서브 카테고리 목록 (사이트)
+    @Override
+    public List<CategoryDTO> getSiteSubCategoryList(String category_no) {
+        return this.sqlSession.selectList("siteSubCategoryList", category_no);
+    }
 
 
 

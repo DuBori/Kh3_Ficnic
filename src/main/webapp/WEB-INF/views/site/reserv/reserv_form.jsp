@@ -11,7 +11,7 @@
 <div class="page-info w1100">
     <h2>참여하기</h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>피크닉</li>
         <li><b>참여하기</b></li>
     </ol>

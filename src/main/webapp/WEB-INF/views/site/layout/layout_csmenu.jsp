@@ -8,7 +8,7 @@
     	</ul>
     </h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>고객센터</li>
         <li><b>${conf.getBoard_name()}</b></li>
     </ol>

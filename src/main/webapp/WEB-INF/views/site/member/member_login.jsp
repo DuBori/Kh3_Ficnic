@@ -11,7 +11,7 @@
 <div class="page-info w1100">
     <h2>로그인</h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li><b>로그인</b></li>
     </ol>
 </div>
