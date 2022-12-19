@@ -92,7 +92,7 @@ public class SiteFicnicController {
         List<FicnicDTO> fList = fdao.getSiteFicnicList(dto.getStartNo(), dto.getEndNo(), map);
 
         // 현재 카테고리 이름
-        String ficnic_name = this.cdao.getCategoryName(parent_category_no);
+        String category_name = this.cdao.getCategoryName(parent_category_no);
 
         // 서브 카테고리 목록
         List<CategoryDTO> cList = cdao.getSiteSubCategoryList(parent_category_no);
@@ -102,7 +102,7 @@ public class SiteFicnicController {
         model.addAttribute("clist", cList);
         model.addAttribute("category_no", ficnic_category_no);
         model.addAttribute("parent_category_no", parent_category_no);
-        model.addAttribute("ficnic_name", ficnic_name);
+        model.addAttribute("category_name", category_name);
 
         model.addAttribute("totalCount", totalRecord);
         model.addAttribute("paging", dto);
@@ -119,7 +119,7 @@ public class SiteFicnicController {
     // =====================================================================================
     @RequestMapping("ficnic/ficnic_view.do")
     public String ficnic_view(@RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model) {
-        FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
+        FicnicDTO dto = fdao.getFicnicCont(ficnic_no);
         List<ReviewDTO> rList = rdao.getNumList(ficnic_no);
 
         int cnt = 0;
@@ -132,7 +132,7 @@ public class SiteFicnicController {
             avg = Math.round(cnt / rList.size());
         }
 
-        model.addAttribute("fdto", fdto);
+        model.addAttribute("dto", dto);
         model.addAttribute("rList", rList);
         model.addAttribute("count", rList.size());
         model.addAttribute("avg", avg);

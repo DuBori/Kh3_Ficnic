@@ -7,11 +7,11 @@
 
 
 <div class="page-info w1100">
-    <h2>${ficnic_name}</h2>
+    <h2>${category_name}</h2>
     <ol>
         <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>피크닉</li>
-        <li><b>${ficnic_name}</b></li>
+        <li><b>${category_name}</b></li>
     </ol>
 </div>
 
@@ -36,7 +36,7 @@
 				<c:forEach items="${flist}" var="dto">
 					<li>
 						<button type="button"><i class="fa fa-heart-o"></i></button>
-						<a href="ficnic_view.do?ficnic_no=${dto.getFicnic_no()}">
+						<a href="ficnic_view.do?category=${param.category}&ficnic_no=${dto.getFicnic_no()}">
 							<div class="fl-photo">
 								<c:choose>
 									<c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" alt=""></c:when>
