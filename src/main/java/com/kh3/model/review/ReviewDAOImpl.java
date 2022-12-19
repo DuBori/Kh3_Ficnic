@@ -76,6 +76,11 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public int writeOkReview(ReviewDTO dto) {
         return this.sqlSession.insert("adminReviewWriteOk", dto);
 	}
+
+
+
+
+
     
 
 }

@@ -65,8 +65,18 @@
 	<select id="siteFicnicName" parameterType="string" resultType="string">
 		select category_name from ficnic_category where category_id = #{ficnic_name}
 	</select>
+	
 
-
+    <select id="siteFicnicPointCount" resultType="int">
+    select sum(review_point) from review_list where ficnic_no = #{ficnic_no}
+ 	</select>
+ 	
+ 	
+ 	 <!-- 리뷰 목록 총 갯수 -->
+    <select id="siteFicnicCount" resultType="int">
+        select count(review_no) from review_list where ficnic_no = #{ficnic_no}
+    </select>
+ 	
 
 
 </mapper>
