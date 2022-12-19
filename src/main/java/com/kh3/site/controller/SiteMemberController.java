@@ -78,21 +78,23 @@ public class SiteMemberController {
 
         // 비밀번호 체크
         int check = this.dao.pwCheck(dto);
-        
-
        
-        // 일치하는 아이디 없음
+        
         if (result == 0) {
         	
             out.println("<script>alert('존재하지 않는 아이디입니다.'); history.back(); </script>");
 
             
-		} // 아이디 일치하는 경우, 임시비밀번호 사용하는 경우 (길이가 20 아래) 로그인 가능함.
-       
+		} else if (mdto.getMember_type().equals("exit")) {
+	      	  out.println("<script>alert('탈퇴한 회원입니다.'); history.back(); </script>");
+	          
+	    } 
+
         // 길이 체크
         int pw_length = this.dao.pwLength(dto); 
         
-        if (pw_length < 20 && check == 1) {
+		// 아이디 일치하는 경우, 임시비밀번호 사용하는 경우 (길이가 20 아래) 로그인 가능함.
+        if (pw_length < 20 && check == 1 && !mdto.getMember_type().equals("exit")) {
         	
         	 dto = this.dao.loginSession(id);
 
@@ -118,7 +120,7 @@ public class SiteMemberController {
 
         }
 
-          if (isTrue == true) {	// 기존이랑 암호화 비교해서 true인 경우
+          if (isTrue == true && !mdto.getMember_type().equals("exit")) {	// 기존이랑 암호화 비교해서 true인 경우
             dto = this.dao.loginSession(id);
 
             HttpSession session = request.getSession();
@@ -137,6 +139,9 @@ public class SiteMemberController {
         	out.println("<script>alert('비밀번호를 다시 확인해주세요.'); history.back(); </script>");
         	
         }
+          
+
+        	  
 
     }
 
