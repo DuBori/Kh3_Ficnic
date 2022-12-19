@@ -5,14 +5,14 @@ $(function() {
 /////////////////////////////////////////////////////
 	// 댓글 등록
 	$(".qnaWriteBtn").on("click", function() {
-		if(!$("#comment_content").val() || $("#comment_content").val() == ""){
+		if(!$("#comment_contentOk").val() || $("#comment_contentOk").val() == ""){
 			alert("댓글 내용을 입력해 주세요.");
-			$("#comment_content").focus();
+			$("#comment_contentOk").focus();
 			return false;
 		}
 
 		let get_qna_no = $("#qna_no").val();
-		let get_comment_content = $("#comment_content").val();
+		let get_comment_content = $("#comment_contentOk").val();
 		let get_comment_writer_name = $("#comment_writer_name").val();
 		let get_comment_writer_pw = $("#comment_writer_pw").val();
 		let get_member_id = $("#member_id").val();
@@ -48,11 +48,11 @@ $(function() {
 						new_comment += "\t<td class=\"text-left pl-4\">"+get_comment_content.replace("\n", "<br />")+"</td>\n";
 						new_comment += "\t<td>\n";
 						new_comment += "\t<p class=\"eng\">"+year+"-"+month+"-"+day+"<br />"+hours+":"+minutes+":"+seconds+"</p>\n";
-						new_comment += "\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-1 px-1 py-0 deleteBtn\" name=\"comment_no\" value=\""+data+"\"><i class=\"fa fa-trash-o\"></i> 삭제</button>\n";
+						new_comment += "\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-1 px-1 py-0 qnaDeleteBtn\" name=\"comment_no\" value=\""+data+"\"><i class=\"fa fa-trash-o\"></i> 삭제</button>\n";
 						new_comment += "\t</td>\n";
 						new_comment += "</tr>\n";
 					$("#comment-list").append(new_comment);
-					$("#comment_content").val("");
+					$("#comment_contentOk").val("");
 				}else{
 					alert("댓글 등록 중 에러가 발행하였습니다.");
 				}
