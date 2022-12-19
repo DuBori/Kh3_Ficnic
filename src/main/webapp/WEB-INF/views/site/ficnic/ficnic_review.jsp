@@ -31,7 +31,17 @@
 	<hr color="lightgray">
 	
 	<c:forEach items="${rdto}" var="rdto">
-		<b><p class="rpoint">${rdto.review_point }점</p></b>
+			<div class="fvtc-review">
+				<div class="fvtcr-star">
+
+	<c:if test="${rdto.review_point > 0 and rdto.review_point <= 2}"><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></c:if>
+	<c:if test="${rdto.review_point > 2 and rdto.review_point <= 4}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></c:if>
+	<c:if test="${rdto.review_point > 4 and rdto.review_point <= 6}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></c:if>
+	<c:if test="${rdto.review_point > 6 and rdto.review_point <= 8}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></c:if>
+	<c:if test="${rdto.review_point > 8}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></c:if>
+		<b>${rdto.review_point}</b>
+				</div>
+			</div>
 		<b><p class="rname">${rdto.review_name }</p></b>
 		<b><p class="rdate">${rdto.review_date } 작성</p></b>
 		<b><p class="rcont">${rdto.review_cont }</p></b>
