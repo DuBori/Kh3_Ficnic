@@ -9,7 +9,7 @@
 <div class="page-info w1100">
     <h2>1:1 문의하기</h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>피크닉</li>
         <li>{ㅁㄴㅇㅁㄴㅇㅁㄴ 피크닉 이름}</li>
         <li><b>1:1 문의하기</b></li>

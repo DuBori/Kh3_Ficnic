@@ -21,7 +21,10 @@
     </select>
 
 
-
+    <!-- 서브 카테고리 목록 -->
+    <select id="siteSubCategoryList" parameterType="String" resultType="categoryDTO">
+        select * from ficnic_category where category_id_up = #{value} order by category_rank asc
+    </select>
 
 
 

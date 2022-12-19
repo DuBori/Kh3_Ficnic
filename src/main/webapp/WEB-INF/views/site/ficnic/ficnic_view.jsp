@@ -9,7 +9,7 @@
 <div class="page-info w1100">
     <h2>${fdto.getFicnic_name()}</h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>피크닉</li>
         <li><b>${fdto.getFicnic_category_name()}</b></li>
     </ol>

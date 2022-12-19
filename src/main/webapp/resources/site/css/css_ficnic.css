@@ -90,6 +90,38 @@
 
 
 
+/*************************/
+/* .goods-list
+/*************************/
+.goods-list {}
+
+.goods-list .gl-category {    position: relative;
+    margin-bottom: 25px;
+    white-space: nowrap;
+    overflow: auto;
+}
+.goods-list .gl-category li {
+    display: inline-block;
+    margin-right: 20px;
+}
+.goods-list .gl-category li a {
+    font-size: 15px;
+    color: #000;
+}
+.goods-list .gl-category li a:hover {
+    color: var(--font-color);
+}
+.goods-list .gl-category li.now a {
+    font-weight: bold;
+    color: var(--font-color);
+}
+
+
+
+
+
+
+
 
 
 

@@ -9,7 +9,7 @@
 <div class="page-info w1100">
     <h2>${ficnic_name}</h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>피크닉</li>
         <li><b>${ficnic_name}</b></li>
     </ol>
@@ -17,34 +17,18 @@
 
 
 
-<div class="contents w1100 ficnic-list">
+<div class="contents w1100 goods-list">
 
-
-
-
-		<!-- 카테고리 리스트  -->
-		<div>
-			<select onchange="if(this.value) location.href=(this.value);">
-				<option value="">카테고리 없음</option>
-				<c:forEach items="${clist }" var="dto">
-					<option value="${path}/ficnic/ficnic_list.do?category=${dto.getCategory_id()}"<c:if test="${dto.getCategory_id() eq category_no  }">selected</c:if> >${dto.getCategory_name() }</option>	
-				</c:forEach>
-			</select>
-			
-		</div>
-	   
-	   <div>
-	  	<c:forEach items="${clist }" var="dto">
-	  		<c:if test="${dto.getCategory_id() eq category_no }">
-		  		<c:forEach items="${dto.getSub_category() }" var="sub">
-		  			<a href="${path}/ficnic/ficnic_list.do?category=${dto.getCategory_id()}&subcategory=${sub.getCategory_id()}">${sub.getCategory_name() }</a>
-		  		</c:forEach>
-	  		</c:if>
+	<ul class="gl-category">
+		<li<c:if test="${param.category eq parent_category_no}"> class="now"</c:if>><a href="ficnic_list.do?category=${parent_category_no}">전체보기</a></li>
+	  	<c:forEach var="sub" items="${clist}">
+	  	<li<c:if test="${param.category eq sub.getCategory_id()}"> class="now"</c:if>><a href="ficnic_list.do?category=${sub.getCategory_id()}">${sub.getCategory_name()}</a></li>
 	  	</c:forEach>
-	   </div>
+	</ul>
+
+
 	   
 	   <div>
-	   	<h3><c:if test="${!empty ficnic_name}">${ficnic_name}</c:if></h3>
 	   	<c:choose>
 	   	<c:when test="${!empty flist }">
 	   		<c:forEach items="${flist }" var="dto">
