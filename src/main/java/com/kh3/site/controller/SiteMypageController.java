@@ -196,11 +196,14 @@ public class SiteMypageController {
     @RequestMapping("mypage/mypage_info_modify.do")
     public String midify(Model model, HttpSession session, HttpServletRequest request) {
       
-    	session = request.getSession();
-    	String id = (String) session.getAttribute("sess_id");
-    	
-    	MemberDTO dto = this.mdao.getReservMember(id);
-    	model.addAttribute("member", dto);
+		
+		  session = request.getSession(); 
+		  String id = (String)
+		  session.getAttribute("sess_id");
+		  
+		  MemberDTO dto = this.mdao.getReservMember(id); 
+		  model.addAttribute("member", dto);
+		 
 
 
         return "site/mypage/mypage_info_modify";
@@ -212,18 +215,24 @@ public class SiteMypageController {
     // 마이페이지 - 회원정보 수정
     // =====================================================================================
     @RequestMapping("mypage/mypage_info_modifyOk.do")
-    public void modifyOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto,
-                        @RequestParam("pw") String member_pw, HttpServletResponse response) throws IOException {
+    public void modifyOk(@Valid MemberDTO dto, BindingResult result, @RequestParam("member_pw") String member_pw, HttpSession session, 
+    		HttpServletRequest request, @RequestParam("member_pw_re") String member_pw_re, HttpServletResponse response) throws IOException {
 
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        // 비밀번호 일치 확인
-        if (!member_pw.equals(dto.getMember_pw_re())) {
-            out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
+		session = request.getSession(); 
+		String pw = (String)session.getAttribute("sess_pw");
 
-        } else if (member_pw.length() > 0) {
-        	
+        // 비밀번호 일치하지 않는 경우
+        if (!member_pw.equals(member_pw_re)) {
+            out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
+        } 
+        
+        
+        // 비밀번호 입력한 경우
+        else if (member_pw.length() > 0) {
+            System.out.println("어디야2>>>>>>>>>>>>>>>>>>>>>>>> ㅜㅜㅜㅜ");
         	// 새로운 비밀번호로 수정,  암호화 설정
             dto.setMember_pw(passwordEncoder.encode(member_pw));
 
@@ -244,18 +253,18 @@ public class SiteMypageController {
                     }
                 }
             }
-
-
+            
+            
             int check = this.mdao.modifyOk(dto);
             if (check > 0) {
-                out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='mypage_info_modify.do';</script>");
+               out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='mypage_info_modify.do';</script>");
             } else {
                 out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
             }
 
 
         // 기존에 가지고 있던 비밀번호로 수정
-        } else {
+        }  else {
             // 유효성 검사
             if (result.hasErrors()) {
                 List<ObjectError> list = result.getAllErrors();
@@ -271,27 +280,60 @@ public class SiteMypageController {
                 }
             }
 
-            int check = this.mdao.modifyOk(dto);
-            if (check > 0) {
-                // 적립금이 바뀌면 실행
-                if (pdto.getPoint_add() > 0) {
-                    // 관리자 수정 포인트 적립
-                    this.pdao.modifyPoint(pdto);
-                }
-                out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='mypage_info_modify.do';</script>");
-            } else {
-                out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
-            }
+            
+            
+            
+            			dto.setMember_pw(pw);
+                     	
+        			   int check = this.mdao.modifyOk(dto);
+        	            if (check > 0) {
+        	                 out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='mypage_info_modify.do';</script>");
+        	            } else {
+        	                out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
+        	            }
 
-        }
-        
-        
+        	        }
 
+        	    }
+    
+    
+    
+    
+    
+ // =====================================================================================
+    // 마이페이지 - 회원정보 수정
+    // =====================================================================================
+    @RequestMapping("mypage/mypage_secession.do")
+    public void secession(MemberDTO dto, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
+    	session = request.getSession(); 
+		String id = (String)session.getAttribute("sess_id");
+		 
+		System.out.println("id>???" + id);
+		MemberDTO mdto = this.mdao.getReservMember(id);
+		 
+		System.out.println("dto" + dto);
+		System.out.println("mdto" + mdto);
+		
+		int check = this.mdao.secession(mdto);
+		 
+		if(check > 0) {
+			 out.println("<script>alert('회원 탈퇴가 완료되었습니다.'); location.href='../main.do';</script>");
+        } else {
+             out.println("<script>alert('에러가 발생하였습니다.'); history.back();</script>");
+		}
+    	
+        request.getSession().invalidate();
+        request.getSession(true);
+
+        out.println("<script>location.href='" + request.getContextPath() + "/';</script>");
+    	
     }
-
-
-
-
+    
+    
 
 
 

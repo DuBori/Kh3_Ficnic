@@ -66,4 +66,7 @@ public interface MemberDAO {
     // 비밀번호 길이 확인
     int pwLength(MemberDTO dto);
     
+    // 회원 정보 수정
+    int secession(MemberDTO dto);
+    
 }

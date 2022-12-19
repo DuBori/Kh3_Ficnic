@@ -164,6 +164,12 @@ public class MemberDAOImpl implements MemberDAO {
 		return this.sqlSession.selectOne("siteMemberPwLength", dto);
 	}
 
+
+	@Override
+	public int secession(MemberDTO dto) {
+		return this.sqlSession.update("siteMemberSecession", dto);
+	}
+
 	
 
 }

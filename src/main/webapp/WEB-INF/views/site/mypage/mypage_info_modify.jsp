@@ -29,7 +29,6 @@
 	<form name="form_input" method="post"
 		action="${path}/mypage/mypage_info_modifyOk.do">
 
-			<input type="hidden" name="pw" value="${dto.getMember_pw()}">
 		
 			<!-- 아이디 -->
 				<p><label for="member_id">아이디</label></p>
@@ -65,7 +64,7 @@
 
 
 				<p><input type="submit" class="btnMod" value="수정하기"></p>
-				<p><a href="<%=request.getContextPath()%>/member/member_secession.do" class="member_secession">회원 탈퇴</a></p>
+				<p><a href="<%=request.getContextPath()%>/mypage/mypage_secession.do" class="member_secession" onclick="return confirm('정말로 탈퇴하시겠습니까?\n돌이키실 수 없습니다.')">회원 탈퇴</a></p>
          
 			
 		</table>
