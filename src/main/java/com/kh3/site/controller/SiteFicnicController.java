@@ -143,6 +143,37 @@ public class SiteFicnicController {
 
 
 
+    // =====================================================================================
+    // 피크닉 내용 보기 - 리뷰 목록 페이지
+    // =====================================================================================
+    @RequestMapping("ficnic/ficnic_review.do")
+    public String ficnic_review(@RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model) {
+        FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
+        List<ReviewDTO> rList = rdao.getNumList(ficnic_no);
+
+        model.addAttribute("fdto", fdto);
+        model.addAttribute("rList", rList);
+
+        return "site/ficnic/ficnic_review";
+    }
+
+
+
+
+    // =====================================================================================
+    // 피크닉 내용 보기 - 1:1 문의 작성 페이지
+    // =====================================================================================
+    @RequestMapping("ficnic/ficnic_qna.do")
+    public String ficnic_qna(@RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model) {
+
+
+
+        return "site/ficnic/ficnic_qna_write";
+    }
+
+
+
+
 
 
 

@@ -20,6 +20,11 @@
 <div class="contents w1100 ficnic-view">
 
 
+	<h3><a href="ficnic_review.do?ficnic_no=${param.ficnic_no}">피크닉 리뷰</a></h3>
+	<h3><a href="ficnic_qna.do?ficnic_no=${param.ficnic_no}">피크닉 1:1 문의 작성</a></h3>
+
+
+
 
 	<!-- 이미지 -->
 	<div class="border">
