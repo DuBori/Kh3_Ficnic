@@ -140,4 +140,18 @@ public class FicnicDAOImpl implements FicnicDAO {
         this.sqlSession.update("adminFicnicUpdateReviewCont", map);
 	}
 
+
+	@Override
+	public int countReviewPoint(int ficnic_no) {
+		return this.sqlSession.selectOne("siteFicnicPointCount", ficnic_no);
+	}
+	
+	
+
+	@Override
+	public int countAll(int ficnic_no) {
+		 return this.sqlSession.selectOne("siteFicnicCount", ficnic_no);
+	}
+	
+
 }

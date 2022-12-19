@@ -150,9 +150,13 @@ public class SiteFicnicController {
     public String ficnic_review(@RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model) {
         FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
         List<ReviewDTO> rList = rdao.getNumList(ficnic_no);
-
+		int count = fdao.countAll(ficnic_no);
+		int rcount = fdao.countReviewPoint(ficnic_no);
+        
         model.addAttribute("fdto", fdto);
         model.addAttribute("rList", rList);
+		model.addAttribute("count", count);
+		model.addAttribute("rcount", rcount);
 
         return "site/ficnic/ficnic_review";
     }
