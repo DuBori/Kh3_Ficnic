@@ -2,6 +2,7 @@ package com.kh3.site.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,8 @@ import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.model.reserv.ReservDAO;
 import com.kh3.model.reserv.ReservDTO;
+import com.kh3.model.review.ReviewDAO;
+import com.kh3.model.review.ReviewDTO;
 
 
 @Controller
@@ -28,6 +31,8 @@ public class SiteReservController {
 	@Inject
 	private FicnicDAO ficnicDAO;
 	
+	@Inject
+	private ReviewDAO reviewDAO;
 	/* 회원 예약 상세 페이지 */
 	@RequestMapping("mypage/mypage_reserv_view.do")
 	public	void mypage_reserv_view(
@@ -49,16 +54,20 @@ public class SiteReservController {
 	}
 	/* 회원 예약 상세 페이지 확인 이동*/
 	@RequestMapping("mypage/mypage_reserv_view_ok.do")
-	public String mypage_reserv_viewOk( @RequestParam("reserv_no") int reserv_no
+	public String mypage_reserv_viewOk(
+			HttpSession session,
+			@RequestParam("reserv_no") int reserv_no
 			,Model model) {
 	
 		ReservDTO reservDTO=reservDAO.getResevCont(reserv_no);
 		
 		FicnicDTO ficnicDTO =  ficnicDAO.getFicnicCont(reservDTO.getFicnic_no());
+		List<ReviewDTO> rlist =  this.reviewDAO.getListSession((String)session.getAttribute("sess_id"));
 		
 		model.addAttribute("reservDto", reservDTO);
 		model.addAttribute("ficnicDto", ficnicDTO);
-		
+		model.addAttribute("reserv_no", reserv_no);
+		model.addAttribute("rlist", rlist);
 		return "site/mypage/mypage_reserv_view";
 	}
 	

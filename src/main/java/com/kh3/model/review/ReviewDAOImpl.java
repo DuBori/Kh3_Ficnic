@@ -76,6 +76,12 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public int writeOkReview(ReviewDTO dto) {
         return this.sqlSession.insert("adminReviewWriteOk", dto);
 	}
+
+
+	@Override
+	public List<ReviewDTO> getListSession(String member_id) {
+		return this.sqlSession.selectList("SiteMypageReviewList", member_id);
+	}
     
 
 }

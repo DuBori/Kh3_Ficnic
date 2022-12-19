@@ -23,4 +23,6 @@ public interface ReviewDAO {
 
 	int writeOkReview(ReviewDTO dto);
 
+	List<ReviewDTO> getListSession(String member_id);
+
 }
