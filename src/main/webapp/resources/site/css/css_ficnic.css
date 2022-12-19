@@ -96,7 +96,7 @@
 .goods-list {}
 
 .goods-list .gl-category {    position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     white-space: nowrap;
     overflow: auto;
 }
