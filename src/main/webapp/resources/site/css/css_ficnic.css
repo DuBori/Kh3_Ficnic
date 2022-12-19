@@ -117,10 +117,70 @@
 }
 
 
+/*************************/
+/* 리뷰 보기
+/*************************/
 
 
+.ficnic-review .r_one {
+	
+	padding-top:50px;
+	font-size: 20px;
+}
+
+.ficnic-review p b {
+	
+	color: #5757ff;
+	
+}
+
+.ficnic-review .r_two {
+	
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+
+.ficnic-review hr {
+	/* border-width:1px 0 0 0;  */
+	border-width: 0px;
+	border-style:solid; 
+	border-color:#f4f4f4;
+}
+
+.ficnic-review .rpoint {
+	
+	font-size: 20px;
+	padding-top:10px;
+	color: #8b17ff;
+}
 
 
+.ficnic-review .rname {
+	
+	font-size: 14px;
+}
+
+.ficnic-review .rdate {
+	
+	font-size: 11px;
+	color: #b8b8b8;
+	
+}
+
+.ficnic-review .rcont {
+	padding-top: 25px;
+	font-size: 12px;
+	
+}
+
+.ficnic-review .rfname{
+	padding-top: 25px;
+	
+}
+
+.ficnic-review .rimg1 {
+	padding-top: 35px;
+	}
 
 /*************************/
 /* .ficnic-view
@@ -348,9 +408,21 @@
 
 
 
+.ficnic-review .rhr {
+	
+	margin-top: 40px;
+	
+}
 
+.ficnic-review {
+	padding-bottom: 10px;
+}
 
-
-
-
+.ficnic-review a {
+	color: #b8b8b8;
+	text-decoration: none;
+	padding-top: 25px;
+	font-size: 12px;
+	color: #b8b8b8;
+}
 

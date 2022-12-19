@@ -50,5 +50,11 @@ public interface FicnicDAO {
     
     /* 리뷰 등록시 리뷰 갯수 수정 */
 	void updateReviewCont(int ficnic_no);
-
+   
+    /* 리뷰 count */
+	int countAll(int ficnic_no);
+	
+	/* 리뷰 평점 sum */
+	int countReviewPoint(int ficnic_no);
+	
 }
