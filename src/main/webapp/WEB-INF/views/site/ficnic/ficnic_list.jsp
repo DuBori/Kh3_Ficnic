@@ -7,91 +7,93 @@
 
 
 <div class="page-info w1100">
-    <h2>${ficnic_name}</h2>
+    <h2>${category_name}</h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>피크닉</li>
-        <li><b>${ficnic_name}</b></li>
+        <li><b>${category_name}</b></li>
     </ol>
 </div>
 
 
 
-<div class="contents w1100 ficnic-list">
+<div class="contents w1100 goods-list">
 
-
-
-
-		<!-- 카테고리 리스트  -->
-		<div>
-			<select onchange="if(this.value) location.href=(this.value);">
-				<option value="">카테고리 없음</option>
-				<c:forEach items="${clist }" var="dto">
-					<option value="${path}/ficnic/ficnic_list.do?category=${dto.getCategory_id()}"<c:if test="${dto.getCategory_id() eq category_no  }">selected</c:if> >${dto.getCategory_name() }</option>	
-				</c:forEach>
-			</select>
-			
-		</div>
-	   
-	   <div>
-	  	<c:forEach items="${clist }" var="dto">
-	  		<c:if test="${dto.getCategory_id() eq category_no }">
-		  		<c:forEach items="${dto.getSub_category() }" var="sub">
-		  			<a href="${path}/ficnic/ficnic_list.do?category=${dto.getCategory_id()}&subcategory=${sub.getCategory_id()}">${sub.getCategory_name() }</a>
-		  		</c:forEach>
-	  		</c:if>
+	<c:if test="${!empty clist}">
+	<ul class="gl-category">
+		<li<c:if test="${param.category eq parent_category_no}"> class="now"</c:if>><a href="ficnic_list.do?category=${parent_category_no}">전체보기</a></li>
+	  	<c:forEach var="sub" items="${clist}">
+	  	<li<c:if test="${param.category eq sub.getCategory_id()}"> class="now"</c:if>><a href="ficnic_list.do?category=${sub.getCategory_id()}">${sub.getCategory_name()}</a></li>
 	  	</c:forEach>
-	   </div>
-	   
-	   <div>
-	   	<h3><c:if test="${!empty ficnic_name}">${ficnic_name}</c:if></h3>
-	   	<c:choose>
-	   	<c:when test="${!empty flist }">
-	   		<c:forEach items="${flist }" var="dto">
-	   			<c:set var="cnt" value="0"/>
-	   			<div class="border" onclick="location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no() }'">
-		   			<img alt="이미지없음" src="${dto.getFicnic_photo1() }">
-		   			<p>${dto.getFicnic_location()}</p>
-		   			<p>${dto.getFicnic_name()}</p>
-		   			<p>★★★★★ 후기 <c:forEach items="${rlist}" var="review" >
-		   								<c:if test="${dto.getFicnic_no() eq review.getFicnic_no() }" >
-		   									<c:set var="cnt" value="${cnt+1}"/>
-		   								</c:if>
-		   						  </c:forEach>
-		   						  ${cnt}
-		   			</p>
-		   			<c:choose>
-		   				<c:when test="${!empty dto.getFicnic_sale_price() }">
-			   				<p>이전가격 : ${dto.getFicnic_market_price()}</p>
-			   				할인율 <fmt:formatNumber value="${dto.getFicnic_sale_price()/dto.getFicnic_market_price()*100}" type="percent" pattern="##" />% <fmt:formatNumber value="${dto.getFicnic_sale_price() }"></fmt:formatNumber>원
-		   				</c:when>
-		   				<c:otherwise>
-		   					Only  ${dto.getFicnic_market_price()}
-		   				</c:otherwise>
-		   			</c:choose>
-		   		</div>
-	   		</c:forEach>
-	   		</c:when>
-	   		<c:otherwise>
-	   			<h5>등록된 피크닉이 없어요</h5>
-	   		</c:otherwise>
+	</ul>
+	</c:if>
+
+
+
+	<ul class="gl-list ficnic-list">
+		<c:choose>
+			<c:when test="${!empty flist}">
+				<c:forEach items="${flist}" var="dto">
+					<li>
+						<button type="button"><i class="fa fa-heart-o"></i></button>
+						<a href="ficnic_view.do?category=${param.category}&ficnic_no=${dto.getFicnic_no()}">
+							<div class="fl-photo">
+								<c:choose>
+									<c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" alt=""></c:when>
+									<c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" alt=""></c:when>
+									<c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
+									<c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
+									<c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
+									<c:otherwise><span class="noimg">no img</span></c:otherwise>
+								</c:choose>
+							</div>
+
+
+							<div class="fl-info">
+								<div class="fli-location">${dto.getFicnic_location()}</div>
+
+								<div class="fli-name">${dto.getFicnic_name()}</div>
+
+								<c:if test="${dto.getFicnic_review_count() > 0}">
+								<div class="fli-review">
+									<span>
+										<c:choose>
+											<c:when test="${dto.getFicnic_review_point() > 0 and dto.getFicnic_review_point() <= 2}"><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></c:when>
+											<c:when test="${dto.getFicnic_review_point() > 2 and dto.getFicnic_review_point() <= 4}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></c:when>
+											<c:when test="${dto.getFicnic_review_point() > 4 and dto.getFicnic_review_point() <= 6}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></c:when>
+											<c:when test="${dto.getFicnic_review_point() > 6 and dto.getFicnic_review_point() <= 8}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></c:when>
+											<c:when test="${dto.getFicnic_review_point() > 8}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></c:when>
+										</c:choose>
+									</span>
+									후기 <fmt:formatNumber value="${dto.getFicnic_review_count()}" />
+								</div>
+								</c:if>
+
+								<div class="fli-price">
+									<c:if test="${dto.getFicnic_market_price() > 0}"><p class="prev">${dto.getFicnic_market_price()}원</p></c:if>
+									<p class="sale">
+										<c:if test="${dto.getFicnic_market_price() > 0}"><span><fmt:formatNumber value="${dto.getFicnic_sale_price() / dto.getFicnic_market_price() * 100}" type="percent" pattern="##" />%</span></c:if>
+										<fmt:formatNumber value="${dto.getFicnic_sale_price()}" />원
+									</p>
+								</div>
+							</div>
+						</a>
+					</li>
+				</c:forEach>
+			</c:when>
+
+			<c:otherwise><li class="nodata">등록된 피크닉이 없어요...</li></c:otherwise>
 		</c:choose>
-	   </div>
-	   
-	   
+	</ul>
 
 
-      	<!-- 페이징 처리  -->
-		<c:if test="${!empty paging}">
-	            <div class="row list-bottom-util">
-	                <div class="col text-center">
-	                    ${pagingWrite}
-	                </div>
-	            </div>
-	    </c:if>
-	    <!-- 페이징 처리 end -->
 
 
+    <div class="row mt-4 list-bottom-util">
+        <div class="col mb-3 text-center">
+            ${pagingWrite}
+        </div>
+    </div>
 
 </div>
 

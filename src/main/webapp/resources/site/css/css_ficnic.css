@@ -90,10 +90,339 @@
 
 
 
+/*************************/
+/* .goods-list
+/*************************/
+.goods-list {}
+
+.goods-list .gl-category {    position: relative;
+    margin-bottom: 30px;
+    white-space: nowrap;
+    overflow: auto;
+}
+.goods-list .gl-category li {
+    display: inline-block;
+    margin-right: 20px;
+}
+.goods-list .gl-category li a {
+    font-size: 15px;
+    color: #000;
+}
+.goods-list .gl-category li a:hover {
+    color: var(--font-color);
+}
+.goods-list .gl-category li.now a {
+    font-weight: bold;
+    color: var(--font-color);
+}
+
+
+/*************************/
+/* 리뷰 보기
+/*************************/
+
+
+.ficnic-review .r_one {
+	
+	padding-top:50px;
+	font-size: 20px;
+}
+
+.ficnic-review p b {
+	
+	color: #5757ff;
+	
+}
+
+.ficnic-review .r_two {
+	
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+
+.ficnic-review hr {
+	/* border-width:1px 0 0 0;  */
+	border-width: 0px;
+	border-style:solid; 
+	border-color:#f4f4f4;
+}
+
+.ficnic-review .rpoint {
+	
+	font-size: 20px;
+	padding-top:10px;
+	color: #8b17ff;
+}
+
+
+.ficnic-review .rname {
+	
+	font-size: 14px;
+}
+
+.ficnic-review .rdate {
+	
+	font-size: 11px;
+	color: #b8b8b8;
+	
+}
+
+.ficnic-review .rcont {
+	padding-top: 25px;
+	font-size: 12px;
+	
+}
+
+.ficnic-review .rfname{
+	padding-top: 25px;
+	
+}
+
+.ficnic-review .rimg1 {
+	padding-top: 35px;
+	}
+
+/*************************/
+/* .ficnic-view
+/*************************/
+.ficnic-view {}
+.ficnic-view > div {
+	position: relative;
+	width: 100%;
+	margin-bottom: 50px;
+}
+
+
+
+/* 상단 정보 */
+.ficnic-view .fv-top {
+	display: flex;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	padding-bottom: 50px;
+	border-bottom: 1px solid #ddd;
+}
+.ficnic-view .fv-top .fvt-photo {
+	position: relative;
+	width: 50%;
+}
+.ficnic-view .fv-top .fvt-photo li {
+	width: 100%;
+}
+.ficnic-view .fv-top .fvt-photo li img {
+	width: 100%;
+	border-radius: 10px;
+	object-fit: cover;
+}
+
+.ficnic-view .fv-top .fvt-photo .swiper-pagination,
+.ficnic-view .fv-top .fvt-photo .swiper-button {
+    position: absolute;
+    z-index: 2;
+}
+
+.ficnic-view .fv-top .fvt-photo .swiper-pagination {
+	bottom: 0;
+	width: auto;
+	margin-left: calc(50% - 28px);
+	margin-bottom: 12px;
+	padding: 3px 10px;
+    font-family: 'Lato';
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #fff;
+    border-radius: 16px;
+    background: rgba(0,0,0,0.3);
+}
+.ficnic-view .fv-top .fvt-photo .swiper-pagination-current {
+    font-weight: 600;
+}
+
+.ficnic-view .fv-top .fvt-photo .swiper-button {
+	width: 100%;
+	top: 50%;
+}
+.ficnic-view .fv-top .fvt-photo button {
+	font-size: 22px;
+	color: #fff;
+    background: none;
+    vertical-align: middle;
+    text-align: center;
+    margin-top: 0;
+    opacity: 0.5;
+}
+.ficnic-view .fv-top .fvt-photo .swiper-button button:hover {
+	opacity: 1;
+}
+
+
+
+.ficnic-view .fv-top .fvt-cont {
+	display: flex;
+	flex-direction: column;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	width: 50%;
+	max-height: 534px;
+	box-sizing: border-box;
+	padding-left: 50px;
+	overflow: hidden;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-basic {
+    font-family: 'Lato';
+    letter-spacing: 0;
+    margin-bottom: 30px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-basic h2 {
+	font-size: 2rem;
+	font-weight: 600;
+	letter-spacing: -1px;
+	margin-bottom: 14px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-basic p.prev {
+    font-size: 18px;
+    line-height: 20px;
+    color: #ccc;
+    text-decoration: line-through;
+    margin-bottom: 5px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-basic p.sale {
+	font-size: 18px;
+    font-weight: 700;
+    color: #000;
+    line-height: 30px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-basic p.sale b {
+    font-size: 28px;
+    font-weight: 700;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-basic p.sale span {
+    color: var(--font-color);
+    font-size: 28px;
+    margin-right: 5px;
+}
+
+
+
+.ficnic-view .fv-top .fvt-cont .fvtc-review {}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star {}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star i {
+    font-size: 20px;
+    color: #ffdc00;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star b {
+	font-family: 'Lato';
+	font-size: 17px;
+	line-height: 24px;
+	font-weight: bold;
+	letter-spacing: 0;
+	margin-left: 8px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star b:after {
+	content: "•";
+	width: 3px;
+	height: 3px;
+	padding: 0 4px 0 6px;
+	font-size: 12px;
+	color: #777;
+	vertical-align: top;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star span {
+	font-size: 15px;
+	color: #777;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star p.avg {
+	color: #333;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 26px;
+	letter-spacing: -1px;
+}
+
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 12px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li {
+	width: calc(33.3333333333% - 10px);
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.photo {
+	width: 100%;
+	margin-bottom: 8px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.photo img {
+	width: 100%;
+	object-fit: cover;
+	border-radius: 8px;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.writer {}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.cont {}
 
 
 
 
 
 
+/* 피크닉 정보 */
+.ficnic-view .fv-info {}
+
+
+
+
+/* 상세 정보 */
+.ficnic-view .fv-detail {}
+
+
+
+
+/* 커리큘럼 */
+.ficnic-view .fv-curriculum {}
+
+
+
+
+/* 필요 정보 */
+.ficnic-view .fv-required {}
+
+
+
+
+/* 이용 안내 */
+.ficnic-view .fv-tab {}
+
+
+
+
+
+
+@media (min-width: 992px) {
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 520px) {
+}
+
+
+
+.ficnic-review .rhr {
+	
+	margin-top: 40px;
+	
+}
+
+.ficnic-review {
+	padding-bottom: 10px;
+}
+
+.ficnic-review a {
+	color: #b8b8b8;
+	text-decoration: none;
+	padding-top: 25px;
+	font-size: 12px;
+	color: #b8b8b8;
+}
 

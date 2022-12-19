@@ -11,7 +11,7 @@
 <div class="page-info w1100">
     <h2>FIND RESULT</h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>비밀번호 찾기</li>
         <li><b>비밀번호 찾기 결과</b></li>
     </ol>

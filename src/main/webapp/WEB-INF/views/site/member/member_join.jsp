@@ -17,7 +17,7 @@
 <div class="page-info w1100">
 	<h2>회원 가입</h2>
 	<ol>
-		<li><a href="/"><i class="icon-home"></i> HOME</a></li>
+		<li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
 		<li><b>회원 가입</b></li>
 	</ol>
 </div>

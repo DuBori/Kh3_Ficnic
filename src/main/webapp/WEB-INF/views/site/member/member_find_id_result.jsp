@@ -10,7 +10,7 @@
 <div class="page-info w1100">
     <h2>FIND RESULT</h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>아이디 찾기</li>
         <li><b>아이디 찾기 결과</b></li>
     </ol>

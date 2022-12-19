@@ -96,5 +96,9 @@
 		update member_list set member_pw = #{member_pw} where member_id = #{member_id}
 	</update>
 
+	<!-- 회원 탈퇴 -->
+	<update id="siteMemberSecession" parameterType="memberDTO">
+		update member_list set member_type = 'exit' where member_id = #{member_id}
+	</update>
 
 </mapper>

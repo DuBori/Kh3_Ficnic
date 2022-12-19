@@ -103,68 +103,45 @@
     <!-- 내용 //END -->
 
 
-    <!-- 답변 목록 //START -->
+    <!-- 댓글 목록 //START -->
     <div class="row rv-body">
         <div class="col-lg mb-5">
-            <h4>답변 목록</h4>
+            <h4>댓글 목록</h4>
+               <table class="table-list">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%; min-width: 120px;">작성자</th>
+                                <th>내용</th>
+                                <th style="width: 20%; min-width: 120px;">작성일</th>
+                            </tr>
+                        </thead>
 
-            <table class="table-form comment-list">
-                <colgroup>
-                    <col width="13%" />
-                    <col />
-                    <col width="13%" />
-                </colgroup>	
+                        <tbody id="comment-list">
+                        	<c:if test="${!empty cdto}">
+                        	<c:forEach items="${cdto}" var="cdto">
+                            <tr id="comment-${cdto.getComment_no()}">
+                                <td>
+                                	<p><b>${cdto.getComment_writer_name()}</b></p>
+                                	<p class="eng">(${cdto.getMember_id()})</p>
+                                </td>
+                                <td class="text-left pl-4">${cdto.getComment_content().replace(newLine, "<br />")}</td>
+                                <td>
+                                	<p class="eng">${cdto.getComment_date().substring(0,10)}<br />${cdto.getComment_date().substring(11)}</p>
+                            		<button type="button" class="btn btn-sm btn-outline-danger mt-1 px-1 py-0 qnaDeleteBtn" name="comment_no" value="${cdto.getComment_no()}"><i class="fa fa-trash-o"></i> 삭제</button>
+                                </td>
+                            </tr>
+                            </c:forEach>
+                            </c:if>
 
-                <c:choose>
-                <c:when test="${!empty cdto }">
-                <thead>
-                    <tr>
-                        <th class="text-center">작성자</th>
-                        <th class="text-center">내용</th>
-                        <th class="text-center">작성일</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <c:forEach items="${cdto}" var="cdto">
-                    <tr id="comment-${cdto.getComment_no()}">
-                    	<c:choose>
-                    	<c:when test="${dto.getMember_id() == cdto.getMember_id() }">
-                        <td class="text-center"><b>${cdto.getComment_writer_name() }</b></td>
-                        </c:when>
-                        <c:otherwise>
-                        <td class="text-center text-danger"><b>관리자</b></td>
-                        </c:otherwise>
-                        </c:choose>
-                        <td class="text-left">${cdto.getComment_content() }</td>
-                        <c:choose>
-                        <c:when test="${dto.getMember_id() == cdto.getMember_id() }">
-                       	<td class="text-center">
-                            <p class="eng">${cdto.getComment_date().substring(0,10)}<br />${cdto.getComment_date().substring(11)}</p>
-                            <button type="button" class="btn btn-sm btn-outline-danger mt-1 px-1 py-0 qnaDeleteBtn" name="comment_no" value="${cdto.getComment_no()}"><i class="fa fa-trash-o"></i> 삭제</button>
-            			</td>
-                        </c:when>
-                        <c:otherwise>
-  						<td class="text-center"></td>
-                        </c:otherwise>
-                        </c:choose>
-                    </tr>
-                    </c:forEach>
-                </tbody>
-                </c:when>
-                
-                <c:otherwise>
-                <tbody>
-                    <tr>
-                        <td colspan="3" class="nodata">답변 내역이 없습니다.</td>
-                    </tr>
-                </tbody>
-                </c:otherwise>
-                </c:choose>
+                            <c:if test="${empty cdto}">
+                            <tr>
+                            	<td colspan="3" class="nodata">댓글이 없습니다.</td>
+                            </tr>
+                            </c:if>
+                        </tbody>
             </table>
 
 
-            <form name="write_form" method="post" action="${path}/mypage/mypage_qna_commentOk.do?no=${dto.getQna_no()}">
             <table class="table-form comment-write">
              	<colgroup>
                     <col width="120" />
@@ -172,12 +149,17 @@
                     <col width="120" />
              	</colgroup>
 			    <tr> 
-			        <th>댓글 쓰기</th>										
-					<td><textarea name="comment_content" class="comment_content-" cols="20" rows="3" ></textarea></td>
-                    <td><button type="submit"><i class="fa fa-pencil qnaWriteBtn"></i> 쓰기</button></td>
+                   <td>
+                       <p><b>회원이름</b></p>
+                       <p class="eng">(회원아이디)</p>
+						<input type="hidden" id="qna_no" name="qna_no" value="${param.no}" />
+						<input type="hidden" id="member_id" name="member_id" value="${sess_id }" />
+						<input type="hidden" id="comment_writer_name" name="comment_writer_name" value="${sess_name }" />						
+                    </td>
+					<td><textarea name="comment_contentOk" class="comment_contentOk" id="comment_contentOk" cols="20" rows="3" ></textarea></td>
+                    <td><button type="button" class="btn btn-lg btn-primary rounded-0 qnaWriteBtn" id="qnaWriteBtn" style="padding: .94rem 1.1rem;"><i class="fa fa-pencil"></i> 댓글 쓰기</button></td>
 			    </tr> 
 	   		</table>
-	   		</form>
 	   			
         </div>
     </div>

@@ -159,5 +159,23 @@
 	margin: 5px 0px 0px 150px; 
 }
 
+.mypage-info .member_secession {
+		font-size: 13px;
+		margin: 5px 0px 0px 150px; 
+		color: #909090;
+		line-height: 50px;
+		text-align: center;
+		background-color: #e4e4e4;
+}
+
+.mypage-info .member_secession:hover {
+		font-size: 13px;
+		margin: 5px 0px 0px 150px; 
+		color: #909090;
+		line-height: 50px;
+		text-align: center;
+		background-color: #e4e4e4;
+		}
+		
 
 

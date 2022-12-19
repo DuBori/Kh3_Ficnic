@@ -6,8 +6,6 @@ public interface CategoryDAO {
 
     List<CategoryDTO> getCategoryList();
 
-    List<CategoryDTO> getSiteCategoryList();
-
     void setCategoryRank(String cateid, int rank);
 
     int addCategory(String ps_ctid, String category_show, String category_name, String category_image);
@@ -24,8 +22,15 @@ public interface CategoryDAO {
     
     String checkCategory(String coupon_use_value);
 
+
+
     /////////////////////////////////////////////////////////////////////////////
-    
+
+
+    List<CategoryDTO> getSiteCategoryList();
+
+    List<CategoryDTO> getSiteSubCategoryList(String category_no);
+
 	List<String> getChildList(String ficnic_category_no);
 
 	String getCategoryName(String ficnic_sub);

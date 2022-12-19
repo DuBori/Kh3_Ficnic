@@ -42,7 +42,6 @@ public class FicnicDAOImpl implements FicnicDAO {
 	}
 	@Override
 	public int getSiteListCount(Map<String, Object> map) {
-		
 		return this.sqlSession.selectOne("SiteFicnicSearchCount", map);
 	}
 
@@ -140,5 +139,19 @@ public class FicnicDAOImpl implements FicnicDAO {
         map.put("ficnic_no", ficnic_no);
         this.sqlSession.update("adminFicnicUpdateReviewCont", map);
 	}
+
+
+	@Override
+	public int countReviewPoint(int ficnic_no) {
+		return this.sqlSession.selectOne("siteFicnicPointCount", ficnic_no);
+	}
+	
+	
+
+	@Override
+	public int countAll(int ficnic_no) {
+		 return this.sqlSession.selectOne("siteFicnicCount", ficnic_no);
+	}
+	
 
 }

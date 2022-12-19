@@ -9,7 +9,7 @@
 <div class="page-info w1100">
     <h2>카테고리</h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li><b>카테고리</b></li>
     </ol>
 </div>

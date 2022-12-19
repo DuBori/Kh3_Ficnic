@@ -124,59 +124,18 @@ public class SiteQnaController {
     }
     
     
-    // =====================================================================================
-    // 1:1 문의 추가하기
-    // =====================================================================================
-    @RequestMapping("mypage/mypage_qna_writeOk.do")
-    public void qna_writeOk(HttpServletResponse response, MultipartHttpServletRequest mRequest, QnaDTO dto, HttpServletRequest request, HttpSession session) throws IOException {
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        session = request.getSession();
-        
-        String id = (String) session.getAttribute("sess_id");
-        String pw = (String) session.getAttribute("sess_pw");
-        String name = (String) session.getAttribute("sess_name");
-        
-        dto.setMember_id(id);
-    	dto.setQna_pw(pw);
-    	dto.setQna_name(name);
-        dto.setFicnic_no(2);
-        
-        // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
-        List<String> upload_list = UploadFile.fileUpload(mRequest, qnaFolder, qnaSaveName);        
-        for(int i=0; i<upload_list.size(); i++){
-            switch (i) {
-                case 0:
-                    dto.setQna_file1(upload_list.get(0));
-                    break;
-                case 1:
-                	dto.setQna_file2(upload_list.get(1));
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        // 문의글 등록
-        int check = this.qdao.qnaWriteOk(dto);
-
-        if(check > 0){
-            out.println("<script>alert('문의글이 추가되었습니다.'); location.href='mypage_qna_list.do';</script>");
-        }else{
-            out.println("<script>alert('문의글 추가 중 에러가 발생하였습니다.'); history.back();</script>");
-        }
-    	
-    }
     
     
     // =====================================================================================
     //  문의글 삭제
     // =====================================================================================
         @RequestMapping("mypage/mypage_qna_deleteOk.do")
-        public void delete(@RequestParam("qna_no") int no, HttpServletResponse response) throws IOException {
+        public void delete(@RequestParam("qna_no") int no, HttpServletResponse response, HttpServletRequest request, QnaDTO dto) throws IOException {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             int check = this.qdao.qnaDelete(no);
+            
+            dto = this.qdao.qnaView(no);
 
             if (check > 0) {
                 this.cdao.qnaCommentAllDelete(no);
@@ -192,13 +151,15 @@ public class SiteQnaController {
         // 1:1 문의 답변 추가하기
         // =====================================================================================
         @RequestMapping("mypage/mypage_qna_commentOk.do")
-        public void reply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        public void reply(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
             QnaCommentDTO cdto = new QnaCommentDTO();
-
+            
             cdto.setComment_content(request.getParameter("comment_content"));
-            cdto.setComment_writer_name(request.getParameter("comment_writer_name"));
-            cdto.setComment_writer_pw(request.getParameter("comment_writer_pw"));
-            cdto.setMember_id(request.getParameter("member_id"));
+            cdto.setComment_writer_name((String) session.getAttribute("sess_name"));
+            cdto.setComment_writer_pw((String) session.getAttribute("sess_pw"));
+            cdto.setMember_id((String) session.getAttribute("sess_id"));
+            System.out.println("이름 값 ======= " + cdto.getComment_writer_name());
+            System.out.println("아이디 값 ======= " + cdto.getMember_id());
             
             cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
 

@@ -11,7 +11,7 @@
     	</ul>
     </h2>
     <ol>
-        <li><a href="/"><i class="icon-home"></i> HOME</a></li>
+        <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>마이페이지</li>
         <li><b>${mypage_kor}</b></li>
     </ol>
