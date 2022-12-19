@@ -192,13 +192,15 @@ public class SiteQnaController {
         // 1:1 문의 답변 추가하기
         // =====================================================================================
         @RequestMapping("mypage/mypage_qna_commentOk.do")
-        public void reply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        public void reply(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
             QnaCommentDTO cdto = new QnaCommentDTO();
-
+            
             cdto.setComment_content(request.getParameter("comment_content"));
-            cdto.setComment_writer_name(request.getParameter("comment_writer_name"));
-            cdto.setComment_writer_pw(request.getParameter("comment_writer_pw"));
-            cdto.setMember_id(request.getParameter("member_id"));
+            cdto.setComment_writer_name((String) session.getAttribute("sess_name"));
+            cdto.setComment_writer_pw((String) session.getAttribute("sess_pw"));
+            cdto.setMember_id((String) session.getAttribute("sess_id"));
+            System.out.println("이름 값 ======= " + cdto.getComment_writer_name());
+            System.out.println("아이디 값 ======= " + cdto.getMember_id());
             
             cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
 
