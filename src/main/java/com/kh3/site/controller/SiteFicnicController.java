@@ -482,8 +482,4 @@ public class SiteFicnicController {
 
 
 
-
-
-
-
 }
