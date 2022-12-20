@@ -21,7 +21,6 @@ public class MemberDAOImpl implements MemberDAO {
         return this.sqlSession.selectOne("adminMemberTotalCount", searchMap);
     }
 
-
     // 회원 전체 리스트 가져오기
     @Override
     public List<MemberDTO> getMemberList(int startNo, int endNo, Map<String, Object> searchMap) {
