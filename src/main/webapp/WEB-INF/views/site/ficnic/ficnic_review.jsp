@@ -23,11 +23,32 @@
 
 
 <div class="contents w1100 ficnic-review" align="left">
+    
+    
+    <div>
+		<ul class="mypage-reserv d-flex flex-row">
+			<li class="btn btn-sm text-dark text-secondary m-2 <c:if test="${getType == 'pointH'}">now</c:if>">
+			<a href="ficnic_review.do?getType=pointH"">평점 높은 순</a></li>
+			
+			<li class="btn btn-sm text-dark text-secondary m-2 <c:if test="${getType == 'pointL'}">now</c:if>">
+			<a href="ficnic_review.do?getType=pointL">평점 낮은 순</a></li>
+			
+			<li class="btn btn-sm text-dark text-secondary m-2 <c:if test="${getType == 'pointD'}">now</c:if>">
+			<a href="ficnic_review.do?getType=pointD">최신 순</a></li>
+		</ul>
+	</div> 
+    
+    
 
+
+	
+		
 	<p class="r_one"><b><fmt:formatNumber value="${totalCount}" /></b>명의 대원들이 리뷰를 남겼어요. 😀 </p>
 	<p class="r_two"> 평균 별점은 <b><fmt:formatNumber value="${rcount / totalCount}" 
 	pattern=".0"></fmt:formatNumber></b>점이에요! </p>
 
+
+		
 	<hr color="lightgray">
 	
 	<c:forEach items="${rdto}" var="rdto">
@@ -39,13 +60,13 @@
 	<c:if test="${rdto.review_point > 4 and rdto.review_point <= 6}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></c:if>
 	<c:if test="${rdto.review_point > 6 and rdto.review_point <= 8}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></c:if>
 	<c:if test="${rdto.review_point > 8}"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></c:if>
-		<b>${rdto.review_point}</b>
+		<b class="notstar">${rdto.review_point}</b>
 				</div>
 			</div>
 		<b><p class="rname">${rdto.review_name }</p></b>
-		<b><p class="rdate">${rdto.review_date } 작성</p></b>
+		<b><p class="rdate">${rdto.review_date.substring(0,16) } 작성</p></b>
 		<b><p class="rcont">${rdto.review_cont }</p></b>
-		<b><p class="rfname"> <a href='ficnic_view.do?ficnic_no=${rdto.ficnic_no}'>${dto.ficnic_name }</a></p></b>
+		<b><p class="rfname"> <a class="rficnic"href='ficnic_view.do?category=${dto.ficnic_category_no }&ficnic_no=${rdto.ficnic_no}'>${dto.ficnic_name }</a></p></b>
 	  
 
       <c:if test="${!empty rdto.review_photo1 or !empty rdto.review_photo2}" />

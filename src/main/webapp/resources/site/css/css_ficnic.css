@@ -871,9 +871,7 @@
 
 
 
-
-
-/* 상단으로 버튼 */
+* 상단으로 버튼 */
 button.goto-top {
 	position: fixed;
 	bottom: 95px;
@@ -974,6 +972,7 @@ button.goto-top:hover {
 		font-size: 14px;
 		line-height: 19px;
 		margin-left: 4px;
+    
 	}
 	.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-star span {
 		font-size: 14px;
@@ -1016,12 +1015,12 @@ button.goto-top:hover {
 /* 리뷰 보기
 /*************************/
 .ficnic-review .r_one {
-	padding-top:50px;
+	padding-top:20px;
 	font-size: 20px;
 }
 
 .ficnic-review p b {
-	color: #5757ff;
+	color: #9122ff;
 	
 }
 
@@ -1036,11 +1035,6 @@ button.goto-top:hover {
 	border-color:#f4f4f4;
 }
 
-.ficnic-review .rpoint {
-	font-size: 20px;
-	padding-top:10px;
-	color: #8b17ff;
-}
 
 
 .ficnic-review .rname {
@@ -1072,7 +1066,7 @@ button.goto-top:hover {
 	padding-bottom: 10px;
 }
 
-.ficnic-review a {
+.ficnic-review .rficnic {
 	color: #b8b8b8;
 	text-decoration: none;
 	padding-top: 25px;
@@ -1081,4 +1075,17 @@ button.goto-top:hover {
 }
 
 
+.fvtcr-star {
+	color: #9122ff;
+	padding-top: 15px;
+}
+
+.fvtcr-star .notstar {
+	color: #000000;
+}
+
+.ficnic-review .rorder {
+	color: #000000;
+	font-size: 14px;
+}
 

@@ -25,8 +25,11 @@ import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
+import com.kh3.model.member.McouponDAO;
+import com.kh3.model.member.McouponDTO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
+import com.kh3.model.reserv.ReservDTO;
 import com.kh3.model.review.ReviewDAO;
 import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
@@ -47,6 +50,9 @@ public class SiteFicnicController {
     
     @Inject
     QnaDAO qdao;
+    
+    @Inject
+    McouponDAO mdao;
 
     // 문의 사진 업로드 설정
     private String qnaFolder = "/resources/data/qna/";
@@ -315,7 +321,7 @@ public class SiteFicnicController {
     // 피크닉 내용 보기 - 리뷰 목록 페이지
     // =====================================================================================
     @RequestMapping("ficnic/ficnic_review.do")
-    public String ficnic_review(@RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model) {
+    public String ficnic_review(@RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model, HttpServletRequest request) {
         FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
         List<ReviewDTO> rList = rdao.getNumList(ficnic_no);
 		int count = fdao.countAll(ficnic_no);
@@ -325,7 +331,16 @@ public class SiteFicnicController {
         model.addAttribute("rList", rList);
 		model.addAttribute("count", count);
 		model.addAttribute("rcount", rcount);
-
+		
+    
+		
+		
+		
+		
+		
+		
+		
+		
         return "site/ficnic/ficnic_review";
     }
 
@@ -390,8 +405,36 @@ public class SiteFicnicController {
     
     
     @RequestMapping("ficnic/ficnic_pay.do")
-    public String pay() {
-    	System.out.println("들어옴");
+    public String pay(
+    		@RequestParam(value = "ficnic_no") int ficnic_no,
+    		HttpServletRequest request,
+    		HttpSession session,
+    		Model model) {
+    	
+    	FicnicDTO fdto= this.fdao.getFicnicCont(ficnic_no);
+    	
+    	String[] hi=request.getParameterValues("select_option");
+    	String[] hello=request.getParameterValues("select_price");
+    
+    	
+    	int price =0;
+    	if(hello !=null) {
+    		
+    		for(String value : hello) {
+        		price+=Integer.parseInt(value);
+        	}	
+    		model.addAttribute("selectprice", price);
+        	
+    	}
+    	
+    	// 회원 쿠폰 보유 여부
+    	List<McouponDTO> mlist= mdao.getCouponView((String)session.getAttribute("sess_id"));
+    	
+    	
+    	model.addAttribute("fdto", fdto);
+    	model.addAttribute("mlist", mlist);
+    	model.addAttribute("couponCount", mlist.size());
+    	
     	return "site/ficnic/ficnic_pay";
     }
 
