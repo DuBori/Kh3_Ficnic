@@ -69,8 +69,8 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 
 	@Override
-	public List<ReviewDTO> getNumList(int ficnic_no) {
-		return this.sqlSession.selectList("SiteFicnicNumList",ficnic_no);
+	public List<ReviewDTO> getNumList(Map<String, Object> map) {
+		return this.sqlSession.selectList("SiteFicnicNumList",map);
 	}
 
 	// 리뷰 등록
