@@ -9,7 +9,7 @@ create table qna_list(
     qna_file1 varchar2(200),
     qna_file2 varchar2(200),
     member_id varchar2(30) not null,
-    qna_pw varchar2(50) not null,
+    qna_pw varchar2(200) not null,
     qna_name varchar2(50) not null,
     qna_date date default sysdate
 );

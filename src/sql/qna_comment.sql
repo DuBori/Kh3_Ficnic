@@ -7,7 +7,7 @@ create table qna_comment(
     comment_content varchar2(2000) not null,
     comment_writer_name varchar2(50) not null,
     member_id varchar2(30) not null,
-    comment_writer_pw varchar2(50) not null,
+    comment_writer_pw varchar2(200) not null,
     comment_date date default sysdate not null
 );
 
