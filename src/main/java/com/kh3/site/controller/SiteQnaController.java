@@ -133,10 +133,23 @@ public class SiteQnaController {
         public void delete(@RequestParam("qna_no") int no, HttpServletResponse response, HttpServletRequest request, QnaDTO dto) throws IOException {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
-            int check = this.qdao.qnaDelete(no);
             
             dto = this.qdao.qnaView(no);
+            
+            // 기존 파일 있으면 삭제 처리
+            if (dto.getQna_file1() != null) {
+                File del_pimage = new File(request.getSession().getServletContext().getRealPath(dto.getQna_file1()));
+                if (del_pimage.exists())
+                    del_pimage.delete();
 
+            }
+            if (dto.getQna_file2() != null) {
+                File del_pimage = new File(request.getSession().getServletContext().getRealPath(dto.getQna_file2()));
+                if (del_pimage.exists())
+                    del_pimage.delete();
+            }
+            
+            int check = this.qdao.qnaDelete(no);
             if (check > 0) {
                 this.cdao.qnaCommentAllDelete(no);
                 out.println("<script>alert('문의글 정보가 삭제되었습니다.'); location.href='mypage_qna_list.do';</script>");
@@ -182,8 +195,43 @@ public class SiteQnaController {
             int res = this.cdao.qnaCommentDelete(no);
             out.println(res);
         } 
-       
+              
+        // =====================================================================================
+        // 이미지만 삭제
+        // =====================================================================================
+        @RequestMapping("mypage/qna_img_delete.do")
+        public void qnaImgDelete(@RequestParam("qna_no") int qna_no, @RequestParam("img_num") int img_num, HttpServletRequest request, HttpServletResponse response) throws IOException {
+            response.setContentType("text/html; charset=utf-8");
+            PrintWriter out = response.getWriter();
+
+            String chkResult = "N";
+
+            // 기존 파일 있으면 삭제 처리
+            QnaDTO dto = this.qdao.qnaView(qna_no);
+            File del_pimage = null;
+
+            switch (img_num) {
+            case 1:
+                if (dto.getQna_file1() != null) {
+                    del_pimage = new File(request.getSession().getServletContext().getRealPath(dto.getQna_file1()));
+                }
+            case 2:
+                if (dto.getQna_file2() != null) {
+                    del_pimage = new File(request.getSession().getServletContext().getRealPath(dto.getQna_file2()));
+                }
+
+            if (del_pimage.exists()) {
+                del_pimage.delete();
+                chkResult = "Y";
+            }
+
+            this.qdao.deleteQnaImage(qna_no, img_num);
+
+            out.println(chkResult);
+            }
+        }
         
-    
-  
+        
+        
+        
 }

@@ -3,7 +3,7 @@
 <c:if test="${empty sess_id}"><script type="text/javascript">alert('회원 로그인이 필요합니다.'); location.href='${path}/member/member_login.do';</script></c:if>
 
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_qna.css" />
-<script language="javascript" src="${path}/resources/site/js/js_mypage.js"></script>
+<script language="javascript" src="${path}/resources/site/js/js_qna.js"></script>
 
 
 <c:set var="mypage_eng" value="qna" />
@@ -87,6 +87,7 @@
                                     <div class="col pb-2">
                                         <input type="file" name="qna_file_modi1" class="form-control" accept="image/jpeg, image/png, image/gif" />
                                         <c:if test="${!empty dto.getQna_file1()}">
+                                            <button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delQnaPhoto(this, '${dto.getQna_no()}', 1);"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
                                             <input type="hidden" name="ori_qna_file1" value="${dto.getQna_file1()}" />
                                         </c:if>
                                     </div>
@@ -105,6 +106,7 @@
                                     <div class="col pb-2">
                                         <input type="file" name="qna_file_modi2" class="form-control" accept="image/jpeg, image/png, image/gif" />
                                         <c:if test="${!empty dto.getQna_file2()}">
+                                            <button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="delQnaPhoto(this, '${dto.getQna_no()}', 2);"><i class="fa fa-trash-o"></i> 등록된 이미지 삭제</button>
                                             <input type="hidden" name="ori_qna_file2" value="${dto.getQna_file2()}" />
                                         </c:if>
                                     </div>

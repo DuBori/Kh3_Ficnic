@@ -101,6 +101,42 @@ $(function() {
 		});
 	});
 
+
+/////////////////////////////////////////////////////
+// 1대1문의 - 사진 삭제
+/////////////////////////////////////////////////////
+delQnaPhoto = function(btn, qna_no, img_num){
+    if(confirm("이 사진을 삭제하시겠습니까?")){
+    }else{
+        return false;
+    }
+
+    $.ajax({
+        type: "post",
+        url : "qna_img_delete.do",
+        data : {
+                qna_no : qna_no,
+                img_num : img_num
+        },
+
+        success: function(result){
+            if(result != "N"){
+                $("#qna_file"+img_num).remove();
+                $(btn).remove();
+            }else{
+                alert("삭제 중 오류가 발생하였습니다.");
+            }
+        },
+
+        error: function (xhr, textStatus, errorThrown){
+            alert("Error : "+errorThrown);
+        }
+    });
+}
+
+
+
+
 });
 
 
