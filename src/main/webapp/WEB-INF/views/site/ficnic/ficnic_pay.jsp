@@ -18,7 +18,7 @@
 
 
 <div class="contents w1100 goods-list">
-<form action="" method="post">
+<form action="${path}/reserv_form_ok.do" method="post">
 
 <input type="hidden" value="${fdto.getFicnic_no()}"  name="ficnic_no" />
 <input type="hidden" value="${fdto.getFicnic_name()}"  name="reserv_ficnic_name" />
@@ -94,15 +94,25 @@
 					<p class="SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">프립 할인 쿠폰</p>
 					<div class="d-flex flex-row justify-content-between ">
 						<div class="Coupon__CouponCount-p6h1sc-1 cRGbZm"><span>전체 ${couponCount}장</span><span>, 사용가능 0장</span></div>
-						<button class="InnerActionButton-io567l-0 cVMMHP">쿠폰 선택</button>
+						<select>
+						<c:if test="${!empty mlist }">
+							<c:forEach items="${mlist }" var="mdto">
+								<c:forEach items="${mdto.getCoupon_list() }" var="cdto">
+									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">
+										<option value="${cdto.getCoupon_price()}">${cdto.getCoupon_name() }</option>
+									</c:if>	
+								</c:forEach>
+								
+							</c:forEach>
+						</c:if>
+						</select>
 					</div>
 					<hr class="Hr-sc-4qqq6q-0 bqjyoQ">
-					<p class="SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">중복 할인 쿠폰</p>
+					<p class="SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">적립금 사용</p>
 					<div class="d-flex flex-row justify-content-between">
 						<div class="Coupon__CouponCount-p6h1sc-1 cRGbZm">
-							<span>전체 ${couponCount}장</span><span>, 사용가능 0장</span>
+							<span>사용가능 적립금 : </span> <span> <input type="number" min="0" max="${memdto.getMember_point()}" value="${memdto.getMember_point()}"></span>
 						</div>
-						<button class="InnerActionButton-io567l-0 cVMMHP">쿠폰 선택</button>
 					</div>
 				</div>
 			</div>
