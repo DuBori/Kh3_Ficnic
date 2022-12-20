@@ -26,15 +26,15 @@
     
     
     <div>
-		<ul class="mypage-reserv d-flex flex-row">
-			<li class="btn btn-sm text-dark text-secondary m-2 <c:if test="${getType == 'pointH'}">now</c:if>">
-			<a href="ficnic_review.do?getType=pointH"">평점 높은 순</a></li>
+		<ul class="mypage-reserv d-flex flex-row justify-content-end">
+			<li>
+			<a class="mr-2 text-dark" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointH">평점 높은 순</a>|</li>
 			
-			<li class="btn btn-sm text-dark text-secondary m-2 <c:if test="${getType == 'pointL'}">now</c:if>">
-			<a href="ficnic_review.do?getType=pointL">평점 낮은 순</a></li>
+			<li>
+			<a class="ml-2 mr-2 text-dark" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointL">평점 낮은 순</a>|</li>
 			
-			<li class="btn btn-sm text-dark text-secondary m-2 <c:if test="${getType == 'pointD'}">now</c:if>">
-			<a href="ficnic_review.do?getType=pointD">최신 순</a></li>
+			<li>
+			<a  class="ml-2 mr-2 text-dark" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointD">최신 순</a></li>
 		</ul>
 	</div> 
     

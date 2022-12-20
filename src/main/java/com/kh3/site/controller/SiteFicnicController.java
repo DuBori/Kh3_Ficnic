@@ -150,7 +150,12 @@ public class SiteFicnicController {
         String category_name = this.cdao.getCategoryName(parent_category_no);
 
         FicnicDTO dto = fdao.getFicnicCont(ficnic_no);
-        List<ReviewDTO> rList = rdao.getNumList(ficnic_no);
+        
+        Map<String, Object> numListMap = new HashMap<String, Object>();
+        numListMap.put("ficnic_no", ficnic_no);
+        numListMap.put("getType", "");
+        
+        List<ReviewDTO> rList = rdao.getNumList(numListMap);
 
         // 리뷰 점수
         int cnt = 0;
@@ -308,9 +313,17 @@ public class SiteFicnicController {
     // 피크닉 내용 보기 - 리뷰 목록 페이지
     // =====================================================================================
     @RequestMapping("ficnic/ficnic_review.do")
-    public String ficnic_review(@RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model, HttpServletRequest request) {
-        FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
-        List<ReviewDTO> rList = rdao.getNumList(ficnic_no);
+    public String ficnic_review(@RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no,
+    		@RequestParam(value = "getType", required = false, defaultValue = "") String getType,
+    		Model model,
+    		HttpServletRequest request) {
+        
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	map.put("ficnic_no",ficnic_no);
+    	map.put("getType", getType);
+    	FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
+        
+        List<ReviewDTO> rList = rdao.getNumList(map);
 		int count = fdao.countAll(ficnic_no);
 		int rcount = fdao.countReviewPoint(ficnic_no);
         
