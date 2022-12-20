@@ -29,7 +29,6 @@ import com.kh3.model.member.McouponDAO;
 import com.kh3.model.member.McouponDTO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
-import com.kh3.model.reserv.ReservDTO;
 import com.kh3.model.review.ReviewDAO;
 import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
@@ -88,6 +87,7 @@ public class SiteFicnicController {
     @RequestMapping("ficnic/ficnic_list.do")
     public String ficnic_List(
         @RequestParam(value = "category", required = false, defaultValue = "") String ficnic_category_no,
+        @RequestParam(value = "sort", required = false, defaultValue = "popular") String sort,
         @RequestParam(value = "page", required = false, defaultValue = "1") int page,
         HttpServletRequest request, Model model) {
 
@@ -102,6 +102,7 @@ public class SiteFicnicController {
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("category_no", ficnic_category_no);
+        map.put("sort", sort);
         map.put("next_num", next_num);
         map.put("parent_str", parent_str);
 
@@ -110,7 +111,7 @@ public class SiteFicnicController {
         PageDTO dto = new PageDTO(page, rowsize, totalRecord, map);
 
         // 페이지 이동 URL
-        String pageUrl = request.getContextPath() + "/ficnic/ficnic_list.do?category=" + ficnic_category_no;
+        String pageUrl = request.getContextPath() + "/ficnic/ficnic_list.do?category=" + ficnic_category_no + "&sort=" + sort;
 
 
         // 카테고리 피크닉 목록
@@ -126,6 +127,7 @@ public class SiteFicnicController {
         model.addAttribute("flist", fList);
         model.addAttribute("clist", cList);
         model.addAttribute("category_no", ficnic_category_no);
+        model.addAttribute("sort", sort);
         model.addAttribute("parent_category_no", parent_category_no);
         model.addAttribute("category_name", category_name);
 
@@ -148,6 +150,10 @@ public class SiteFicnicController {
         @RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model) {
 
         FicnicDTO dto = fdao.getFicnicCont(ficnic_no);
+
+        // 조회수 늘리기
+        fdao.updateFicnicHit(ficnic_no);
+
 
         if(ficnic_category_no.equals("") || ficnic_category_no == "null") {
             ficnic_category_no = dto.getFicnic_category_no();
@@ -298,7 +304,7 @@ public class SiteFicnicController {
         }
 
 
-
+        // 오늘 날짜 넘기
         LocalDate getDate = LocalDate.now();
         String todayDate = getDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
