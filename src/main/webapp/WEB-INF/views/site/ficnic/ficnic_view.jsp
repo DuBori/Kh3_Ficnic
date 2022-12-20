@@ -7,6 +7,7 @@
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_ficnic.css" />
 <script language="javascript" src="${path}/resources/site/js/js_ficnic.js"></script>
 
+<style>#footer { padding-bottom: 100px; }</style>
 
 
 
@@ -50,6 +51,7 @@
 				<p class="sale">
 					<c:if test="${dto.getFicnic_market_price() > 0}"><span><fmt:formatNumber value="${dto.getFicnic_sale_price() / dto.getFicnic_market_price() * 100}" type="percent" pattern="##" />%</span></c:if>
 					<b><fmt:formatNumber value="${dto.getFicnic_sale_price()}" /></b>원
+					<button type="button" onclick=""><i class="fa fa-heart-o"></i></button>
 				</p>
 			</div>
 
@@ -253,37 +255,91 @@
 
     <!-- .fv-join //START -->
     <div class="fv-join">
+    	<div class="fvj-btn">
+    		<button type="button" onclick="showFicnicJoin();">참여하기</button>
+    	</div>
+
+
+    	<div class="fvj-sel">
+            <button type="button" class="fvjs-close" onclick="showFicnicJoin();"><i class="fa fa-chevron-down"></i></button>
+
+
+            <form name="reserv_form" method="post" action="reserv_form.do">
+            <input type="hidden" name="ficnic_no" value="${dto.getFicnic_no()}" />
+            <input type="hidden" name="reserv_ficnic_name" value="${dto.getFicnic_name()}" />
+            <input type="hidden" name="reserv_ficnic_sale_price" value="${dto.getFicnic_sale_price()}" />
+            <input type="hidden" name="reserv_ficnic_photo" value="${dto.getFicnic_photo1()}" />
+            <input type="hidden" name="reserv_ficnic_option_title" value="" />
+            <input type="hidden" name="reserv_ficnic_option_price" value="0" />
+            <input type="hidden" name="reserv_ficnic_select_title" value="" />
+            <input type="hidden" name="reserv_ficnic_select_price" value="0" />
+            <c:if test="${dto.getFicnic_date_use() ne 'Y'}"><input type="hidden" name="reserv_ficnic_date" value="" /></c:if>
+
+            <c:if test="${dto.getFicnic_date_use() eq 'Y' or !empty optionList or !empty selectList}">
+            <div class="fvjs-wrap">
+        		<c:if test="${dto.getFicnic_date_use() eq 'Y'}">
+        		<div class="fvjs-date">
+        			<label for="datePick1">날짜 선택</label>
+        			<input id="datePick1" name="reserv_ficnic_date" value="${todayDate}" readonly="readonly" />
+        		</div>
+        		</c:if>
+
+
+        		<c:if test="${!empty optionList}">
+        		<div class="fvjs-option open">
+                    <button type="button" class="fvjso-btn">선택 옵션 <i class="fa fa-angle-down"></i></button>
+                    <ul class="fvjso-list">
+                        <c:forEach var="optlist" items="${optionList}">
+                        <li type="option">
+                            <strong>${optlist.title}</strong>
+                            <span><b><fmt:formatNumber value="${optlist.price}" /></b>원</span>
+                        </li>
+                        </c:forEach>
+                    </ul>
+        		</div>
+        		</c:if>
+
+
+                <c:if test="${!empty selectList}">
+                <div class="fvjs-option">
+                    <button type="button" class="fvjso-btn">추가 선택 <i class="fa fa-angle-down"></i></button>
+                    <ul class="fvjso-list">
+                        <li type="select">
+                            <strong>선택안함</strong>
+                            <span><b>0</b>원</span>
+                        </li>
+                        <c:forEach var="sellist" items="${selectList}">
+                        <li type="select">
+                            <strong>${sellist.title}</strong>
+                            <span><b><fmt:formatNumber value="${sellist.price}" /></b>원</span>
+                        </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                </c:if>
+            </div>
+            </c:if>
+
+
+
+    		<div class="fvjs-done">
+                <div class="fvjsd-price">
+                    <p>총 예약금액</p>
+                    <span><b><fmt:formatNumber value="${dto.getFicnic_sale_price()}" /></b>원</span>
+                </div>
+                <button type="button" class="fvjsd-btn" onclick="chkReservJoin();">참여하기</button>
+    		</div>
+            </form>
+    	</div>
     </div>
     <!-- .fv-join //END -->
 </div>
 
 
 
+<button type="button" class="goto-top" onclick="gotoTop();"><i class="fa fa-angle-up"></i></button>
 
-<script type="text/javascript">
-$(document).ready(function(){
-    var photoSwiper = new Swiper(".ficnic-view .fv-top .fvt-photo", {
-        effect: "fade",
-        slidesPerView: 1,
-        spaceBetween: 0,
-        speed: 500,
-        loop: true,
-        touchEnabled: false,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: ".ficnic-view .fv-top .fvt-photo .swiper-pagination",
-            type: "fraction"
-        },
-        navigation: {
-            nextEl: '.ficnic-view .fv-top .fvt-photo .swiper-button-next',
-            prevEl: '.ficnic-view .fv-top .fvt-photo .swiper-button-prev'
-        }
-    });
-});
-</script>
+
 
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4747e8c028b191f245af1699f475ac6c&libraries=services,clusterer,drawing"></script>
