@@ -65,4 +65,14 @@ public class QnaDAOImpl implements QnaDAO {
         return this.sqlSession.insert("siteQnaWriteOk", dto);
 	}
 
+
+	/* 피크닉 사진 삭제 */
+	@Override
+	public void deleteQnaImage(int qna_no, int img_num) {
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("qna_no", qna_no);
+	    map.put("img_num", img_num);
+	    this.sqlSession.update("siteDeleteQnaImage", map);
+	}
+
 }
