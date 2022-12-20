@@ -355,7 +355,7 @@ public class SiteFicnicController {
 		System.out.println("pdto>>>" + pdto.getStartNo());
 
 		// 페이지 이동 URL
-		String pageUrl = request.getContextPath()+"ficnic/ficnic_review.do?ficnic_no="+ficnic_no+"&getType="+getType+"&page="+page;
+		String pageUrl = request.getContextPath()+"/ficnic/ficnic_review.do?ficnic_no="+ficnic_no+"&getType="+getType;
 		
 
     	FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
@@ -372,12 +372,6 @@ public class SiteFicnicController {
 		model.addAttribute("page", page);
 		model.addAttribute("getType", getType);
 		model.addAttribute("pagingWrite",Paging.showPage(pdto.getAllPage(), pdto.getStartBlock(), pdto.getEndBlock(), pdto.getPage(), pageUrl));
-		
-		System.out.println("확인1>>>>>>>" + pdto.getAllPage());
-		System.out.println("확인2>>>>>>>" + pdto.getStartBlock());
-		System.out.println("확인3>>>>>>>" + pdto.getEndBlock());
-		System.out.println("확인4>>>>>>>" + pdto.getPage());
-		System.out.println("확인5>>>>>>>" + pageUrl);
 		
         return "site/ficnic/ficnic_review";
         

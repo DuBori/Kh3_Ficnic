@@ -85,7 +85,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public int getSiteReviewCount(Map<String, Object> searchMap) {
 		
-		return this.sqlSession.selectOne("siteReservCount", searchMap);
+		return this.sqlSession.selectOne("siteReviewCount", searchMap);
 	}
 
 
