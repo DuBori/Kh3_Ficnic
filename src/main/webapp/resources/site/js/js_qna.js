@@ -53,7 +53,6 @@ $(function() {
 					$("#comment-list").append(new_comment);
 					$("#comment_contentOk").val("");
 					$("#comment_contentOk").focus();
-					alert(data);
 				}else{
 					alert("댓글 등록 중 에러가 발행하였습니다.");
 				}
