@@ -40,19 +40,20 @@ $(function() {
 					var minutes = ("0" + today.getMinutes()).slice(-2);
 					var seconds = ("0" + today.getSeconds()).slice(-2); 
 
-					let new_comment = "<tr>\n";
+					let new_comment = "<tr id\"comment-\">\n";
 						new_comment += "\t<td>\n";
 						new_comment += "\t\t<p><b>"+get_comment_writer_name+"</b></p>\n";
-						new_comment += "\t\t<p class=\"eng\">("+get_member_id+")</p>\n";
 						new_comment += "\t</td>\n";
 						new_comment += "\t<td class=\"text-left pl-4\">"+get_comment_content.replace("\n", "<br />")+"</td>\n";
 						new_comment += "\t<td>\n";
-						new_comment += "\t<p class=\"eng\">"+year+"-"+month+"-"+day+"<br />"+hours+":"+minutes+":"+seconds+"</p>\n";
-						new_comment += "\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-1 px-1 py-0 qnaDeleteBtn\" name=\"comment_no\" value=\""+data+"\"><i class=\"fa fa-trash-o\"></i> 삭제</button>\n";
+						new_comment += "\t<p class=\"engnum\">"+year+"-"+month+"-"+day+"<br />"+hours+":"+minutes+":"+seconds+"</p>\n";"+get_comment_writer_name+"
+						new_comment += "\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-1 px-1 py-0 qnaDeleteBtn\" name=\"comment_no\" value="+data+"><i class=\"fa fa-trash-o\"></i> 삭제</button>\n";
 						new_comment += "\t</td>\n";
 						new_comment += "</tr>\n";
 					$("#comment-list").append(new_comment);
 					$("#comment_contentOk").val("");
+					$("#comment_contentOk").focus();
+					alert(data);
 				}else{
 					alert("댓글 등록 중 에러가 발행하였습니다.");
 				}

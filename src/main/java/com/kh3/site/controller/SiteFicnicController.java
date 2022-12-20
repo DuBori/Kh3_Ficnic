@@ -3,6 +3,8 @@ package com.kh3.site.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -144,6 +146,14 @@ public class SiteFicnicController {
     public String ficnic_view(
         @RequestParam(value = "category", required = false, defaultValue = "") String ficnic_category_no,
         @RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model) {
+
+        FicnicDTO dto = fdao.getFicnicCont(ficnic_no);
+        List<ReviewDTO> rList = rdao.getNumList(ficnic_no);
+
+
+        if(ficnic_category_no.equals("") || ficnic_category_no == "null") {
+            ficnic_category_no = dto.getFicnic_category_no();
+        }
 
         // 현재 카테고리 이름
         String parent_category_no = (ficnic_category_no.substring(0, 2)) + "000000";
@@ -291,6 +301,10 @@ public class SiteFicnicController {
 
 
 
+        LocalDate getDate = LocalDate.now();
+        String todayDate = getDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+
         model.addAttribute("dto", dto);
         model.addAttribute("rList", rList);
 
@@ -302,6 +316,7 @@ public class SiteFicnicController {
         model.addAttribute("selectList", selectList);
         model.addAttribute("infoList", infoList);
         model.addAttribute("currList", currList);
+        model.addAttribute("todayDate", todayDate);
 
         return "site/ficnic/ficnic_view";
     }
