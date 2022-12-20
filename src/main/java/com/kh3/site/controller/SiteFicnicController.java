@@ -3,9 +3,12 @@ package com.kh3.site.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -438,34 +441,24 @@ public class SiteFicnicController {
     }
     
     
-    @RequestMapping("ficnic/ficnic_pay.do")
+    @RequestMapping("ficnic/reserv_form.do")
     public String pay(
     		@RequestParam(value = "ficnic_no") int ficnic_no,
+    		ReservDTO dto,
     		HttpServletRequest request,
     		HttpSession session,
-    		Model model) {
+    		Model model) throws ParseException {
     	
     	FicnicDTO fdto= this.fdao.getFicnicCont(ficnic_no);
     	
-    	String[] hi=request.getParameterValues("select_option");
-    	String[] hello=request.getParameterValues("select_price");
-    
     	
-    	int price =0;
-    	if(hello !=null) {
-    		
-    		for(String value : hello) {
-        		price+=Integer.parseInt(value);
-        	}	
-    		model.addAttribute("selectprice", price);
-        	
-    	}
     	
     	// 회원 쿠폰 보유 여부
     	List<McouponDTO> mlist= mdao.getCouponView((String)session.getAttribute("sess_id"));
     	
     	
     	model.addAttribute("fdto", fdto);
+    	model.addAttribute("dto", dto);
     	model.addAttribute("mlist", mlist);
     	model.addAttribute("couponCount", mlist.size());
     	

@@ -172,7 +172,7 @@ $(document).ready(function(){
 $(function(){
 	$("input[name='ficnic_pay_flexRadioDefault2']").on("click",function(){
 		var ficnic_pay_val = $(this).val();
-		$(".ficnic_pay_ficnicOtherpay").html("<input disabled=\"\" class=\"Form__Input-sc-1quypp7-1 dYnqqW\" value=\""+ficnic_pay_val+"\"> <input type=\"button\" class=\"btn btn-outline-dark\" value=\"변경\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\"/>  ");
+		$(".ficnic_pay_ficnicOtherpay").html("<p>"+ficnic_pay_val+"</p> <input type=\"hidden\" class=\"Form__Input-sc-1quypp7-1 dYnqqW\" value=\""+ficnic_pay_val+"\"> <input type=\"button\" class=\"btn btn-outline-dark\" value=\"변경\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\"/>  ");
 
 	});
 
