@@ -17,50 +17,49 @@
 
 
 
-<div class="contents w1100 mypage-reserv">
+<div class="contents w1100 mypage-reserv" align="left">
 
 	<div class="mypage-reserv-topdiv">
 		<ul class="mypage-reserv d-flex flex-row">
-			<li class="mr-3"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=done">이용완료</a></li>
+			<li class="mr-3"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=done">이용완료</a></li>｜
 			<li class="mr-3"><a href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=cancel">취소내역</a></li>
 		</ul>
 	</div>
 	
-	<div class="mypage-reserv-mainDiv d-flex flex-column w1000 ">
+	<div class="mypage-reserv-mainDiv d-flex flex-column w1000 " align="left">
 		<!-- 예약 리스트 출력  -->
-		<div class="mypage-reserv-subDiv d-flex flex-row flex-wrap justify-content-center">
+		<div class="mypage-reserv-subDiv d-flex flex-row flex-wrap justify-content-center" align="left">
 			<c:choose>
 				<c:when test="${!empty List }">
 					<c:forEach items="${List}" var="dto">
 				    			<c:set var="move_ficnic_info" value="onclick=\"location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no()}'\""/>
 				    			<div class="mypage-wish w-20 m-1 p-1 d-flex flex-row ">
-									  <div>
 									  	<img ${move_ficnic_info } src="${path }${dto.getReserv_ficnic_photo()}" class="card-img-top" style="width:200px" alt="...">
-									  </div>
 									  <div class="mypage-wish d-flex flex-column  ml-3">
 										  	<div ${move_ficnic_info } class="mb-2"> 
-											    <p class="card-location">지역</p>
-											    <h5 class="card-text card-title">${dto.getReserv_ficnic_name() }</h5>
+											    <p class="card-location"></p>
+											    <p class="card-sess">${dto.getReserv_sess() }</p>
+											    <p class="card-text card-title">${dto.getReserv_ficnic_name() }</p>
 											 </div>
 											 <div class="mt-2 mb-2">
 												 <ul ${move_ficnic_info } class="mypage-wish d-flex  flex-column ">
-												    <li class="card-text"> 예약 날짜 :${dto.getReserv_date().substring(0,10)}</li>
-												    <li class="card-text"><fmt:formatNumber value="${dto.getReserv_total_price()}"/>원</li>
+												    <li class="card-date"> ${dto.getReserv_date().substring(0,10)}</li>
 												    <li class="card-text
 												    	<c:if test="${dto.getReserv_status() eq 'reserv'}"> text-warning" >예약 신청</c:if> 
 												    	<c:if test="${dto.getReserv_status() eq 'confirm'}"> text-primary" >예약 확인</c:if> 
 												    	<c:if test="${dto.getReserv_status() eq 'done'}"> text-success" >체험 완료</c:if> 
 												    	<c:if test="${dto.getReserv_status() eq 'cancel'}"> text-danger" >예약 취소</c:if> 							    
 												    </li>
+												     <li class="card-price"><fmt:setLocale value="ko_kr" /><fmt:formatNumber value="${dto.getReserv_ficnic_sale_price()}" type="currency" /></li>
 												 </ul>
 											 </div>
-										<div class="d-flex flex-row" class="mt-2 mb-2">
-										    <c:if test="${!empty dto.getReserv_status()}"> <a href="${path}/mypage/mypage_reserv_view.do?reserv_no=${dto.getReserv_no()}" class="btn btn-sm  btn-outline-dark card-text mr-2"><i class="fa fa-search"></i>상세내역 보기</a></c:if>
+										<div class="mt-2 mb-2">
+										    <c:if test="${!empty dto.getReserv_status()}"> <a href="${path}/mypage/mypage_reserv_view.do?reserv_no=${dto.getReserv_no()}" class="view_btn"><i class="fa fa-search"></i> 상세 내역</a></c:if>
 										    <c:forEach items="${sList }" var="sdto">
 										    	<c:if test="${sdto.getFicnic_no() eq dto.getFicnic_no() }">
 										    		<c:set var="revSession" value="t"/>
 										    		<c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and !empty revSession}">
-										    			<a class="btn btn-sm btn-outline-dark btn-open-popup mr-2  card-text" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no()}" data-cont="${sdto.getReview_cont()}" data-modi="m" data-avg="${sdto.getReview_point()}" data-photo1="${sdto.getReview_photo1() }" data-photo2="${sdto.getReview_photo2() }" data-rno="${sdto.getReview_no() }"><i class="fa fa-pencil"></i> 리뷰 수정하기</a>
+										    			<a class="modi_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no()}" data-cont="${sdto.getReview_cont()}" data-modi="m" data-avg="${sdto.getReview_point()}" data-photo1="${sdto.getReview_photo1() }" data-photo2="${sdto.getReview_photo2() }" data-rno="${sdto.getReview_no() }"><i class="fa fa-pencil"></i> 리뷰 수정</a>
 										    		</c:if>
 										    	</c:if>
 										    </c:forEach>
