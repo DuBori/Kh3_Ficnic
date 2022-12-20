@@ -7,78 +7,151 @@
 /* 예약목록 start
 /*************************/
 
-.mypage-reserv-divtop{
-	width: 35%;
-}
-.mypage-reserv-divimg{
-	width: 65%;
-}
-.mypage-reserv-divimg img{
-	width: 100%;
-	height: 300px;
-}
-.mypage-wish{
-	width: 100%;
-}
-
-.mypage-reserv-h{
-	
-	margin: 10px;
-	padding: 2px;
-}
 
 .mypage-wish .card-location{
-	
 	font-size: 0.6rem !important;
 }
-.mypage-wish .card-title{
-	
-	font-size: 0.9rem !important;
-}
-#mypage-reserv-div-img{
-	width:200px;
-	height: 200px;
-}
-.card-text{	
-	font-size: 0.9rem !important;
+.mb-2 .card-title{
+	font-size: 26px;
+	font-weight: 400;
 }
 
-.mypage-reserv-topdiv ul li a{
-	display: -webkit-box;
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 20px;
+.mb-2 .card-sess{
+	font-size: 13px;
+	padding-bottom: 10px;
+	font-family: 'Lato';
+}
+
+.mb-2 .card-date{
+	
+	font-size: 13px;
+	font-family: 'Lato';
+}
+
+.mb-2 .card-price{
+    margin-top: 10px;
+    font-family: 'Lato';
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+.mb-2 .view_btn {
+	margin-top:20px;
+	display: inline-block;
+    width: 150px;
+    height: 40px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 14px;
+    vertical-align: middle;
+    padding-top: 7px;
+    color: #fff;
+    background: #000;
+    border: 1px solid #000;
+}
+
+.mb-2 .view_btn:hover {
+	display: inline-block;
+    width: 150px;
+    height: 40px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 14px;
+    vertical-align: middle;
+    padding-top: 7px;
+    color: #fff;
+    background: #4b4b4b;
+    border: 1px solid #000;
+}
+
+.mb-2 .modi_btn{
+	margin-top:20px;
+	display: inline-block;
+    width: 150px;
+    height: 40px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 14px;
+    vertical-align: middle;
+    padding-top: 8px;
     color: #000;
-    word-break: keep-all;
-    overflow-wrap: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-    margin-bottom: 12px;
-    -webkit-transition: all 0.2s ease-out 0s;
-    -o-transition: all 0.2s ease-out 0s;
-    transition: all 0.2s ease-out 0s;
+    background: #fff;
+    margin-left: 5px;
+    border: 1px solid #000;
 }
 
+.mb-2 .modi_btn:hover{
+	margin-top:20px;
+	display: inline-block;
+    width: 150px;
+    height: 40px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 14px;
+    vertical-align: middle;
+    padding-top: 8px;
+    color: #000;
+    background: #fff;
+    margin-left: 5px;
+    border: 1px solid #8000ff;
+}
+
+.mypage-reserv-topdiv .ali1 {
+	margin-left: 10px;
+	font-size: 15px;
+	color: #000;
+}
+
+.mypage-reserv-topdiv .ali2 {
+	font-size: 15px;
+	color: #000;
+}
+
+/*************************/
+/* 예약 상세 내역
+/*************************/
 
 
-/*************************/
-/* 예약목록 end
-/*************************/
-.mypage-wish-card-text{
-	font-size: 0.8rem !important;
-}
-.mypage-wish-card-location{
-	
-	font-size: 0.5rem !important;
+.d-block{
+	width: 100px;
+	line-height:120%; 
+	display:inline-block; 
+	text-align:center; 
+	float: left;
+	padding-right: 10px;
 }
 
-.mypage-wish-card-title{
-	font-size: 0.7rem !important;
+.mypage-p{
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 20px;
 }
-/*************************/
-/* 위시 리스트 end
-/*************************/
+
+.info_view{
+	margin: 5px;
+	padding-bottom: 50px;
+}
+
+.mypage-reserv-view{
+	pad
+}
+
+.fname{
+	font-size: 16px;
+	font-weight: 450;
+	padding-bottom: 2px;
+}
+
+.floc{
+	color:#8d8d8d;
+	font-weight: 650;
+}
+
+.fhr{
+	padding-bottom: 7px;
+	color:#bdbdbd;
+}
 
 
 
