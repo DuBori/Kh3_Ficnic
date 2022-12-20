@@ -148,8 +148,6 @@ public class SiteFicnicController {
         @RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model) {
 
         FicnicDTO dto = fdao.getFicnicCont(ficnic_no);
-        List<ReviewDTO> rList = rdao.getNumList(ficnic_no);
-
 
         if(ficnic_category_no.equals("") || ficnic_category_no == "null") {
             ficnic_category_no = dto.getFicnic_category_no();
@@ -159,7 +157,7 @@ public class SiteFicnicController {
         String parent_category_no = (ficnic_category_no.substring(0, 2)) + "000000";
         String category_name = this.cdao.getCategoryName(parent_category_no);
 
-        FicnicDTO dto = fdao.getFicnicCont(ficnic_no);
+       
         
         Map<String, Object> numListMap = new HashMap<String, Object>();
         numListMap.put("ficnic_no", ficnic_no);
