@@ -10,6 +10,7 @@
     margin-bottom: 10px;
     outline: none;
     resize: none;
+    border: 1px solid #ddd !important;
 }
 
 .fIDbHx {
@@ -43,6 +44,7 @@
     outline: none;
     resize: none;	
 	font-size: 20px;
+	border: 1px solid #ddd !important;
 }
 
 /*************************/
@@ -150,7 +152,8 @@ h4 {
     line-height: 40px;
 }
 
-.table-form {
+.table-form,
+.table-list {
     position: relative;
     width: 100%;
     margin: 0 auto;
@@ -172,19 +175,45 @@ h4 {
     border-bottom: 1px solid #ddd !important;
 }
 
-.table-form th {}
 .table-form td {
     color: #181818;
 }
 
-.tdImg p{
-	font-size: 17px;
+	
+.table-form td.tdImg {
+	font-size: 0;
 }
 
 .qnaImg {
-	float: left;
-	width: 25%;
-	padding-right: 5px;
+	display: inline-block;
+	width: 90px;
 }
+
+.tdImg p {
+	display: inline-block;
+	width: calc(100% - 90px);
+	font-size: 17px;
+    vertical-align: middle;
+	padding-left: 10px;
+}
+
+.tdImg p .engnum {
+	display: block;
+	margin-top: 10px;
+}
+
+.table-form th {
+    text-align: center;
+    background: #f9f9f9;
+    font-size: inherit;
+    vertical-align: middle;
+}
+
+.form-control[type="file"] {
+	margin-top: 17px;
+	
+	
+}
+
 
 

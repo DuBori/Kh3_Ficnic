@@ -67,11 +67,6 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 
 
-	@Override
-	public List<ReviewDTO> getNumList(Map<String, Object> map) {
-		return this.sqlSession.selectList("SiteFicnicNumList",map);
-	}
-
 	// 리뷰 등록
 	@Override
 	public int writeOkReview(ReviewDTO dto) {
@@ -83,6 +78,29 @@ public class ReviewDAOImpl implements ReviewDAO {
 	@Override
 	public List<ReviewDTO> getListSession(String member_id) {
 		return this.sqlSession.selectList("SiteMypageReviewList", member_id);
+	}
+
+    // 해당 세션 예약 카운트
+	@Override
+	public int getSiteReviewCount(Map<String, Object> searchMap) {
+		
+		return this.sqlSession.selectOne("siteReviewCount", searchMap);
+	}
+
+
+
+	@Override
+	public List<ReviewDTO> getNumList(int startNo, int endNo, Map<String, Object> searchMap) {
+		searchMap.put("startNo", startNo);
+		searchMap.put("endNo", endNo);
+		
+		return this.sqlSession.selectList("SiteFicnicThreeNumList", searchMap);
+	}
+
+
+	@Override
+	public List<ReviewDTO> getNumList(Map<String, Object> searchMap) {
+		return this.sqlSession.selectList("SiteFicnicNumList", searchMap);
 	}
 
 

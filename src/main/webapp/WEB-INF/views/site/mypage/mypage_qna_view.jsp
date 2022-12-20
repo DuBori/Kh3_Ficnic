@@ -38,8 +38,7 @@
 						    <c:when test="${!empty fdto.getFicnic_photo1() }"><img src="${path}${fdto.getFicnic_photo1()}" alt="" class="qnaImg"/></c:when>
 						    <c:otherwise><span class="noimg">no img</span></c:otherwise>
 						    </c:choose>                        
-			                <p><b>${fdto.getFicnic_name() }</b></p>
-			                <p class="engnum"><fmt:formatNumber value="${fdto.getFicnic_sale_price() }" />원</p>	                        
+			                <p><b>${fdto.getFicnic_name() }</b><span class="engnum"><fmt:formatNumber value="${fdto.getFicnic_sale_price() }" />원</span></p>
                         </td>
                     </tr>
                     <tr>
@@ -70,32 +69,38 @@
                     </tr>
                     <tr> 
                         <th>내용</th>
-                        <td>${dto.getQna_cont().replace(newLine, "<br />")}
+                        <td>${dto.getQna_cont().replace(newLine, "<br />")}</td>
                         <c:if test="${!empty dto.getQna_file1() or !empty dto.getQna_file2()}"><div class="w-100 border-bottom"></div></c:if>
-                        <c:if test="${!empty dto.getQna_file1()}">
+                    </tr>
+                    <c:if test="${!empty dto.getQna_file1()}">
+                    <tr>
+                        <th>첨부파일 1</th>
+                        <td>
                         <div class="form-group join-form">
-                            <label>첨부파일 1</label>
                             <div class="jf-input">
                                 <div class="row">
-                                    <div class="col pt-1 pb-2"><img src="${path}${dto.getQna_file1()}" style="max-width: 100%;" alt="" /></div>
+                                    <div class="col pt-1 pb-2"><img src="${path}${dto.getQna_file1()}" style="max-width: 200px;" alt="" /></div>
                                 </div>
                             </div>
                         </div>
-                        </c:if>
-
-                        <c:if test="${!empty dto.getQna_file2()}">
-                        <div class="form-group join-form">
-                            <label>첨부파일 2</label>
-                            <div class="jf-input">
-                                <div class="row">
-                                    <div class="col pt-1 pb-2"><img src="${path}${dto.getQna_file2()}" style="max-width: 100%;" alt="" /></div>
-                                </div>
-                            </div>
-                        </div>
-                        </c:if>
-                        
                         </td>
                     </tr>
+                    </c:if>
+                    <c:if test="${!empty dto.getQna_file2()}">
+                    <tr>
+                    	<th>첨부파일 2</th>
+                    	<td>
+                        <div class="form-group join-form">
+                            <div class="jf-input">
+                                <div class="row">
+                                    <div class="col pt-1 pb-2"><img src="${path}${dto.getQna_file2()}" style="max-width: 200px;" alt="" /></div>
+                                </div>
+                            </div>
+                        </div>
+                        </td>
+                    </tr>    
+                    </c:if>
+                        
                 </tbody>
             </table>
         </div>

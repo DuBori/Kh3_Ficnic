@@ -3,9 +3,12 @@ package com.kh3.site.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +33,7 @@ import com.kh3.model.member.McouponDTO;
 import com.kh3.model.member.WishDAO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
+import com.kh3.model.reserv.ReservDTO;
 import com.kh3.model.review.ReviewDAO;
 import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
@@ -356,36 +360,45 @@ public class SiteFicnicController {
     // =====================================================================================
     @RequestMapping("ficnic/ficnic_review.do")
     public String ficnic_review(@RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no,
-    		@RequestParam(value = "getType", required = false, defaultValue = "") String getType,
-    		Model model,
-    		HttpServletRequest request) {
+    		@RequestParam(value = "getType", required = false, defaultValue = "") String getType, 
+    		@RequestParam(value = "page", required = false, defaultValue = "1") int page, Model model, HttpServletRequest request) {
         
-    	Map<String, Object> map = new HashMap<String, Object>();
-    	map.put("ficnic_no",ficnic_no);
-    	map.put("getType", getType);
+    	// 정렬 설정
+    	Map<String, Object> searchMap = new HashMap<String, Object>();
+    	searchMap.put("ficnic_no", ficnic_no);
+    	searchMap.put("getType", getType);
+    	// 페이징
+    	totalRecord = this.rdao.getSiteReviewCount(searchMap);
+
+		PageDTO pdto = new PageDTO(page, rowsize, totalRecord, searchMap);
+		
+		// 정렬 쿼리
+		List<ReviewDTO> rList = rdao.getNumList(pdto.getStartNo(), pdto.getEndNo(), searchMap);
+		System.out.println("rlist>>>" + rList);
+		System.out.println("pdto>>>" + pdto.getStartNo());
+
+		// 페이지 이동 URL
+		String pageUrl = request.getContextPath()+"/ficnic/ficnic_review.do?ficnic_no="+ficnic_no+"&getType="+getType;
+		
+
     	FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
-        
-        List<ReviewDTO> rList = rdao.getNumList(map);
 		int count = fdao.countAll(ficnic_no);
 		int rcount = fdao.countReviewPoint(ficnic_no);
-        
+     
+	    
         model.addAttribute("fdto", fdto);
         model.addAttribute("rList", rList);
 		model.addAttribute("count", count);
 		model.addAttribute("rcount", rcount);
 		
-    
-		
-		
-		
-		
-		
-		
-		
+		model.addAttribute("paging", pdto);
+		model.addAttribute("page", page);
+		model.addAttribute("getType", getType);
+		model.addAttribute("pagingWrite",Paging.showPage(pdto.getAllPage(), pdto.getStartBlock(), pdto.getEndBlock(), pdto.getPage(), pageUrl));
 		
         return "site/ficnic/ficnic_review";
+        
     }
-
 
 
 
@@ -446,34 +459,24 @@ public class SiteFicnicController {
     }
     
     
-    @RequestMapping("ficnic/ficnic_pay.do")
+    @RequestMapping("ficnic/reserv_form.do")
     public String pay(
     		@RequestParam(value = "ficnic_no") int ficnic_no,
+    		ReservDTO dto,
     		HttpServletRequest request,
     		HttpSession session,
-    		Model model) {
+    		Model model) throws ParseException {
     	
     	FicnicDTO fdto= this.fdao.getFicnicCont(ficnic_no);
     	
-    	String[] hi=request.getParameterValues("select_option");
-    	String[] hello=request.getParameterValues("select_price");
-    
     	
-    	int price =0;
-    	if(hello !=null) {
-    		
-    		for(String value : hello) {
-        		price+=Integer.parseInt(value);
-        	}	
-    		model.addAttribute("selectprice", price);
-        	
-    	}
     	
     	// 회원 쿠폰 보유 여부
     	List<McouponDTO> mlist= mdao.getCouponView((String)session.getAttribute("sess_id"));
     	
     	
     	model.addAttribute("fdto", fdto);
+    	model.addAttribute("dto", dto);
     	model.addAttribute("mlist", mlist);
     	model.addAttribute("couponCount", mlist.size());
     	
