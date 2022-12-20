@@ -28,6 +28,8 @@ import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.model.member.McouponDAO;
 import com.kh3.model.member.McouponDTO;
+import com.kh3.model.member.MemberDAO;
+import com.kh3.model.member.MemberDTO;
 import com.kh3.model.member.WishDAO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
@@ -58,6 +60,9 @@ public class SiteFicnicController {
 
     @Inject
     WishDAO wdao;
+    
+    @Inject
+    MemberDAO memberDAO;
 
 
     // 문의 사진 업로드 설정
@@ -470,13 +475,23 @@ public class SiteFicnicController {
     	// 회원 쿠폰 보유 여부
     	List<McouponDTO> mlist= mdao.getCouponView((String)session.getAttribute("sess_id"));
     	
+    	MemberDTO memdto= memberDAO.getReservMember((String)session.getAttribute("sess_id"));
+    	
     	
     	model.addAttribute("fdto", fdto);
     	model.addAttribute("dto", dto);
+    	model.addAttribute("memdto", memdto);
     	model.addAttribute("mlist", mlist);
     	model.addAttribute("couponCount", mlist.size());
     	
     	return "site/ficnic/ficnic_pay";
+    }
+    
+    @RequestMapping("ficnic/reserv_form_ok.do")
+    public void reserv_form_ok(
+    		ReservDTO rDto ,
+    		HttpServletRequest request) {
+    	
     }
 
 
