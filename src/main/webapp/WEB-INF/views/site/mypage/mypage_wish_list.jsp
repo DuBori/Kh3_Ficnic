@@ -19,29 +19,36 @@
 
     <div class="mypage-wish-mainDiv d-flex flex-column w1000 ">   	
     	<!-- 위시 리스트 출력  -->
-    	<div class="mypage-wish-subDiv d-flex flex-row flex-wrap justify-content-center">
+    	<ul class="ficnic-list">
     	
     		<c:forEach items="${List}" var="dto">
     			<c:set var="fdto" value="${dto.getFicnic_cont() }"/>
     			<c:set var="move_ficnic_info" value="onclick=\"location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${fdto.getFicnic_no()}'\""/>
     			
-    			<div class="mypage-wish-card-div card w-20 m-1 p-1 d-flex flex-column border justify-content-center align-items-center " >
-					  <img ${move_ficnic_info } src="${path}/${fdto.getFicnic_photo1()}" class="card-img-top" style="width:200px" alt="...">
-					  <div ${move_ficnic_info } class="mypage-wish card-body">
-					    <p class="mypage-wish-card-location">${fdto.getFicnic_location() }</p>
-					    <h5 class="mypage-wish-card-title">${fdto.getFicnic_name() }</h5>
+    			<li>
+    				 <button type="button" onclick="location.href='${path}/mypage/wish_cancel.do?ficnic_no=${fdto.getFicnic_no()}'" ><i class="fa fa-heart-o"></i></button>   				 
+					  <img ${move_ficnic_info } src="${path}/${fdto.getFicnic_photo1()}" class="fl-photo">
+					  <div ${move_ficnic_info } class="fl-info">
+						    <div class="fli-location">${fdto.getFicnic_location() }</div>
+						    <div class="fli-name">${fdto.getFicnic_name() }</div>
+						  
+						    <div  ${move_ficnic_info }  class="fli-review">
+								<span><i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i></span>
+								후기(${fdto.getFicnic_review_count()})
+							</div>
+						 	<div class="fli-price">	
+								<p class="sale">		
+									<fmt:formatNumber value="${fdto.getFicnic_sale_price()}"/>원
+								</p>
+							</div>						
 					  </div>
-					  <ul ${move_ficnic_info } class="mypage-wish-ul d-flex flex-column align-items-center">
-					    <li class="mypage-wish-card-text">별점 ★★★★★ (${fdto.getFicnic_review_count() })</li>
-					    <li class="mypage-wish-card-text"><fmt:formatNumber value="${fdto.getFicnic_sale_price()}"/>원</li>
-					  </ul>
-					  <div class="mypage-wish-div card-body">
-					    <a href="${path}/mypage/wish_cancel.do?ficnic_no=${fdto.getFicnic_no()}" class="btn btn-outline-primary card-link ">찜 취소하기</a>
-					  </div>
-				</div>		
+				</li>						
     		</c:forEach>
-    	</div>
-    	
+    	</ul>
     </div>
 
 	<div class="col-md-4 text-center mt-3">

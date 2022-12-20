@@ -6,9 +6,7 @@
 /*************************/
 /* 예약목록 start
 /*************************/
-.mypage-reserv .now{
-	color: black;
-}
+
 .mypage-reserv-divtop{
 	width: 35%;
 }
@@ -44,6 +42,25 @@
 .card-text{	
 	font-size: 0.9rem !important;
 }
+
+.mypage-reserv-topdiv ul li a{
+	display: -webkit-box;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #000;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    margin-bottom: 12px;
+    -webkit-transition: all 0.2s ease-out 0s;
+    -o-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+}
+
+
 
 /*************************/
 /* 예약목록 end
