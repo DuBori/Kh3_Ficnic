@@ -18,7 +18,9 @@
 
 
 <div class="contents w1100 goods-list">
-<form action="">
+<form action="" method="post">
+<input type="hidden" value="${fdto.getFicnic_no()}"  name="ficnic_no" />
+<input type="hidden" value="${fdto.getFicnic_name()}"  name="reserv_ficnic_name" />
 <div class="ficnic-pay-main d-flex flex-column ">
 	
 	<div class="ficnic-pay-sub">
@@ -31,7 +33,7 @@
 					</div>
 					<div class="mt-3 mb-3">
 						<div class="ficnic_pay_ficnicTitle">
-							${fdto.getFicnic_name()}
+							${fdto.getFicnic_name()}	
 						</div>
 						
 						<div class="ficnic_pay_ficnicStarReview mt-2 mb-2">
@@ -100,7 +102,7 @@
 			</div><hr>
 			<div class="d-flex flex-row justify-content-between">
 				<p class="SubTitle-eeu9i7-0 TotalPrice__PriceSectionSubTitle-sc-1e1zxsm-2 eHKVGS">총 프립 금액</p>
-				<span>20,000원</span>
+				<span>${totalprice }</span>
 			</div>
 			
 		</div>
@@ -118,19 +120,19 @@
 			<strong class="mt-3 mb-3">이번 프립은 누구와 하시나요?</strong>
 			<span class="mt-2 mb-2">다음번 크루님이 좋아할만한 프립을 추천해드릴게요.</span>
 			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="radio" id="inlineCheckbox1" value="option1" name="reserv_with">
+			  <input class="form-check-input" type="radio" id="inlineCheckbox1" value="single" name="reserv_with">
 			  <label class="form-check-label mr-2" for="inlineCheckbox1">혼자</label>
 
-			  <input class="form-check-input" type="radio" id="inlineCheckbox2" value="option2" name="reserv_with">
+			  <input class="form-check-input" type="radio" id="inlineCheckbox2" value="couple" name="reserv_with">
 			  <label class="form-check-label mr-2" for="inlineCheckbox2">연인</label>
 						
-			  <input class="form-check-input" type="radio" id="inlineCheckbox3" value="option3" name="reserv_with">
+			  <input class="form-check-input" type="radio" id="inlineCheckbox3" value="friend" name="reserv_with">
 			  <label class="form-check-label mr-2" for="inlineCheckbox3">친구</label>
 			
-			  <input class="form-check-input" type="radio" id="inlineCheckbox4" value="option4" name="reserv_with">
+			  <input class="form-check-input" type="radio" id="inlineCheckbox4" value="family" name="reserv_with">
 			  <label class="form-check-label mr-2" for="inlineCheckbox4">가족</label>
 			
-			  <input class="form-check-input" type="radio" id="inlineCheckbox5" value="option5" name="reserv_with">
+			  <input class="form-check-input" type="radio" id="inlineCheckbox5" value="parent" name="reserv_with">
 			  <label class="form-check-label mr-2" for="inlineCheckbox5">배우자</label>
 			</div>
 		</div>
