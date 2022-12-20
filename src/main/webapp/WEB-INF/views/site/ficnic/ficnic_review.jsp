@@ -28,13 +28,13 @@
     <div>
 		<ul class="mypage-reserv d-flex flex-row justify-content-end">
 			<li>
-			<a class="mr-2 text-dark" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointH">평점 높은 순</a>|</li>
+			<a class="mr-2 text-dark orderfc" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointH">평점 높은 순</a>|</li>
 			
 			<li>
-			<a class="ml-2 mr-2 text-dark" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointL">평점 낮은 순</a>|</li>
+			<a class="ml-2 mr-2 text-dark orderfc" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointL">평점 낮은 순</a>|</li>
 			
 			<li>
-			<a  class="ml-2 mr-2 text-dark" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointD">최신 순</a></li>
+			<a  class="ml-2 mr-2 text-dark orderfc" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointD">최신 순</a></li>
 		</ul>
 	</div> 
     
@@ -83,7 +83,15 @@
 	<hr class="rhr">
 
 	</c:forEach>
-
+	
+	
+	
+    <div class="row mt-4 list-bottom-util">
+        <div class="col mb-3 text-center">
+            ${pagingWrite}
+        </div>
+    </div>
+    
 
 </div>
 

@@ -22,11 +22,18 @@ public interface ReviewDAO {
     
     List<ReviewDTO> getList();
 
-	List<ReviewDTO> getNumList(Map<String, Object> map);
-	
-
 	int writeOkReview(ReviewDTO dto);
 	
 	List<ReviewDTO> getListSession(String member_id);
+    
+    // 해당 세션 예약 카운트
+	int getSiteReviewCount(Map<String, Object> searchMap);
 
+	// 해당 세션 예약 카운트
+	List<ReviewDTO> getNumList(int startNo, int endNo, Map<String, Object> searchMap);
+	
+	// 해당 세션 예약 카운트
+	List<ReviewDTO> getNumList(Map<String, Object> searchMap);
+
+	
 }
