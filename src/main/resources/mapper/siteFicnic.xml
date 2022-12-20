@@ -29,7 +29,15 @@
 	<select id="SiteFicnicCategoryList" parameterType="map" resultType="ficnicDTO">
 			select * from(
 	                select
-	                    row_number() over(order by ficnic_no desc) rnum,
+	                    row_number() over(
+	                       <choose>
+	                           <when test="sort eq 'date'">order by ficnic_date desc</when>
+	                           <when test="sort eq 'review'">order by ficnic_review_point desc, ficnic_date desc</when>
+	                           <when test="sort eq 'high'">order by ficnic_sale_price desc, ficnic_date desc</when>
+	                           <when test="sort eq 'low'">order by ficnic_sale_price asc, ficnic_date desc</when>
+	                           <otherwise>order by ficnic_hit desc, ficnic_date desc</otherwise>
+	                       </choose>
+	                    ) rnum,
 	                    b.*
 	                from (
 	                select * from ficnic_list
@@ -76,7 +84,12 @@
     <select id="siteFicnicCount" resultType="int">
         select count(review_no) from review_list where ficnic_no = #{ficnic_no}
     </select>
- 	
+
+
+    <!-- 피크닉 조회수 늘리기 -->
+    <update id="siteFicnicUpdateHit" parameterType="int">
+        update ficnic_list set ficnic_hit = ficnic_hit + 1 where ficnic_no = #{ficnic_no}
+    </update>
 
 
 </mapper>

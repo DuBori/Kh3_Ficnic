@@ -19,14 +19,24 @@
 
 <div class="contents w1100 goods-list">
 
-	<c:if test="${!empty clist}">
-	<ul class="gl-category">
-		<li<c:if test="${param.category eq parent_category_no}"> class="now"</c:if>><a href="ficnic_list.do?category=${parent_category_no}">전체보기</a></li>
-	  	<c:forEach var="sub" items="${clist}">
-	  	<li<c:if test="${param.category eq sub.getCategory_id()}"> class="now"</c:if>><a href="ficnic_list.do?category=${sub.getCategory_id()}">${sub.getCategory_name()}</a></li>
-	  	</c:forEach>
-	</ul>
-	</c:if>
+	<div class="gl-top">
+		<c:if test="${!empty clist}">
+		<ul class="glt-category">
+			<li<c:if test="${param.category eq parent_category_no}"> class="now"</c:if>><a href="ficnic_list.do?category=${parent_category_no}&sort=${param.sort}">전체보기</a></li>
+		  	<c:forEach var="sub" items="${clist}">
+		  	<li<c:if test="${param.category eq sub.getCategory_id()}"> class="now"</c:if>><a href="ficnic_list.do?category=${sub.getCategory_id()}&sort=${param.sort}">${sub.getCategory_name()}</a></li>
+		  	</c:forEach>
+		</ul>
+		</c:if>
+
+		<select name="sort" class="custom-select glt-sort" onchange="location.href=this.value;">
+			<option value="ficnic_list.do?category=${param.category}&sort=popular"<c:if test="${param.sort eq 'popular'}"> selected="selected"</c:if>>인기순</option>
+			<option value="ficnic_list.do?category=${param.category}&sort=date"<c:if test="${param.sort eq 'date'}"> selected="selected"</c:if>>등록일순</option>
+			<option value="ficnic_list.do?category=${param.category}&sort=review"<c:if test="${param.sort eq 'review'}"> selected="selected"</c:if>>평점순</option>
+			<option value="ficnic_list.do?category=${param.category}&sort=high"<c:if test="${param.sort eq 'high'}"> selected="selected"</c:if>>가격높은순</option>
+			<option value="ficnic_list.do?category=${param.category}&sort=low"<c:if test="${param.sort eq 'low'}"> selected="selected"</c:if>>가격낮은순</option>
+		</select>
+	</div>
 
 
 

@@ -151,5 +151,18 @@ chkReservJoin = function() {
 
 
 
+/////////////////////////////////////////////////////
+// 피크닉 날짜 선택 달력
+/////////////////////////////////////////////////////
+$(document).ready(function(){
+    $("#reserv_ficnic_date").datepicker({
+        format: "yyyy-mm-dd",
+        showRightIcon: false,
+        iconsLibrary: "fontawesome"
+    });
+});
+
+
+
 
 

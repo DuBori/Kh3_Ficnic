@@ -56,7 +56,10 @@ public interface FicnicDAO {
 	
 	/* 리뷰 평점 sum */
 	int countReviewPoint(int ficnic_no);
-	
+
+
+    /* 피크닉 조회수 늘리기 */
+    void updateFicnicHit(int ficnic_no);
 
 	
 }
