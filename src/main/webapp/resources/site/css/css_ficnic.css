@@ -95,27 +95,39 @@
 /*************************/
 .goods-list {}
 
-.goods-list .gl-category {    position: relative;
+
+.goods-list .gl-top {
+	position: relative;
     margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.goods-list .gl-top .glt-category {
     white-space: nowrap;
     overflow: auto;
 }
-.goods-list .gl-category li {
+.goods-list .gl-top .glt-category li {
     display: inline-block;
     margin-right: 20px;
 }
-.goods-list .gl-category li a {
+.goods-list .gl-top .glt-category li a {
     font-size: 15px;
     color: #000;
 }
-.goods-list .gl-category li a:hover {
+.goods-list .gl-top .glt-category li a:hover {
     color: var(--font-color);
 }
-.goods-list .gl-category li.now a {
+.goods-list .gl-top .glt-category li.now a {
     font-weight: bold;
     color: var(--font-color);
 }
 
+.goods-list .gl-top .glt-sort {
+	width: 110px;
+	font-size: 14px;
+}
 
 
 
@@ -728,16 +740,26 @@
 	color: #555;
 	margin: 0 0 0 10px;
 }
+.ficnic-view .fv-join .fvj-sel .fvjs-date .input-group {
+	width: auto;
+}
 .ficnic-view .fv-join .fvj-sel .fvjs-date input {
 	width: 100%;
 	max-width: 200px;
-	padding: 6px;
-	border: 1px solid #eee;
-	border-radius: 5px;
+	padding: 10px 6px;
+	border: 1px solid #ededed;
+	background: #fff;
+	border-radius: 8px;
 	font-family: 'Lato';
 	font-weight: bold;
 	font-size: 15px;
 	text-align: center;
+}
+.ficnic-view .fv-join .fvj-sel .fvjs-date input:active {
+	border-color: var(--border-color);
+}
+.gj-picker-md div[role=navigator] {
+	text-align: center !important;
 }
 
 
@@ -871,7 +893,7 @@
 
 
 
-* 상단으로 버튼 */
+/* 상단으로 버튼 */
 button.goto-top {
 	position: fixed;
 	bottom: 95px;
@@ -1015,8 +1037,12 @@ button.goto-top:hover {
 /* 리뷰 보기
 /*************************/
 .ficnic-review .r_one {
-	padding-top:20px;
+	padding-top:40px;
 	font-size: 20px;
+}
+
+.ficnic-review .orderfc{
+	font-weight: 600;
 }
 
 .ficnic-review p b {
@@ -1084,8 +1110,4 @@ button.goto-top:hover {
 	color: #000000;
 }
 
-.ficnic-review .rorder {
-	color: #000000;
-	font-size: 14px;
-}
 
