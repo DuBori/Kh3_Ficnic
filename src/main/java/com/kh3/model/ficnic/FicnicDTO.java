@@ -42,5 +42,6 @@ public class FicnicDTO {
 	private int ficnic_hit;
 	private int ficnic_sale;
 	private String ficnic_date;
+	private int ficnic_wish;
 
 }

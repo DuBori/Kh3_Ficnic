@@ -3,7 +3,6 @@ package com.kh3.model.review;
 import java.util.List;
 import java.util.Map;
 
-import com.kh3.model.reserv.ReservDTO;
 
 
 public interface ReviewDAO {
@@ -24,7 +23,6 @@ public interface ReviewDAO {
 
 	List<ReviewDTO> getNumList(Map<String, Object> map);
 	
-
 	int writeOkReview(ReviewDTO dto);
 	
 	List<ReviewDTO> getListSession(String member_id);

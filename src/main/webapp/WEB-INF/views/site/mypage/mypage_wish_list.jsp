@@ -24,15 +24,15 @@
     		<c:forEach items="${List}" var="dto">
     			<c:set var="fdto" value="${dto.getFicnic_cont() }"/>
     			<c:set var="move_ficnic_info" value="onclick=\"location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${fdto.getFicnic_no()}'\""/>
-    			
+
     			<li>
-    				 <button type="button" onclick="location.href='${path}/mypage/wish_cancel.do?ficnic_no=${fdto.getFicnic_no()}'" ><i class="fa fa-heart-o"></i></button>   				 
+    				 <button type="button" onclick="if(confirm('위시리스트에서 삭제하시겠습니까?')){ location.href='${path}/mypage/wish_cancel.do?ficnic_no=${fdto.getFicnic_no()}'; }else{ return false; }"><i class="fa fa-heart"></i></button>
 					  <img ${move_ficnic_info } src="${path}/${fdto.getFicnic_photo1()}" class="fl-photo">
 					  <div ${move_ficnic_info } class="fl-info">
 						    <div class="fli-location">${fdto.getFicnic_location() }</div>
 						    <div class="fli-name">${fdto.getFicnic_name() }</div>
-						  
-						    <div  ${move_ficnic_info }  class="fli-review">
+
+						    <div ${move_ficnic_info }  class="fli-review">
 								<span><i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star"></i>

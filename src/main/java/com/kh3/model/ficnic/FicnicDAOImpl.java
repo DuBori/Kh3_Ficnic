@@ -36,16 +36,18 @@ public class FicnicDAOImpl implements FicnicDAO {
 	public List<FicnicDTO> getSiteFicnicList(int startNo, int endNo, Map<String, Object> map) {
 		map.put("startNo", startNo);
 		map.put("endNo", endNo);
-		
-	
-		return this.sqlSession.selectList("SiteFicnicCategoryList",map);
+
+		return this.sqlSession.selectList("SiteFicnicCategoryList", map);
 	}
+
+
 	@Override
 	public int getSiteListCount(Map<String, Object> map) {
 		return this.sqlSession.selectOne("SiteFicnicSearchCount", map);
 	}
 
-    /* 피크닉 상품 정보 */
+
+	/* 피크닉 상품 정보 */
     @Override
     public FicnicDTO getFicnicCont(int no) {
         return this.sqlSession.selectOne("adminFicnicCont", no);

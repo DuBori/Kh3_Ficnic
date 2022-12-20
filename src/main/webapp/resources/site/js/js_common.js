@@ -20,157 +20,59 @@
 
 
 
-/////////////////////////////////////////////////////
-// 신규알림 클릭
-/////////////////////////////////////////////////////
-$(document).ready(function(){
-    $("#header button.h-ico").on("click", function(e){
-        if($(this).parent().hasClass("open")){
-            $(this).parent().removeClass("open");
-        }else{
-            $("#header ul.d-flex li.open").removeClass("open");
-            $(this).parent().addClass("open");
-        }
-        e.preventDefault();
-    });
-
-    $("#header .new-pop .np-title button").on("click", function(e){
-        $("#header ul.d-flex li.open").removeClass("open");
-        e.preventDefault();
-    });
-});
-
-
-
-
-
-
-
 
 /////////////////////////////////////////////////////
-// 카테고리 폼 리셋
+// 피크닉 찜하기 처리
 /////////////////////////////////////////////////////
-cateFormReset = function(){
-    var f = $("form[name='form_write']");
-    f.find("input[name='ps_ctid']").val("");
-    f.find("input:radio[name='category_show']:radio[value='Y']").prop("checked", true);
-    f.find("input[name='category_name']").val("").focus();
-    f.find("input[name='category_link']").val("");
-    f.find("input[name='category_image']").val("");
-    f.find("input[name='ori_category_image']").val("");
+ficnicWish = function(btn, ficnic_no, sess_id, path) {
 
-    $(".category-form .card-body .cate-img").hide();
-    $(".category-form .card-body .cate-img .join-form .jf-input .row .col > div").html("");
-
-    $(".category-form .card-body .btn-outline-danger").attr("href", "").hide();
-    $("#form-btn").removeClass("btn-success").addClass("btn-primary").html("<i class=\"fa fa-pencil\"></i> 추가하기");
-}
-
-
-
-
-/////////////////////////////////////////////////////
-// 카테고리 폼 추가
-/////////////////////////////////////////////////////
-cateFormAdd = function(){
-    cateFormReset();
-
-    $("#form-title").text("대분류 추가하기");
-    $("form[name='form_write']").attr("action", "category_write_ok.do");
-    $("form[name='form_write'] input[name='ps_ctid']").val("00000000");
-    $(".category-form .card-body .category-mask").hide();
-    $(".category-form .card-body .cate-img").show();
-}
-
-
-
-
-/////////////////////////////////////////////////////
-// 서브 카테고리 폼 추가
-/////////////////////////////////////////////////////
-$(document).ready(function(){
-    $("ul.folder-tree li .ft-add").click(function(){
-        var get_ctid = $(this).parent().find(".ft-title input[name='category_id[]']").val();
-        var get_depth = $(this).parent().find(".ft-title input[name='category_depth[]']").val();
-        var get_name = $(this).parent().find(".ft-title input[name='category_name[]']").val();
-
-        cateFormReset();
-
-        if(get_depth == 1){
-            $("#form-title").html("<b>["+get_name+"]</b> 중분류 추가하기");
-        }
-        $("form[name='form_write']").attr("action", "category_write_ok.do");
-        $("form[name='form_write'] input[name='ps_ctid']").val(get_ctid);
-        $(".category-form .card-body .category-mask").hide();
-    });
-});
-
-
-
-
-/////////////////////////////////////////////////////
-// 폴더 트리 클릭 (카테고리 수정)
-/////////////////////////////////////////////////////
-$(document).ready(function(){
-    $("ul.folder-tree li.line-plus .ft-title").click(function(){
-
-        // 폴더 토글
-        $("ul.folder-tree li .ft-title.now").removeClass("now");
-        $(this).addClass("now");
-        $(this).parent().children("ul").toggle();
-
-        // 아이콘 변경
-        if($(this).parent().hasClass("depth01-plus") == true){
-            $(this).parent().removeClass("depth01-plus").addClass("depth01-minus");
-        }else if($(this).parent().hasClass("depth01-minus") == true){
-            $(this).parent().removeClass("depth01-minus").addClass("depth01-plus");
-        }else if($(this).parent().hasClass("line-plus") == true){
-            $(this).parent().removeClass("line-plus").addClass("line-minus");
-        }else if($(this).parent().hasClass("line-minus") == true){
-            $(this).parent().removeClass("line-minus").addClass("line-plus");
-        }
-
-
-        var getID = $(this).parent().parent().attr("id");
-        if(getID != "undefined"){
-            cateFormReset();
-
-
-            var get_category_no = $(this).parent().find(".ft-title input[name='category_no[]']").val();
-            var get_ctid = $(this).parent().find(".ft-title input[name='category_id[]']").val();
-            var get_show = $(this).parent().find(".ft-title input[name='category_show[]']").val();
-            var get_depth = $(this).parent().find(".ft-title input[name='category_depth[]']").val();
-            var get_name = $(this).parent().find(".ft-title input[name='category_name[]']").val();
-            var get_image = $(this).parent().find(".ft-title input[name='category_image[]']").val();
-            var get_project = $("form[name='form_sort'] input[name='ps_project']").val();
-
-            $("#form-title").html("<b>["+get_name+"]</b> 카테고리 수정/삭제");
-            $(".category-list .cl-form .clf-mask").hide();
-
-            var f = $("form[name='form_write']");
-            f.attr("action", "category_modify_ok.do");
-            f.find("input[name='ps_ctid']").val(get_ctid);
-            f.find("input:radio[name='category_show']:radio[value='"+get_show+"']").prop("checked", true);
-            f.find("input[name='category_name']").val(get_name).focus();
-            f.find("input[name='category_link']").val(get_ctid);
-
-            if(get_depth == 1){
-                $(".category-form .card-body .cate-img").show();
-                if(get_image != ""){
-                    $(".category-form .card-body .cate-img .join-form .jf-input .row .col > div").html("<img src=\""+get_project+get_image+"\" alt=\"\" />");
-                    f.find("input[name='ori_category_image']").val(get_image);
-                }
-            }
-
-            $(".category-form .card-body .btn-outline-danger").attr("href", "category_delete.do?ps_ctid="+get_ctid).show();
-            $("#form-btn").removeClass("btn-primary").addClass("btn-success").html("<i class=\"fa fa-save\"></i> 수정하기");
-            $(".category-form .card-body .category-mask").hide();
-        }
-
+    // 회원 체크
+    if(!sess_id || sess_id == null || sess_id == "undefined" || sess_id == ""){
+        alert("회원 로그인 후 사용 하실 수 있습니다.");
         return false;
-    });
-});
+    }
 
+
+    // 찜 되어 있는지 여부
+    let wish_mode = "add";
+    if($(btn).hasClass("on")) {
+        wish_mode = "del";
+    }
+
+
+    $.ajax({
+        contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+        type : "post",
+        url : path + "/mypage/wish_ok.do",
+        data : {
+            wish_mode : wish_mode,
+            ficnic_no : ficnic_no,
+            sess_id : sess_id
+        },
+
+        success : function(data) {
+            alert(data);
+            let wish_btn = $(btn);
+            let wish_ico = $(btn).find("i.fa");
+
+            if(data.trim() == "add_ok") {
+                wish_btn.addClass("on");
+                wish_ico.removeClass("fa-heart-o").addClass("fa-heart");
+
+            }else if(data.trim() == "del_ok") {
+                wish_btn.removeClass("on");
+                wish_ico.removeClass("fa-heart").addClass("fa-heart-o");
+
+            }else{
+                alert('처리중 오류가 발생하였습니다.');
+            }
+        },
+
+        error : function(e){
+            alert("Error : " + e.status);
+        }
+    });
+}
 
 
 
