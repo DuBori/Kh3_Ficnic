@@ -45,7 +45,13 @@
 		select * from reserv_list where reserv_no =#{value}
 	</select>
 
-
+	<select id="siteReservSessionList" parameterType="string" resultType="reservDTO">
+		select * from reserv_list where member_id = #{value}
+	</select>
+	
+	<update id="siteChangeReservStatus" parameterType="reservDTO">
+		update reserv_list set reserv_status = 'cancel' where reserv_no = #{reserv_no} and reserv_status = 'reserv'
+	</update>
 
 
 </mapper>

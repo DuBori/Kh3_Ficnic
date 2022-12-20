@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +49,7 @@ import com.kh3.model.qna.QnaCommentDTO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
 import com.kh3.model.reserv.ReservDAO;
+import com.kh3.model.reserv.ReservDTO;
 import com.kh3.model.review.ReviewDAO;
 import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
@@ -120,6 +123,25 @@ public class SiteMypageController {
 		List<ReviewDTO> sessionList =this.rdao.getListSession(member_id);
 		// 페이지 이동 URL
 		String pageUrl = request.getContextPath()+"mypage/mypage_reserv_list.do?+getType="+getType+"&page="+page;
+		
+		
+		// 현재 날짜/시간
+        Date now = new Date();
+ 
+        // 포맷팅 정의
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+ 
+        // 포맷팅 적용
+        String formatedNow = formatter.format(now);
+        
+		List<ReservDTO> reservList =  reservDAO.getReservSessionList(member_id);
+		
+		for(ReservDTO val : reservList) {
+			if(val.getReserv_ficnic_date().compareTo(formatedNow)<0) {
+				this.reservDAO.updateReserv_status(val);
+			}
+		}
+		
 		
 		model.addAttribute("List", this.reservDAO.getBoardList(dto.getStartNo(), dto.getEndNo(), searchMap));
 		model.addAttribute("sList", sessionList);

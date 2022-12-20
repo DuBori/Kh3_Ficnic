@@ -34,21 +34,23 @@
 	    <div class="d-flex flex-column ">
 	    	<h4 class="mypage-reserv-h ">피크닉 정보</h4>
 			<div class="d-flex flex-row justify-content-between">
-	            <div class="mypage-reserv-divtop d-flex flex-column justify-content-between m-3">
+					<div class="mypage-reserv-divimg m-3">					  
+					 	<img src="${path}${ficnicDto.getFicnic_photo1()}" class="d-block" alt="...">	  					 
+	        		</div>
+	            <div class="mypage-reserv-divtop d-flex flex-column">
 		            <div class="m-3">
 		            	피크닉 명 : ${ficnicDto.getFicnic_name() }
 		            </div>
+		            
 		             <div>
 		             	<div class="m-3">지역 : ${ficnicDto.getFicnic_location() }</div>
 		             	<div class="m-3">진행장소 :  ${ficnicDto.getFicnic_address() }</div> 
 		             	
 		             </div>
 	            </div>
-	            <div class="mypage-reserv-divimg m-3">					  
-					 <img src="${path}${ficnicDto.getFicnic_photo1()}" class="d-block" alt="...">	  					 
-	        	</div>
+	            
 	    	</div>
-	    </div>
+	    </div><hr>
     <!-- 숙소 정보 //END -->
 
     <!-- 내용 //START -->
