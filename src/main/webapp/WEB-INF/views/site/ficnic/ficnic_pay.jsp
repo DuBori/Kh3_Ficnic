@@ -19,8 +19,21 @@
 
 <div class="contents w1100 goods-list">
 <form action="" method="post">
+
 <input type="hidden" value="${fdto.getFicnic_no()}"  name="ficnic_no" />
 <input type="hidden" value="${fdto.getFicnic_name()}"  name="reserv_ficnic_name" />
+<input type="hidden" value="${dto.getReserv_ficnic_sale_price()}"  name="reserv_ficnic_sale_price" />
+<input type="hidden" value="${dto.getReserv_ficnic_photo()}"  name="reserv_ficnic_photo" />
+<input type="hidden" value="${dto.getReserv_ficnic_option_title()}"  name="reserv_ficnic_option_title" />
+<input type="hidden" value="${dto.getReserv_ficnic_option_price()}"  name="reserv_ficnic_option_price" />
+<input type="hidden" value="${dto.getReserv_ficnic_select_title()}"  name="reserv_ficnic_select_title" />
+<input type="hidden" value="${dto.getReserv_ficnic_select_price()}"  name="reserv_ficnic_select_price" />
+<input type="hidden" value="${dto.getReserv_ficnic_date()}"  name="reserv_ficnic_date" />
+<input type="hidden" value="${sess_id}"  name="member_id" />
+<input type="hidden" value="${sess_name}"  name="reserv_name" />
+<input type="hidden" value="${sess_phone}"  name="reserv_phone" />
+<input type="hidden" value="${sess_email}"  name="reserv_phone" />
+
 <div class="ficnic-pay-main d-flex flex-column ">
 	
 	<div class="ficnic-pay-sub">
@@ -58,13 +71,13 @@
 		<div class="mt-2 mb-2">
 			<p class="PageTitle__PurchasePageTitle-ex62ss-0 jcPaBR">결제수단</p>
 			<div class="form-check mt-2 mb-2">
-			  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+			  <input class="form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault1" value="card">
 			  <label class="form-check-label " for="flexRadioDefault1">
 			    신용/체크 카드
 			  </label>
 			</div>
 			<div class="form-check mt-2 mb-2">
-			  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+			  <input class="form-check-input" type="radio" id="flexRadioDefault2" data-bs-toggle="modal" data-bs-target="#exampleModal" >
 			  <label class="form-check-label" for="flexRadioDefault2">
 			    다른 결제수단
 			  </label>
@@ -103,6 +116,7 @@
 			<div class="d-flex flex-row justify-content-between">
 				<p class="SubTitle-eeu9i7-0 TotalPrice__PriceSectionSubTitle-sc-1e1zxsm-2 eHKVGS">총 프립 금액</p>
 				<span>${totalprice }</span>
+				<input type="hidden" value="${totalprice- selectprice}" name="reserv_total_price">
 			</div>
 			
 		</div>
@@ -112,8 +126,7 @@
 			</div>
 			<div class="d-flex flex-row justify-content-between m-2"> 
 				<p>결제 대행 서비스 이용약관</p> <button type="button">보기</button>
-			</div>
-			
+			</div>	
 		</div>
 		
 		<div class="d-flex flex-column ">
@@ -143,7 +156,7 @@
 		
 		</div>
 		<div class="d-flex flex-row  justify-content-center mt-2 mb-2 w100">
-			<input class="btn w-100 " type="button" value="참여하기" style=" background-color : rgb(122, 41, 250);">
+			<input class="btn w-100 " type="submit" value="참여하기" style=" background-color : rgb(122, 41, 250);">
 		</div>
 	
 	</div>
@@ -158,21 +171,27 @@
       </div>
       <div class="modal-body">
 		 <div class="form-check">
-		  <input class="form-check-input" type="radio" name="ficnic_pay_flexRadioDefault2" id="flexRadioDefault3" checked data-bs-dismiss="modal" value="네이버페이">
-		  <label class="form-check-label" for="flexRadioDefault1">
+		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" checked data-bs-dismiss="modal" value="naver">
+		  <label class="form-check-label" for="flexRadioDefault3">
 		    네이버 페이
 		  </label>
 		</div>
 		<div class="form-check">
-		  <input class="form-check-input" type="radio" name="ficnic_pay_flexRadioDefault2" id="flexRadioDefault4" data-bs-dismiss="modal" value="카카오페이">
-		  <label class="form-check-label" for="flexRadioDefault2" >
+		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="kakao">
+		  <label class="form-check-label" for="flexRadioDefault3" >
 		    카카오페이
 		  </label>
 		</div>
 		<div class="form-check">
-		  <input class="form-check-input" type="radio" name="ficnic_pay_flexRadioDefault2" id="flexRadioDefault5" data-bs-dismiss="modal" value="토스">
-		  <label class="form-check-label" for="flexRadioDefault2">
+		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="toss">
+		  <label class="form-check-label" for="flexRadioDefault3">
 		    토스
+		  </label>
+		</div>
+		<div class="form-check">
+		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="nobankbook">
+		  <label class="form-check-label" for="flexRadioDefault3">
+		    농협
 		  </label>
 		</div>
       </div>

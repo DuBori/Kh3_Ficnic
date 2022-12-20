@@ -452,8 +452,6 @@ public class SiteFicnicController {
     	
     	FicnicDTO fdto= this.fdao.getFicnicCont(ficnic_no);
     	
-    	
-    	
     	// 회원 쿠폰 보유 여부
     	List<McouponDTO> mlist= mdao.getCouponView((String)session.getAttribute("sess_id"));
     	
