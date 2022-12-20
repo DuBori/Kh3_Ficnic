@@ -871,7 +871,7 @@
 
 
 
-* 상단으로 버튼 */
+/* 상단으로 버튼 */
 button.goto-top {
 	position: fixed;
 	bottom: 95px;
