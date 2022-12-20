@@ -34,4 +34,10 @@ public interface ReservDAO {
 	// 회원 예약내용 상세 페이지
 	ReservDTO getResevCont(int reserv_no);
 
+	// 회원 예약 리스트
+	List<ReservDTO> getReservSessionList(String member_id);
+
+	// 지난 날짜 예약 취소로 변경
+	void updateReserv_status(ReservDTO val);
+
 }

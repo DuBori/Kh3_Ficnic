@@ -88,9 +88,11 @@ public class ReservDAOImpl implements ReservDAO {
 
 	@Override
 	public List<ReservDTO> getBoardList(int startNo, int endNo, Map<String, Object> searchMap) {
+		
 		// TODO Auto-generated method stub
 		searchMap.put("startNo", startNo);
 		searchMap.put("endNo", endNo);
+		
 		return this.sqlSession.selectList("siteReservList", searchMap);
 	}
 
@@ -99,6 +101,22 @@ public class ReservDAOImpl implements ReservDAO {
 	@Override
 	public ReservDTO getResevCont(int reserv_no) {
 		return this.sqlSession.selectOne("siteReservCont",reserv_no );
+	}
+
+
+
+	@Override
+	public List<ReservDTO> getReservSessionList(String member_id) {
+		
+		return this.sqlSession.selectList("siteReservSessionList", member_id);
+	}
+
+
+
+	@Override
+	public void updateReserv_status(ReservDTO val) {
+		
+		this.sqlSession.update("siteChangeReservStatus", val);
 	}
 
 
