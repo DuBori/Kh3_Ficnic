@@ -3,7 +3,6 @@ package com.kh3.model.review;
 import java.util.List;
 import java.util.Map;
 
-import com.kh3.model.reserv.ReservDTO;
 
 
 public interface ReviewDAO {
