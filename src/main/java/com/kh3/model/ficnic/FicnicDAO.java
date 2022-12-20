@@ -57,4 +57,6 @@ public interface FicnicDAO {
 	/* 리뷰 평점 sum */
 	int countReviewPoint(int ficnic_no);
 	
+
+	
 }

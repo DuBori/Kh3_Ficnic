@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh3.model.reserv.ReservDTO;
+
 @Repository
 public class ReviewDAOImpl implements ReviewDAO {
 
@@ -83,6 +85,8 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public List<ReviewDTO> getListSession(String member_id) {
 		return this.sqlSession.selectList("SiteMypageReviewList", member_id);
 	}
+
+
 
     
 

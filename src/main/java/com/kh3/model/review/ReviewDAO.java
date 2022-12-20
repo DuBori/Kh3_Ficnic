@@ -3,6 +3,9 @@ package com.kh3.model.review;
 import java.util.List;
 import java.util.Map;
 
+import com.kh3.model.reserv.ReservDTO;
+
+
 public interface ReviewDAO {
 
     int getReviewCount(Map<String, Object> map);
@@ -23,10 +26,6 @@ public interface ReviewDAO {
 
 	int writeOkReview(ReviewDTO dto);
 	
-
-
-	
-
 	List<ReviewDTO> getListSession(String member_id);
 
 }

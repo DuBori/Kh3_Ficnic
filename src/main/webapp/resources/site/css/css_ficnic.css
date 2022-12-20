@@ -703,12 +703,12 @@
 /* 리뷰 보기
 /*************************/
 .ficnic-review .r_one {
-	padding-top:50px;
+	padding-top:20px;
 	font-size: 20px;
 }
 
 .ficnic-review p b {
-	color: #5757ff;
+	color: #9122ff;
 	
 }
 
@@ -723,11 +723,6 @@
 	border-color:#f4f4f4;
 }
 
-.ficnic-review .rpoint {
-	font-size: 20px;
-	padding-top:10px;
-	color: #8b17ff;
-}
 
 
 .ficnic-review .rname {
@@ -759,11 +754,25 @@
 	padding-bottom: 10px;
 }
 
-.ficnic-review a {
+.ficnic-review .rficnic {
 	color: #b8b8b8;
 	text-decoration: none;
 	padding-top: 25px;
 	font-size: 12px;
 	color: #b8b8b8;
+}
+
+.fvtcr-star {
+	color: #9122ff;
+	padding-top: 15px;
+}
+
+.fvtcr-star .notstar {
+	color: #000000;
+}
+
+.ficnic-review .rorder {
+	color: #000000;
+	font-size: 14px;
 }
 
