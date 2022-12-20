@@ -22,5 +22,8 @@ public interface QnaDAO {
 	
 	// 문의글 추가
 	int qnaWriteOk(QnaDTO dto);
+	
+	// 문의글 파일 삭제
+	void deleteQnaImage(int qna_no, int img_num);
 
 }
