@@ -57,15 +57,7 @@
 	<select id="SiteFicnicReviewList" resultType="reviewDTO">
 		select * from review_list
 	</select>
-	
-	<select id="SiteFicnicNumList" parameterType="map" resultType="reviewDTO">
-		select * from review_list where ficnic_no = #{ficnic_no} 
-		<if test="getType.equals('') or getType.equals('pointD')">order by review_photo1 asc, review_date desc</if> 
-		<choose>
-			<when test="getType.equals('pointH')">order by review_point desc, review_photo1 asc </when>
-			<when test="getType.equals('pointL')">order by review_point asc, review_photo1 asc </when>
-		</choose>
-	</select>
+
 	
 	<select id="siteFicnicName" parameterType="string" resultType="string">
 		select category_name from ficnic_category where category_id = #{ficnic_name}

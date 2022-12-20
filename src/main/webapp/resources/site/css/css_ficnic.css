@@ -1015,8 +1015,12 @@ button.goto-top:hover {
 /* 리뷰 보기
 /*************************/
 .ficnic-review .r_one {
-	padding-top:20px;
+	padding-top:40px;
 	font-size: 20px;
+}
+
+.ficnic-review .orderfc{
+	font-weight: 600;
 }
 
 .ficnic-review p b {
@@ -1084,8 +1088,4 @@ button.goto-top:hover {
 	color: #000000;
 }
 
-.ficnic-review .rorder {
-	color: #000000;
-	font-size: 14px;
-}
 
