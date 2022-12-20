@@ -4,11 +4,9 @@ package com.kh3.site.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +28,7 @@ import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
 import com.kh3.model.member.McouponDAO;
 import com.kh3.model.member.McouponDTO;
+import com.kh3.model.member.WishDAO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
 import com.kh3.model.reserv.ReservDTO;
@@ -56,6 +55,10 @@ public class SiteFicnicController {
     
     @Inject
     McouponDAO mdao;
+
+    @Inject
+    WishDAO wdao;
+
 
     // 문의 사진 업로드 설정
     private String qnaFolder = "/resources/data/qna/";
@@ -93,7 +96,7 @@ public class SiteFicnicController {
         @RequestParam(value = "category", required = false, defaultValue = "") String ficnic_category_no,
         @RequestParam(value = "sort", required = false, defaultValue = "popular") String sort,
         @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-        HttpServletRequest request, Model model) {
+        HttpServletRequest request, HttpSession session, Model model) {
 
         // 카테고리 정보
         CategoryDTO cdto = cdao.getCategoryCont(ficnic_category_no);
@@ -104,11 +107,18 @@ public class SiteFicnicController {
         String parent_str = ficnic_category_no.substring(0, next_num);
 
 
+        // 세션 아이디 가져오기
+        String sess_id = "";
+        if(session.getAttribute("sess_id") != null) {
+            sess_id = (String) session.getAttribute("sess_id");
+        }
+
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("category_no", ficnic_category_no);
         map.put("sort", sort);
         map.put("next_num", next_num);
         map.put("parent_str", parent_str);
+        map.put("sess_id", sess_id);
 
 
         totalRecord = fdao.getSiteListCount(map);
@@ -145,13 +155,15 @@ public class SiteFicnicController {
 
 
 
+
     // =====================================================================================
     // 피크닉 내용 보기 페이지
     // =====================================================================================
     @RequestMapping("ficnic/ficnic_view.do")
     public String ficnic_view(
         @RequestParam(value = "category", required = false, defaultValue = "") String ficnic_category_no,
-        @RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no, Model model) {
+        @RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no,
+        HttpSession session, Model model) {
 
         FicnicDTO dto = fdao.getFicnicCont(ficnic_no);
 
@@ -167,13 +179,20 @@ public class SiteFicnicController {
         String parent_category_no = (ficnic_category_no.substring(0, 2)) + "000000";
         String category_name = this.cdao.getCategoryName(parent_category_no);
 
+
+        // 위시리스트 체크
+        String ficnic_wish = "N";
+        if(session.getAttribute("sess_id") != null) {
+            int chkWish = this.wdao.getFicnicInWish(ficnic_no, (String) session.getAttribute("sess_id"));
+            if(chkWish > 0) ficnic_wish = "Y";
+        }
        
         
         Map<String, Object> numListMap = new HashMap<String, Object>();
         numListMap.put("ficnic_no", ficnic_no);
         numListMap.put("getType", "");
-        
         List<ReviewDTO> rList = rdao.getNumList(numListMap);
+
 
         // 리뷰 점수
         int cnt = 0;
@@ -317,6 +336,7 @@ public class SiteFicnicController {
         model.addAttribute("rList", rList);
 
         model.addAttribute("category_name", category_name);
+        model.addAttribute("ficnic_wish", ficnic_wish);
         model.addAttribute("count", rList.size());
         model.addAttribute("avg", avg);
 
@@ -324,6 +344,7 @@ public class SiteFicnicController {
         model.addAttribute("selectList", selectList);
         model.addAttribute("infoList", infoList);
         model.addAttribute("currList", currList);
+
         model.addAttribute("todayDate", todayDate);
 
         return "site/ficnic/ficnic_view";
@@ -355,7 +376,7 @@ public class SiteFicnicController {
 		System.out.println("pdto>>>" + pdto.getStartNo());
 
 		// 페이지 이동 URL
-		String pageUrl = request.getContextPath()+"ficnic/ficnic_review.do?ficnic_no="+ficnic_no+"&getType="+getType+"&page="+page;
+		String pageUrl = request.getContextPath()+"/ficnic/ficnic_review.do?ficnic_no="+ficnic_no+"&getType="+getType;
 		
 
     	FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
@@ -372,12 +393,6 @@ public class SiteFicnicController {
 		model.addAttribute("page", page);
 		model.addAttribute("getType", getType);
 		model.addAttribute("pagingWrite",Paging.showPage(pdto.getAllPage(), pdto.getStartBlock(), pdto.getEndBlock(), pdto.getPage(), pageUrl));
-		
-		System.out.println("확인1>>>>>>>" + pdto.getAllPage());
-		System.out.println("확인2>>>>>>>" + pdto.getStartBlock());
-		System.out.println("확인3>>>>>>>" + pdto.getEndBlock());
-		System.out.println("확인4>>>>>>>" + pdto.getPage());
-		System.out.println("확인5>>>>>>>" + pageUrl);
 		
         return "site/ficnic/ficnic_review";
         

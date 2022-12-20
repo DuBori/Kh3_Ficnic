@@ -31,6 +31,10 @@
         #{member_id}, #{qna_pw}, #{qna_name}, sysdate)
     </insert>
 
+    <!-- 문의글 이미지 삭제 -->
+    <update id="siteDeleteQnaImage" parameterType="java.util.Map">
+        update qna_list set qna_file${img_num} = null where qna_no = #{qna_no}
+    </update>
 
 
 

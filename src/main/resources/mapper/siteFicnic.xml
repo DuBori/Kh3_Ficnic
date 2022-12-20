@@ -24,40 +24,41 @@
             or substr(ficnic_category_sub3,1,${next_num}) = #{parent_str}
         )
 	</select>
-	
+
+
+
 	<!-- 피크닉 검색 리스트  -->
 	<select id="SiteFicnicCategoryList" parameterType="map" resultType="ficnicDTO">
-			select * from(
-	                select
-	                    row_number() over(
-	                       <choose>
-	                           <when test="sort eq 'date'">order by ficnic_date desc</when>
-	                           <when test="sort eq 'review'">order by ficnic_review_point desc, ficnic_date desc</when>
-	                           <when test="sort eq 'high'">order by ficnic_sale_price desc, ficnic_date desc</when>
-	                           <when test="sort eq 'low'">order by ficnic_sale_price asc, ficnic_date desc</when>
-	                           <otherwise>order by ficnic_hit desc, ficnic_date desc</otherwise>
-	                       </choose>
-	                    ) rnum,
-	                    b.*
-	                from (
-	                select * from ficnic_list
-                    <![CDATA[where ficnic_no > 0]]>
-				    and (
-				        substr(ficnic_category_no,1,${next_num}) = #{parent_str}
-				        or substr(ficnic_category_sub1,1,${next_num}) = #{parent_str}
-				        or substr(ficnic_category_sub2,1,${next_num}) = #{parent_str}
-				        or substr(ficnic_category_sub3,1,${next_num}) = #{parent_str}
-				    )
-			)b
-			)
-			 <![CDATA[
-	            where rnum >= #{startNo} and rnum <= #{endNo}
-	        ]]>
-	        
-	        
+        select * from(
+                    select
+                        row_number() over(
+                            <choose>
+                                <when test="sort eq 'date'">order by ficnic_date desc</when>
+                                <when test="sort eq 'review'">order by ficnic_review_point desc, ficnic_date desc</when>
+                                <when test="sort eq 'high'">order by ficnic_sale_price desc, ficnic_date desc</when>
+                                <when test="sort eq 'low'">order by ficnic_sale_price asc, ficnic_date desc</when>
+                                <otherwise>order by ficnic_hit desc, ficnic_date desc</otherwise>
+                            </choose>
+                        ) rnum,
+                        b.*,
+                        (select wish_no from member_wish where ficnic_no = b.ficnic_no and member_id = #{sess_id}) as ficnic_wish
+                    from (
+                        select * from ficnic_list
+                            <![CDATA[where ficnic_no > 0]]>
+                            and (
+                                substr(ficnic_category_no,1,${next_num}) = #{parent_str}
+                                or substr(ficnic_category_sub1,1,${next_num}) = #{parent_str}
+                                or substr(ficnic_category_sub2,1,${next_num}) = #{parent_str}
+                                or substr(ficnic_category_sub3,1,${next_num}) = #{parent_str}
+                            )
+                    )b
+        )
+        <![CDATA[where rnum >= #{startNo} and rnum <= #{endNo}]]>
 	</select>
 
 	
+	
+
 	<select id="SiteFicnicChildCategory" parameterType="string" resultType="string">
 		select category_id from ficnic_category where category_id_up = #{value}
 	</select>

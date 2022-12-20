@@ -45,7 +45,7 @@
 			<c:when test="${!empty flist}">
 				<c:forEach items="${flist}" var="dto">
 					<li>
-						<button type="button"><i class="fa fa-heart-o"></i></button>
+						<button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${dto.getFicnic_wish() > 0}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${dto.getFicnic_wish() eq 0}">-o</c:if>"></i></button>
 						<a href="ficnic_view.do?category=${param.category}&ficnic_no=${dto.getFicnic_no()}">
 							<div class="fl-photo">
 								<c:choose>

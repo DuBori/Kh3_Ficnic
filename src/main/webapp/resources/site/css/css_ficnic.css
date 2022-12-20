@@ -366,6 +366,12 @@
 	width: 100%;
 	object-fit: cover;
 	border-radius: 8px;
+    -webkit-transition: all 0.2s ease-out 0s;
+    -o-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+}
+.ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.photo a:hover img {
+	opacity: 0.8;
 }
 .ficnic-view .fv-top .fvt-cont .fvtc-review .fvtcr-list li p.writer {
 	font-size: 14px;
