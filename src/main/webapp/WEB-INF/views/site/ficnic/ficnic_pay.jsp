@@ -18,7 +18,9 @@
 
 
 <div class="contents w1100 goods-list">
+<form action="">
 <div class="ficnic-pay-main d-flex flex-column ">
+	
 	<div class="ficnic-pay-sub">
 		<div>
 			<p>프립정보</p>
@@ -133,12 +135,16 @@
 			</div>
 		</div>
 		
-		<div class="mt-2 mb-2">위 내용을 모두 확인하였으며, 결제에 동의합니다.</div>
+		<div class="d-flex flex-row  justify-content-center mt-2 mb-2 ">
+			<p>위 내용을 모두 확인하였으며, 결제에 동의합니다.<p>
 		</div>
+		
+		</div>
+		<div class="d-flex flex-row  justify-content-center mt-2 mb-2 w100">
+			<input class="btn w-100 " type="button" value="참여하기" style=" background-color : rgb(122, 41, 250);">
+		</div>
+	
 	</div>
-</div>
-
-
 
 <!-- Modal -->
 <div class="modal fade center" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -170,8 +176,17 @@
       </div>
       
     </div>
+   
   </div>
+  
 </div>
+
+</form>
+</div>
+
+
+
+
 
 
 

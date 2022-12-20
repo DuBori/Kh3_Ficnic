@@ -22,7 +22,8 @@ public interface ReviewDAO {
     
     List<ReviewDTO> getList();
 
-	List<ReviewDTO> getNumList(int ficnic_no);
+	List<ReviewDTO> getNumList(Map<String, Object> map);
+	
 
 	int writeOkReview(ReviewDTO dto);
 	

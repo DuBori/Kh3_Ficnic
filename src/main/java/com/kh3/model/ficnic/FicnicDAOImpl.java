@@ -154,4 +154,9 @@ public class FicnicDAOImpl implements FicnicDAO {
 	}
 	
 
+    /* 피크닉 조회수 늘리기 */
+    public void updateFicnicHit(int ficnic_no) {
+        this.sqlSession.update("siteFicnicUpdateHit", ficnic_no);
+    }
+
 }
