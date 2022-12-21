@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kh3.model.coupon.CouponDTO;
 import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
@@ -464,6 +465,68 @@ public class SiteFicnicController {
         }
     	
     }
+    // mcouponDTO 에서 쿠폰리스트를 가져와서 매칭을 시키는데
+    // 권한 설정을 어떻게 해주는가 
+    // 1. 있는 쿠폰에 대한 리스트를 따로 set해주고
+    // 2. 해당 쿠폰 리스트 객체를 복수개다
+    // 복수개의 map을 어떻게 사용하는가 
+    // List<String,List<String,Object>> map  = new HashMap<String,Object>();
+    //
+    public Map<String ,Map<String , Object>> getCouponLevel(List<McouponDTO> cList){
+    	
+    	 Map<String ,Map<String , Object>> map = new HashMap<String, Map<String,Object>>();
+    	
+    	
+		/* 이용될 권한들 기본 설정값 */
+    	String COUPON_USE_TYPE = "cart"; // 쿠폰 사용구분 (cart/category/goods)
+    	String COUPON_USE_VALUE = "";  // 쿠폰 사용 구분 값
+    	String COUPON_PRICE_TYPE = "price"; // 할인 금액 구분 (price/percent)
+    	int COUPON_PRICE_OVER = 0; // 최소 사용 금액
+    	int COUPON_PRICE_MAX = 0; // 최대 할인 금액
+    	String COUPON_DATE_TYPE = "free"; // 사용 기간 구분 (free/after/date)
+    	int COUPON_DATE_VALUE = 0; // 사용 기간 구분 값
+    	String COUPON_START_DATE = ""; // 사용 기간 시작
+    	String COUPON_END_DATE = ""; // 사용 기간 끝
+    	
+    	int cnt=0;
+    	// 보유한 쿠폰 개만큼
+    	for(McouponDTO mcouponDTO : cList) {
+    		
+    		List<CouponDTO> clist = mcouponDTO.getCoupon_list();
+    		
+    	// 보유한 쿠폰의 권한 설정
+    		for(CouponDTO val : clist) {
+    			
+    			if(mcouponDTO.getCoupon_no() == val.getCoupon_no()) {
+    				
+    				Map<String, Object> submap = new HashMap<String, Object>();
+    				COUPON_USE_TYPE = val.getCoupon_use_type();
+    				COUPON_USE_VALUE = val.getCoupon_use_value();
+    		    	COUPON_PRICE_TYPE = val.getCoupon_price_type();
+    		    	COUPON_PRICE_OVER = val.getCoupon_price_over();
+    		    	COUPON_PRICE_MAX = val.getCoupon_price_max();
+    		    	COUPON_DATE_TYPE = val.getCoupon_date_type();
+    		    	COUPON_DATE_VALUE = val.getCoupon_date_value();
+    		    	COUPON_START_DATE = val.getCoupon_start_date();
+    		    	COUPON_END_DATE = val.getCoupon_end_date();
+    		    	
+    		    	submap.put("use_type", COUPON_USE_TYPE);
+    		    	submap.put("use_value", COUPON_USE_VALUE);
+    		    	submap.put("price_type", COUPON_PRICE_TYPE);
+    		    	submap.put("price_over", COUPON_PRICE_OVER);
+    		    	submap.put("price_max", COUPON_PRICE_MAX);
+    		    	submap.put("date_type", COUPON_DATE_TYPE);
+    		    	submap.put("date_value", COUPON_DATE_VALUE);
+    		    	submap.put("start_date", COUPON_START_DATE);
+    		    	submap.put("end_date", COUPON_END_DATE);
+    		    	
+    		    	map.put("coupon"+cnt, submap);
+    			}
+    		}
+    		cnt++;
+    	}
+    	return map;
+    }
     
     
     @RequestMapping("ficnic/reserv_form.do")
@@ -487,6 +550,7 @@ public class SiteFicnicController {
     	model.addAttribute("memdto", memdto);
     	model.addAttribute("mlist", mlist);
     	model.addAttribute("couponCount", mlist.size());
+    	model.addAttribute("couponlevelList", getCouponLevel(mlist));
     	
     	return "site/ficnic/ficnic_pay";
     }
@@ -508,7 +572,6 @@ public class SiteFicnicController {
         }else {
         	out.println("<script>alert('예약 실패');history.back();</script>");
         }
-        
        
     }
 
