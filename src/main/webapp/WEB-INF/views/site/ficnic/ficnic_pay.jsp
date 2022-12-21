@@ -18,7 +18,7 @@
 
 
 <div class="contents w1100 goods-list">
-<form action="${path}/reserv_form_ok.do" method="post">
+<form action="${path}/ficnic/reserv_form_ok.do" method="post">
 
 <input type="hidden" value="${fdto.getFicnic_no()}"  name="ficnic_no" />
 <input type="hidden" value="${fdto.getFicnic_name()}"  name="reserv_ficnic_name" />
@@ -32,7 +32,7 @@
 <input type="hidden" value="${sess_id}"  name="member_id" />
 <input type="hidden" value="${sess_name}"  name="reserv_name" />
 <input type="hidden" value="${sess_phone}"  name="reserv_phone" />
-<input type="hidden" value="${sess_email}"  name="reserv_phone" />
+<input type="hidden" value="${sess_email}"  name="reserv_email" />
 
 <div class="ficnic-pay-main d-flex flex-column ">
 	
@@ -95,11 +95,12 @@
 					<div class="d-flex flex-row justify-content-between ">
 						<div class="Coupon__CouponCount-p6h1sc-1 cRGbZm"><span>전체 ${couponCount}장</span><span>, 사용가능 0장</span></div>
 						<select>
+						<option value="">미선택</option>
 						<c:if test="${!empty mlist }">
 							<c:forEach items="${mlist }" var="mdto">
 								<c:forEach items="${mdto.getCoupon_list() }" var="cdto">
 									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">
-										<option value="${cdto.getCoupon_price()}">${cdto.getCoupon_name() }</option>
+										<option value="${cdto.getCoupon_price()}" data-price="${cdto.getCoupon_price_type() }" data-min=${cdto.getCoupon_price_over() } data-max="${cdto.getCoupon_price_max()}">${cdto.getCoupon_name() }</option>
 									</c:if>	
 								</c:forEach>
 								
