@@ -1,5 +1,6 @@
 package com.kh3.admin.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -122,16 +123,34 @@ public class AdminQnaController {
     // 1:1 문의 삭제 처리
     // =====================================================================================
     @RequestMapping("/admin/qna/qna_delete.do")
-    public void delete(@RequestParam("no") int no, HttpServletResponse response) throws Exception {
+    public void delete(@RequestParam("no") int no, HttpServletResponse response, HttpServletRequest request) throws Exception {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        QnaDTO dto = this.dao.qnaView(no);
+        
+        // 기존 파일 있으면 삭제 처리
+        if (dto.getQna_file1() != null) {
+            File del_pimage = new File(request.getSession().getServletContext().getRealPath(dto.getQna_file1()));
+            if (del_pimage.exists())
+                del_pimage.delete();
 
+        }
+        if (dto.getQna_file2() != null) {
+            File del_pimage = new File(request.getSession().getServletContext().getRealPath(dto.getQna_file2()));
+            if (del_pimage.exists())
+                del_pimage.delete();
+        }
+
+        
+        
+        
         int check = this.dao.qnaDelete(no);
         if (check > 0) {
             this.cdao.qnaCommentAllDelete(no);
-            out.println("<script>alert('삭제 성공'); location.href='qna_list.do';</script>");
+            out.println("<script> location.href='qna_list.do';</script>");
         } else {
-            out.println("<script>alert('삭제 실패'); history.back();</script>");
+            out.println("<script>alert('1:1 문의글 삭제 중 에러가 발생하였습니다.'); history.back();</script>");
         }
     }
 

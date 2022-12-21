@@ -183,9 +183,9 @@ public class SiteMypageController {
         	// 피크닉 리뷰 갯수 수정
         	this.fdao.updateReviewCont(dto.getFicnic_no());
         	
-    		out.println("<script>alert('리뷰 작성 완료');location.href='"+mRequest.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
+    		out.println("<script>alert('리뷰글이 등록이 정상적으로 처리되었습니다.');location.href='"+mRequest.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
     	}else {
-    		out.println("<script>alert('리뷰 작성 실패');history.back()</script>");
+    		out.println("<script>alert('리뷰글 등록 중 에러가 발생하였습니다.');history.back()</script>");
     	}
     }
     
@@ -223,9 +223,9 @@ public class SiteMypageController {
         this.fdao.updateReviewPoint(dto.getFicnic_no());
 
         if(check > 0){
-            out.println("<script>alert('리뷰가 수정되었습니다.');location.href='"+mRequest.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
+            out.println("<script>alert('리뷰글 변경 처리가 정상적으로 완료되었습니다.');location.href='"+mRequest.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
         }else{
-            out.println("<script>alert('리뷰 수정에 실패했습니다.'); history.back();</script>");
+            out.println("<script>alert('리뷰글 변경 중 에러가 발생하였습니다.'); history.back();</script>");
         }
     }
 
@@ -345,7 +345,6 @@ public class SiteMypageController {
         
         // 비밀번호 입력한 경우
         else if (member_pw.length() > 0) {
-            System.out.println("어디야2>>>>>>>>>>>>>>>>>>>>>>>> ㅜㅜㅜㅜ");
         	// 새로운 비밀번호로 수정,  암호화 설정
             dto.setMember_pw(passwordEncoder.encode(member_pw));
 
@@ -370,7 +369,7 @@ public class SiteMypageController {
             
             int check = this.mdao.modifyOk(dto);
             if (check > 0) {
-               out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='mypage_info_modify.do';</script>");
+               out.println("<script> location.href='mypage_info_modify.do';</script>");
             } else {
                 out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
             }
@@ -400,7 +399,7 @@ public class SiteMypageController {
                      	
         			   int check = this.mdao.modifyOk(dto);
         	            if (check > 0) {
-        	                 out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='mypage_info_modify.do';</script>");
+        	                 out.println("<script> location.href='mypage_info_modify.do';</script>");
         	            } else {
         	                out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
         	            }
@@ -414,7 +413,7 @@ public class SiteMypageController {
     
     
  // =====================================================================================
-    // 마이페이지 - 회원정보 수정
+    // 마이페이지 - 회원탈퇴
     // =====================================================================================
     @RequestMapping("mypage/mypage_secession.do")
     public void secession(MemberDTO dto, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -425,18 +424,15 @@ public class SiteMypageController {
     	session = request.getSession(); 
 		String id = (String)session.getAttribute("sess_id");
 		 
-		System.out.println("id>???" + id);
 		MemberDTO mdto = this.mdao.getReservMember(id);
 		 
-		System.out.println("dto" + dto);
-		System.out.println("mdto" + mdto);
 		
 		int check = this.mdao.secession(mdto);
 		 
 		if(check > 0) {
-			 out.println("<script>alert('회원 탈퇴가 완료되었습니다.'); location.href='../main.do';</script>");
+			 out.println("<script>alert('회원탈퇴 처리가 정상적으로 완료되었습니다.\\n그동안 Ficnic을 이용해 주셔서 감사합니다.'); location.href='../main.do';</script>");
         } else {
-             out.println("<script>alert('에러가 발생하였습니다.'); history.back();</script>");
+             out.println("<script>alert('회원 탈퇴 중 에러가 발생하였습니다.'); history.back();</script>");
 		}
     	
         request.getSession().invalidate();

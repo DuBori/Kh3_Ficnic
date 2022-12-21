@@ -106,7 +106,7 @@ public class SiteQnaController {
         int check = this.qdao.qnaModify(dto);
 
         if(check > 0){
-            out.println("<script>alert('문의글이 수정되었습니다.'); location.href='mypage_qna_list.do';</script>");
+            out.println("<script> location.href='mypage_qna_list.do';</script>");
         }else{
             out.println("<script>alert('문의글 수정 중 에러가 발생하였습니다.'); history.back();</script>");
         }
@@ -152,7 +152,7 @@ public class SiteQnaController {
             int check = this.qdao.qnaDelete(no);
             if (check > 0) {
                 this.cdao.qnaCommentAllDelete(no);
-                out.println("<script>alert('문의글 정보가 삭제되었습니다.'); location.href='mypage_qna_list.do';</script>");
+                out.println("<script> location.href='mypage_qna_list.do';</script>");
             } else {
                 out.println("<script>alert('문의글 정보 삭제 중 에러가 발생하였습니다.'); history.back();</script>");
             }
@@ -195,7 +195,9 @@ public class SiteQnaController {
             int res = this.cdao.qnaCommentDelete(no);
             out.println(res);
         } 
-              
+        
+        
+        
         // =====================================================================================
         // 이미지만 삭제
         // =====================================================================================

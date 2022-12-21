@@ -169,9 +169,9 @@ public class AdminReviewController {
         this.fdao.updateReviewPoint(dto.getFicnic_no());
 
         if(check > 0){
-            out.println("<script>alert('리뷰가 수정되었습니다.'); location.href='review_list.do';</script>");
+            out.println("<script> location.href='review_list.do';</script>");
         }else{
-            out.println("<script>alert('리뷰 수정에 실패했습니다.'); history.back();</script>");
+            out.println("<script>alert('리뷰 변경 중 에러가 발생하였습니다.'); history.back();</script>");
         }
 
     }
@@ -205,10 +205,10 @@ public class AdminReviewController {
         if (check > 0) {
             this.dao.updateSeq(review_no);
             this.fdao.updateReviewPoint(ficnic_no);	
-            out.println("<script>alert('리뷰가 삭제되었습니다.'); location.href='review_list.do';</script>");
+            out.println("<script> location.href='review_list.do';</script>");
 
         } else {
-            out.println("<script>alert('리뷰 삭제에 실패했습니다.'); history.back();</script>");
+            out.println("<script>alert('리뷰 삭제 중 에러가 발생하였습니다.'); history.back();</script>");
 
         }
     }
@@ -278,7 +278,7 @@ public class AdminReviewController {
 
         	out.println("<script>location.href='review_list.do';</script>");
         }else{
-            out.println("<script>alert('리뷰 등록에 실패했습니다.'); history.back();</script>");
+            out.println("<script>alert('리뷰 등록 중 에러가 발생하였습니다.'); history.back();</script>");
         }
 
     }    

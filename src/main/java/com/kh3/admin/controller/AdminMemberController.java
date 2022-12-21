@@ -197,9 +197,6 @@ public class AdminMemberController {
                 } else if (error.getDefaultMessage().equals("id")) {
                     out.println("<script>alert('아이디를 6자 이상 입력해주세요.'); history.back();</script>");
                     break;
-                } else if (error.getDefaultMessage().equals("name")) {
-                    out.println("<script>alert('이름을 2~8자 사이로 입력해주세요.'); history.back();</script>");
-                    break;
                 } else if (error.getDefaultMessage().equals("pw")) {
                     out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>");
                     break;
@@ -212,20 +209,20 @@ public class AdminMemberController {
                 } else if (error.getDefaultMessage().equals("mailchk")) {
                     out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력하주세요.'); history.back();</script>");
                     break;
+                }else {
+                	// 유효성 검사 이상 없을 때 실행
+                	int check = this.dao.writeOkMember(dto);
+                	if (check > 0) {
+                		// 회원 가입 포인트 적립
+                		this.pdao.joinPoint(pdto);
+                		out.println("<script> location.href='member_list.do';</script>");
+                	} else {
+                		out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
+                	}
+                	break;
                 }
             }
-
-        // 유효성 검사 이상 없을 때 실행
-        } else {
-            int check = this.dao.writeOkMember(dto);
-            if (check > 0) {
-                // 회원 가입 포인트 적립
-                this.pdao.joinPoint(pdto);
-                out.println("<script>alert('회원 등록 되었습니다.'); location.href='member_list.do';</script>");
-            } else {
-                out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
-            }
-        }
+        } 
     }
 
 
@@ -311,9 +308,9 @@ public class AdminMemberController {
                     // 관리자 수정 포인트 적립
                     this.pdao.modifyPoint(pdto);
                 }
-                out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='member_list.do';</script>");
+                out.println("<script> location.href='member_list.do';</script>");
             } else {
-                out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
+                out.println("<script>alert('회원정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
             }
 
 
@@ -363,9 +360,9 @@ public class AdminMemberController {
                     // 관리자 수정 포인트 적립
                     this.pdao.modifyPoint(pdto);
                 }
-                out.println("<script>alert('회원 정보가 수정되었습니다.'); location.href='member_list.do';</script>");
+                out.println("<script> location.href='member_list.do';</script>");
             } else {
-                out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
+                out.println("<script>alert('회원정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
             }
 
         }
@@ -387,9 +384,9 @@ public class AdminMemberController {
 
         if (check > 0) {
             this.dao.updateSequence(no);
-            out.println("<script>alert('회원 정보가 삭제되었습니다.'); location.href='member_list.do';</script>");
+            out.println("<script> location.href='member_list.do';</script>");
         } else {
-            out.println("<script>alert('회원 정보 삭제 중 에러가 발생하였습니다.'); history.back();</script>");
+            out.println("<script>alert('회원정보 삭제 처리 중 에러가 발생하였습니다.'); history.back();</script>");
         }
     }
 

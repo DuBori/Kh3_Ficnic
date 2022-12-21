@@ -26,7 +26,7 @@
                         <thead>
                             <tr>
                                 <th>제목</th>
-                                <th style="width: 200px;" class="table-list-hide-mob">등록일</th>
+                                <th style="width: 200px;" class="table-list-hide-mob">작성일자</th>
                             </tr>
                         </thead>
 
@@ -43,7 +43,7 @@
 
                                 <c:otherwise>
                                 <tr>
-                                    <td colspan="2" class="nodata">문의글 내역이 없습니다.</td>
+                                    <td colspan="2" class="nodata">1:1 문의글 내역이 없습니다.</td>
                                 </tr>
                                 </c:otherwise>
                             </c:choose>

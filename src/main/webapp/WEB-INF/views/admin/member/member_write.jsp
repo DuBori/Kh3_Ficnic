@@ -123,18 +123,18 @@ $(function(){
                         <div class="w-100 border-bottom"></div>
                         <div class="form-group col">
                             <label for="member_id">아이디</label>
-                            <input type="text" name="member_id" id="member_id" class="form-control d-inline w-30" onkeydown="EngNumInput(this);" required />
-                            <div id="idchk-txt" class="d-inline ml-2"></div>
+                            <input type="text" name="member_id" id="member_id" class="form-control d-inline w-30" onkeydown="EngNumInput(this);" placeholder="6자 이상을 입력해주세요." required />
+                            <div id="idchk-txt" class="d-inline ml-2" ></div>
                             <input type="hidden" name="idchk" value="false" />
                         </div>
                         <div class="w-100"></div>
                         <div class="form-group col mb-2">
                             <label for="member_pw">비밀번호</label>
-                            <input type="password" name="member_pw" id="member_pw" class="form-control w-50" required />
+                            <input type="password" name="member_pw" id="member_pw" class="form-control w-50" placeholder="8자 이상의 영문, 숫자, 특수문자 조합" required />
                         </div>
                         <div class="form-group col mb-2">
                             <label for="member_pw_re">비밀번호 확인</label>
-                            <input type="password" name="member_pw_re" id="member_pw_re" class="form-control w-50" required />
+                            <input type="password" name="member_pw_re" id="member_pw_re" class="form-control w-50" placeholder="다시 입력해주세요." required />
                         </div>
 
 
@@ -142,19 +142,19 @@ $(function(){
 
                         <div class="form-group col">
                             <label for="member_name">이름</label>
-                            <input type="text" name="member_name" id="member_name" class="form-control w-30" required />
+                            <input type="text" name="member_name" id="member_name" class="form-control w-30" placeholder="이름을 입력해주세요." required />
                         </div>
                         <div class="w-100"></div>
                         <div class="form-group col">
                             <label for="member_email">이메일</label>
-                            <input type="text" name="member_email" id="member_email" class="form-control w-30" onkeydown="EmailInput(this);" required />
+                            <input type="text" name="member_email" id="member_email" class="form-control w-30" onkeydown="EmailInput(this);" placeholder="이메일을 입력해주세요." required />
                         	<div id="mailchk-txt" class="d-inline ml-2"></div>
 							<input type="hidden" name="mailchk" value="false" />
                         </div>
                         <div class="w-100"></div>
                         <div class="form-group col">
                             <label for="member_phone">연락처</label>
-                            <input type="text" name="member_phone" id="member_phone" maxlength="15" class="form-control w-30" onkeydown="NumSpInput(this);" required />
+                            <input type="text" name="member_phone" id="member_phone" maxlength="15" class="form-control w-30" onkeydown="NumSpInput(this);" placeholder="-을 포함한 전화번호를 입력해주세요." required />
                         </div>
                     </div>
                 </div>

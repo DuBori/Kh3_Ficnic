@@ -83,9 +83,9 @@ public class SiteReservController {
 		
 		if(this.reservDAO.modifyReservStatus(reserv_no, reserv_sess, "cancel")>0) {
 			
-			out.println("<script>alert('예약취소 완료')location.href='"+request.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
+			out.println("<script> location.href='"+request.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
 		}else {
-			out.println("<script>alert('예약취소 실패');history.back();</script>");
+			out.println("<script>alert('예약 취소 중 에러가 발생하였습니다.');history.back();</script>");
 		}
 		
 	}
