@@ -18,5 +18,6 @@ public interface CouponDAO {
     int couponDelete(int no);
     // 쿠폰번호 재작업
     void updateSeq(int no);
+    
 
 }

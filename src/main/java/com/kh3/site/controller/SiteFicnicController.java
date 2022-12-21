@@ -20,8 +20,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kh3.model.coupon.CouponDAO;
 import com.kh3.model.coupon.CouponDTO;
 import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
@@ -69,6 +71,9 @@ public class SiteFicnicController {
     @Inject
     ReservDAO reservDAO;
 
+    @Inject
+    CouponDAO couponDAO;
+    
     // 문의 사진 업로드 설정
     private String qnaFolder = "/resources/data/qna/";
     private String qnaSaveName = "qna";
@@ -581,6 +586,32 @@ public class SiteFicnicController {
     	
     	return "site/ficnic/ficnic_pay";
     }
+    
+    @RequestMapping("ficnic/ficnicCouponSelect.do")
+    @ResponseBody
+    public Map<String, Object> ficnicCouponSelect(
+    		@RequestParam("coupon_no") int coupon_no
+    		) throws IOException{
+
+    	CouponDTO dto=this.couponDAO.couponView(coupon_no);
+    	
+    	Map<String, Object> map = new HashMap<String,Object>(); 
+    	
+    	map.put("price_type", dto.getCoupon_price_type());
+    	map.put("price_over", dto.getCoupon_price_over());
+    	map.put("price_max", dto.getCoupon_price_max());
+    	map.put("date_type", dto.getCoupon_date_type());
+    	map.put("date_value", dto.getCoupon_date_value());
+    	map.put("start_date", dto.getCoupon_start_date());
+    	map.put("end_date", dto.getCoupon_end_date());
+    	map.put("coupon_date", dto.getCoupon_date());
+    	map.put("coupon_price", dto.getCoupon_price());
+    	
+    	return map;
+    }
+    
+    
+    
     
     @RequestMapping("ficnic/reserv_form_ok.do")
     public void reserv_form_ok(

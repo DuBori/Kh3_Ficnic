@@ -175,6 +175,84 @@ $(function(){
 		$(".ficnic_pay_ficnicOtherpay").html("<input disabled class =\"mr-2\" value=\""+ficnic_pay_val+"\"/> <input type=\"hidden\" class=\"Form__Input-sc-1quypp7-1 dYnqqW\" value=\""+ficnic_pay_val+"\"> <input type=\"button\" class=\"btn btn-outline-dark\" value=\"변경\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\"/>  ");
 
 	});
+	
+	
+	$("#sitePriceView").val();
+	
+
+	$("#ficnicCouponSelect").on("change",function(){
+			// 쿠폰 조회
+                $.ajax({
+                    type : "post",
+                    contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+                    url : "ficnicCouponSelect.do",
+                    data : { coupon_no : $("#ficnicCouponSelect").val() },
+        
+                    success : function(data){
+						//변수 설정
+						var price_type = data.price_type;
+						var price_over = data.price_over;
+						var price_max = data.price_max;
+						
+						var date_type = data.date_type;
+						var date_value = data.date_value;
+						var start_date = data.start_date;
+						var end_date = data.end_date;
+						var coupon_price = data.coupon_price;
+						var coupon_date = data.coupon_date;
+						
+						//가격 설정
+						$("input[name='price_type']").val(price_type);
+						$("input[name='price_over']").val(price_over);
+						$("input[name='price_max']").val(price_max);
+						$("input[name='coupon_price']").val(coupon_price);
+						
+						//기간 설정
+						$("input[name='date_type']").val(date_type);
+						$("input[name='date_value']").val(date_value);
+						$("input[name='start_date']").val(start_date);
+						$("input[name='end_date']").val(end_date);
+						
+						
+						//if(date_type == free  || date_type == 'after 
+						
+						if(price_type == "price" ){
+							var priceview= $("#sitePriceView").html();
+							var saleMax = coupon_price;
+							if(saleMax > price_max){
+								saleMax = price_max;
+							}
+							var couponAfterPrice = priceview - saleMax ;
+							
+							if(couponAfterPrice > price_over){
+								alert(couponAfterPrice);
+							}else{
+								alert('사용 불가능');
+							}
+							
+						}else{
+							var priceview= $("#sitePriceView").html();
+							var saleMax = priceview*(coupon_price/100);
+							if(saleMax > price_max){
+								saleMax = price_max;
+							}
+							var couponAfterPrice = priceview - saleMax;
+							
+							if(couponAfterPrice > price_over){
+								alert(couponAfterPrice);
+							}else{
+								alert('사용 불가능');
+							}
+						}
+                    },
+        
+                    error : function(e){
+                        alert("Error : " + e.status);
+                       
+                    }
+                });
+      });	
+
 
 });
 

@@ -14,7 +14,16 @@
         <li><b>${category_name}</b></li>
     </ol>
 </div>
+<!-- js로 받는 값  -->
+<input type="hidden"  name="price_type">
 
+<input type="hidden"  name="price_over">
+<input type="hidden"  name="price_max">
+<input type="hidden"  name="date_type">
+<input type="hidden"  name="date_value">
+<input type="hidden"  name="start_date">
+<input type="hidden"  name="end_date">
+<input type="hidden"  name="coupon_price">
 
 
 <div class="contents w1100 goods-list">
@@ -33,6 +42,9 @@
 <input type="hidden" value="${sess_name}"  name="reserv_name" />
 <input type="hidden" value="${sess_phone}"  name="reserv_phone" />
 <input type="hidden" value="${sess_email}"  name="reserv_email" />
+
+
+
 
 <div class="ficnic-pay-main d-flex flex-column ">
 	
@@ -94,13 +106,37 @@
 					<p class="SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">프립 할인 쿠폰</p>
 					<div class="d-flex flex-row justify-content-between ">
 						<div class="Coupon__CouponCount-p6h1sc-1 cRGbZm"><span>전체 ${couponCount}장</span><span>, 사용가능 0장</span></div>
-						<select>
+					
+
+						
+						
+						<c:set value="disabled" var="chkabled" />
+						<select id="ficnicCouponSelect">
 						<option value="">미선택</option>
 						<c:if test="${!empty mlist }">
-							<c:forEach items="${mlist }" var="mdto" varStatus="i" >
+							<c:forEach items="${mlist }" var="mdto">
 								<c:forEach items="${mdto.getCoupon_list() }" var="cdto" >
-									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">
-										<option value="${cdto.getCoupon_price()}" data-usetype="">${cdto.getCoupon_name()}</option>									
+									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">		
+										<c:if test="${cdto.getCoupon_use_type() ne 'cart' and  cdto.getCoupon_use_type() eq 'category'}" >
+											<c:forTokens items="${cdto.getCoupon_use_value() }" var="val" delims="★">
+													<c:if test="${fdto.getFicnic_category_no() eq val or fdto.getFicnic_category_sub1() eq val or fdto.getFicnic_category_sub2() eq val or fdto.getFicnic_category_sub3() eq val}">
+														<c:set value="" var="chkabled" />
+													</c:if>
+												
+											</c:forTokens>
+										</c:if>
+										<c:if test="${cdto.getCoupon_use_type() ne 'cart' and  cdto.getCoupon_use_type() eq 'goods'}" >
+											<c:forTokens items="${cdto.getCoupon_use_value() }" var="val" delims="★">
+													<c:if test="${fdto.getFicnic_no() eq val}">
+														<c:set value="" var="chkabled" />
+													</c:if>
+												
+											</c:forTokens>
+										</c:if>	
+										<c:if test="${cdto.getCoupon_use_type() ne 'null' }">
+											<c:set value="" var="chkabled" />
+										</c:if>					
+										<option ${chkabled} value="${cdto.getCoupon_no()}" >${cdto.getCoupon_name()}</option>									
 									</c:if>	
 								</c:forEach>	
 							</c:forEach>
@@ -121,12 +157,12 @@
 		<div class="TotalPrice__PriceSectionWrapper-sc-1e1zxsm-0 jmdpIX">
 			<div class="d-flex flex-row justify-content-between">
 				<p class="PageTitle__PurchasePageTitle-ex62ss-0 TotalPrice__PriceSectionTitle-sc-1e1zxsm-1 jjsTId">총 결제금액</p>
-				<span class="TotalPrice__TotalPriceText-sc-1e1zxsm-3 dxsibZ">20,000원</span>
+				<span class="TotalPrice__TotalPriceText-sc-1e1zxsm-3 dxsibZ">${fdto.getFicnic_sale_price() }</span>원
 			</div><hr>
 			<div class="d-flex flex-row justify-content-between">
 				<p class="SubTitle-eeu9i7-0 TotalPrice__PriceSectionSubTitle-sc-1e1zxsm-2 eHKVGS">총 프립 금액</p>
-				<span>${totalprice }</span>
-				<input type="hidden" value="${totalprice- selectprice}" name="reserv_total_price">
+				<span id="sitePriceView">${fdto.getFicnic_sale_price() }</span>원
+				<input type="hidden" value="" name="reserv_total_price">
 			</div>
 			
 		</div>
