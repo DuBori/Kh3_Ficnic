@@ -4,7 +4,7 @@
 $(function(){
 
     // 이미지 슬라이드
-    if($(".ficnic-view .fv-top .fvt-photo").length > 0){
+    if($(".ficnic-view .fv-top .fvt-photo .swiper-wrapper").length > 0){
         var photoSwiper = new Swiper(".ficnic-view .fv-top .fvt-photo", {
             effect: "fade",
             slidesPerView: 1,

@@ -93,7 +93,19 @@
 /*************************/
 /* .goods-list
 /*************************/
-.goods-list {}
+.goods-list {
+	margin-top: 7px !important;
+}
+
+
+.goods-list .gl-img {
+	position: relative;
+    margin-bottom: 30px;
+}
+.goods-list .gl-img img {
+	width: 100%;
+}
+
 
 
 .goods-list .gl-top {
@@ -204,7 +216,7 @@
 .ficnic-view .fv-top .fvt-photo li {
 	width: 100%;
 }
-.ficnic-view .fv-top .fvt-photo li img {
+.ficnic-view .fv-top .fvt-photo img {
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;

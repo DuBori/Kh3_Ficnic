@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -120,6 +119,7 @@ public class SiteFicnicController {
 
         String category_name = "";
         List<CategoryDTO> cList = null;
+        CategoryDTO cdto = null;
 
 
         // -------------------------------------------------------
@@ -136,7 +136,7 @@ public class SiteFicnicController {
         }else{
 
             // 카테고리 정보
-            CategoryDTO cdto = cdao.getCategoryCont(ficnic_category_no);
+            cdto = cdao.getCategoryCont(ficnic_category_no);
             parent_category_no = (ficnic_category_no.substring(0, 2)) + "000000";
 
             // 카테고리 피크닉 불러오기 위한 설정
@@ -181,6 +181,7 @@ public class SiteFicnicController {
 
         model.addAttribute("flist", fList);
         model.addAttribute("clist", cList);
+        model.addAttribute("cdto", cdto);
         model.addAttribute("category_no", ficnic_category_no);
         model.addAttribute("parent_category_no", parent_category_no);
         model.addAttribute("category_name", category_name);

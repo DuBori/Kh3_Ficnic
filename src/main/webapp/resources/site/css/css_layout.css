@@ -1120,6 +1120,11 @@ main .view-form .vf-body a:hover {
 main .view-form .vf-body .vfb-info {
     font-size: 14px;
 }
+main .view-form .vf-body .vfb-info p.writer img {
+    height: 22px;
+    vertical-align: middle;
+    margin: -2px 3px 0 0;
+}
 main .view-form .vf-body .vfb-photo {
     margin: 5px 0;
 }
