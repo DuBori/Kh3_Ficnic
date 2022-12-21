@@ -17,7 +17,7 @@
 
 
 
-<div class="contents w1100 mypage-reserv" align="left">
+<div class="contents w1100 mypage-reserv">
 
 	<div class="mypage-reserv-topdiv">
 		<ul class="mypage-reserv d-flex flex-row">
@@ -27,14 +27,14 @@
 		</ul>
 	</div>
 	
-	<div class="mypage-reserv-mainDiv d-flex flex-column w1000 " align="left">
+	<div class="mypage-reserv-mainDiv d-flex flex-column w1000 ">
 		<!-- 예약 리스트 출력  -->
-		<div class="mypage-reserv-subDiv d-flex flex-row flex-wrap" align="left">
+		<div class="mypage-reserv-subDiv d-flex flex-row flex-wrap ">
 			<c:choose>
 				<c:when test="${!empty List }">
 					<c:forEach items="${List}" var="dto">
 				    			<c:set var="move_ficnic_info" value="onclick=\"location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no()}'\""/>
-				    			<div class="mypage-wish w-20 m-1 p-1 d-flex flex-row ">
+				    			<div class="mypage-wish w-20 m-1 p-1 d-flex justify-content-start  ">
 									  	<img ${move_ficnic_info } src="${path }${dto.getReserv_ficnic_photo()}" class="card-img-top" style="width:250px" alt="...">
 									  <div class="mypage-wish d-flex flex-column  ml-3">
 										  	<div ${move_ficnic_info } class="mb-2"> 
@@ -73,8 +73,8 @@
 						</c:forEach>
 					</c:when>
 				<c:otherwise>
-						<div class="w-20 m-1 p-1 d-flex flex-column justify-content-center">
-							<img src="data:image/svg+xml,%3Csvg width='56' height='56' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M38 16H22M38 23H22M38 30H22M38 37H22' stroke='%23777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E %3Crect x='8' y='5' width='39' height='44' rx='4' stroke='%23777' stroke-width='2'/%3E %3Ccircle cx='16.5' cy='16' r='1.5' fill='%23777'/%3E %3Ccircle cx='16.5' cy='23' r='1.5' fill='%23777'/%3E %3Ccircle cx='16.5' cy='30' r='1.5' fill='%23777'/%3E %3Ccircle cx='16.5' cy='37' r='1.5' fill='%23777'/%3E %3Ccircle cx='42' cy='43' r='11' fill='%23fff' stroke='%23fff' stroke-width='2'/%3E %3Ccircle cx='42' cy='43' r='9' fill='%23fff' stroke='%23777' stroke-width='2'/%3E %3Cpath d='m39 46 6-6M45 46l-6-6' stroke='%23777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E %3C/svg%3E" alt="아직 결제내역이 없어요!" width="56px" height="56px">
+						<div class="d-flex flex-column justify-content-center align-items-center m-1 p-1 ">
+							<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 							<div class="Placeholder__Title-von7t2-1 dqGjWH">
 								아직 해당 피크닉 내역이 없어요!
 							</div>
