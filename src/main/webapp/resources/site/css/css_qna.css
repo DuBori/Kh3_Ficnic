@@ -90,8 +90,6 @@
     margin: 0 auto;
     padding: 0;
     box-sizing: border-box;	
-    border-bottom: 1px solid #ddd !important;
-	
 }
 
 .comment-write th,
@@ -101,6 +99,7 @@
 
 .comment-write td p {
 	text-align: center;
+    border-top: 1px solid #ddd !important;
 }
 
 .comment-write td button {
@@ -175,6 +174,7 @@ h4 {
     border-bottom: 1px solid #ddd !important;
 }
 
+
 .table-form td {
     color: #181818;
 }
@@ -200,6 +200,12 @@ h4 {
 .tdImg p .engnum {
 	display: block;
 	margin-top: 10px;
+}
+
+.tdImg p .fileSpan {
+	display: block;
+	margin-top: 8px;
+	margin-bottom: 5px;
 }
 
 .table-form th {

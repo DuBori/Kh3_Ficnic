@@ -20,44 +20,61 @@
 
 <div class="contents w1100 ficnic-qna">
 
-		<form name="form_input" method="post" enctype="multipart/form-data" action="${path}/ficnic/mypage_qna_writeOk.do">
-		<input type="hidden" value="${fdto.getFicnic_no() }" name="ficnic_no">
-		<div class="input-group flex-nowrap">
-		  <textarea placeholder="제목" class="ProductQnaRegisterPage__TextArea-vv74rv-2 dCffyLn" aria-describedby="addon-wrapping" name="qna_title" id="qna_title" required></textarea>		
-		</div>
+	<form name="form_input" method="post" enctype="multipart/form-data" action="${path}/ficnic/mypage_qna_writeOk.do">
+	<input type="hidden" value="${fdto.getFicnic_no() }" name="ficnic_no">
+            <table class="table-form mb-5">
+                <colgroup>
+                    <col width="10%" />
+                    <col width="32%" />
+                    <col width="17%" />
+                    <col />
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>제목</th>
+                        <td colspan="2">
+                            <input type="text" name="qna_title" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>내용</th>
+                        <td colspan="2">
+                        	<textarea name="qna_cont" cols="80" rows="3" class="form-control"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 		
-		<div class="Fade__Wrapper-sc-1s0ipfq-0 koasSX" style="opacity: 1; display: block;">
-			
-			<textarea placeholder="연락처를 포함한 개인정보를 남기거나 요청하는 등
-직거래 이용 문의는 현장결제로 간주하여 사전안내 없이 삭제 및 이용이 제한될 수 있습니다.
- - 결제, 환불 등 서비스 문의 : 카카오톡 채널 @frip" name="qna_cont" class="ProductQnaRegisterPage__TextArea-vv74rv-2 dCffyL" required></textarea>
-		       
-		        <div class="fileDiv">
-	            <label for="board_list_num">첨부 파일 #1</label>
-		            <div class="">
-			            <div class="">
-				            <div class="">
-				            	<input type="file" name="qna_file_modi1" class="form-control" accept="image/jpeg, image/png, image/gif" />
-				            </div>
-			            </div>
-		            </div>
-	            </div>
-	            
-	            <div class="fileDiv">
-	            <label for="board_list_num">첨부 파일 #2</label>
-		            <div class="jf-input">
-			            <div class="">
-				            <div class="">
-				            	<input type="file" name="qna_file_modi2" class="form-control" accept="image/jpeg, image/png, image/gif" />
-				            </div>
-			            </div>
-		            </div>
-	            </div>
-			<div class="d-grid gap-2">
-			  <button class="btn btn-primary writeBtn" type="submit" font-size="15px" type="submit">등록하기</button>
-			</div>	            
-		</div>
-		</form>
+		<h4>1:1 문의 사진</h4>
+            <table class="table-form mb-5">
+                <colgroup>
+                    <col width="10%" />
+                    <col width="32%" />
+                    <col width="17%" />
+                    <col />
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>사진1</th>
+                        <td class="engnum" colspan="2">
+				            <input type="file" name="qna_file_modi1" class="form-control" accept="image/jpeg, image/png, image/gif" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>사진2</th>
+                        <td class="engnum" colspan="2">
+				        	<input type="file" name="qna_file_modi2" class="form-control" accept="image/jpeg, image/png, image/gif" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        
+		<button class="btn btn-primary writeBtn" type="submit" type="submit">등록하기</button>
+        
+	</form>
+
+
+
 
 </div>
 

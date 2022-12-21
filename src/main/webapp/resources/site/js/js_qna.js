@@ -50,7 +50,7 @@ $(function() {
 						new_comment += "\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-1 px-1 py-0 qnaDeleteBtn\" name=\"comment_no\" value="+data+"><i class=\"fa fa-trash-o\"></i> 삭제</button>\n";
 						new_comment += "\t</td>\n";
 						new_comment += "</tr>\n";
-					$("#comment-list").append(new_comment);
+					$("#mComment-list").append(new_comment);
 					$("#comment_contentOk").val("");
 					$("#comment_contentOk").focus();
 				}else{
