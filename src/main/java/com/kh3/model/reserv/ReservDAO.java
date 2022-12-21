@@ -43,5 +43,11 @@ public interface ReservDAO {
 	// 지난 날짜 예약 취소로 변경
 	void updateReserv_status(ReservDTO val);
 
+	// 회원 예약 하기
+	int insertReserv(ReservDTO rDto);
+
+	// 해당 날짜 Reserv-sess 중복 검사 리스트
+	List<ReservDTO> getReservList(String todayDate);
+
 
 }
