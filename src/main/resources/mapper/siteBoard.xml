@@ -75,10 +75,18 @@
 
 
 	<!-- 해당 게시판 해당 게시글 불러오기 -->
-	<select id="SiteBoardDto" parameterType="map" resultType="boardDTO">
+    <resultMap id="siteBdataContMap" type="boardDto">
+        <result property="bdata_writer_id" column="bdata_writer_id" />
+        <collection property="bdata_writer_type" column="bdata_writer_id" select="siteBoardContWriterType" javaType="String" ofType="String" />
+    </resultMap>
+
+	<select id="SiteBoardDto" parameterType="map" resultMap="siteBdataContMap">
 		select * from board_data_${bbs_id} where bdata_no = #{bdata_no} 
 	</select>
-	
+
+    <select id="siteBoardContWriterType" parameterType="String" resultType="String">
+        select member_type from member_list where member_id = #{bdata_writer_id}
+    </select>
 
 
 

@@ -5,8 +5,8 @@
 <c:set var="totalCount" value="${count }" />
 <c:set var="rcount" value="${rcount }" />
 
-<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_ficnic.css" />
-<script language="javascript" src="${path}/resources/site/js/js_ficnic.js"></script>
+<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_ficnic.css?${time}" />
+<script language="javascript" src="${path}/resources/site/js/js_ficnic.js?${time}"></script>
 
 
 

@@ -72,14 +72,6 @@ public class FicnicDAOImpl implements FicnicDAO {
 
 
 
-    /* 피크닉 상품 삭제 후 번호 정렬 */
-    @Override
-    public void updateSeq(int no) {
-        this.sqlSession.update("adminFicnicDeleteUpdate", no);
-    }
-
-
-
     /* 피크닉 사진 삭제 */
     public void deleteFicnicImage(int no, int img_no) {
         Map<String, Object> map = new HashMap<String, Object>();

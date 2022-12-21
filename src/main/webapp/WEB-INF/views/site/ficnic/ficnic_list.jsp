@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/layout_header.jsp" %>
 
-<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_ficnic.css" />
-<script language="javascript" src="${path}/resources/site/js/js_ficnic.js"></script>
+<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_ficnic.css?${time}" />
+<script language="javascript" src="${path}/resources/site/js/js_ficnic.js?${time}"></script>
 
 
 
@@ -19,25 +19,33 @@
 
 <div class="contents w1100 goods-list">
 
-	<div class="gl-top">
-		<select name="sort" class="custom-select glt-sort" onchange="location.href=this.value;">
-			<option value="ficnic_list.do?category=${param.category}&search=${param.search}&sort=popular"<c:if test="${param.sort eq 'popular'}"> selected="selected"</c:if>>인기순</option>
-			<option value="ficnic_list.do?category=${param.category}&search=${param.search}&sort=date"<c:if test="${param.sort eq 'date'}"> selected="selected"</c:if>>등록일순</option>
-			<option value="ficnic_list.do?category=${param.category}&search=${param.search}&sort=review"<c:if test="${param.sort eq 'review'}"> selected="selected"</c:if>>평점순</option>
-			<option value="ficnic_list.do?category=${param.category}&search=${param.search}&sort=high"<c:if test="${param.sort eq 'high'}"> selected="selected"</c:if>>가격높은순</option>
-			<option value="ficnic_list.do?category=${param.category}&search=${param.search}&sort=low"<c:if test="${param.sort eq 'low'}"> selected="selected"</c:if>>가격낮은순</option>
-		</select>
 
-		<c:if test="${!empty clist}">
-		<ul class="glt-category">
-			<li<c:if test="${param.category eq parent_category_no}"> class="now"</c:if>><a href="ficnic_list.do?category=${parent_category_no}&sort=${param.sort}">전체보기</a></li>
-		  	<c:forEach var="sub" items="${clist}">
-		  	<li<c:if test="${param.category eq sub.getCategory_id()}"> class="now"</c:if>><a href="ficnic_list.do?category=${sub.getCategory_id()}&sort=${param.sort}">${sub.getCategory_name()}</a></li>
-		  	</c:forEach>
-		</ul>
-		</c:if>
-	</div>
+	<c:choose>
+		<c:when test="${cdto.getCategory_show() eq 'N' and !empty cdto.getCategory_image()}">
+		<div class="gl-img"><img src="${path}${cdto.getCategory_image()}" alt="" /></div>
+		</c:when>
 
+		<c:otherwise>
+			<c:if test="${!empty clist}">
+				<div class="gl-top">
+					<select name="sort" class="custom-select glt-sort" onchange="location.href=this.value;">
+						<option value="ficnic_list.do?category=${param.category}&search=${param.search}&sort=popular"<c:if test="${param.sort eq 'popular'}"> selected="selected"</c:if>>인기순</option>
+						<option value="ficnic_list.do?category=${param.category}&search=${param.search}&sort=date"<c:if test="${param.sort eq 'date'}"> selected="selected"</c:if>>등록일순</option>
+						<option value="ficnic_list.do?category=${param.category}&search=${param.search}&sort=review"<c:if test="${param.sort eq 'review'}"> selected="selected"</c:if>>평점순</option>
+						<option value="ficnic_list.do?category=${param.category}&search=${param.search}&sort=high"<c:if test="${param.sort eq 'high'}"> selected="selected"</c:if>>가격높은순</option>
+						<option value="ficnic_list.do?category=${param.category}&search=${param.search}&sort=low"<c:if test="${param.sort eq 'low'}"> selected="selected"</c:if>>가격낮은순</option>
+					</select>
+
+					<ul class="glt-category">
+						<li<c:if test="${param.category eq parent_category_no}"> class="now"</c:if>><a href="ficnic_list.do?category=${parent_category_no}&sort=${param.sort}">전체보기</a></li>
+					  	<c:forEach var="sub" items="${clist}">
+					  	<li<c:if test="${param.category eq sub.getCategory_id()}"> class="now"</c:if>><a href="ficnic_list.do?category=${sub.getCategory_id()}&sort=${param.sort}">${sub.getCategory_name()}</a></li>
+					  	</c:forEach>
+					</ul>
+				</div>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 
 
 	<ul class="gl-list ficnic-list">
@@ -54,7 +62,7 @@
 									<c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
 									<c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
 									<c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
-									<c:otherwise><span class="noimg">no img</span></c:otherwise>
+									<c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
 								</c:choose>
 							</div>
 

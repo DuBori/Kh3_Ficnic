@@ -23,9 +23,6 @@ public interface FicnicDAO {
     /* 피크닉 삭제 */
     int deleteFicnic(int no);
 
-    /* 피크닉 삭제 후 번호 정렬 */
-    void updateSeq(int no);
-
     /* 피크닉 사진 삭제 */
     void deleteFicnicImage(int no, int img_no);
 

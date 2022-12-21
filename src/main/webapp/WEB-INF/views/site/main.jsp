@@ -34,16 +34,16 @@
     <!-- #main-icon //메인 아이콘 START -->
     <section id="main-icon">
         <ul>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=10000000"><p><img src="${path}/resources/site/images/main_icon_01.png" alt="" /></p>실시간랭킹</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=10000000"><p><img src="${path}/resources/site/images/main_icon_02.png" alt="" /></p>신규클래스</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=10000000"><p><img src="${path}/resources/site/images/main_icon_03.png" alt="" /></p>도전!댄스</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=10000000"><p><img src="${path}/resources/site/images/main_icon_04.png" alt="" /></p>헤메코</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=10000000"><p><img src="${path}/resources/site/images/main_icon_05.png" alt="" /></p>일상탈출</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=10000000"><p><img src="${path}/resources/site/images/main_icon_06.png" alt="" /></p>N잡러</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=10000000"><p><img src="${path}/resources/site/images/main_icon_07.png" alt="" /></p>사주/타로</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=10000000"><p><img src="${path}/resources/site/images/main_icon_08.png" alt="" /></p>액세서리</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=10000000"><p><img src="${path}/resources/site/images/main_icon_09.png" alt="" /></p>쿠킹/베이킹</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=10000000"><p><img src="${path}/resources/site/images/main_icon_10.png" alt="" /></p>외국어</a></li>
+            <li><a href="${path}/ficnic/ficnic_list.do?category=rank"><p><img src="${path}/resources/site/images/main_icon_01.png" alt="" /></p>실시간랭킹</a></li>
+            <li><a href="${path}/ficnic/ficnic_list.do?category=new"><p><img src="${path}/resources/site/images/main_icon_02.png" alt="" /></p>신규클래스</a></li>
+            <li><a href="${path}/ficnic/ficnic_list.do?category=06040000"><p><img src="${path}/resources/site/images/main_icon_03.png" alt="" /></p>도전!댄스</a></li>
+            <li><a href="${path}/ficnic/ficnic_list.do?category=09000000"><p><img src="${path}/resources/site/images/main_icon_04.png" alt="" /></p>헤메코</a></li>
+            <li><a href="${path}/ficnic/ficnic_list.do?category=01000000"><p><img src="${path}/resources/site/images/main_icon_05.png" alt="" /></p>일상탈출</a></li>
+            <li><a href="${path}/ficnic/ficnic_list.do?category=07020000"><p><img src="${path}/resources/site/images/main_icon_06.png" alt="" /></p>N잡러</a></li>
+            <li><a href="${path}/ficnic/ficnic_list.do?category=12010000"><p><img src="${path}/resources/site/images/main_icon_07.png" alt="" /></p>사주/타로</a></li>
+            <li><a href="${path}/ficnic/ficnic_list.do?category=03090000"><p><img src="${path}/resources/site/images/main_icon_08.png" alt="" /></p>액세서리</a></li>
+            <li><a href="${path}/ficnic/ficnic_list.do?category=05000000"><p><img src="${path}/resources/site/images/main_icon_09.png" alt="" /></p>쿠킹/베이킹</a></li>
+            <li><a href="${path}/ficnic/ficnic_list.do?category=07060000"><p><img src="${path}/resources/site/images/main_icon_10.png" alt="" /></p>외국어</a></li>
         </ul>
     </section>
     <!-- #main-icon //메인 아이콘 START -->
@@ -69,7 +69,7 @@
                                 <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
                                 <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
                                 <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
-                                <c:otherwise><span class="noimg">no img</span></c:otherwise>
+                                <c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
                             </c:choose>
                         </div>
 
@@ -116,7 +116,7 @@
 
     <!-- #main-banner //메인 배너 START -->
     <section id="main-banner">
-        <a href="#"><img src="${path}/resources/site/images/main_banner.jpg" alt="" /></a>
+        <a href="${path}/ficnic/ficnic_view.do?category=02010000&ficnic_no=89"><img src="${path}/resources/site/images/main_banner.jpg" alt="" /></a>
     </section>
     <!-- #main-banner //메인 배너 START -->
 
@@ -141,7 +141,7 @@
                                 <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
                                 <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
                                 <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
-                                <c:otherwise><span class="noimg">no img</span></c:otherwise>
+                                <c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
                             </c:choose>
                         </div>
 
@@ -188,7 +188,16 @@
 
     <!-- #main-exhibition //메인 기획전 START -->
     <section id="main-exhibition">
-        메인 기획전
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button">
+            <button class="swiper-button-prev"><i class="icon-arrow-left"></i></button>
+            <button class="swiper-button-next"><i class="icon-arrow-right"></i></button>
+        </div>
+        <ul class="swiper-wrapper">
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/exhibition_slide_1.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/exhibition_slide_2.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/exhibition_slide_3.jpg" alt="" /></a></li>
+        </ul>
     </section>
     <!-- #main-exhibition //메인 기획전 START -->
 
@@ -213,7 +222,7 @@
                                 <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
                                 <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
                                 <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
-                                <c:otherwise><span class="noimg">no img</span></c:otherwise>
+                                <c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
                             </c:choose>
                         </div>
 
@@ -298,7 +307,7 @@
                                 <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
                                 <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
                                 <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
-                                <c:otherwise><span class="noimg">no img</span></c:otherwise>
+                                <c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
                             </c:choose>
                         </div>
 
