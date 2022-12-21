@@ -194,9 +194,9 @@
             <button class="swiper-button-next"><i class="icon-arrow-right"></i></button>
         </div>
         <ul class="swiper-wrapper">
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/exhibition_slide_1.jpg" alt="" /></a></li>
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/exhibition_slide_2.jpg" alt="" /></a></li>
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/exhibition_slide_3.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=20000000"><img src="${path}/resources/site/images/exhibition_slide_1.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=21000000"><img src="${path}/resources/site/images/exhibition_slide_2.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=22000000"><img src="${path}/resources/site/images/exhibition_slide_3.jpg" alt="" /></a></li>
         </ul>
     </section>
     <!-- #main-exhibition //메인 기획전 START -->
