@@ -26,7 +26,12 @@
                         </div>
 
                         <div class="col text-right pt-2">
-                        	<p class="writer">${BoardConDto.getBdata_writer_name()}<c:if test="${!empty BoardConDto.getBdata_writer_id()}"> (${BoardConDto.getBdata_writer_id()})</c:if></p>
+                        	<p class="writer">
+                                <c:choose>
+                                    <c:when test="${BoardConDto.getBdata_writer_type() eq 'admin'}"><img src="${path}/resources/site/images/admin_icon.png" alt="" /><b>관리자</b></c:when>
+                                    <c:otherwise>${BoardConDto.getBdata_writer_name()}<c:if test="${!empty BoardConDto.getBdata_writer_id()}"> (${BoardConDto.getBdata_writer_id()})</c:if></c:otherwise>
+                                </c:choose>
+                            </p>
                         </div>
                     </div>
 

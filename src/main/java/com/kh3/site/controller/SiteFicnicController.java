@@ -76,7 +76,7 @@ public class SiteFicnicController {
 
 
     // 한 페이지당 보여질 게시물의 수
-    private final int rowsize = 10;
+    private final int rowsize = 12;
 
     // 전체 게시물의 수
     private int totalRecord = 0;
@@ -106,15 +106,46 @@ public class SiteFicnicController {
         @RequestParam(value = "category", required = false, defaultValue = "") String ficnic_category_no,
         @RequestParam(value = "sort", required = false, defaultValue = "popular") String sort,
         @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        @RequestParam(value = "search", required = false, defaultValue = "") String search,
         HttpServletRequest request, HttpSession session, Model model) {
 
-        // 카테고리 정보
-        CategoryDTO cdto = cdao.getCategoryCont(ficnic_category_no);
-        String parent_category_no = (ficnic_category_no.substring(0, 2)) + "000000";
+        String parent_category_no = "";
+        int next_num = 0;
+        String parent_str = "";
 
-        // 카테고리 피크닉 불러오기 위한 설정
-        int next_num = cdto.getCategory_depth() * 2;
-        String parent_str = ficnic_category_no.substring(0, next_num);
+        String category_name = "";
+        List<CategoryDTO> cList = null;
+
+
+        // -------------------------------------------------------
+        // 검색 일때
+        // -------------------------------------------------------
+        if(!search.equals("") & ficnic_category_no.equals("")) {
+            // 현재 카테고리 이름
+            category_name = search + " 검색 결과";
+
+
+        // -------------------------------------------------------
+        // 일반 카테고리
+        // -------------------------------------------------------
+        }else{
+
+            // 카테고리 정보
+            CategoryDTO cdto = cdao.getCategoryCont(ficnic_category_no);
+            parent_category_no = (ficnic_category_no.substring(0, 2)) + "000000";
+
+            // 카테고리 피크닉 불러오기 위한 설정
+            next_num = cdto.getCategory_depth() * 2;
+            parent_str = ficnic_category_no.substring(0, next_num);
+
+            // 현재 카테고리 이름
+            category_name = this.cdao.getCategoryName(parent_category_no);
+
+            // 서브 카테고리 목록
+            cList = cdao.getSiteSubCategoryList(parent_category_no);
+
+        }
+
 
 
         // 세션 아이디 가져오기
@@ -125,35 +156,32 @@ public class SiteFicnicController {
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("category_no", ficnic_category_no);
-        map.put("sort", sort);
         map.put("next_num", next_num);
         map.put("parent_str", parent_str);
         map.put("sess_id", sess_id);
+        map.put("sort", sort);
+        map.put("search", search);
 
 
         totalRecord = fdao.getSiteListCount(map);
         PageDTO dto = new PageDTO(page, rowsize, totalRecord, map);
 
         // 페이지 이동 URL
-        String pageUrl = request.getContextPath() + "/ficnic/ficnic_list.do?category=" + ficnic_category_no + "&sort=" + sort;
+        String pageUrl = request.getContextPath() + "/ficnic/ficnic_list.do?category=" + ficnic_category_no + "&sort=" + sort + "&search=" + search;
 
 
         // 카테고리 피크닉 목록
         List<FicnicDTO> fList = fdao.getSiteFicnicList(dto.getStartNo(), dto.getEndNo(), map);
 
-        // 현재 카테고리 이름
-        String category_name = this.cdao.getCategoryName(parent_category_no);
-
-        // 서브 카테고리 목록
-        List<CategoryDTO> cList = cdao.getSiteSubCategoryList(parent_category_no);
-
 
         model.addAttribute("flist", fList);
         model.addAttribute("clist", cList);
         model.addAttribute("category_no", ficnic_category_no);
-        model.addAttribute("sort", sort);
         model.addAttribute("parent_category_no", parent_category_no);
         model.addAttribute("category_name", category_name);
+
+        model.addAttribute("sort", sort);
+        model.addAttribute("search", search);
 
         model.addAttribute("totalCount", totalRecord);
         model.addAttribute("paging", dto);
@@ -181,7 +209,7 @@ public class SiteFicnicController {
         fdao.updateFicnicHit(ficnic_no);
 
 
-        if(ficnic_category_no.equals("") || ficnic_category_no == "null") {
+        if(ficnic_category_no.equals("") || ficnic_category_no == null) {
             ficnic_category_no = dto.getFicnic_category_no();
         }
 
