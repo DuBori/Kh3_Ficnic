@@ -128,7 +128,7 @@
 						<div class="w-100"></div>
 						<div class="form-group col-sm">
 							<label for="category_name">카테고리 이름</label>
-							<input type="text" name="category_name" id="category_name" value="" maxlength="30" class="form-control" required />
+							<input type="text" name="category_name" id="category_name" value="" maxlength="30" class="form-control" required autocomplete="off" />
 						</div>
 						<div class="form-group col-sm">
 							<label for="category_link">카테고리 번호</label>
