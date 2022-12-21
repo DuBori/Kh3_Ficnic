@@ -22,6 +22,8 @@ import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
+import com.kh3.model.review.ReviewDAO;
+import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
 import com.kh3.util.UploadFile;
@@ -34,6 +36,9 @@ public class AdminFicnicController {
 
     @Inject
     private CategoryDAO cdao;
+
+    @Inject
+    ReviewDAO rdao;
 
 
     // 카테고리 업로드 설정
@@ -785,9 +790,30 @@ public class AdminFicnicController {
         }
 
         if (this.dao.deleteFicnic(no) > 0) {
-            this.dao.updateSeq(no);
-            out.println(
-                    "<script>location.href='" + request.getContextPath() + "/admin/ficnic/ficnic_list.do'</script>");
+
+            // 해당 리뷰도 삭제
+            Map<String, Object> searchMap = new HashMap<String, Object>();
+            searchMap.put("ficnic_no", no);
+            searchMap.put("getType", "");
+            List<ReviewDTO> rList = rdao.getNumList(1, 9999, searchMap);
+
+            for(int i=0; i<rList.size(); i++) {
+                ReviewDTO dto = rList.get(i);
+
+                // 기존 파일 있으면 삭제 처리
+                if(dto.getReview_photo1() != null){
+                    File del_pimage1 = new File(request.getSession().getServletContext().getRealPath(dto.getReview_photo1()));
+                    if(del_pimage1.exists()) del_pimage1.delete();
+                }
+                if(dto.getReview_photo2() != null){
+                    File del_pimage2 = new File(request.getSession().getServletContext().getRealPath(dto.getReview_photo2()));
+                    if(del_pimage2.exists()) del_pimage2.delete();
+                }
+    
+                rdao.reviewDelete(dto.getReview_no());
+            }
+
+            out.println("<script>location.href='" + request.getContextPath() + "/admin/ficnic/ficnic_list.do'</script>");
         } else {
             out.println("<script>alert('피크닉 삭제 실패'); history.back()</script>");
         }
@@ -926,9 +952,11 @@ public class AdminFicnicController {
         // 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
         String category_image = mRequest.getParameter("ori_category_image");
         List<String> upload_list = UploadFile.fileUpload(mRequest, categoryFolder, categorySaveName);
-        if (upload_list.size() > 0) {
+        System.out.println("upload_list.size() >>> " + upload_list.size());
+        System.out.println("upload_list.get(0) >>> " + upload_list.get(0));
+        if (upload_list.size() > 0 && !upload_list.get(0).equals("")) {
             // 기존 파일 있으면 삭제 처리
-            if (category_image != null) {
+            if (category_image != null && !upload_list.get(0).equals("")) {
                 File del_pimage = new File(mRequest.getSession().getServletContext().getRealPath(category_image));
                 if (del_pimage.exists())
                     del_pimage.delete();

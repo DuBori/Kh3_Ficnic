@@ -115,15 +115,6 @@
 	<delete id="adminFicnicDelete" parameterType="int">
 		delete from ficnic_list where ficnic_no = #{no}	
 	</delete>
-	
-
-
-	<!-- 해당 피크닉 삭제 후 번호 정렬  -->
-	<update id="adminFicnicDeleteUpdate" parameterType="int">
-		<![CDATA[
-            update ficnic_list set ficnic_no = ficnic_no-1 where ficnic_no > #{no}
-        ]]>
-	</update>
 
 
 

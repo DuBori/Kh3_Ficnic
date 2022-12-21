@@ -4,8 +4,8 @@
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/swiper.min.css" />
 <script language="javascript" src="${path}/resources/site/js/swiper.min.js"></script>
 
-<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_ficnic.css" />
-<script language="javascript" src="${path}/resources/site/js/js_ficnic.js"></script>
+<link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_ficnic.css?${time}" />
+<script language="javascript" src="${path}/resources/site/js/js_ficnic.js?${time}"></script>
 
 <c:if test="${dto.getFicnic_date_use() eq 'Y'}">
 <script src="${path}/resources/site/js/gijgo.min.js" type="text/javascript"></script>
@@ -34,18 +34,23 @@
 	<!-- .fv-top //START -->
 	<div class="fv-top">
 		<div class="fvt-photo">
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button">
-            	<button class="swiper-button-prev"><i class="icon-arrow-left"></i></button>
-            	<button class="swiper-button-next"><i class="icon-arrow-right"></i></button>
-            </div>
-            <ul class="swiper-wrapper">
-                <c:if test="${!empty dto.getFicnic_photo1()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo1()}" alt="" /></li></c:if>
-                <c:if test="${!empty dto.getFicnic_photo2()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo2()}" alt="" /></li></c:if>
-                <c:if test="${!empty dto.getFicnic_photo3()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo3()}" alt="" /></li></c:if>
-                <c:if test="${!empty dto.getFicnic_photo4()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo4()}" alt="" /></li></c:if>
-                <c:if test="${!empty dto.getFicnic_photo5()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo5()}" alt="" /></li></c:if>
-            </ul>
+            <c:choose>
+                <c:when test="${!empty dto.getFicnic_photo1() or !empty dto.getFicnic_photo2() or !empty dto.getFicnic_photo3() or !empty dto.getFicnic_photo4() or !empty dto.getFicnic_photo5()}">
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button">
+                    	<button class="swiper-button-prev"><i class="icon-arrow-left"></i></button>
+                    	<button class="swiper-button-next"><i class="icon-arrow-right"></i></button>
+                    </div>
+                    <ul class="swiper-wrapper">
+                        <c:if test="${!empty dto.getFicnic_photo1()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo1()}" alt="" /></li></c:if>
+                        <c:if test="${!empty dto.getFicnic_photo2()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo2()}" alt="" /></li></c:if>
+                        <c:if test="${!empty dto.getFicnic_photo3()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo3()}" alt="" /></li></c:if>
+                        <c:if test="${!empty dto.getFicnic_photo4()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo4()}" alt="" /></li></c:if>
+                        <c:if test="${!empty dto.getFicnic_photo5()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo5()}" alt="" /></li></c:if>
+                    </ul>
+                </c:when>
+                <c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
+            </c:choose>
 		</div>
 
 
