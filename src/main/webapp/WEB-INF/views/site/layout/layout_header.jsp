@@ -79,7 +79,7 @@
                 <form name="search" class="navbar-search mr-auto" action="${path}/ficnic/ficnic_list.do">
                 <fieldset>
                     <legend class="displaynone">통합검색</legend>
-                    <input type="text" name="query" value="" autocomplete="off" placeholder="배우고 싶은 재능을 찾아보세요." />
+                    <input type="text" name="search" value="" autocomplete="off" placeholder="배우고 싶은 재능을 찾아보세요." />
                     <button type="submit"><span class="displaynone">검색</span></button>
                 </fieldset>
                 </form>
