@@ -97,10 +97,10 @@
 						<select>
 						<option value="">미선택</option>
 						<c:if test="${!empty mlist }">
-							<c:forEach items="${mlist }" var="mdto">
-								<c:forEach items="${mdto.getCoupon_list() }" var="cdto">
+							<c:forEach items="${mlist }" var="mdto" varStatus="i" >
+								<c:forEach items="${mdto.getCoupon_list() }" var="cdto" >
 									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">
-										<option value="${cdto.getCoupon_price()}" data-price="${cdto.getCoupon_price_type() }" data-min=${cdto.getCoupon_price_over() } data-max="${cdto.getCoupon_price_max()}">${cdto.getCoupon_name() }</option>
+										<option value="${cdto.getCoupon_price()}">${cdto.getCoupon_name() }</option>
 									</c:if>	
 								</c:forEach>
 								
@@ -112,7 +112,7 @@
 					<p class="SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">적립금 사용</p>
 					<div class="d-flex flex-row justify-content-between">
 						<div class="Coupon__CouponCount-p6h1sc-1 cRGbZm">
-							<span>사용가능 적립금 : </span> <span> <input type="number" min="0" max="${memdto.getMember_point()}" value="${memdto.getMember_point()}"></span>
+							<span>사용가능 적립금 :</span><span><input type="number" min="0" max="${memdto.getMember_point()}"  value="${memdto.getMember_point()}" onpause="NumberInput(this)"></span>
 						</div>
 					</div>
 				</div>
@@ -182,15 +182,21 @@
       </div>
       <div class="modal-body">
 		 <div class="form-check">
-		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" checked data-bs-dismiss="modal" value="naver">
+		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" checked data-bs-dismiss="modal" value="naverpay">
 		  <label class="form-check-label" for="flexRadioDefault3">
 		    네이버 페이
 		  </label>
 		</div>
 		<div class="form-check">
-		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="kakao">
+		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="kakaopay">
 		  <label class="form-check-label" for="flexRadioDefault3" >
 		    카카오페이
+		  </label>
+		</div>
+		<div class="form-check">
+		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="sampay">
+		  <label class="form-check-label" for="flexRadioDefault3">
+		    삼성페이
 		  </label>
 		</div>
 		<div class="form-check">
@@ -200,9 +206,15 @@
 		  </label>
 		</div>
 		<div class="form-check">
-		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="nobankbook">
+		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="bank">
 		  <label class="form-check-label" for="flexRadioDefault3">
-		    농협
+		    무통장입금
+		  </label>
+		</div>
+		<div class="form-check">
+		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="toss">
+		  <label class="form-check-label" for="flexRadioDefault3">
+		    토스
 		  </label>
 		</div>
       </div>
