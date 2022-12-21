@@ -100,10 +100,9 @@
 							<c:forEach items="${mlist }" var="mdto" varStatus="i" >
 								<c:forEach items="${mdto.getCoupon_list() }" var="cdto" >
 									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">
-										<option value="${cdto.getCoupon_price()}">${cdto.getCoupon_name() }</option>
+										<option value="${cdto.getCoupon_price()}" data-usetype="">${cdto.getCoupon_name()}</option>									
 									</c:if>	
-								</c:forEach>
-								
+								</c:forEach>	
 							</c:forEach>
 						</c:if>
 						</select>
