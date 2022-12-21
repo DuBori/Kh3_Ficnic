@@ -59,7 +59,7 @@
         select bcate_name from board_category_${board_id} where bcate_no = #{bdata_category}
     </select>
 
-    <select id="siteBoardWriterType" parameterType="java.util.Map" resultType="String">
+    <select id="siteBoardWriterType" parameterType="String" resultType="String">
         select member_type from member_list where member_id = #{bdata_writer_id}
     </select>
 

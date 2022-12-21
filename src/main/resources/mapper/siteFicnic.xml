@@ -17,12 +17,20 @@
 	<select id="SiteFicnicSearchCount" parameterType="map" resultType="int">		
 		select count(*) from ficnic_list
 		<![CDATA[where ficnic_no > 0]]>
-        and (
-            substr(ficnic_category_no,1,${next_num}) = #{parent_str}
-            or substr(ficnic_category_sub1,1,${next_num}) = #{parent_str}
-            or substr(ficnic_category_sub2,1,${next_num}) = #{parent_str}
-            or substr(ficnic_category_sub3,1,${next_num}) = #{parent_str}
-        )
+        <choose>
+            <when test="search != ''">
+            and ficnic_name like '%' || #{search} || '%'
+            </when>
+
+            <otherwise>
+            and (
+                substr(ficnic_category_no,1,${next_num}) = #{parent_str}
+                or substr(ficnic_category_sub1,1,${next_num}) = #{parent_str}
+                or substr(ficnic_category_sub2,1,${next_num}) = #{parent_str}
+                or substr(ficnic_category_sub3,1,${next_num}) = #{parent_str}
+            )
+            </otherwise>
+        </choose>
 	</select>
 
 
@@ -45,12 +53,20 @@
                     from (
                         select * from ficnic_list
                             <![CDATA[where ficnic_no > 0]]>
-                            and (
-                                substr(ficnic_category_no,1,${next_num}) = #{parent_str}
-                                or substr(ficnic_category_sub1,1,${next_num}) = #{parent_str}
-                                or substr(ficnic_category_sub2,1,${next_num}) = #{parent_str}
-                                or substr(ficnic_category_sub3,1,${next_num}) = #{parent_str}
-                            )
+                            <choose>
+                                <when test="search != ''">
+                                and ficnic_name like '%' || #{search} || '%'
+                                </when>
+
+                                <otherwise>
+	                            and (
+	                                substr(ficnic_category_no,1,${next_num}) = #{parent_str}
+	                                or substr(ficnic_category_sub1,1,${next_num}) = #{parent_str}
+	                                or substr(ficnic_category_sub2,1,${next_num}) = #{parent_str}
+	                                or substr(ficnic_category_sub3,1,${next_num}) = #{parent_str}
+	                            )
+                                </otherwise>
+                            </choose>
                     )b
         )
         <![CDATA[where rnum >= #{startNo} and rnum <= #{endNo}]]>

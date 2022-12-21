@@ -20,9 +20,8 @@
 <div class="contents w1100 mypage-qna">
 
     <!-- 기본 정보 //START -->
-    <div class="row rv-body">
-        <div class="col-lg mb-5">
-            <table class="table-form">
+        	<h4>피크닉 정보</h4>
+            <table class="table-form mb-5">
                 <colgroup>
                     <col width="10%" />
                     <col width="32%" />
@@ -32,7 +31,7 @@
 
                 <tbody>
                     <tr>
-                        <th>피크닉정보</th>
+                        <th>피크닉 이름</th>
                         <td colspan="2" class="tdImg">
 						    <c:choose>
 						    <c:when test="${!empty fdto.getFicnic_photo1() }"><img src="${path}${fdto.getFicnic_photo1()}" alt="" class="qnaImg"/></c:when>
@@ -47,16 +46,13 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
     <!-- 기본 정보 //END -->
 
 
 
     <!-- 내용 //START -->
-    <div class="row rv-body">
-        <div class="col-lg mb-5">
-            <table class="table-form">
+	    <h4>1:1 문의 내용</h4>	
+            <table class="table-form mb-5">
                 <colgroup>
                     <col width="17%" />
                     <col />
@@ -74,43 +70,28 @@
                     </tr>
                     <c:if test="${!empty dto.getQna_file1()}">
                     <tr>
-                        <th>첨부파일 1</th>
+                        <th>사진 1</th>
                         <td>
-                        <div class="form-group join-form">
-                            <div class="jf-input">
-                                <div class="row">
-                                    <div class="col pt-1 pb-2"><img src="${path}${dto.getQna_file1()}" style="max-width: 200px;" alt="" /></div>
-                                </div>
-                            </div>
-                        </div>
+                            <div class="pt-1 pb-1"><img src="${path}${dto.getQna_file1()}" style="max-width: 200px;" alt="" /></div>
                         </td>
                     </tr>
                     </c:if>
                     <c:if test="${!empty dto.getQna_file2()}">
                     <tr>
-                    	<th>첨부파일 2</th>
+                    	<th>사진 2</th>
                     	<td>
-                        <div class="form-group join-form">
-                            <div class="jf-input">
-                                <div class="row">
-                                    <div class="col pt-1 pb-2"><img src="${path}${dto.getQna_file2()}" style="max-width: 200px;" alt="" /></div>
-                                </div>
-                            </div>
-                        </div>
+                            <div class="pt-1 pb-1"><img src="${path}${dto.getQna_file2()}" style="max-width: 200px;" alt="" /></div>
                         </td>
                     </tr>    
                     </c:if>
-                        
                 </tbody>
             </table>
-        </div>
-    </div>
     <!-- 내용 //END -->
 
 
     <!-- 댓글 목록 //START -->
-    <div class="row rv-body">
-        <div class="col-lg mb-5">
+    <div class="row">
+        <div class="mb-2">
             <h4>답변 목록</h4>
                <table class="table-list">
                         <thead>
@@ -121,13 +102,13 @@
                             </tr>
                         </thead>
 
-                        <tbody id="comment-list">
+                        <tbody id="mComment-list">
                         	<c:if test="${!empty cdto}">
                         	<c:forEach items="${cdto}" var="cdto">
                             <tr id="comment-${cdto.getComment_no()}">
-                                <td>
-                                	<p><b>${cdto.getComment_writer_name()}</b></p>
-                                </td>
+                                <th>
+                                	<p>${cdto.getComment_writer_name()}</p>
+                                </th>
                                 <td class="text-left pl-4">${cdto.getComment_content().replace(newLine, "<br />")}</td>
                                 <td>
                                 	<p class="engnum">${cdto.getComment_date().substring(0,10)}<br />${cdto.getComment_date().substring(11)}</p>
