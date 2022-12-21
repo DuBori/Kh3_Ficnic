@@ -97,10 +97,6 @@
 	padding: 10px;
 }
 
-.comment-write td p {
-	text-align: center;
-    border-top: 1px solid #ddd !important;
-}
 
 .comment-write td button {
     display: block;
@@ -162,7 +158,8 @@ h4 {
 }
 
 .table-form th,
-.table-form td {
+.table-form td,
+#mComment-list th {
     margin: 0;
     padding: 18px 14px;
     font-size: 14px;
@@ -171,7 +168,12 @@ h4 {
     color: #666;
     text-align: left;
     vertical-align: middle;
-    border-bottom: 1px solid #ddd !important;
+    border-bottom: 1px solid #f1f1f1 !important;
+}
+
+#mComment-list th p,
+.comment-write td p {
+	text-align: center;
 }
 
 

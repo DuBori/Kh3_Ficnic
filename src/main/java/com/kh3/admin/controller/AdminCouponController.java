@@ -235,9 +235,9 @@ public class AdminCouponController {
 
         int check = this.dao.couponWrite(dto);
         if (check > 0) {
-            out.println("<script>alert('쿠폰이 추가되었습니다.'); location.href='coupon_list.do';</script>");
+            out.println("<script> location.href='coupon_list.do';</script>");
         } else {
-            out.println("<script>alert('쿠폰 추가 실패했습니다.'); history.back();</script>");
+            out.println("<script>alert('쿠폰 등록 중 에러가 발생하였습니다.'); history.back();</script>");
         }
     }
 
@@ -360,9 +360,9 @@ public class AdminCouponController {
 
         int check = this.dao.couponModify(dto);
         if (check > 0) {
-            out.println("<script>alert('쿠폰이 수정되었습니다.'); location.href='coupon_list.do';</script>");
+            out.println("<script> location.href='coupon_list.do';</script>");
         } else {
-            out.println("<script>alert('쿠폰 수정에 실패했습니다.'); history.back();</script>");
+            out.println("<script>alert('쿠폰 수정 처리중 에러가 발생하였습니다.'); history.back();</script>");
         }
     }
 
@@ -381,10 +381,10 @@ public class AdminCouponController {
 
         if (check > 0) {
             this.dao.updateSeq(no);
-            out.println("<script>alert('쿠폰이 삭제되었습니다.'); location.href='coupon_list.do';</script>");
+            out.println("<script> location.href='coupon_list.do';</script>");
 
         } else {
-            out.println("<script>alert('쿠폰 삭제에 실패했습니다.'); history.back();</script>");
+            out.println("<script>alert('쿠폰 삭제 중 에러가 발생하였습니다.'); history.back();</script>");
 
         }
     }

@@ -269,12 +269,6 @@ public class SiteMemberController {
 
             int pwUpdate = this.dao.updatePw(dto);
 
-            if (pwUpdate > 0) {
-                System.out.println("변경");
-            } else {
-                System.out.println("오류");
-            }
-
             return "site/member/member_find_pw_result";
 
         } else {
@@ -372,9 +366,9 @@ public class SiteMemberController {
             if (check > 0) {
                 // 회원 가입 포인트 적립
                 this.pdao.joinPoint(pdto);
-                out.println("<script>alert('회원 등록 되었습니다.'); location.href='../main.do';</script>");
+                out.println("<script>alert('반갑습니다. "+dto.getMember_name()+"님 \\nFicnic 회원가입이 정상적으로 완료되었습니다.'); location.href='../main.do';</script>");
             } else {
-                out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
+                out.println("<script>alert('회원 가입 중 에러가 발생하였습니다.'); history.back();</script>");
             }
         }
     }

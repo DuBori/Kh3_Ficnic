@@ -107,7 +107,10 @@
                         	<c:forEach items="${cdto}" var="cdto">
                             <tr id="comment-${cdto.getComment_no()}">
                                 <th>
-                                	<p>${cdto.getComment_writer_name()}</p>
+                                <c:choose>
+                                <c:when test="${cdto.getMember_id() == dto.getMember_id() }"><p><b>${cdto.getComment_writer_name()}</b></p></c:when>
+                                <c:otherwise><p><b class="text-danger">관리자</b></p></c:otherwise>
+                                </c:choose>
                                 </th>
                                 <td class="text-left pl-4">${cdto.getComment_content().replace(newLine, "<br />")}</td>
                                 <td>
@@ -120,7 +123,7 @@
 
                             <c:if test="${empty cdto}">
                             <tr>
-                            	<td colspan="3" class="nodata">댓글이 없습니다.</td>
+                            	<td colspan="3" class="nodata">답변 처리 중 입니다. 잠시만 기다려주세요.</td>
                             </tr>
                             </c:if>
                         </tbody>
@@ -129,9 +132,9 @@
 
             <table class="comment-write">
              	<colgroup>
-                    <col width="120" />
+                    <col width="15%" />
                     <col />
-                    <col width="120" />
+                    <col width="15%" />
              	</colgroup>
 			    <tr> 
                    <td>
