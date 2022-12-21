@@ -52,6 +52,40 @@
 	<update id="siteChangeReservStatus" parameterType="reservDTO">
 		update reserv_list set reserv_status = 'cancel' where reserv_no = #{reserv_no} and reserv_status = 'reserv'
 	</update>
+	
+	<insert id="siteReservFicnic" parameterType="reservDTO">
+		<selectKey resultType="int" keyProperty="reserv_no" order="BEFORE">
+			select max(reserv_no) from reserv_list
+		</selectKey>
+		insert into reserv_list values(
+		#{reserv_no}+1,
+		#{reserv_sess},
+		default,
+		#{ficnic_no},
+		#{reserv_ficnic_name},
+		#{reserv_ficnic_sale_price},
+		#{reserv_ficnic_option_title},
+		#{reserv_ficnic_option_price},
+		#{reserv_ficnic_select_title},
+		#{reserv_ficnic_select_price},
+		#{reserv_ficnic_photo},
+		to_date(#{reserv_ficnic_date},'yy/mm/dd'),
+		#{reserv_use_coupon},
+		#{reserv_coupon_price},
+		#{reserv_use_point},
+		#{reserv_payment},
+		#{reserv_total_price},
+		#{reserv_with},
+		#{member_id},
+		#{reserv_name},
+		sysdate,
+		#{reserv_phone},
+		#{reserv_email}
+		)
+	</insert>
 
+	<select id="siteReservCheckSessList" parameterType="string" resultType="reservDTO">
+		select * from reserv_list where reserv_sess like '%' || #{todayDate} ||'%'
+	</select>
 
 </mapper>

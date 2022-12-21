@@ -115,4 +115,19 @@ public class ReservDAOImpl implements ReservDAO {
 	}
 
 
+
+	@Override
+	public int insertReserv(ReservDTO rDto) {
+		return this.sqlSession.insert("siteReservFicnic", rDto);
+	}
+
+
+
+	@Override
+	public List<ReservDTO> getReservList(String todayDate) {
+		
+		return this.sqlSession.selectList("siteReservCheckSessList", todayDate);
+	}
+
+
 }

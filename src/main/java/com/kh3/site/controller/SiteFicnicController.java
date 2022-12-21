@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ import com.kh3.model.member.MemberDTO;
 import com.kh3.model.member.WishDAO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
+import com.kh3.model.reserv.ReservDAO;
 import com.kh3.model.reserv.ReservDTO;
 import com.kh3.model.review.ReviewDAO;
 import com.kh3.model.review.ReviewDTO;
@@ -64,6 +66,8 @@ public class SiteFicnicController {
     @Inject
     MemberDAO memberDAO;
 
+    @Inject
+    ReservDAO reservDAO;
 
     // 문의 사진 업로드 설정
     private String qnaFolder = "/resources/data/qna/";
@@ -490,11 +494,60 @@ public class SiteFicnicController {
     @RequestMapping("ficnic/reserv_form_ok.do")
     public void reserv_form_ok(
     		ReservDTO rDto ,
-    		HttpServletRequest request) {
+    		HttpServletResponse response) throws IOException {
     	
+    	response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+       
+        String checkSess = checkSess();
+        rDto.setReserv_sess(checkSess);
+        
+        if(reservDAO.insertReserv(rDto)>0) {
+        	out.println("<script>alert('예약 완료');location.href='ficnic_list.do';</script>");
+        }else {
+        	out.println("<script>alert('예약 실패');history.back();</script>");
+        }
+        
+       
     }
 
+    
+    public String checkSess() {
+    	
+    	boolean isTrue=false;  	
+        
+    	String sub="";
+        
+        // reservSess 재귀함수처리 
+    	for(int i=0; i<6; i++) {
+        	sub+= (int)(Math.random()*10)+1;
+        }
+    	
+    	// 오늘 날짜 넘기
+        LocalDate getDate = LocalDate.now();
+        String todayDate = getDate.format(DateTimeFormatter.ofPattern("yyMMdd"));
+    
 
+        sub = todayDate+"-"+sub;
+        
+        List<ReservDTO> list =  reservDAO.getReservList(sub);
+        
+        for(ReservDTO val : list) {
+        	if(sub.equals(val.getReserv_sess())){  		
+        		isTrue=true;
+        	}      	
+        }
+       if(isTrue) {
+    	   return checkSess();
+       }else {
+    	   return sub;
+       }
+        
+    }
+    
+    
+   
 
 
 }
