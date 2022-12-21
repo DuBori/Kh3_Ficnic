@@ -500,9 +500,9 @@ public class SiteFicnicController {
     // 복수개의 map을 어떻게 사용하는가 
     // List<String,List<String,Object>> map  = new HashMap<String,Object>();
     //
-    public Map<String ,Map<String , Object>> getCouponLevel(List<McouponDTO> cList){
+    public List<Map<String , Object>> getCouponLevel(List<McouponDTO> mList){
     	
-    	 Map<String ,Map<String , Object>> map = new HashMap<String, Map<String,Object>>();
+    	 List<Map<String , Object>> list = new ArrayList<Map<String,Object>>();
     	
     	
 		/* 이용될 권한들 기본 설정값 */
@@ -516,9 +516,8 @@ public class SiteFicnicController {
     	String COUPON_START_DATE = ""; // 사용 기간 시작
     	String COUPON_END_DATE = ""; // 사용 기간 끝
     	
-    	int cnt=0;
     	// 보유한 쿠폰 개만큼
-    	for(McouponDTO mcouponDTO : cList) {
+    	for(McouponDTO mcouponDTO : mList) {
     		
     		List<CouponDTO> clist = mcouponDTO.getCoupon_list();
     		
@@ -548,12 +547,11 @@ public class SiteFicnicController {
     		    	submap.put("start_date", COUPON_START_DATE);
     		    	submap.put("end_date", COUPON_END_DATE);
     		    	
-    		    	map.put("coupon"+cnt, submap);
+    		    	list.add(submap);
     			}
     		}
-    		cnt++;
     	}
-    	return map;
+    	return list;
     }
     
     
