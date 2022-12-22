@@ -19,10 +19,10 @@
             <button class="swiper-button-next"><i class="icon-arrow-right"></i></button>
         </div>
         <ul class="swiper-wrapper">
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/main_slide_1.jpg" alt="" /></a></li>
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/main_slide_2.jpg" alt="" /></a></li>
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/main_slide_3.jpg" alt="" /></a></li>
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/main_slide_4.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=24000000"><img src="${path}/resources/site/images/main_slide_1.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=25000000"><img src="${path}/resources/site/images/main_slide_2.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=26000000"><img src="${path}/resources/site/images/main_slide_3.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=23000000"><img src="${path}/resources/site/images/main_slide_4.jpg" alt="" /></a></li>
         </ul>
     </section>
     <!-- #main-slide //메인 슬라이드 START -->
@@ -34,8 +34,8 @@
     <!-- #main-icon //메인 아이콘 START -->
     <section id="main-icon">
         <ul>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=rank"><p><img src="${path}/resources/site/images/main_icon_01.png" alt="" /></p>실시간랭킹</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=new"><p><img src="${path}/resources/site/images/main_icon_02.png" alt="" /></p>신규클래스</a></li>
+            <li><a href="${path}/ficnic/ficnic_rank.do"><p><img src="${path}/resources/site/images/main_icon_01.png" alt="" /></p>실시간랭킹</a></li>
+            <li><a href="${path}/ficnic/ficnic_new.do"><p><img src="${path}/resources/site/images/main_icon_02.png" alt="" /></p>신규클래스</a></li>
             <li><a href="${path}/ficnic/ficnic_list.do?category=06040000"><p><img src="${path}/resources/site/images/main_icon_03.png" alt="" /></p>도전!댄스</a></li>
             <li><a href="${path}/ficnic/ficnic_list.do?category=09000000"><p><img src="${path}/resources/site/images/main_icon_04.png" alt="" /></p>헤메코</a></li>
             <li><a href="${path}/ficnic/ficnic_list.do?category=01000000"><p><img src="${path}/resources/site/images/main_icon_05.png" alt="" /></p>일상탈출</a></li>
