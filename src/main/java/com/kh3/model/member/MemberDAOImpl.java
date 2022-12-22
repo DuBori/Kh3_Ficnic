@@ -83,6 +83,12 @@ public class MemberDAOImpl implements MemberDAO {
     public int modifyOk(MemberDTO dto) {
         return this.sqlSession.update("adminMemberModifyOk", dto);
     }
+    
+    // 마이페이지 회원 정보 수정
+    @Override
+    public int sitemodifyOk(MemberDTO dto) {
+    	return this.sqlSession.update("siteMemberModifyOk", dto);
+    }
 
 
     // 로그인 체크
