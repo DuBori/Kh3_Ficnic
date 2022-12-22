@@ -521,7 +521,6 @@ public class SiteFicnicController {
 
 		// 페이지 이동 URL
 		String pageUrl = request.getContextPath()+"/ficnic/ficnic_review.do?ficnic_no="+ficnic_no+"&getType="+getType;
-		
 
     	FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
 		int count = fdao.countAll(ficnic_no);
