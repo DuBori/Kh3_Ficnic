@@ -457,6 +457,7 @@
 .ficnic-view .fv-info ul li {
 	display: flex;
 	font-size: 15px;
+	margin-bottom: 10px;
 }
 .ficnic-view .fv-info ul li b {
 	width: 75px;
