@@ -169,6 +169,12 @@ public class MemberDAOImpl implements MemberDAO {
 		return this.sqlSession.update("siteMemberSecession", dto);
 	}
 
+	@Override
+	public void updatePoint(Map<String, Object> pointMap) {
+		this.sqlSession.update("SiteMemberUpdatePointMinus",pointMap);
+		
+	}
+
 	
 
 }

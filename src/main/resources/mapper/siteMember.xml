@@ -100,5 +100,11 @@
 	<update id="siteMemberSecession" parameterType="memberDTO">
 		update member_list set member_type = 'exit' where member_id = #{member_id}
 	</update>
+	
+	<!-- 회원 마일리지 업데이트  -->
+	<update id="SiteMemberUpdatePointMinus" parameterType="map">
+		update member_list set member_point = member_point-#{point_add} where member_id = #{member_id}
+	</update>
+	
 
 </mapper>

@@ -38,13 +38,12 @@
 									  	<img ${move_ficnic_info } src="${path }${dto.getReserv_ficnic_photo()}" class="card-img-top" style="width:250px" alt="...">
 									  <div class="mypage-wish d-flex flex-column  ml-3">
 										  	<div ${move_ficnic_info } class="mb-2"> 
-											    <p class="card-location"></p>
 											    <p class="card-sess">${dto.getReserv_sess() }</p>
 											    <p class="card-text card-title">${dto.getReserv_ficnic_name() }</p>
 											 </div>
 											 <div class="mt-2 mb-2">
 												 <ul ${move_ficnic_info } class="mypage-wish d-flex  flex-column ">
-												    <li class="card-date"> ${dto.getReserv_date().substring(0,10)}</li>
+												    <li class="card-date"> ${dto.getReserv_ficnic_date().substring(0,10)}</li>
 												    <li class="card-text
 												    	<c:if test="${dto.getReserv_status() eq 'reserv'}"> text-warning" >예약 신청</c:if> 
 												    	<c:if test="${dto.getReserv_status() eq 'confirm'}"> text-primary" >예약 확인</c:if> 

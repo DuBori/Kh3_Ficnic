@@ -26,7 +26,7 @@
 	</delete>
 	
 	<select id="siteMemberCouponNum" parameterType="map" resultType="mcouponDTO">
-		select * from member_mcoupon coupon_no = #{coupon_no} and member_id = #{sess_id}
+		select * from member_mcoupon where coupon_no = #{coupon_no} and member_id = #{sess_id}
 	</select>
 	
 	<update id="siteMCouponNumUpdate" parameterType="int">
