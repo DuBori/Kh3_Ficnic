@@ -31,6 +31,9 @@ public interface MemberDAO {
     // 회원 정보 수정
     int modifyOk(MemberDTO dto);
     
+    // 마이페이지 회원 정보 수정
+    int sitemodifyOk(MemberDTO dto);
+    
     // 로그인 아이디체크
     int loginCheck(MemberDTO dto);
     

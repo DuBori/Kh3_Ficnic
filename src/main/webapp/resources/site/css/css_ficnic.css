@@ -1075,7 +1075,6 @@ button.goto-top:hover {
 /* 리뷰 보기
 /*************************/
 .ficnic-review .r_one {
-	padding-top:40px;
 	font-size: 20px;
 }
 
@@ -1090,7 +1089,6 @@ button.goto-top:hover {
 
 .ficnic-review .r_two {
 	font-size: 20px;
-	padding-bottom: 10px;
 }
 
 .ficnic-review hr {
@@ -1101,8 +1099,9 @@ button.goto-top:hover {
 
 
 
-.ficnic-review .rname {
-	font-size: 14px;
+.fvtcr-star .rname {
+	font-size: 15px;
+	color: #000000;
 }
 
 .ficnic-review .rdate {
@@ -1112,16 +1111,27 @@ button.goto-top:hover {
 
 .ficnic-review .rcont {
 	padding-top: 25px;
-	font-size: 12px;
+	font-size: 14px;
 }
 
 .ficnic-review .rfname{
 	padding-top: 25px;
 }
 
-.ficnic-review .rimg1 {
-	padding-top: 35px;
+ .ficnic-review .rimg1, .rimg2 {
+	padding-top: 35px;   
+	transition: transform 0.8s; 
+	transform:scale(1.0);   
+	padding-right: 18px;
 	}
+
+.ficnic-review .rimg1:hover, .rimg2:hover {
+	padding-top: 35px;
+ 	transform:scale(1.15);           
+	transition: transform 0.8s; 	
+	opacity: 0.8;
+	}
+
 .ficnic-review .rhr {
 	margin-top: 40px;
 }
@@ -1131,11 +1141,10 @@ button.goto-top:hover {
 }
 
 .ficnic-review .rficnic {
-	color: #b8b8b8;
+	color: #c0c0c0;
 	text-decoration: none;
 	padding-top: 25px;
-	font-size: 12px;
-	color: #b8b8b8;
+	font-size: 13px;
 }
 
 
