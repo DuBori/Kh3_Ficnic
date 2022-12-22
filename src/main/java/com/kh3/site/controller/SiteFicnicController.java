@@ -688,7 +688,7 @@ public class SiteFicnicController {
     	model.addAttribute("couponCount", mlist.size());
     	model.addAttribute("couponlevelList", getCouponLevel(mlist));
     	
-    	return "site/ficnic/ficnic_pay";
+    	return "site/reserv/reserv_form";
     }
     
     @RequestMapping("ficnic/ficnicCouponSelect.do")
