@@ -200,6 +200,106 @@ public class SiteFicnicController {
 
 
 
+
+    // =====================================================================================
+    // 피크닉 랭킹 페이지
+    // =====================================================================================
+    @RequestMapping("ficnic/ficnic_rank.do")
+    public String ficnic_rank(
+        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        HttpServletRequest request, HttpSession session, Model model) {
+
+        // 세션 아이디 가져오기
+        String sess_id = "";
+        if(session.getAttribute("sess_id") != null) {
+            sess_id = (String) session.getAttribute("sess_id");
+        }
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("page_type", "rank");
+        map.put("sess_id", sess_id);
+
+
+        totalRecord = fdao.getSiteListCount(map);
+        PageDTO dto = new PageDTO(page, rowsize, totalRecord, map);
+
+        // 페이지 이동 URL
+        String pageUrl = request.getContextPath() + "/ficnic/ficnic_rank.do";
+
+
+        // 카테고리 피크닉 목록
+        List<FicnicDTO> fList = fdao.getSiteFicnicList(dto.getStartNo(), dto.getEndNo(), map);
+
+
+        model.addAttribute("flist", fList);
+        model.addAttribute("category_name", "실시간 랭킹 🏆");
+
+        model.addAttribute("totalCount", totalRecord);
+        model.addAttribute("paging", dto);
+        model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
+
+
+        return "site/ficnic/ficnic_list";
+    }
+
+
+
+
+
+
+    // =====================================================================================
+    // 신규 피크닉 페이지
+    // =====================================================================================
+    @RequestMapping("ficnic/ficnic_new.do")
+    public String ficnic_new(
+        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        HttpServletRequest request, HttpSession session, Model model) {
+
+        // 세션 아이디 가져오기
+        String sess_id = "";
+        if(session.getAttribute("sess_id") != null) {
+            sess_id = (String) session.getAttribute("sess_id");
+        }
+
+
+        LocalDate chkNowDate = LocalDate.now().minusDays(7L); // 오늘로부터 7일전 부터
+        String newDate = chkNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("page_type", "new");
+        map.put("new_date", newDate);
+        map.put("sess_id", sess_id);
+
+
+        totalRecord = fdao.getSiteListCount(map);
+        PageDTO dto = new PageDTO(page, rowsize, totalRecord, map);
+
+        // 페이지 이동 URL
+        String pageUrl = request.getContextPath() + "/ficnic/ficnic_new.do";
+
+
+        // 카테고리 피크닉 목록
+        List<FicnicDTO> fList = fdao.getSiteFicnicList(dto.getStartNo(), dto.getEndNo(), map);
+
+
+        model.addAttribute("flist", fList);
+        model.addAttribute("category_name", "신규 피크닉 🔔");
+
+        model.addAttribute("totalCount", totalRecord);
+        model.addAttribute("paging", dto);
+        model.addAttribute("pagingWrite", Paging.showPage(dto.getAllPage(), dto.getStartBlock(), dto.getEndBlock(), dto.getPage(), pageUrl));
+
+
+        return "site/ficnic/ficnic_list";
+    }
+
+
+
+
+
+
+
     // =====================================================================================
     // 피크닉 내용 보기 페이지
     // =====================================================================================
@@ -721,9 +821,7 @@ public class SiteFicnicController {
        }
         
     }
-    
-    
-   
+
 
 
 }

@@ -19,10 +19,10 @@
             <button class="swiper-button-next"><i class="icon-arrow-right"></i></button>
         </div>
         <ul class="swiper-wrapper">
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/main_slide_1.jpg" alt="" /></a></li>
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/main_slide_2.jpg" alt="" /></a></li>
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/main_slide_3.jpg" alt="" /></a></li>
-            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=10000000"><img src="${path}/resources/site/images/main_slide_4.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=24000000"><img src="${path}/resources/site/images/main_slide_1.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=25000000"><img src="${path}/resources/site/images/main_slide_2.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=26000000"><img src="${path}/resources/site/images/main_slide_3.jpg" alt="" /></a></li>
+            <li class="swiper-slide"><a href="${path}/ficnic/ficnic_list.do?category=23000000"><img src="${path}/resources/site/images/main_slide_4.jpg" alt="" /></a></li>
         </ul>
     </section>
     <!-- #main-slide //메인 슬라이드 START -->
@@ -34,8 +34,8 @@
     <!-- #main-icon //메인 아이콘 START -->
     <section id="main-icon">
         <ul>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=rank"><p><img src="${path}/resources/site/images/main_icon_01.png" alt="" /></p>실시간랭킹</a></li>
-            <li><a href="${path}/ficnic/ficnic_list.do?category=new"><p><img src="${path}/resources/site/images/main_icon_02.png" alt="" /></p>신규클래스</a></li>
+            <li><a href="${path}/ficnic/ficnic_rank.do"><p><img src="${path}/resources/site/images/main_icon_01.png" alt="" /></p>실시간랭킹</a></li>
+            <li><a href="${path}/ficnic/ficnic_new.do"><p><img src="${path}/resources/site/images/main_icon_02.png" alt="" /></p>신규피크닉</a></li>
             <li><a href="${path}/ficnic/ficnic_list.do?category=06040000"><p><img src="${path}/resources/site/images/main_icon_03.png" alt="" /></p>도전!댄스</a></li>
             <li><a href="${path}/ficnic/ficnic_list.do?category=09000000"><p><img src="${path}/resources/site/images/main_icon_04.png" alt="" /></p>헤메코</a></li>
             <li><a href="${path}/ficnic/ficnic_list.do?category=01000000"><p><img src="${path}/resources/site/images/main_icon_05.png" alt="" /></p>일상탈출</a></li>
@@ -61,14 +61,14 @@
             <c:forEach items="${flist1}" var="dto">
                 <li>
                     <button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${dto.getFicnic_wish() > 0}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${dto.getFicnic_wish() eq 0}">-o</c:if>"></i></button>
-                    <a href="ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
+                    <a href="${path}/ficnic/ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
                         <div class="fl-photo">
                             <c:choose>
-                                <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
                                 <c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
                             </c:choose>
                         </div>
@@ -116,7 +116,7 @@
 
     <!-- #main-banner //메인 배너 START -->
     <section id="main-banner">
-        <a href="${path}/ficnic/ficnic_view.do?category=02010000&ficnic_no=89"><img src="${path}/resources/site/images/main_banner.jpg" alt="" /></a>
+        <a href="${path}/ficnic/${path}/ficnic/ficnic_view.do?category=02010000&ficnic_no=89"><img src="${path}/resources/site/images/main_banner.jpg" alt="" /></a>
     </section>
     <!-- #main-banner //메인 배너 START -->
 
@@ -133,14 +133,14 @@
             <c:forEach items="${flist2}" var="dto">
                 <li>
                     <button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${dto.getFicnic_wish() > 0}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${dto.getFicnic_wish() eq 0}">-o</c:if>"></i></button>
-                    <a href="ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
+                    <a href="${path}/ficnic/ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
                         <div class="fl-photo">
                             <c:choose>
-                                <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
                                 <c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
                             </c:choose>
                         </div>
@@ -214,14 +214,14 @@
             <c:forEach items="${flist3}" var="dto">
                 <li>
                     <button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${dto.getFicnic_wish() > 0}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${dto.getFicnic_wish() eq 0}">-o</c:if>"></i></button>
-                    <a href="ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
+                    <a href="${path}/ficnic/ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
                         <div class="fl-photo">
                             <c:choose>
-                                <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
                                 <c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
                             </c:choose>
                         </div>
@@ -299,14 +299,14 @@
             <c:forEach items="${flist4}" var="dto">
                 <li>
                     <button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${dto.getFicnic_wish() > 0}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${dto.getFicnic_wish() eq 0}">-o</c:if>"></i></button>
-                    <a href="ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
+                    <a href="${path}/ficnic/ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
                         <div class="fl-photo">
                             <c:choose>
-                                <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
-                                <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+                                <c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
                                 <c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
                             </c:choose>
                         </div>

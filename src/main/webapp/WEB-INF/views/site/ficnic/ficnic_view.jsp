@@ -42,11 +42,11 @@
                     	<button class="swiper-button-next"><i class="icon-arrow-right"></i></button>
                     </div>
                     <ul class="swiper-wrapper">
-                        <c:if test="${!empty dto.getFicnic_photo1()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo1()}" alt="" /></li></c:if>
-                        <c:if test="${!empty dto.getFicnic_photo2()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo2()}" alt="" /></li></c:if>
-                        <c:if test="${!empty dto.getFicnic_photo3()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo3()}" alt="" /></li></c:if>
-                        <c:if test="${!empty dto.getFicnic_photo4()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo4()}" alt="" /></li></c:if>
-                        <c:if test="${!empty dto.getFicnic_photo5()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo5()}" alt="" /></li></c:if>
+                        <c:if test="${!empty dto.getFicnic_photo1()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo1()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></li></c:if>
+                        <c:if test="${!empty dto.getFicnic_photo2()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo2()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></li></c:if>
+                        <c:if test="${!empty dto.getFicnic_photo3()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo3()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></li></c:if>
+                        <c:if test="${!empty dto.getFicnic_photo4()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo4()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></li></c:if>
+                        <c:if test="${!empty dto.getFicnic_photo5()}"><li class="swiper-slide"><img src="${path}${dto.getFicnic_photo5()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></li></c:if>
                     </ul>
                 </c:when>
                 <c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>

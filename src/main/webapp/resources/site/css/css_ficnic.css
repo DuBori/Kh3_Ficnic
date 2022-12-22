@@ -100,6 +100,8 @@
 
 .goods-list .gl-img {
 	position: relative;
+	overflow: hidden;
+	border-radius: 12px;
     margin-bottom: 30px;
 }
 .goods-list .gl-img img {
@@ -455,6 +457,7 @@
 .ficnic-view .fv-info ul li {
 	display: flex;
 	font-size: 15px;
+	margin-bottom: 10px;
 }
 .ficnic-view .fv-info ul li b {
 	width: 75px;
