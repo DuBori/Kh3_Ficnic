@@ -116,7 +116,7 @@
 
     <!-- #main-banner //메인 배너 START -->
     <section id="main-banner">
-        <a href="${path}/ficnic/${path}/ficnic/ficnic_view.do?category=02010000&ficnic_no=89"><img src="${path}/resources/site/images/main_banner.jpg" alt="" /></a>
+        <a href="${path}/ficnic/ficnic_view.do?category=02010000&ficnic_no=89"><img src="${path}/resources/site/images/main_banner.jpg" alt="" /></a>
     </section>
     <!-- #main-banner //메인 배너 START -->
 

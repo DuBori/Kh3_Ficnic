@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh3.model.ficnic.FicnicDAO;
-import com.kh3.model.ficnic.FicnicDTO;
 
 import com.kh3.model.member.McouponDAO;
 import com.kh3.model.member.McouponDTO;
@@ -42,8 +41,6 @@ import com.kh3.model.member.PointDAO;
 import com.kh3.model.member.PointDTO;
 import com.kh3.model.member.WishDAO;
 import com.kh3.model.member.WishDTO;
-import com.kh3.model.qna.QnaCommentDAO;
-import com.kh3.model.qna.QnaCommentDTO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
 import com.kh3.model.reserv.ReservDAO;
