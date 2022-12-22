@@ -100,5 +100,13 @@
 	<update id="siteMemberSecession" parameterType="memberDTO">
 		update member_list set member_type = 'exit' where member_id = #{member_id}
 	</update>
+	
+	
+	<!-- 회원 수정 -->
+	<update id="siteMemberModifyOk" parameterType="memberDTO">
+		update
+		member_list set member_pw = #{member_pw}, member_name = #{member_name}, member_email =
+		#{member_email}, member_phone = #{member_phone} where member_id = #{member_id}
+	</update>
 
 </mapper>
