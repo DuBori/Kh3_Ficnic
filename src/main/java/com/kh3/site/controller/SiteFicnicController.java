@@ -597,9 +597,9 @@ public class SiteFicnicController {
         int check = this.qdao.qnaWriteOk(dto);
 
         if(check > 0){
-            out.println("<script>alert('문의글이 추가되었습니다.'); location.href='ficnic_view.do?ficnic_no="+dto.getFicnic_no()+"';</script>");
+            out.println("<script>alert('1:1문의글이 정상적으로 등록되었습니다.'); location.href='ficnic_view.do?ficnic_no="+dto.getFicnic_no()+"';</script>");
         }else{
-            out.println("<script>alert('문의글 추가 중 에러가 발생하였습니다.'); history.back();</script>");
+            out.println("<script>alert('1:1문의글 등록 중 에러가 발생하였습니다.'); history.back();</script>");
         }
     	
     }
