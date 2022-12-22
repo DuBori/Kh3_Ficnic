@@ -134,8 +134,9 @@ public class SiteMypageController {
         
 		List<ReservDTO> reservList =  reservDAO.getReservSessionList(member_id);
 		if(reservList.size()!=0) {
+			
 			for(ReservDTO val : reservList) {
-				if(val.getReserv_ficnic_date() !=null && val.getReserv_ficnic_date().compareTo(formatedNow) < 0) {
+				if(val.getReserv_ficnic_date() !=null && formatedNow.compareTo(val.getReserv_ficnic_date()) < 0) {
 					this.reservDAO.updateReserv_status(val);
 				}
 			}
