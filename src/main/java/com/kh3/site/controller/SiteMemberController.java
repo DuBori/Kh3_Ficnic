@@ -79,22 +79,17 @@ public class SiteMemberController {
         // 비밀번호 체크
         int check = this.dao.pwCheck(dto);
        
-        
-        if (result == 0) {
-        	
-            out.println("<script>alert('존재하지 않는 아이디입니다.'); history.back(); </script>");
-
-            
-		} else if (mdto.getMember_type().equals("exit")) {
-	      	  out.println("<script>alert('탈퇴한 회원입니다.'); history.back(); </script>");
-	          
-	    } 
-
         // 길이 체크
         int pw_length = this.dao.pwLength(dto); 
         
+        if (result == 0) {
+        	out.println("<script>alert('존재하지 않는 아이디입니다.'); history.back(); </script>");
+  
+		} else if (mdto.getMember_type().equals("exit")) {
+	      	  out.println("<script>alert('탈퇴한 회원입니다.'); history.back(); </script>");
+
 		// 아이디 일치하는 경우, 임시비밀번호 사용하는 경우 (길이가 20 아래) 로그인 가능함.
-        if (pw_length < 20 && check == 1 && !mdto.getMember_type().equals("exit")) {
+       } else if (pw_length < 20 && check == 1 && !mdto.getMember_type().equals("exit")) {
         	
         	 dto = this.dao.loginSession(id);
 
@@ -110,7 +105,7 @@ public class SiteMemberController {
              out.println("<script>alert('" + dto.getMember_name() + "님 안녕하세요 :)'); location.href='../main.do' </script>");
         
             // 암호화된 비밀번호인 경우
-        } else if (pw_length > 50){ // by.. 로 만든 암호화 비밀번호인 경우 기존 비밀번호랑 맞는지 비교
+        } else if (pw_length > 50 && !mdto.getMember_type().equals("exit")){ // by.. 로 만든 암호화 비밀번호인 경우 기존 비밀번호랑 맞는지 비교
         	
         	isTrue = passwordEncoder.matches(dto.getMember_pw(), mdto.getMember_pw());
         	

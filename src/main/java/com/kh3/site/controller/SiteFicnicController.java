@@ -695,6 +695,7 @@ public class SiteFicnicController {
 
     	CouponDTO dto=this.couponDAO.couponView(coupon_no);
     	
+    	
     	Map<String, Object> map = new HashMap<String,Object>(); 
     	
     	map.put("price_type", dto.getCoupon_price_type());
@@ -716,12 +717,66 @@ public class SiteFicnicController {
     @RequestMapping("ficnic/reserv_form_ok.do")
     public void reserv_form_ok(
     		ReservDTO rDto ,
-    		HttpServletResponse response) throws IOException {
-    	
+    		HttpServletRequest request,
+    		HttpServletResponse response,
+    		HttpSession session) throws IOException {
     	response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
+    	
+    	
+        // 중복체크 해당 상품 정보 불러오기
+        
+    	FicnicDTO fdto= this.fdao.getFicnicCont(Integer.parseInt(request.getParameter("ficnic_no")));
+    	
+    	boolean isNotHost=false;
+		
+    	if(fdto.getFicnic_sale_price() != Integer.parseInt(request.getParameter("reserv_ficnic_sale_price"))) isNotHost =true;
+    	
+    	int cnt = 0;
+    	if(request.getParameter("reserv_ficnic_option_title") !=null && !request.getParameter("reserv_ficnic_option_title").equals("")) {
+	    	for(String title : fdto.getFicnic_option_title().split("★")) {
+	    		int price =Integer.parseInt(fdto.getFicnic_option_price().split("★")[cnt++]);
+	    		if(title.equals(request.getParameter("reserv_ficnic_option_title"))) {
+	    			if(price != Integer.parseInt(request.getParameter("reserv_ficnic_option_price"))) isNotHost =true;
+	    		}
+	    	}
+    	}
+    	cnt=0;
+    	if(request.getParameter("reserv_ficnic_select_title") !=null && !request.getParameter("reserv_ficnic_select_title").equals("")) {
+	    	for(String title : fdto.getFicnic_select_title().split("★")) {
+	    		int price =Integer.parseInt(fdto.getFicnic_select_price().split("★")[cnt++]);
+	    		if(title.equals(request.getParameter("reserv_ficnic_select_title"))) {
+	    			if(price != Integer.parseInt(request.getParameter("reserv_ficnic_select_price"))) isNotHost =true;
+	    		}
+	    	}
+    	}
+    	
+    	if(isNotHost) out.println("<script>alert('잘못된 접근을 하셨습니다.');history.back();</script>");
+    	
+    	
+    	
 
-       
+        // 사용한 쿠폰 제거
+        
+        Map<String, Object> couponMap = new HashMap<String, Object>();
+        couponMap.put("coupon_no", Integer.parseInt(request.getParameter("select_coupon")));
+        couponMap.put("sess_id", (String) session.getAttribute("sess_id")); 
+        
+        this.mdao.deleteMemberCoupon(couponMap);
+         
+        //쿠폰 제거후 McouponNum 정렬
+        McouponDTO mdto =  this.mdao.getCouponNum(couponMap);
+        
+        this.mdao.updateMcouponNo(mdto.getCoupon_no());
+        
+        // 사용한 마일리지 제거
+		/* 추가적으로 말씀하신거는 포인트 중복 확인?? */
+        
+		/* 1. 멤버 포인트 테이블에 사용한 내역을 등록 */
+
+        /* 2. 멤버 테이블에서 사용한 포인트 차감 */
+        
+        
         String checkSess = checkSess();
         rDto.setReserv_sess(checkSess);
         

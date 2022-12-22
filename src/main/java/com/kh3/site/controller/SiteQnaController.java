@@ -171,8 +171,6 @@ public class SiteQnaController {
             cdto.setComment_writer_name((String) session.getAttribute("sess_name"));
             cdto.setComment_writer_pw((String) session.getAttribute("sess_pw"));
             cdto.setMember_id((String) session.getAttribute("sess_id"));
-            System.out.println("이름 값 ======= " + cdto.getComment_writer_name());
-            System.out.println("아이디 값 ======= " + cdto.getMember_id());
             
             cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
 

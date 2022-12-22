@@ -16,7 +16,8 @@ $(function() {
 		let get_comment_writer_name = $("#comment_writer_name").val();
 		let get_comment_writer_pw = $("#comment_writer_pw").val();
 		let get_member_id = $("#member_id").val();
-
+		let listLength = $("#mComment-list td").length; 
+		
 		$.ajax({
 			type : "post",
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
@@ -31,7 +32,13 @@ $(function() {
 			},
 
 			success : function(data) {
+				if(listLength == 0) {
+					$("#nodata").animate({opacity: "0"}, function(){
+						$(this).remove();
+					});	
+				}
 				if(data > 0){
+				
 					var today = new Date();
 					var year = today.getFullYear();
 					var month = ("0" + (today.getMonth() + 1)).slice(-2);
@@ -69,7 +76,7 @@ $(function() {
 // 문의 댓글 삭제
 /////////////////////////////////////////////////////
 
-	$(".qnaDeleteBtn").on("click", function(){
+	$(document).on("click", ".qnaDeleteBtn", function(){
 		if(!confirm("이 댓글을 삭제하시겠습니까?")){
 			return false;
 		}
@@ -89,6 +96,7 @@ $(function() {
 				if(data > 0){
 					$("#comment-"+comment_no).animate({opacity: "0"}, function(){
 						$(this).remove();
+						alert(comment_no);
 					});
 				}else{
 					alert("댓글 삭제 중 에러가 발행하였습니다.");

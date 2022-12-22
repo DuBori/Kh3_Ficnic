@@ -21,6 +21,17 @@
     	select * from coupon_list 
     </select>
     
+    <delete id="siteMemberCouponDelete" parameterType="map">
+		delete member_mcoupon where coupon_no = #{coupon_no} and member_id = #{sess_id}
+	</delete>
+	
+	<select id="siteMemberCouponNum" parameterType="map" resultType="mcouponDTO">
+		select * from member_mcoupon coupon_no = #{coupon_no} and member_id = #{sess_id}
+	</select>
+	
+	<update id="siteMCouponNumUpdate" parameterType="int">
+		update member_mcoupon set mcoupon_no=mcoupon_no-1 where mcoupon_no > #{coupon_no}
+	</update>
     
 
 

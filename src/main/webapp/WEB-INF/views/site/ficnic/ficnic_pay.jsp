@@ -24,7 +24,7 @@
 <input type="hidden"  name="start_date">
 <input type="hidden"  name="end_date">
 <input type="hidden"  name="coupon_price">
-
+<input type="hidden" id="memberPoint" value="${memdto.getMember_point()}">
 
 <div class="contents w1100 goods-list">
 <form action="${path}/ficnic/reserv_form_ok.do" method="post">
@@ -42,9 +42,11 @@
 <input type="hidden" value="${sess_name}"  name="reserv_name" />
 <input type="hidden" value="${sess_phone}"  name="reserv_phone" />
 <input type="hidden" value="${sess_email}"  name="reserv_email" />
+<input type="hidden" value="${oprice+sprice}" name="reserv_total_price">
 
 
-
+<c:set var="oprice" value="${dto.getReserv_ficnic_option_price()}"/>
+<c:set var="sprice" value="${dto.getReserv_ficnic_option_price()}"/>
 
 <div class="ficnic-pay-main d-flex flex-column ">
 	
@@ -105,18 +107,16 @@
 				<div>
 					<p class="SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">프립 할인 쿠폰</p>
 					<div class="d-flex flex-row justify-content-between ">
-						<div class="Coupon__CouponCount-p6h1sc-1 cRGbZm"><span>전체 ${couponCount}장</span><span>, 사용가능 0장</span></div>
-					
-
-						
-						
-						<c:set value="disabled" var="chkabled" />
-						<select id="ficnicCouponSelect">
+						<div class="Coupon__CouponCount-p6h1sc-1 cRGbZm"><span>전체 ${couponCount}장</span></div>
+						<select id="ficnicCouponSelect" name="select_coupon">
 						<option value="">미선택</option>
 						<c:if test="${!empty mlist }">
 							<c:forEach items="${mlist }" var="mdto">
-								<c:forEach items="${mdto.getCoupon_list() }" var="cdto" >
-									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">		
+								<c:forEach items="${mdto.getCoupon_list() }" var="cdto" >							
+									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">
+									
+									<c:set value="disabled" var="chkabled" />		
+										
 										<c:if test="${cdto.getCoupon_use_type() ne 'cart' and  cdto.getCoupon_use_type() eq 'category'}" >
 											<c:forTokens items="${cdto.getCoupon_use_value() }" var="val" delims="★">
 													<c:if test="${fdto.getFicnic_category_no() eq val or fdto.getFicnic_category_sub1() eq val or fdto.getFicnic_category_sub2() eq val or fdto.getFicnic_category_sub3() eq val}">
@@ -132,12 +132,13 @@
 													</c:if>
 												
 											</c:forTokens>
-										</c:if>	
-										<c:if test="${cdto.getCoupon_use_type() ne 'null' }">
+										</c:if>		
+										<c:if test="${cdto.getCoupon_use_type() eq 'cart'}" >
 											<c:set value="" var="chkabled" />
-										</c:if>					
+										</c:if>			
 										<option ${chkabled} value="${cdto.getCoupon_no()}" >${cdto.getCoupon_name()}</option>									
 									</c:if>	
+									
 								</c:forEach>	
 							</c:forEach>
 						</c:if>
@@ -147,7 +148,8 @@
 					<p class="SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">적립금 사용</p>
 					<div class="d-flex flex-row justify-content-between">
 						<div class="Coupon__CouponCount-p6h1sc-1 cRGbZm">
-							<span>사용가능 적립금 :</span><span><input type="number" min="0" max="${memdto.getMember_point()}"  value="${memdto.getMember_point()}" onpause="NumberInput(this)"></span>
+							<span>사용가능 적립금 </span><span><input type="number" min="0" max="${memdto.getMember_point()}"  value="" onpause="NumberInput(this)" name="canUsePoint" ></span>
+							
 						</div>
 					</div>
 				</div>
@@ -157,14 +159,13 @@
 		<div class="TotalPrice__PriceSectionWrapper-sc-1e1zxsm-0 jmdpIX">
 			<div class="d-flex flex-row justify-content-between">
 				<p class="PageTitle__PurchasePageTitle-ex62ss-0 TotalPrice__PriceSectionTitle-sc-1e1zxsm-1 jjsTId">총 결제금액</p>
-				<span class="TotalPrice__TotalPriceText-sc-1e1zxsm-3 dxsibZ">${fdto.getFicnic_sale_price() }</span>원
+				<span class="TotalPrice__TotalPriceText-sc-1e1zxsm-3 dxsibZ" id="orginPirceView">${fdto.getFicnic_sale_price() }</span>원
 			</div><hr>
 			<div class="d-flex flex-row justify-content-between">
 				<p class="SubTitle-eeu9i7-0 TotalPrice__PriceSectionSubTitle-sc-1e1zxsm-2 eHKVGS">총 프립 금액</p>
 				<span id="sitePriceView">${fdto.getFicnic_sale_price() }</span>원
-				<input type="hidden" value="" name="reserv_total_price">
+				
 			</div>
-			
 		</div>
 		<div class="bg-light d-flex flex-column">
 			<div class="d-flex flex-row justify-content-between m-2">
@@ -259,7 +260,6 @@
   </div>
   
 </div>
-
 </form>
 </div>
 

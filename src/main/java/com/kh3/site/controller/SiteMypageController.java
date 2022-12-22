@@ -346,7 +346,6 @@ public class SiteMypageController {
             // 유효성 검사
             if (result.hasErrors()) {
                 List<ObjectError> list = result.getAllErrors();
-
                 for (ObjectError error : list) {
                     if (error.getDefaultMessage().equals("pw_re")) {
                         out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>");
@@ -362,9 +361,16 @@ public class SiteMypageController {
             }
             
             
-            int check = this.mdao.modifyOk(dto);
+            int check = this.mdao.sitemodifyOk(dto);
             if (check > 0) {
                out.println("<script> location.href='mypage_info_modify.do';</script>");
+               session = request.getSession();
+               session.setAttribute("sess_pw", dto.getMember_pw());
+               session.setAttribute("sess_type", dto.getMember_type());
+               session.setAttribute("sess_name", dto.getMember_name());
+               session.setAttribute("sess_email", dto.getMember_email());
+               session.setAttribute("sess_phone", dto.getMember_phone());
+               session.setAttribute("sess_point", dto.getMember_point());
             } else {
                 out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
             }
@@ -388,14 +394,19 @@ public class SiteMypageController {
             }
 
             
-            
-            
-            			dto.setMember_pw(pw);
+            		dto.setMember_pw(pw);
                      	
-        			   int check = this.mdao.modifyOk(dto);
-        	            if (check > 0) {
-        	                 out.println("<script> location.href='mypage_info_modify.do';</script>");
-        	            } else {
+        			int check = this.mdao.sitemodifyOk(dto);
+        	        if (check > 0) {
+        	               out.println("<script> location.href='mypage_info_modify.do';</script>");
+        	               session = request.getSession();
+        	               session.setAttribute("sess_pw", dto.getMember_pw());
+        	               session.setAttribute("sess_type", dto.getMember_type());
+        	               session.setAttribute("sess_name", dto.getMember_name());
+        	               session.setAttribute("sess_email", dto.getMember_email());
+        	               session.setAttribute("sess_phone", dto.getMember_phone());
+        	               session.setAttribute("sess_point", dto.getMember_point());
+        	        } else {
         	                out.println("<script>alert('회원 정보 수정 중 에러가 발생하였습니다.'); history.back();</script>");
         	            }
 

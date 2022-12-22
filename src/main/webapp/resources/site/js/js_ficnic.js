@@ -176,8 +176,45 @@ $(function(){
 
 	});
 	
+	var price_over = 0;
 	
-	$("#sitePriceView").val();
+	var memberPoint = $("#memberPoint").val();
+
+	var SitePirceOrigin = $("#sitePriceView").html();
+	
+	var couponAfterPrice =0;
+	
+	
+	$("input[name='canUsePoint']").on("blur",function(){
+		
+		var thisvalue = $("input[name='canUsePoint']").val();
+		
+		if(memberPoint < thisvalue){
+			$("input[name='canUsePoint']").val(memberPoint);
+		}
+		
+		$("#sitePriceView").html(SitePirceOrigin);
+		
+		var changePoint = $("input[name='canUsePoint']").val();
+		
+	
+		
+		var origin_price = $("#orginPirceView").html();
+		
+		if(couponAfterPrice != 0){
+			$("#sitePriceView").html(couponAfterPrice);
+		}
+		
+		$("#sitePriceView").html($("#sitePriceView").html()-changePoint);
+		$("input[name='reserv_total_price']").val($("#sitePriceView").html());
+		
+		
+		
+		couponAfterPrice = 0;
+		
+	});
+	
+	
 	
 
 	$("#ficnicCouponSelect").on("change",function(){
@@ -189,9 +226,12 @@ $(function(){
                     data : { coupon_no : $("#ficnicCouponSelect").val() },
         
                     success : function(data){
+                    	var origin_price = $("#orginPirceView").html();
+						$("#sitePriceView").html(origin_price);
+						
 						//변수 설정
 						var price_type = data.price_type;
-						var price_over = data.price_over;
+						price_over = data.price_over;
 						var price_max = data.price_max;
 						
 						var date_type = data.date_type;
@@ -200,6 +240,8 @@ $(function(){
 						var end_date = data.end_date;
 						var coupon_price = data.coupon_price;
 						var coupon_date = data.coupon_date;
+						
+						
 						
 						//가격 설정
 						$("input[name='price_type']").val(price_type);
@@ -213,42 +255,86 @@ $(function(){
 						$("input[name='start_date']").val(start_date);
 						$("input[name='end_date']").val(end_date);
 						
+						//날짜 설정
 						
-						//if(date_type == free  || date_type == 'after 
+						var date = new Date(coupon_date);
 						
-						if(price_type == "price" ){
-							var priceview= $("#sitePriceView").html();
-							var saleMax = coupon_price;
-							if(saleMax > price_max){
-								saleMax = price_max;
-							}
-							var couponAfterPrice = priceview - saleMax ;
-							
-							if(couponAfterPrice > price_over){
-								alert(couponAfterPrice);
-							}else{
-								alert('사용 불가능');
-							}
-							
-						}else{
-							var priceview= $("#sitePriceView").html();
-							var saleMax = priceview*(coupon_price/100);
-							if(saleMax > price_max){
-								saleMax = price_max;
-							}
-							var couponAfterPrice = priceview - saleMax;
-							
-							if(couponAfterPrice > price_over){
-								alert(couponAfterPrice);
-							}else{
-								alert('사용 불가능');
-							}
+						var current_date = new Date();
+						
+						var canuse = true;
+						
+						
+						if(date_type == 'after'){
+						 	
+						 	date.setDate(date.getDate() + date_value);
+						 	
+						 	if(current_date <= date){
+						 		canuse = true;
+						 	}else{
+						 		canuse = false;
+						 	}
 						}
+						
+						if(date_type == 'date'){
+						 	
+						 	var start_date = new Date(start_date);
+						 	
+						 	var end_date = new Date(end_date);
+						 	
+						 	if( start_date <= current_date <=end_date){
+						 		canuse = true;
+						 	}else{
+						 		canuse = false;
+						 	}
+						 	
+						}
+						
+						
+						if(canuse){
+						
+							if(price_type == "price" ){
+								var priceview= $("#sitePriceView").html();
+								var saleMax = coupon_price;
+								if(saleMax > price_max){
+									saleMax = price_max;
+								}
+	
+								
+							}else{
+								var priceview= $("#sitePriceView").html();
+								var saleMax = priceview*(coupon_price/100);
+								if(saleMax > price_max){
+									saleMax = price_max;
+								}
+	
+							}
+													
+							couponAfterPrice = priceview - saleMax - $("input[name='canUsePoint']").val();
+						
+							if(couponAfterPrice > price_over){
+								$("#sitePriceView").html(couponAfterPrice );
+								$("input[name='reserv_total_price']").val(couponAfterPrice);
+								
+							}else{
+								alert('최소 결제 금액보다 낮아서 사용하실 수 없습니다.');
+								$('#ficnicCouponSelect').val("").prop("selected",true);
+								$("#sitePriceView").html(SitePirceOrigin);
+								 $("input[name='canUsePoint']").val(0);
+							}
+						
+						}else{
+						 		alert('기간이 끝난 쿠폰입니다.');
+								$('#ficnicCouponSelect').val("").prop("selected",true);
+								$("#sitePriceView").html(SitePirceOrigin);
+								$("input[name='canUsePoint']").val(0);
+						}
+						
                     },
         
                     error : function(e){
-                        alert("Error : " + e.status);
-                       
+                        alert("선택된 쿠폰이 없습니다.");              
+						$("#sitePriceView").html(SitePirceOrigin);
+                       $("input[name='canUsePoint']").val(0);
                     }
                 });
       });	
