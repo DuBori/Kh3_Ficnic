@@ -71,5 +71,8 @@ public interface MemberDAO {
     
     // 회원 정보 수정
     int secession(MemberDTO dto);
+
+    // 해당 회원 포인트 차감
+	void updatePoint(Map<String, Object> pointMap);
     
 }

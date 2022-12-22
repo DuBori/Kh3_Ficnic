@@ -65,7 +65,7 @@
     border: 1px solid #000;
 }
 
-.mb-2 .modi_btn{
+.mb-2 .modi_btn, .modbtnreserv {
 	margin-top:20px;
 	display: inline-block;
     width: 150px;
@@ -81,7 +81,7 @@
     border: 1px solid #000;
 }
 
-.mb-2 .modi_btn:hover{
+.mb-2 .modi_btn:hover, .modbtnreserv:hover{
 	margin-top:20px;
 	display: inline-block;
     width: 150px;

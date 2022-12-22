@@ -3,6 +3,7 @@
 <script type="text/javascript">$("#header .navbar .nav-item:nth-child(5)").addClass("active");</script>
 
 
+
 <div class="page-info row mb-3">
     <div class="d-flex align-items-center justify-content-between">
         <h2>문의 목록</h2>

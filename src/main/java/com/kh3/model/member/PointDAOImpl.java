@@ -1,6 +1,7 @@
 package com.kh3.model.member;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -31,6 +32,13 @@ public class PointDAOImpl implements PointDAO {
 	@Override
 	public List<PointDTO> getPointView(String id) {
 		return this.sqlSession.selectList("pointView", id);
+	}
+
+	@Override
+	public void MinusPoint(Map<String, Object> pointMap) {
+		
+		this.sqlSession.insert("MinusPoint", pointMap);
+		
 	}
 
 

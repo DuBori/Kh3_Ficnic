@@ -47,7 +47,7 @@ $(function() {
 					var minutes = ("0" + today.getMinutes()).slice(-2);
 					var seconds = ("0" + today.getSeconds()).slice(-2); 
 
-					let new_comment = "<tr id\"comment-\">\n";
+					let new_comment = "<tr id=\"comment-"+data.trim()+"\">\n";
 						new_comment += "\t<td>\n";
 						new_comment += "\t\t<p><b>"+get_comment_writer_name+"</b></p>\n";
 						new_comment += "\t</td>\n";
@@ -75,7 +75,6 @@ $(function() {
 /////////////////////////////////////////////////////
 // 문의 댓글 삭제
 /////////////////////////////////////////////////////
-
 	$(document).on("click", ".qnaDeleteBtn", function(){
 		if(!confirm("이 댓글을 삭제하시겠습니까?")){
 			return false;
@@ -96,7 +95,6 @@ $(function() {
 				if(data > 0){
 					$("#comment-"+comment_no).animate({opacity: "0"}, function(){
 						$(this).remove();
-						alert(comment_no);
 					});
 				}else{
 					alert("댓글 삭제 중 에러가 발행하였습니다.");
@@ -141,8 +139,6 @@ delQnaPhoto = function(btn, qna_no, img_num){
         }
     });
 }
-
-
 
 
 });

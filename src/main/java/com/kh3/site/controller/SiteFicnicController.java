@@ -33,6 +33,8 @@ import com.kh3.model.member.McouponDAO;
 import com.kh3.model.member.McouponDTO;
 import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
+import com.kh3.model.member.PointDAO;
+import com.kh3.model.member.PointDTO;
 import com.kh3.model.member.WishDAO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
@@ -73,6 +75,9 @@ public class SiteFicnicController {
 
     @Inject
     CouponDAO couponDAO;
+    
+    @Inject
+    PointDAO pointDAO;
     
     // 문의 사진 업로드 설정
     private String qnaFolder = "/resources/data/qna/";
@@ -521,7 +526,6 @@ public class SiteFicnicController {
 
 		// 페이지 이동 URL
 		String pageUrl = request.getContextPath()+"/ficnic/ficnic_review.do?ficnic_no="+ficnic_no+"&getType="+getType;
-		
 
     	FicnicDTO fdto = fdao.getFicnicCont(ficnic_no);
 		int count = fdao.countAll(ficnic_no);
@@ -593,9 +597,9 @@ public class SiteFicnicController {
         int check = this.qdao.qnaWriteOk(dto);
 
         if(check > 0){
-            out.println("<script>alert('문의글이 추가되었습니다.'); location.href='ficnic_view.do?ficnic_no="+dto.getFicnic_no()+"';</script>");
+            out.println("<script>alert('1:1문의글이 정상적으로 등록되었습니다.'); location.href='ficnic_view.do?ficnic_no="+dto.getFicnic_no()+"';</script>");
         }else{
-            out.println("<script>alert('문의글 추가 중 에러가 발생하였습니다.'); history.back();</script>");
+            out.println("<script>alert('1:1문의글 등록 중 에러가 발생하였습니다.'); history.back();</script>");
         }
     	
     }
@@ -684,7 +688,7 @@ public class SiteFicnicController {
     	model.addAttribute("couponCount", mlist.size());
     	model.addAttribute("couponlevelList", getCouponLevel(mlist));
     	
-    	return "site/ficnic/ficnic_pay";
+    	return "site/reserv/reserv_form";
     }
     
     @RequestMapping("ficnic/ficnicCouponSelect.do")
@@ -716,13 +720,14 @@ public class SiteFicnicController {
     
     @RequestMapping("ficnic/reserv_form_ok.do")
     public void reserv_form_ok(
+    		@RequestParam( value = "canUsePoint", required = false, defaultValue = "0") int canUsePoint,
     		ReservDTO rDto ,
     		HttpServletRequest request,
     		HttpServletResponse response,
     		HttpSession session) throws IOException {
     	response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-    	
+        int cnt = 0;
     	
         // 중복체크 해당 상품 정보 불러오기
         
@@ -732,7 +737,7 @@ public class SiteFicnicController {
 		
     	if(fdto.getFicnic_sale_price() != Integer.parseInt(request.getParameter("reserv_ficnic_sale_price"))) isNotHost =true;
     	
-    	int cnt = 0;
+    	cnt = 0;
     	if(request.getParameter("reserv_ficnic_option_title") !=null && !request.getParameter("reserv_ficnic_option_title").equals("")) {
 	    	for(String title : fdto.getFicnic_option_title().split("★")) {
 	    		int price =Integer.parseInt(fdto.getFicnic_option_price().split("★")[cnt++]);
@@ -754,34 +759,44 @@ public class SiteFicnicController {
     	if(isNotHost) out.println("<script>alert('잘못된 접근을 하셨습니다.');history.back();</script>");
     	
     	
-    	
-
-        // 사용한 쿠폰 제거
-        
-        Map<String, Object> couponMap = new HashMap<String, Object>();
-        couponMap.put("coupon_no", Integer.parseInt(request.getParameter("select_coupon")));
-        couponMap.put("sess_id", (String) session.getAttribute("sess_id")); 
-        
-        this.mdao.deleteMemberCoupon(couponMap);
-         
-        //쿠폰 제거후 McouponNum 정렬
-        McouponDTO mdto =  this.mdao.getCouponNum(couponMap);
-        
-        this.mdao.updateMcouponNo(mdto.getCoupon_no());
-        
-        // 사용한 마일리지 제거
-		/* 추가적으로 말씀하신거는 포인트 중복 확인?? */
-        
-		/* 1. 멤버 포인트 테이블에 사용한 내역을 등록 */
-
-        /* 2. 멤버 테이블에서 사용한 포인트 차감 */
-        
         
         String checkSess = checkSess();
         rDto.setReserv_sess(checkSess);
         
+        
         if(reservDAO.insertReserv(rDto)>0) {
-        	out.println("<script>alert('예약 완료');location.href='ficnic_list.do';</script>");
+           
+        	// 사용한 쿠폰 제거
+        	String selectCoupon = request.getParameter("select_coupon");
+            if(selectCoupon!=null && !selectCoupon.equals("") ) {
+            	Map<String, Object> couponMap = new HashMap<String, Object>();
+                couponMap.put("coupon_no", Integer.parseInt(request.getParameter("select_coupon")));
+                couponMap.put("sess_id", (String) session.getAttribute("sess_id")); 
+                
+                
+                 
+                //쿠폰 제거후 McouponNum 정렬
+                McouponDTO mdto =  this.mdao.getCouponNum(couponMap);
+                
+                this.mdao.deleteMemberCoupon(couponMap);
+                
+                this.mdao.updateMcouponNo(mdto.getCoupon_no());
+            }
+            // 사용한 마일리지 제거
+            if(canUsePoint!=0) {
+            	
+                Map<String, Object> pointMap = new HashMap<String, Object>();
+                pointMap.put("member_id", (String) session.getAttribute("sess_id"));
+                pointMap.put("reserv_sess", rDto.getReserv_sess());
+                pointMap.put("point_add", canUsePoint);
+                
+                pointDAO.MinusPoint(pointMap);
+                
+                memberDAO.updatePoint(pointMap);
+            }
+
+            out.println("<script>alert('예약 완료');location.href='"+request.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
+        
         }else {
         	out.println("<script>alert('예약 실패');history.back();</script>");
         }
