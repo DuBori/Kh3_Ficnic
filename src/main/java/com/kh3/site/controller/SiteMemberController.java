@@ -267,7 +267,7 @@ public class SiteMemberController {
             dto.setMember_id(id);
             dto.setMember_pw(tempPw);
 
-            int pwUpdate = this.dao.updatePw(dto);
+            this.dao.updatePw(dto);
 
             return "site/member/member_find_pw_result";
 
