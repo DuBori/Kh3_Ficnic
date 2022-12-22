@@ -10,41 +10,6 @@
 <link type="text/css" rel="stylesheet" href="${path}/resources/site/css/css_ficnic.css?${time}" />
 <script language="javascript" src="${path}/resources/site/js/js_ficnic.js?${time}"></script>
 
-<script>
-
-
-
-     $(document).ready(function() {
-
-                var xOffset = 10;
-                var yOffset = 30;
-               
-                $(document).on("mouseover",".thumbnail",function(e){ //마우스 오버 시
-					
-					$("body").append("<p id='preview'><img src='"+ $(this).attr("src") +"' width='500px' /></p>"); //보여줄 이미지를 선언						 
-
-					$("#preview")
-						.css("top",(e.pageY - xOffset) + "px")
-						.css("left",(e.pageX + yOffset) + "px")
-						.fadeIn("fast"); //미리보기 화면 설정 셋팅
-				});
-
-				
-				$(document).on("mousemove",".thumbnail",function(e){ //마우스 이동시
-
-					$("#preview")
-						.css("top",(e.pageY - xOffset) + "px")
-						.css("left",(e.pageX + yOffset) + "px");
-				});
-
-
-				$(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
-					$("#preview").remove();
-				});
-
-            });
-
-        </script>
 
 
 <div class="page-info w1100">
@@ -71,13 +36,6 @@
 	
 	<div class="ml-auto">
 			<p class="mypage-reserv ml-auto">
-			
-		<%-- 	<a class="mr-2 text-dark orderfc" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointH">평점 높은 순</a>|
-			
-			<a class="ml-2 mr-2 text-dark orderfc" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointL">평점 낮은 순</a>|
-			
-			<a  class="ml-2 mr-2 text-dark orderfc" href="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointD">최신 순</a></p>
-			  --%>
 	 
 				 	<select name="sort" class="mr-2 text-dark orderfc custom-select glt-sort" onchange="location.href=this.value;">
 						<option value="ficnic_review.do?ficnic_no=${fdto.getFicnic_no()}&getType=pointD" <c:if test="${param.getType eq 'pointD'}"> selected="selected" </c:if>>최신 순</option>
