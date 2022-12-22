@@ -61,7 +61,7 @@
             <c:forEach items="${flist1}" var="dto">
                 <li>
                     <button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${dto.getFicnic_wish() > 0}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${dto.getFicnic_wish() eq 0}">-o</c:if>"></i></button>
-                    <a href="ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
+                    <a href="${path}/ficnic/ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
                         <div class="fl-photo">
                             <c:choose>
                                 <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
@@ -116,7 +116,7 @@
 
     <!-- #main-banner //메인 배너 START -->
     <section id="main-banner">
-        <a href="${path}/ficnic/ficnic_view.do?category=02010000&ficnic_no=89"><img src="${path}/resources/site/images/main_banner.jpg" alt="" /></a>
+        <a href="${path}/ficnic/${path}/ficnic/ficnic_view.do?category=02010000&ficnic_no=89"><img src="${path}/resources/site/images/main_banner.jpg" alt="" /></a>
     </section>
     <!-- #main-banner //메인 배너 START -->
 
@@ -133,7 +133,7 @@
             <c:forEach items="${flist2}" var="dto">
                 <li>
                     <button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${dto.getFicnic_wish() > 0}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${dto.getFicnic_wish() eq 0}">-o</c:if>"></i></button>
-                    <a href="ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
+                    <a href="${path}/ficnic/ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
                         <div class="fl-photo">
                             <c:choose>
                                 <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
@@ -214,7 +214,7 @@
             <c:forEach items="${flist3}" var="dto">
                 <li>
                     <button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${dto.getFicnic_wish() > 0}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${dto.getFicnic_wish() eq 0}">-o</c:if>"></i></button>
-                    <a href="ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
+                    <a href="${path}/ficnic/ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
                         <div class="fl-photo">
                             <c:choose>
                                 <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
@@ -299,7 +299,7 @@
             <c:forEach items="${flist4}" var="dto">
                 <li>
                     <button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${dto.getFicnic_wish() > 0}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${dto.getFicnic_wish() eq 0}">-o</c:if>"></i></button>
-                    <a href="ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
+                    <a href="${path}/ficnic/ficnic_view.do?category=${dto.getFicnic_category_no()}&ficnic_no=${dto.getFicnic_no()}">
                         <div class="fl-photo">
                             <c:choose>
                                 <c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
