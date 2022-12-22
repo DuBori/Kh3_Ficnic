@@ -30,7 +30,6 @@
 
 <div class="contents w1100 reserv-form">
 <form action="${path}/ficnic/reserv_form_ok.do" method="post">
-
 <input type="hidden" value="${fdto.getFicnic_no()}"  name="ficnic_no" />
 <input type="hidden" value="${fdto.getFicnic_name()}"  name="reserv_ficnic_name" />
 <input type="hidden" value="${dto.getReserv_ficnic_sale_price()}"  name="reserv_ficnic_sale_price" />
