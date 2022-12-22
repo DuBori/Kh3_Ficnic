@@ -200,6 +200,42 @@ public class SiteFicnicController {
 
 
 
+
+    // =====================================================================================
+    // 피크닉 랭킹 페이지
+    // =====================================================================================
+    @RequestMapping("ficnic/ficnic_rank.do")
+    public String ficnic_rank(
+        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        HttpServletRequest request, HttpSession session, Model model) {
+
+
+        return "site/ficnic/ficnic_list";
+    }
+
+
+
+
+
+
+    // =====================================================================================
+    // 신규 피크닉 페이지
+    // =====================================================================================
+    @RequestMapping("ficnic/ficnic_new.do")
+    public String ficnic_new(
+        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        HttpServletRequest request, HttpSession session, Model model) {
+
+
+        return "site/ficnic/ficnic_list";
+    }
+
+
+
+
+
+
+
     // =====================================================================================
     // 피크닉 내용 보기 페이지
     // =====================================================================================
