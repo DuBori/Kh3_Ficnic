@@ -63,7 +63,7 @@
 										    		</c:if>
 										    	</c:if>
 										    </c:forEach>
-										    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and empty revSession}"> <a class="btn btn-sm btn-outline-dark btn-open-popup mr-2  card-text" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no() }"><i class="fa fa-pencil"></i> 리뷰 작성하기</a></c:if>
+										    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and empty revSession}"> <a class="modbtnreserv" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no() }"><i class="fa fa-pencil"></i> 리뷰 작성</a></c:if>
 										    <c:remove var="revSession"/>
 										    <c:if test="${dto.getReserv_status() eq 'cancel'}"></c:if>
 										</div>
