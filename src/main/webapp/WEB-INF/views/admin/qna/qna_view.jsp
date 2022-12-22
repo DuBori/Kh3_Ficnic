@@ -25,6 +25,7 @@ $(function() {
 		let get_comment_writer_name = $("#comment_writer_name").val();
 		let get_comment_writer_pw = $("#comment_writer_pw").val();
 		let get_member_id = $("#member_id").val();
+		let listLength = $("#mComment-list td").length; 
 
 		$.ajax({
 			type : "post",
@@ -40,7 +41,14 @@ $(function() {
 			},
 
 			success : function(data) {
-				if(data > 0){
+				success : function(data) {
+					if(listLength == 0) {
+						$("#nodata").animate({opacity: "0"}, function(){
+							$(this).remove();
+						});	
+					}
+					if(data > 0) {
+						
 					var today = new Date();
 					var year = today.getFullYear();
 					var month = ("0" + (today.getMonth() + 1)).slice(-2);
@@ -75,7 +83,7 @@ $(function() {
 
 
 	// 댓글 삭제
-	$(".deleteBtn").on("click", function(){
+		$(document).on("click", ".deleteBtn", function(){
 		if(!confirm("이 댓글을 삭제하시겠습니까?")){
 			return false;
 		}
@@ -231,7 +239,7 @@ $(function() {
                             </tr>
                         </thead>
 
-                        <tbody id="comment-list">
+                        <tbody id="mComment-list">
                         	<c:if test="${!empty cdto}">
                         	<c:forEach items="${cdto}" var="cdto">
                             <tr id="comment-${cdto.getComment_no()}">
