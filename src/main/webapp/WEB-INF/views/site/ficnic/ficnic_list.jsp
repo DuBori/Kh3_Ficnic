@@ -57,11 +57,11 @@
 						<a href="ficnic_view.do?category=${param.category}&ficnic_no=${dto.getFicnic_no()}">
 							<div class="fl-photo">
 								<c:choose>
-									<c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" alt=""></c:when>
-									<c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" alt=""></c:when>
-									<c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" alt=""></c:when>
-									<c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" alt=""></c:when>
-									<c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" alt=""></c:when>
+									<c:when test="${!empty dto.getFicnic_photo1()}"><img src="${path}${dto.getFicnic_photo1()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+									<c:when test="${!empty dto.getFicnic_photo2()}"><img src="${path}${dto.getFicnic_photo2()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+									<c:when test="${!empty dto.getFicnic_photo3()}"><img src="${path}${dto.getFicnic_photo3()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+									<c:when test="${!empty dto.getFicnic_photo4()}"><img src="${path}${dto.getFicnic_photo4()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
+									<c:when test="${!empty dto.getFicnic_photo5()}"><img src="${path}${dto.getFicnic_photo5()}" onerror="this.src='${path}/resources/site/images/noimg.gif';" alt="" /></c:when>
 									<c:otherwise><img src="${path}/resources/site/images/noimg.gif" alt="" /></c:otherwise>
 								</c:choose>
 							</div>
