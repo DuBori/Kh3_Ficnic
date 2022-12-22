@@ -23,6 +23,7 @@ public interface ReviewDAO {
 
 	int writeOkReview(ReviewDTO dto);
 	
+	// 해당 회원의 리뷰 리스트
 	List<ReviewDTO> getListSession(String member_id);
     
     // 해당 세션 예약 카운트

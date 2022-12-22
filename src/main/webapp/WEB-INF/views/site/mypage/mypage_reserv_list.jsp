@@ -59,11 +59,11 @@
 										    	<c:if test="${sdto.getFicnic_no() eq dto.getFicnic_no() }">
 										    		<c:set var="revSession" value="t"/>
 										    		<c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and !empty revSession}">
-										    			<a class="modi_btn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no()}" data-cont="${sdto.getReview_cont()}" data-modi="m" data-avg="${sdto.getReview_point()}" data-photo1="${sdto.getReview_photo1() }" data-photo2="${sdto.getReview_photo2() }" data-rno="${sdto.getReview_no() }"><i class="fa fa-pencil"></i> 리뷰 수정</a>
+										    			<a class="modi_btn btn-js" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no()}" data-cont="${sdto.getReview_cont()}" data-modi="m" data-avg="${sdto.getReview_point()}" data-photo1="${sdto.getReview_photo1() }" data-photo2="${sdto.getReview_photo2() }" data-rno="${sdto.getReview_no() }"><i class="fa fa-pencil"></i> 리뷰 수정</a>
 										    		</c:if>
 										    	</c:if>
 										    </c:forEach>
-										    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and empty revSession}"> <a class="modbtnreserv" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no() }"><i class="fa fa-pencil"></i> 리뷰 작성</a></c:if>
+										    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and empty revSession}"> <a class="modbtnreserv btn-js" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no() }"><i class="fa fa-pencil"></i> 리뷰 작성</a></c:if>
 										    <c:remove var="revSession"/>
 										    <c:if test="${dto.getReserv_status() eq 'cancel'}"></c:if>
 										</div>
