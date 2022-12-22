@@ -1081,7 +1081,7 @@ button.goto-top:hover {
 	font-size: 20px;
 }
 
-.ficnic-review .orderfc{
+.ficnic-review a:visited{
 	font-weight: 600;
 }
 
@@ -1117,22 +1117,14 @@ button.goto-top:hover {
 	font-size: 14px;
 }
 
-.ficnic-review .rfname{
-	padding-top: 25px;
-}
 
- .ficnic-review .rimg1, .rimg2 {
-	padding-top: 35px;   
-	transition: transform 0.8s; 
-	transform:scale(1.0);   
-	padding-right: 18px;
+ .ficnic-review .rimg1 {
+	padding-top: 35px;    
+	padding-right: 10px;
 	}
 
-.ficnic-review .rimg1:hover, .rimg2:hover {
-	padding-top: 35px;
- 	transform:scale(1.15);           
-	transition: transform 0.8s; 	
-	opacity: 0.8;
+.ficnic-review .rimg1:hover {	
+	opacity: 0.9;
 	}
 
 .ficnic-review .rhr {
@@ -1159,5 +1151,15 @@ button.goto-top:hover {
 .fvtcr-star .notstar {
 	color: #000000;
 }
+
+	#preview {
+	z-index: 9999;
+	position:absolute;
+	border:0px solid #ccc;
+	background:#333;
+	padding:1px;
+	display:none;
+	color:#fff;
+	}
 
 
