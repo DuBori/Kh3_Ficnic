@@ -35,7 +35,7 @@
     <section id="main-icon">
         <ul>
             <li><a href="${path}/ficnic/ficnic_rank.do"><p><img src="${path}/resources/site/images/main_icon_01.png" alt="" /></p>실시간랭킹</a></li>
-            <li><a href="${path}/ficnic/ficnic_new.do"><p><img src="${path}/resources/site/images/main_icon_02.png" alt="" /></p>신규클래스</a></li>
+            <li><a href="${path}/ficnic/ficnic_new.do"><p><img src="${path}/resources/site/images/main_icon_02.png" alt="" /></p>신규피크닉</a></li>
             <li><a href="${path}/ficnic/ficnic_list.do?category=06040000"><p><img src="${path}/resources/site/images/main_icon_03.png" alt="" /></p>도전!댄스</a></li>
             <li><a href="${path}/ficnic/ficnic_list.do?category=09000000"><p><img src="${path}/resources/site/images/main_icon_04.png" alt="" /></p>헤메코</a></li>
             <li><a href="${path}/ficnic/ficnic_list.do?category=01000000"><p><img src="${path}/resources/site/images/main_icon_05.png" alt="" /></p>일상탈출</a></li>

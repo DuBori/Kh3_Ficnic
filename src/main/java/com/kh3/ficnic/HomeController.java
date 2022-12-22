@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.kh3.model.board.BoardDAO;
 import com.kh3.model.board.BoardDTO;
 import com.kh3.model.ficnic.CategoryDAO;
-import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
 
