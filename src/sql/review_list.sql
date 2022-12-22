@@ -5,7 +5,7 @@ create table review_list(
     review_no number(5) primary key,
     ficnic_no number(11) not null,
     review_point number(2) default '10' not null,
-    review_cont varchar2(1000) not null,
+    review_cont varchar2(3000) not null,
     review_photo1 varchar2(200),
     review_photo2 varchar2(200),
     member_id varchar2(30) not null,
