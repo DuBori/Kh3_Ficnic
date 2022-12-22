@@ -46,7 +46,7 @@
 
 
 <c:set var="oprice" value="${dto.getReserv_ficnic_option_price()}"/>
-<c:set var="sprice" value="${dto.getReserv_ficnic_option_price()}"/>
+<c:set var="sprice" value="${dto.getReserv_ficnic_select_price()}"/>
 
 <div class="ficnic-pay-main d-flex flex-column ">
 	
@@ -85,7 +85,7 @@
 		<div class="mt-2 mb-2">
 			<p class="PageTitle__PurchasePageTitle-ex62ss-0 jcPaBR">결제수단</p>
 			<div class="form-check mt-2 mb-2">
-			  <input class="form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault1" value="card">
+			  <input class="form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault1" value="card" checked="checked">
 			  <label class="form-check-label " for="flexRadioDefault1">
 			    신용/체크 카드
 			  </label>
@@ -159,11 +159,11 @@
 		<div class="TotalPrice__PriceSectionWrapper-sc-1e1zxsm-0 jmdpIX">
 			<div class="d-flex flex-row justify-content-between">
 				<p class="PageTitle__PurchasePageTitle-ex62ss-0 TotalPrice__PriceSectionTitle-sc-1e1zxsm-1 jjsTId">총 결제금액</p>
-				<span class="TotalPrice__TotalPriceText-sc-1e1zxsm-3 dxsibZ" id="orginPirceView">${fdto.getFicnic_sale_price() }</span>원
+				<span class="TotalPrice__TotalPriceText-sc-1e1zxsm-3 dxsibZ" id="orginPirceView">${oprice + sprice }</span>원
 			</div><hr>
 			<div class="d-flex flex-row justify-content-between">
 				<p class="SubTitle-eeu9i7-0 TotalPrice__PriceSectionSubTitle-sc-1e1zxsm-2 eHKVGS">총 프립 금액</p>
-				<span id="sitePriceView">${fdto.getFicnic_sale_price() }</span>원
+				<span id="sitePriceView">${oprice + sprice}</span>원
 				
 			</div>
 		</div>

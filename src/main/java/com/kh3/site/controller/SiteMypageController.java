@@ -127,18 +127,20 @@ public class SiteMypageController {
         Date now = new Date();
  
         // 포맷팅 정의
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yy/MM/dd");
  
         // 포맷팅 적용
         String formatedNow = formatter.format(now);
         
 		List<ReservDTO> reservList =  reservDAO.getReservSessionList(member_id);
-		
-		for(ReservDTO val : reservList) {
-			if(val.getReserv_ficnic_date().compareTo(formatedNow)<0) {
-				this.reservDAO.updateReserv_status(val);
+		if(reservList.size()!=0) {
+			for(ReservDTO val : reservList) {
+				if(val.getReserv_ficnic_date() !=null && val.getReserv_ficnic_date().compareTo(formatedNow) < 0) {
+					this.reservDAO.updateReserv_status(val);
+				}
 			}
 		}
+		
 		
 		
 		model.addAttribute("List", this.reservDAO.getBoardList(dto.getStartNo(), dto.getEndNo(), searchMap));
