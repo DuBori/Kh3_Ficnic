@@ -120,7 +120,7 @@ public class SiteMypageController {
 
 		List<ReviewDTO> sessionList =this.rdao.getListSession(member_id);
 		// 페이지 이동 URL
-		String pageUrl = request.getContextPath()+"mypage/mypage_reserv_list.do?+getType="+getType+"&page="+page;
+		String pageUrl = request.getContextPath()+"/mypage/mypage_reserv_list.do?getType="+getType;
 		
 		
 		// 현재 날짜/시간
