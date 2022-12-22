@@ -58,5 +58,4 @@ public interface FicnicDAO {
     /* 피크닉 조회수 늘리기 */
     void updateFicnicHit(int ficnic_no);
 
-	
 }

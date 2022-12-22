@@ -7,7 +7,7 @@
 
 
 <div class="page-info w1100">
-    <h2>${category_name} <span><fmt:formatNumber value="${totalCount}" /></span></h2>
+    <h2>${category_name}<c:if test="${totalCount > 0}"> <span><fmt:formatNumber value="${totalCount}" /></span></c:if></h2>
     <ol>
         <li><a href="${path}/"><i class="icon-home"></i> HOME</a></li>
         <li>피크닉</li>
