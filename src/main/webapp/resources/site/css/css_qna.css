@@ -217,6 +217,14 @@ h4 {
     vertical-align: middle;
 }
 
+.table-list #nodata {
+    height: 200px !important;
+    text-align: center;
+    font-family: 'Raleway';
+    font-weight: 500;
+    letter-spacing: 0;
+    border-bottom: 1px solid #f1f1f1 !important;
+}
 
 
 

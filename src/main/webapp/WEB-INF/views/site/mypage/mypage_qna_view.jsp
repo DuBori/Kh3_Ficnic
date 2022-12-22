@@ -93,7 +93,7 @@
     <div class="row">
         <div class="mb-2">
             <h4>답변 목록</h4>
-               <table class="table-list">
+               <table class="table-list" id="write-list">
                         <thead>
                             <tr>
                                 <th style="width: 15%; min-width: 120px;">작성자</th>
@@ -122,8 +122,8 @@
                             </c:if>
 
                             <c:if test="${empty cdto}">
-                            <tr>
-                            	<td colspan="3" class="nodata">답변 처리 중 입니다. 잠시만 기다려주세요.</td>
+                            <tr id="comment+">
+                            	<th colspan="3" id="nodata">답변 처리 중 입니다. 잠시만 기다려주세요.</th>
                             </tr>
                             </c:if>
                         </tbody>
