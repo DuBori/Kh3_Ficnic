@@ -84,7 +84,7 @@
 		</div>
 
 
-	</div>
+	
 			      	<!-- 페이징 처리  -->
 		<c:if test="${!empty paging}">
 	        <div class=" row list-bottom-util">
@@ -95,7 +95,7 @@
 	    </c:if>
 	    <!-- 페이징 처리 end -->
 	
-</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
