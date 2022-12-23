@@ -25,6 +25,7 @@ $(function() {
 		let get_comment_writer_name = $("#comment_writer_name").val();
 		let get_comment_writer_pw = $("#comment_writer_pw").val();
 		let get_member_id = $("#member_id").val();
+		let listLength = $("#mComment-list td").length; 
 
 		$.ajax({
 			type : "post",
@@ -40,7 +41,13 @@ $(function() {
 			},
 
 			success : function(data) {
-				if(data > 0){
+					if(listLength == 0) {
+						$("#nodata").animate({opacity: "0"}, function(){
+							$(this).remove();
+						});	
+					}
+					if(data > 0) {
+						
 					var today = new Date();
 					var year = today.getFullYear();
 					var month = ("0" + (today.getMonth() + 1)).slice(-2);
@@ -49,19 +56,20 @@ $(function() {
 					var minutes = ("0" + today.getMinutes()).slice(-2);
 					var seconds = ("0" + today.getSeconds()).slice(-2); 
 
-					let new_comment = "<tr>\n";
-						new_comment += "\t<td>\n";
-						new_comment += "\t\t<p><b>"+get_comment_writer_name+"</b></p>\n";
-						new_comment += "\t\t<p class=\"eng\">("+get_member_id+")</p>\n";
-						new_comment += "\t</td>\n";
-						new_comment += "\t<td class=\"text-left pl-4\">"+get_comment_content.replace("\n", "<br />")+"</td>\n";
-						new_comment += "\t<td>\n";
-						new_comment += "\t<p class=\"eng\">"+year+"-"+month+"-"+day+"<br />"+hours+":"+minutes+":"+seconds+"</p>\n";
-						new_comment += "\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-1 px-1 py-0 deleteBtn\" name=\"comment_no\" value=\""+data+"\"><i class=\"fa fa-trash-o\"></i> 삭제</button>\n";
-						new_comment += "\t</td>\n";
-						new_comment += "</tr>\n";
-					$("#comment-list").append(new_comment);
-					$("#comment_content").val("");
+					let new_comment = "<tr id=\"comment-"+data.trim()+"\">\n";
+					new_comment += "\t<td>\n";
+					new_comment += "\t\t<p><b>"+get_comment_writer_name+"</b></p>\n";
+					new_comment += "\t\t<p class=\"eng\">("+get_member_id+")</p>\n";
+					new_comment += "\t</td>\n";
+					new_comment += "\t<td class=\"text-left pl-4\">"+get_comment_content.replace("\n", "<br />")+"</td>\n";
+					new_comment += "\t<td>\n";
+					new_comment += "\t<p class=\"eng\">"+year+"-"+month+"-"+day+"<br />"+hours+":"+minutes+":"+seconds+"</p>\n";
+					new_comment += "\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger mt-1 px-1 py-0 deleteBtn\" name=\"comment_no\" value=\""+data+"\"><i class=\"fa fa-trash-o\"></i> 삭제</button>\n";
+					new_comment += "\t</td>\n";
+					new_comment += "</tr>\n";
+				$("#mComment-list").append(new_comment);
+				$("#comment_content").val("");
+				$("#comment_content").focus();
 				}else{
 					alert("댓글 등록 중 에러가 발행하였습니다.");
 				}
@@ -75,7 +83,7 @@ $(function() {
 
 
 	// 댓글 삭제
-	$(".deleteBtn").on("click", function(){
+		$(document).on("click", ".deleteBtn", function(){
 		if(!confirm("이 댓글을 삭제하시겠습니까?")){
 			return false;
 		}
@@ -231,7 +239,7 @@ $(function() {
                             </tr>
                         </thead>
 
-                        <tbody id="comment-list">
+                        <tbody id="mComment-list">
                         	<c:if test="${!empty cdto}">
                         	<c:forEach items="${cdto}" var="cdto">
                             <tr id="comment-${cdto.getComment_no()}">
@@ -250,7 +258,7 @@ $(function() {
 
                             <c:if test="${empty cdto}">
                             <tr>
-                            	<td colspan="3" class="nodata">댓글이 없습니다.</td>
+                            	<th colspan="3" id="nodata">댓글이 없습니다.</th>
                             </tr>
                             </c:if>
                         </tbody>
@@ -258,12 +266,14 @@ $(function() {
                         <tfoot>
                         	<tr>
                         		<td>
-                        			<p><b>회원이름</b></p>
-                        			<p class="eng">(회원아이디)</p>
-									<input type="hidden" id="qna_no" name="qna_no" value="${param.no}" />
-									<input type="hidden" id="member_id" name="member_id" value="test1" />
-									<input type="hidden" id="comment_writer_name" name="comment_writer_name" value="테스트회원1" /> 
-									<input type="hidden" id="comment_writer_pw" name="comment_writer_pw" value="1234" />
+                        			<p><b>${sess_name }</b></p>
+                        			<p class="eng">${sess_id }</p>
+                        			
+                        			<input type="hidden" id="qna_no" name="qna_no" value="${param.no}" />
+									<input type="hidden" id="member_id" name="member_id" value="${sess_id }" />
+									<input type="hidden" id="comment_writer_name" name="comment_writer_name" value="${sess_name }" />	
+									<input type="hidden" id="comment_writer_pw" name="comment_writer_pw" value="${sess_pw }" />	
+									
                         		</td>
                         		<td class="pl-4"><textarea name="comment_content" id="comment_content" class="form-control rounded-0" required></textarea></td>
                         		<td colspan="2"><button type="button" class="btn btn-lg btn-primary rounded-0" id="replyBtn" style="padding: .94rem 1.1rem;"><i class="fa fa-pencil"></i> 댓글 쓰기</button></td>
