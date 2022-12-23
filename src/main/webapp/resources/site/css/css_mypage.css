@@ -108,6 +108,68 @@
 	color: #000;
 }
 
+.f_rlist {
+	padding-top:150px;
+	padding-bottom:150px;
+	font-size:18px;
+	font-weight: 620;
+	color: #787878;
+	letter-spacing: -1.2px;
+}
+
+.f_rlistf {
+	padding-top:17px;
+	padding-bottom:7px;
+}
+
+.f_rlists {
+	font-size:14px;
+	font-weight: 500;
+	padding-bottom: 20px;
+}
+
+.f_rlistbtn {
+    background: rgb(0, 117, 239);
+    color: rgb(255, 255, 255);
+    display: inline-flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    text-align: center;
+    white-space: nowrap;
+    width: auto;
+    border-radius: 10px;
+    padding: 13px 18px;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.f_rlistbtn:hover {
+    background: rgb(0, 117, 239);
+    color: rgb(255, 255, 255);
+    display: inline-flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    text-align: center;
+    white-space: nowrap;
+    width: auto;
+    border-radius: 10px;
+    padding: 13px 18px;
+    font-size: 14px;
+    line-height: 22px;
+    opacity: 90%;
+}
+
+
 /*************************/
 /* 예약 상세 내역
 /*************************/
