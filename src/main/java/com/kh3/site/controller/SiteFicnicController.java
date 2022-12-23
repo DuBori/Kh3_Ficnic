@@ -727,13 +727,17 @@ public class SiteFicnicController {
     		HttpSession session) throws IOException {
     	response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         int cnt = 0;
-    	
+        boolean isNotHost=false;
+        
+        if(rDto.getReserv_total_price() == 0) isNotHost=true;
+        
         // 중복체크 해당 상품 정보 불러오기
         
     	FicnicDTO fdto= this.fdao.getFicnicCont(Integer.parseInt(request.getParameter("ficnic_no")));
     	
-    	boolean isNotHost=false;
+    	
 		
     	if(fdto.getFicnic_sale_price() != Integer.parseInt(request.getParameter("reserv_ficnic_sale_price"))) isNotHost =true;
     	
