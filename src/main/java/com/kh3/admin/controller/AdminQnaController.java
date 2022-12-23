@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -158,26 +159,26 @@ public class AdminQnaController {
 
 
     // =====================================================================================
-    // 1:1 문의 댓글 작성 처리
+    // 1:1 문의 댓글 등록 처리
     // =====================================================================================
     @RequestMapping("admin/qna/qna_reply_ok.do")
-    public void reply(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void reply(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         QnaCommentDTO cdto = new QnaCommentDTO();
 
-        cdto.setComment_content(request.getParameter("comment_content"));
-        cdto.setComment_writer_name(request.getParameter("comment_writer_name"));
-        cdto.setComment_writer_pw(request.getParameter("comment_writer_pw"));
-        cdto.setMember_id(request.getParameter("member_id"));
+        
         cdto.setQna_no(Integer.parseInt(request.getParameter("qna_no")));
+        cdto.setComment_content(request.getParameter("comment_content"));
+        cdto.setComment_writer_name((String) session.getAttribute("sess_name"));
+        cdto.setComment_writer_pw((String) session.getAttribute("sess_pw"));
+        cdto.setMember_id((String) session.getAttribute("sess_id"));
 
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         int check = this.cdao.qnaReply(cdto);
         out.println(check);
+        
     }
-
-
 
 
     // =====================================================================================
