@@ -78,18 +78,20 @@ public class SiteMemberController {
 
         // 비밀번호 체크
         int check = this.dao.pwCheck(dto);
-       
-        // 길이 체크
-        int pw_length = this.dao.pwLength(dto); 
         
         if (result == 0) {
         	out.println("<script>alert('존재하지 않는 아이디입니다.'); history.back(); </script>");
   
 		} else if (mdto.getMember_type().equals("exit")) {
 	      	  out.println("<script>alert('탈퇴한 회원입니다.'); history.back(); </script>");
-
+		}
+        
+        
+      // 길이 체크
+      int pw_length = this.dao.pwLength(dto); 
+      
 		// 아이디 일치하는 경우, 임시비밀번호 사용하는 경우 (길이가 20 아래) 로그인 가능함.
-       } else if (pw_length < 20 && check == 1 && !mdto.getMember_type().equals("exit")) {
+       if (pw_length < 20 && check == 1 && !mdto.getMember_type().equals("exit")) {
         	
         	 dto = this.dao.loginSession(id);
 
@@ -109,10 +111,12 @@ public class SiteMemberController {
         	
         	isTrue = passwordEncoder.matches(dto.getMember_pw(), mdto.getMember_pw());
         	
-        } else {
+        } else if (!mdto.getMember_type().equals("exit")) {
            
         	out.println("<script>alert('비밀번호를 다시 확인해주세요.'); history.back(); </script>");
 
+        } else {
+        	System.out.println("오류 발생");
         }
 
           if (isTrue == true && !mdto.getMember_type().equals("exit")) {	// 기존이랑 암호화 비교해서 true인 경우
@@ -129,10 +133,12 @@ public class SiteMemberController {
 
             out.println("<script>alert('" + dto.getMember_name() + "님 안녕하세요 :)'); location.href='../main.do' </script>");
             
-        } else {
+        } else if (!mdto.getMember_type().equals("exit")) {
            
         	out.println("<script>alert('비밀번호를 다시 확인해주세요.'); history.back(); </script>");
         	
+        } else {
+        	System.out.println("오류 발생");
         }
           
 
@@ -334,24 +340,23 @@ public class SiteMemberController {
             List<ObjectError> list = result.getAllErrors();
 
             for (ObjectError error : list) {
-                if (error.getDefaultMessage().equals("idchk_join")) {
-                    out.println("<script>alert('사용 할수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); history.back();</script>");
-                    break;
-                } else if (error.getDefaultMessage().equals("id")) {
+            	if (error.getDefaultMessage().equals("id")) {
                     out.println("<script>alert('아이디를 6자 이상 입력해주세요.'); history.back();</script>");
                     break;
+            	 } else if (error.getDefaultMessage().equals("pw")) {
+                     out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>");
+                     break;
+                 } else if (error.getDefaultMessage().equals("email")) {
+                     out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>");
+                     break;
+                 } else if (error.getDefaultMessage().equals("phone")) {
+                     out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>");
+                     break;
+                 } else if (error.getDefaultMessage().equals("idchk_join")) {
+                    out.println("<script>alert('사용할 수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); history.back();</script>");
+                    break;
                 } else if (error.getDefaultMessage().equals("mailchk_join")) {
-                    out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력하주세요.'); history.back();</script>");
-                    break;
-                } else if (error.getDefaultMessage().equals("pw")) {
-                    out.println(
-                            "<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>");
-                    break;
-                } else if (error.getDefaultMessage().equals("email")) {
-                    out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>");
-                    break;
-                } else if (error.getDefaultMessage().equals("phone")) {
-                    out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>");
+                    out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.'); history.back();</script>");
                     break;
                 }
             }
