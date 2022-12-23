@@ -16,7 +16,7 @@
 
 <c:set var="status" value="${reservDto.getReserv_status() }"/>
 <c:set var="reserv_sess" value="${reservDto.getReserv_sess() }"/>
-<c:set var="reserv_date" value="${reservDto.getReserv_date() }"/>
+<c:set var="reserv_date" value="${reservDto.getReserv_ficnic_date() }"/>
 <c:set var="reserv_name" value="${reservDto.getReserv_name() }"/>
 <c:set var="reserv_phone" value="${reservDto.getReserv_phone() }"/>
 <c:set var="reserv_email" value="${reservDto.getReserv_email() }"/>
@@ -128,14 +128,15 @@
     <!-- 결제 정보 //END -->
     <hr class="fhr">
     <!-- 작성한 리뷰 //START -->
-            <p class="mypage-p">작성한 리뷰 정보</p>
-            <table class="table">
-           				 <colgroup>
-		                    <col width="17%">
-		                    <col>
-		                </colgroup>	                
+                 
            		<c:choose>
             		<c:when test="${!empty rlist}">
+            			           <p class="mypage-p">작성한 리뷰 정보</p>
+			            <table class="table">
+			           				 <colgroup>
+					                    <col width="17%">
+					                    <col>
+					                </colgroup>	
             			<c:forEach items="${rlist }" var="rdto">
             				<c:if test="${rdto.getFicnic_no()  eq ficnicDto.getFicnic_no()}">
             				<tbody>
@@ -161,7 +162,7 @@
             				
             				</c:if>
             			</c:forEach>
-	            		
+	            		</table>
 		                    	
             		</c:when>
             		<c:otherwise>
@@ -169,7 +170,7 @@
             		</c:otherwise>
             	</c:choose>
                 
-            </table>
+            
     <!-- 결제 정보 //END -->
 
 
@@ -177,7 +178,8 @@
 
     <!-- 버튼 //START -->
     <div class="d-flex p-1  m-3 justify-content-center">
-    	<c:if test="${today < reserv_date}">
+ 
+    	<c:if test="${(empty reserv_date and status eq 'reserv') or today < reserv_date  }">
     		<button type="button" class="btn btn-outline-primary" onclick="if(confirm('정말로 취소하시겠습니까?\n돌이키실 수 없습니다.')){ location.href='${path}/mypage/mypage_reserv_cancel.do?reserv_no=${reservDto.getReserv_no()}&reserv_sess=${reservDto.getReserv_sess()}'; }else{ return false; }">예약취소</button>
     	</c:if>
     	
