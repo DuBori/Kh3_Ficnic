@@ -62,20 +62,20 @@
 						</div>
 						<div>
 							<div class="ficnic_pay_ficnicTitle">
-								${fdto.getFicnic_name()}	
+								<span>${fdto.getFicnic_name()}</span> 	
 							</div>
 							
 							<div class="ficnic_pay_ficnicStarReview mt-2 mb-2">
 								<img src="data:image/svg+xml,%3Csvg width='16' height='14' viewBox='0 0 16 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M12.293 8.6189L15.7442 6.00968C16.2325 5.63914 15.9799 4.9135 15.3402 4.88263L10.8957 4.6356C10.6263 4.62016 10.3906 4.46577 10.2896 4.23418L8.65658 0.405277C8.42088 -0.135092 7.59595 -0.135092 7.36026 0.405277L5.72724 4.21874C5.62623 4.45033 5.39053 4.60472 5.12117 4.62016L0.659819 4.86719C0.0200779 4.89806 -0.232451 5.6237 0.255772 5.99424L3.707 8.58802C3.90903 8.74241 4.01004 9.00487 3.9427 9.23646L2.81473 13.2043C2.66322 13.7601 3.31979 14.2079 3.85852 13.8991L7.61279 11.6913C7.84848 11.5523 8.13468 11.5523 8.35354 11.6913L12.1246 13.8991C12.6634 14.2079 13.3199 13.7601 13.1684 13.2043L12.0405 9.2519C11.99 9.02031 12.0741 8.77329 12.293 8.6189Z' fill='%237A29FA'/%3E %3C/svg%3E" alt="별점 아이콘">
-								<span class="ficnic_pay_ficnicStar">${fdto.getFicnic_review_point() }</span>
-								<span class="ficnic_pay_ficnicReview">${fdto.getFicnic_review_count() }</span>
+								<span class="ficnic_pay_ficnicStar">${fdto.getFicnic_review_point()}</span>
+								<p class="ficnic_pay_ficnicReview">리뷰 수 : ${fdto.getFicnic_review_count()}</p>
 							</div>
 						</div>
 					</div>
 					
 					<div class="d-flex flex-column">
 					<div>옵션정보</div>
-					<div class="d-flex flex-column mt-3">
+					<div class="ficnic_pay_ficnicOption d-flex flex-column mt-3">
 						<div>
 							<c:if test="${!empty dto.getReserv_ficnic_date() }">
 							<span>예약날짜 - ${dto.getReserv_ficnic_date() }</span>
@@ -99,17 +99,17 @@
 			</div>
 		</div>
 		<hr class="Hr-sc-1533uvg-0 cbobBO">
-		<div class="mt-2 mb-2">
-			<p class="PageTitle__PurchasePageTitle-ex62ss-0 jcPaBR">결제수단</p>
+		<div class=" mt-2 mb-2">
+			<p class="ficnic_pay_ficnicTitle jcPaBR">결제수단</p>
 			<div class="form-check mt-2 mb-2">
-			  <input class="form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault1" value="card">
-			  <label class="form-check-label " for="flexRadioDefault1">
+			  <input class="ficnic_pay_ficnicPay form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault1" value="card">
+			  <label class="ficnic_pay_ficnicPay form-check-label " for="flexRadioDefault1">
 			    신용/체크 카드
 			  </label>
 			</div>
 			<div class="form-check mt-2 mb-2">
-			  <input class="form-check-input" type="radio"  name="reserv_payment" id="flexRadioDefault2" data-bs-toggle="modal" data-bs-target="#exampleModal" >
-			  <label class="form-check-label" for="flexRadioDefault2">
+			  <input class="ficnic_pay_ficnicPay form-check-input" type="radio"  name="reserv_payment" id="flexRadioDefault2" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+			  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault2">
 			    다른 결제수단
 			  </label>
 			</div>
@@ -119,12 +119,11 @@
 		</div>
 		<hr class="Hr-sc-1533uvg-0 cbobBO">
 		<div class="mt-2 mb-2">
-			<p class="PageTitle__PurchasePageTitle-ex62ss-0 jcPaBR mt-2 mb-2">쿠폰</p>
 			<div>
 				<div>
-					<p class="SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">피크닉 할인 쿠폰</p>
+					<p class="ficnic_pay_ficnicTitle SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">피크닉 할인 쿠폰</p>
 					<div class="d-flex flex-row justify-content-between ">
-						<div class="Coupon__CouponCount-p6h1sc-1 cRGbZm"><span>전체 ${couponCount}장</span></div>
+						<div class="ficnic_pay_ficnicPay Coupon__CouponCount-p6h1sc-1 cRGbZm"><span>전체 ${couponCount}장</span></div>
 						<select id="ficnicCouponSelect" name="select_coupon">
 						<option value="">미선택</option>
 						<c:if test="${!empty mlist }">
@@ -162,10 +161,10 @@
 						</select>
 					</div>
 					<hr class="Hr-sc-4qqq6q-0 bqjyoQ">
-					<p class="SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">적립금 사용</p>
+					<p class="ficnic_pay_ficnicTitle  gVXCTF mt-2 mb-2">적립금 사용</p>
 					<div class="d-flex flex-row justify-content-between">
 						
-							<span>사용가능 적립금 </span><span><input type="number" min="0" max="${memdto.getMember_point()}"  value="" onpause="NumberInput(this)" name="canUsePoint" ></span>
+							<span class="ficnic_pay_ficnicPay">사용가능 적립금 </span><span><input type="number" min="0" max="${memdto.getMember_point()}"  value="" onpause="NumberInput(this)" name="canUsePoint" ></span>
 							
 						
 					</div>
@@ -175,17 +174,17 @@
 		<hr class="Hr-sc-1533uvg-0 cbobBO">
 		<div class="TotalPrice__PriceSectionWrapper-sc-1e1zxsm-0 jmdpIX">
 			<div class="d-flex flex-row justify-content-between">
-				<p class="PageTitle__PurchasePageTitle-ex62ss-0 TotalPrice__PriceSectionTitle-sc-1e1zxsm-1 jjsTId">총 결제금액</p>
-				<b><span class="TotalPrice__TotalPriceText-sc-1e1zxsm-3 dxsibZ" id="orginPirceView">${oprice + sprice }</span>원</b>
+				<p class="ficnic_pay_ficnicTitle TotalPrice__PriceSectionTitle-sc-1e1zxsm-1 jjsTId">총 결제금액</p>
+				<b class="fincnic_pay_price"><span class="fincnic_pay_price dxsibZ" id="orginPirceView">${oprice + sprice }</span>원</b>
 			</div><hr>
 			<div class="d-flex flex-row justify-content-between">
-				<p class="SubTitle-eeu9i7-0 TotalPrice__PriceSectionSubTitle-sc-1e1zxsm-2 eHKVGS">총 피크닉 금액</p>
-				<b><span id="sitePriceView">${oprice + sprice}</span>원</b>
+				<p class="ficnic_pay_ficnicTitle TotalPrice__PriceSectionSubTitle-sc-1e1zxsm-2 eHKVGS">총 피크닉 금액</p>
+				<b class="fincnic_pay_price"><span class="fincnic_pay_price" id="sitePriceView">${oprice + sprice}</span>원</b>
 			</div>
 		</div>
 		<div class="bg-light d-flex flex-column">
 			<div class="d-flex flex-row justify-content-between m-2">
-				<p>개인정보 제 3자 제공약관</p> <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">보기</button>
+				<p class="ficnic_pay_ficnicPay">개인정보 제 3자 제공약관</p> <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">보기</button>
 			</div>
 			<div class="collapse" id="collapseExample">
 				  <div class="card card-body">
@@ -317,7 +316,7 @@
 				  </div>
 				</div>
 			<div class="d-flex flex-row justify-content-between m-2"> 
-				<p>결제 대행 서비스 이용약관</p> <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2" >보기</button>
+				<p class="ficnic_pay_ficnicPay">결제 대행 서비스 이용약관</p> <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2" >보기</button>
 			</div>
 			<div class="collapse" id="collapseExample2">
 			  <div class="card card-body">
@@ -454,23 +453,23 @@
 		</div>
 		
 		<div class="d-flex flex-column ">
-			<strong class="mt-3 mb-3">이번 피크닉은 누구와 하시나요?</strong>
-			<span class="mt-2 mb-2">다음번 크루님이 좋아할만한 피크닉을 추천해드릴게요.</span>
+			<strong class="ficnic_pay_ficnicPay mt-3 mb-3">이번 피크닉은 누구와 하시나요?</strong>
+			<span class="ficnic_pay_ficnicPay mt-2 mb-2">다음번 크루님이 좋아할만한 피크닉을 추천해드릴게요.</span>
 			<div class="form-check form-check-inline">
 			  <input class="form-check-input" type="radio" id="inlineCheckbox1" value="single" name="reserv_with">
-			  <label class="form-check-label mr-2" for="inlineCheckbox1">혼자</label>
+			  <label class="ficnic_pay_ficnicPay form-check-label mr-2" for="inlineCheckbox1">혼자</label>
 
-			  <input class="form-check-input" type="radio" id="inlineCheckbox2" value="couple" name="reserv_with">
-			  <label class="form-check-label mr-2" for="inlineCheckbox2">연인</label>
+			  <input class="ficnic_pay_ficnicPay form-check-input" type="radio" id="inlineCheckbox2" value="couple" name="reserv_with">
+			  <label class="ficnic_pay_ficnicPay form-check-label mr-2" for="inlineCheckbox2">연인</label>
 						
 			  <input class="form-check-input" type="radio" id="inlineCheckbox3" value="friend" name="reserv_with">
-			  <label class="form-check-label mr-2" for="inlineCheckbox3">친구</label>
+			  <label class="ficnic_pay_ficnicPay form-check-label mr-2" for="inlineCheckbox3">친구</label>
 			
 			  <input class="form-check-input" type="radio" id="inlineCheckbox4" value="family" name="reserv_with">
-			  <label class="form-check-label mr-2" for="inlineCheckbox4">가족</label>
+			  <label class="ficnic_pay_ficnicPay form-check-label mr-2" for="inlineCheckbox4">가족</label>
 			
 			  <input class="form-check-input" type="radio" id="inlineCheckbox5" value="parent" name="reserv_with">
-			  <label class="form-check-label mr-2" for="inlineCheckbox5">배우자</label>
+			  <label class="ficnic_pay_ficnicPay form-check-label mr-2" for="inlineCheckbox5">배우자</label>
 			</div>
 		</div>
 		
@@ -496,37 +495,37 @@
       <div class="modal-body">
 		 <div class="form-check">
 		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" checked data-bs-dismiss="modal" value="naverpay">
-		  <label class="form-check-label" for="flexRadioDefault3">
+		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
 		    네이버 페이
 		  </label>
 		</div>
 		<div class="form-check">
 		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="kakaopay">
-		  <label class="form-check-label" for="flexRadioDefault3" >
+		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3" >
 		    카카오페이
 		  </label>
 		</div>
 		<div class="form-check">
 		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="sampay">
-		  <label class="form-check-label" for="flexRadioDefault3">
+		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
 		    삼성페이
 		  </label>
 		</div>
 		<div class="form-check">
 		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="toss">
-		  <label class="form-check-label" for="flexRadioDefault3">
+		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
 		    토스
 		  </label>
 		</div>
 		<div class="form-check">
 		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="bank">
-		  <label class="form-check-label" for="flexRadioDefault3">
+		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
 		    무통장입금
 		  </label>
 		</div>
 		<div class="form-check">
 		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="toss">
-		  <label class="form-check-label" for="flexRadioDefault3">
+		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
 		    토스
 		  </label>
 		</div>
