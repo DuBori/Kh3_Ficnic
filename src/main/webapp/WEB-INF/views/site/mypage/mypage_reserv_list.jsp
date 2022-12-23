@@ -132,11 +132,11 @@
 	      	<label>리뷰 내용</label>
 	        <textarea class="form-control form-control-lg" rows="5" name="review_cont" id="review_con"></textarea>      		
 	        <div class="mypage-reserv-img">
-	        	<img alt="이미지 없음" src="" name="ori_review_photo1"  id="ori_review_photo1">
+	        	<img alt="이미지 없음" src="" name="ori_review_photo1"  id="ori_review_photo1" style="width: 200px; height: 200px; ">
 	        </div>
 	        <input type="file" name="file1" class="form-control" accept="image/jpeg, image/png, image/gif">
 	        <div class="mypage-reserv-img">
-	        	<img alt="이미지 없음" src="" name="ori_review_photo2"  id="ori_review_photo2">
+	        	<img alt="이미지 없음" src="" name="ori_review_photo2"  id="ori_review_photo2" style="width: 200px; height: 200px; ">
 	        </div>
 	        <input type="file" name="file2" class="form-control" accept="image/jpeg, image/png, image/gif">
 	      </div>
@@ -148,6 +148,7 @@
 	  </div>
   </form>
 </div>
+
 
 
 <%@ include file="../layout/layout_footer.jsp" %>
