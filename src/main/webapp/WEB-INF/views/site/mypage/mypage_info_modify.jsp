@@ -51,7 +51,7 @@
 					
 			<!-- 이메일 -->
 				<p><label for="member_email">이메일</label></p>
-				<p><input type="email" class="join_email" id="member_email" name="member_email" value="${dto.getMember_email()}" 
+				<p><input type="email" class="join_email" id="member_email" name="member_email" value="${dto.getMember_email()}" readonly
 				onkeydown="EmailInput(this);" required></p>
 					<div id="mailchk-txt" class="check_font join_check join_mail_check rowrow"></div>
 					<input type="hidden" name="mailchk_join" value="false" />
