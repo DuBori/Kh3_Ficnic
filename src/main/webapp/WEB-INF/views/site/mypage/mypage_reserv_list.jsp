@@ -69,6 +69,8 @@
 										</div>
 									  </div>
 								</div>	
+							</div>
+						</div>
 						</c:forEach>
 					</c:when>
 				<c:otherwise>
@@ -81,19 +83,19 @@
 				</c:otherwise>	
     		
     		</c:choose>
-		</div>
-
-
-	
-			      	<!-- 페이징 처리  -->
+</div>
+		<!-- 페이징 처리  -->
 		<c:if test="${!empty paging}">
-	        <div class=" row list-bottom-util">
-	            	<div class="d-flex flex-row justify-content-center">
+	        <div class="d-flex flex-row  justify-content-center  align-items-center w1000 ">
+	            	<div class="d-flex flex-row ">
 	                    ${pagingWrite}
 	               </div>
 	        </div>
 	    </c:if>
 	    <!-- 페이징 처리 end -->
+
+	
+
 	
 
 
