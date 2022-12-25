@@ -21,9 +21,9 @@
 
 	<div class="mypage-reserv-topdiv">
 		<ul class="mypage-reserv d-flex flex-row">
-			<li class="mr-3"><a class="ali1" href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do">모두보기</a>&nbsp;&nbsp;&nbsp;&nbsp;｜</li>
-			<li class="mr-3"><a class="ali1" href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=done">이용완료</a>&nbsp;&nbsp;&nbsp;&nbsp;｜</li>
-			<li class="mr-3"><a class="ali2" href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=cancel">취소내역</a></li>
+			<li class="mr-3"><a class="ali1 <c:if test="${empty getType}">text-danger</c:if> " href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do" >모두보기</a>&nbsp;&nbsp;&nbsp;&nbsp;｜</li>
+			<li class="mr-3"><a class="ali1 <c:if test="${getType eq 'done'}">text-danger</c:if> " href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=done">이용완료</a>&nbsp;&nbsp;&nbsp;&nbsp;｜</li>
+			<li class="mr-3"><a class="ali2 <c:if test="${getType eq 'cancel'}">text-danger</c:if>" href="<%=request.getContextPath()%>/mypage/mypage_reserv_list.do?getType=cancel">취소내역</a></li>
 		</ul>
 	</div>
 	
