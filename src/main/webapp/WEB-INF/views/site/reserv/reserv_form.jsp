@@ -102,7 +102,7 @@
 		<div class=" mt-2 mb-2">
 			<p class="ficnic_pay_ficnicTitle jcPaBR">결제수단</p>
 			<div class="form-check mt-2 mb-2">
-			  <input class="ficnic_pay_ficnicPay form-check-input" id="ficnicPay_check" type="radio" name="reserv_payment" id="flexRadioDefault1" value="card">
+			  <input class="ficnic_pay_ficnicPay form-check-input" id="ficnicPay_check" type="radio" name="reserv_payment" id="flexRadioDefault1" value="card" checked>
 			  <label class="ficnic_pay_ficnicPay form-check-label " for="flexRadioDefault1">
 			    신용/체크 카드
 			  </label>
@@ -164,7 +164,7 @@
 					<p class="ficnic_pay_ficnicTitle  gVXCTF mt-2 mb-2">적립금 사용</p>
 					<div class="d-flex flex-row justify-content-between">
 						
-							<span class="ficnic_pay_ficnicPay">사용가능 적립금 </span><span><input type="number" min="0" max="${memdto.getMember_point()}"  value="" onpause="NumberInput(this)" name="canUsePoint" ></span>
+							<span class="ficnic_pay_ficnicPay">사용가능 적립금 </span><span><input type="number" min="0" max="${memdto.getMember_point()}" value="0" onpause="NumberInput(this)" name="canUsePoint" ></span>
 							
 						
 					</div>
@@ -175,7 +175,7 @@
 		<div class="TotalPrice__PriceSectionWrapper-sc-1e1zxsm-0 jmdpIX">
 			<div class="d-flex flex-row justify-content-between">
 				<p class="ficnic_pay_ficnicTitle TotalPrice__PriceSectionTitle-sc-1e1zxsm-1 jjsTId">총 결제금액</p>
-				<b class="fincnic_pay_price"><span class="fincnic_pay_price dxsibZ" id="orginPirceView">${oprice + sprice }</span>원</b>
+				<b class="fincnic_pay_price"><span class="fincnic_pay_price dxsibZ" id="orginPirceView"><fmt:formatNumber value="${oprice + sprice }"/></span>원</b>
 			</div><hr>
 			<div class="d-flex flex-row justify-content-between">
 				<p class="ficnic_pay_ficnicTitle TotalPrice__PriceSectionSubTitle-sc-1e1zxsm-2 eHKVGS">총 피크닉 금액</p>
@@ -492,7 +492,7 @@
       </div>
       <div class="modal-body">
 		 <div class="form-check">
-		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" checked data-bs-dismiss="modal" value="naverpay">
+		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3"  data-bs-dismiss="modal" value="naverpay">
 		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
 		    네이버 페이
 		  </label>
