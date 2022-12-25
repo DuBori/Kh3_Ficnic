@@ -2,6 +2,10 @@
 	$(function(){
 		
 		$(".btn-js").on("click",function(){  
+			$("#review_con").html("");
+			$("#ori_review_photo1").attr("src","");
+			$("#ori_review_photo2").attr("src","");
+			
 			var name = $(this).data('name')+"후기 작성";
 			var no = $(this).data('no');
 			var path = "/ficnic";

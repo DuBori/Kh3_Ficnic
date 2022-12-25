@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -102,7 +103,7 @@ public class SiteMypageController {
     		@RequestParam( value = "getType", required = false, defaultValue = "") String getType,
     		Model model,
     		HttpServletRequest request,
-    		HttpSession session) {
+    		HttpSession session) throws ParseException {
    
     	
     	String member_id = (String) session.getAttribute("sess_id");
@@ -122,22 +123,20 @@ public class SiteMypageController {
 		
 		// 현재 날짜/시간
         Date now = new Date();
+ 		
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
  
-        // 포맷팅 정의
-        SimpleDateFormat formatter = new SimpleDateFormat("yy/MM/dd");
- 
-        // 포맷팅 적용
-        String formatedNow = formatter.format(now);
-        
-		List<ReservDTO> reservList =  reservDAO.getReservSessionList(member_id);
-		if(reservList.size()!=0) {
-			
-			for(ReservDTO val : reservList) {
-				if(val.getReserv_ficnic_date() !=null && formatedNow.compareTo(val.getReserv_ficnic_date()) < 0) {
-					this.reservDAO.updateReserv_status(val);
-				}
-			}
-		}
+		List<ReservDTO> reservList = reservDAO.getReservSessionList(member_id);
+		  if(reservList.size()!=0) {	  
+			  for(ReservDTO val : reservList) { 			
+					  
+				  if(val.getReserv_ficnic_date() !=null && now.compareTo(format.parse(val.getReserv_ficnic_date())) > 0 ) {
+						  this.reservDAO.updateReserv_status(val); 
+				  }
+					  
+			  } 
+		  }
+			 
 		
 		
 		

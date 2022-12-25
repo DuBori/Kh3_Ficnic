@@ -102,7 +102,7 @@
 		<div class=" mt-2 mb-2">
 			<p class="ficnic_pay_ficnicTitle jcPaBR">결제수단</p>
 			<div class="form-check mt-2 mb-2">
-			  <input class="ficnic_pay_ficnicPay form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault1" value="card">
+			  <input class="ficnic_pay_ficnicPay form-check-input" id="ficnicPay_check" type="radio" name="reserv_payment" id="flexRadioDefault1" value="card">
 			  <label class="ficnic_pay_ficnicPay form-check-label " for="flexRadioDefault1">
 			    신용/체크 카드
 			  </label>
@@ -191,10 +191,8 @@
 				   <span>개인정보 제 3자 제공 동의
 
 개인정보처리방침
-
 개인정보 수집 및 이용 안내
 주식회사 프렌트립(이하 “회사”)는 회원님의 개인정보를 보호하기 위해 최선을 다하고 있습니다. 이를 위해서 회사는 개인정보의 보호와 관련하여 ‘정보통신망 이용촉진 및 정보보호 등에 관한 법률’, ‘개인정보 보호법’ 등 개인정보와 관련된 법령을 준수하고 있습니다.
-
 1. 수집하는 개인정보의 항목
 회사는 이름, 이메일, 나이, 성별, 서비스 이용기록, 결제 및 환불 기록, 생년월일, 휴대폰번호, 관심분야 등에 관한 정보를 수집합니다.
 서비스를 이용하는 과정에서 방문일시, 사용이력, 기기정보, 접속로그, IP주소 등이 자동으로 생성·수집 될 수 있습니다.
