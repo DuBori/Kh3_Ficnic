@@ -353,8 +353,8 @@
 
 
 <c:if test="${!empty dto.getFicnic_address()}">
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4747e8c028b191f245af1699f475ac6c&libraries=services,clusterer,drawing"></script>
-<script type="text/javascript">
+
+<script type="text/javascript" defer="defer">
     var mapContainer = document.getElementById('showmap'); // 지도를 표시할 div
     var mapOption = {
         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
