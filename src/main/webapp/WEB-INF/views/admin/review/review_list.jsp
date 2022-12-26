@@ -52,7 +52,7 @@
                     	</div>
                         <div class="search-form-button col-lg-auto text-center">
                             <button type="submit" class="btn btn-secondary mb-2"><i class="fa fa-search"></i> 검색하기</button>
-                            <a href="${path}/admin/review/review_write.do" class="btn btn-primary ml-1 mb-2"><i class="fa fa-plus"></i> 리뷰 추가</a>
+                            <a href="${path}/admin/review/review_list.do" class="btn btn-outline-secondary ml-1 mb-2"><i class="fa fa-refresh"></i> 초기화</a>
                         </div>
                     </div>
                     </form>
