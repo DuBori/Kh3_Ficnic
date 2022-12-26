@@ -749,6 +749,8 @@ public class SiteFicnicController {
         
         if(rDto.getReserv_total_price() == 0) isNotHost=true;
         
+        
+        
         // 중복체크 해당 상품 정보 불러오기
         
     	FicnicDTO fdto= this.fdao.getFicnicCont(Integer.parseInt(request.getParameter("ficnic_no")));
@@ -766,6 +768,7 @@ public class SiteFicnicController {
 	    		}
 	    	}
     	}
+    	
     	cnt=0;
     	if(request.getParameter("reserv_ficnic_select_title") !=null && !request.getParameter("reserv_ficnic_select_title").equals("")) {
 	    	for(String title : fdto.getFicnic_select_title().split("★")) {
@@ -776,10 +779,11 @@ public class SiteFicnicController {
 	    	}
     	}
     	
-    	if(isNotHost) out.println("<script>alert('잘못된 접근을 하셨습니다.');history.back();</script>");
     	
+    	if(isNotHost) {
+    		out.println("<script>alert('잘못된 접근을 하셨습니다.');history.back();</script>");
+    	}else {
     	
-        
         String checkSess = checkSess();
         rDto.setReserv_sess(checkSess);
         
@@ -817,10 +821,10 @@ public class SiteFicnicController {
 
             out.println("<script>alert('예약 완료');location.href='"+request.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
         
-        }else {
-        	out.println("<script>alert('예약 실패');history.back();</script>");
-        }
-       
+	        }else {
+	        	out.println("<script>alert('예약 실패');history.back();</script>");
+	        }
+	    }
     }
 
     
