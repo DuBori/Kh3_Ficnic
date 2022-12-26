@@ -3,7 +3,6 @@ package com.kh3.model.ficnic;
 import java.util.List;
 import java.util.Map;
 
-import com.kh3.model.coupon.CouponDTO;
 
 
 public interface FicnicDAO {
