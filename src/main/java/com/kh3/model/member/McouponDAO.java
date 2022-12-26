@@ -16,6 +16,9 @@ public interface McouponDAO {
 
 	// 회원 사용 해당 쿠폰 제거 후 번호 정렬
 	void updateMcouponNo(int coupon_no);
+	
+	// 쿠폰 삭제 시 회원쿠폰 가지고 있는거 삭제
+	void mCouponDelete(int no);
 
 
 

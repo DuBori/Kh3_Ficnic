@@ -22,6 +22,7 @@ import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
+import com.kh3.model.member.WishDAO;
 import com.kh3.model.review.ReviewDAO;
 import com.kh3.model.review.ReviewDTO;
 import com.kh3.util.PageDTO;
@@ -36,6 +37,9 @@ public class AdminFicnicController {
 
     @Inject
     private CategoryDAO cdao;
+    
+    @Inject
+    private WishDAO wdao;
 
     @Inject
     ReviewDAO rdao;
@@ -809,10 +813,11 @@ public class AdminFicnicController {
                     File del_pimage2 = new File(request.getSession().getServletContext().getRealPath(dto.getReview_photo2()));
                     if(del_pimage2.exists()) del_pimage2.delete();
                 }
-    
+                
                 rdao.reviewDelete(dto.getReview_no());
             }
 
+            wdao.wishDelete(no);
             out.println("<script>location.href='" + request.getContextPath() + "/admin/ficnic/ficnic_list.do'</script>");
         } else {
             out.println("<script>alert('피크닉 삭제 실패'); history.back()</script>");
