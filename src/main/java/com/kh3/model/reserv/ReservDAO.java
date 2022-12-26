@@ -49,4 +49,7 @@ public interface ReservDAO {
 	List<ReservDTO> getReservList(String todayDate);
 
 
+	// 상단 - 최근 3일간 내역 가져오기
+	List<ReservDTO> getRecentReservList(String chkDate);
+
 }

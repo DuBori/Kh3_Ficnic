@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.kh3.util.RecentList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -27,6 +28,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${path}/resources/admin/images/favicon_114x114.png" />
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${path}/resources/admin/images/favicon_144x144.png" />
 
+    <c:if test="${sess_type ne 'admin'}"><script>alert('관리자만 접근 할 수 있습니다.'); history.back();</script></c:if>
 
     <link type="text/css" rel="stylesheet" href="${path}/resources/admin/css/jquery-ui.min.css" />
     <link type="text/css" rel="stylesheet" href="${path}/resources/admin/css/bootstrap-reboot.min.css" />
@@ -83,7 +85,7 @@
                 <button type="button" class="btn btn-lg px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-toggle="collapse" data-target="#topnav-menu-content"><i class="fa fa-fw fa-bars"></i></button>
             </div>
 
-            <div class="d-name text-center"><c:if test="${!empty sess_name}"><b>${sess_name}</b>님 안녕하세요 😊</c:if></div>
+            <div class="d-name text-center"><c:if test="${!empty sess_name}"><b>${sess_name}</b>님 안녕하세요 😊 asdasd <%=RecentList.showRecent("reserv")%></c:if></div>
 
             <ul class="d-flex">
                 <!-- 예약 알림창//START -->

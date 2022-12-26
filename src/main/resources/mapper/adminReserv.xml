@@ -63,4 +63,13 @@
 
 
 
+
+    <!-- 상단 - 최근 3일간 내역 가져오기 -->
+    <select id="adminRecentReservList" parameterType="String" resultType="reservDTO">
+        select * from reserv_list where
+        <![CDATA[reserv_no > 0 and rownum <= 9 and reserv_date >= to_date(#{value})]]>
+        order by reserv_date desc
+    </select>
+
+
 </mapper>

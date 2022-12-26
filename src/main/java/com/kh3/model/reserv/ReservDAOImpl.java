@@ -130,4 +130,9 @@ public class ReservDAOImpl implements ReservDAO {
 	}
 
 
+    // 상단 - 최근 3일간 내역 가져오기
+	@Override
+    public List<ReservDTO> getRecentReservList(String chkDate) {
+	    return this.sqlSession.selectList("adminRecentReservList", chkDate);
+	}
 }
