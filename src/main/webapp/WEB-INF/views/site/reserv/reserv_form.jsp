@@ -43,82 +43,141 @@
 <input type="hidden" value="${sess_name}"  name="reserv_name" />
 <input type="hidden" value="${sess_phone}"  name="reserv_phone" />
 <input type="hidden" value="${sess_email}"  name="reserv_email" />
-<input type="hidden" value="${oprice+sprice}" name="reserv_total_price">
 
+<c:if test="${dto.getReserv_ficnic_option_price() ne 0}">
+	<c:set var="oprice" value="${dto.getReserv_ficnic_option_price()}"/>
+</c:if>
+<c:if test="${dto.getReserv_ficnic_option_price() eq 0}">
+	<c:set var="oprice" value="${dto.getReserv_ficnic_sale_price()}"/>
+</c:if>
 
-<c:set var="oprice" value="${dto.getReserv_ficnic_option_price()}"/>
 <c:set var="sprice" value="${dto.getReserv_ficnic_select_price()}"/>
+<input type="hidden" value="${oprice+sprice}" name="reserv_total_price">
 
 <div class="ficnic-pay-main d-flex flex-column ">
 	
 	<div class="ficnic-pay-sub">
-		<div>
-			<h4>피크닉 정보</h4>
-			<div class="ficnic_pay_ficnicInfo d-flex flex-row justify-content-between mt-3">
+		<div class="mb-6">
+			<div class="ficnic_pay_ficnicInfo d-flex flex-row justify-content-between mt-4">
 				
 					<div class="d-flex flex-row">
 						<div class="mr-3">
 							<img src="${path}${fdto.getFicnic_photo1()}" width="200" height="200" style=" border-radius: 5%;">
 						</div>
-						<div>
+						<div class="d-flex flex-column justify-content-between">
 							<div class="ficnic_pay_ficnicTitle">
 								<span>${fdto.getFicnic_name()}</span> 	
 							</div>
 							
 							<div class="ficnic_pay_ficnicStarReview mt-2 mb-2">
-								<img src="data:image/svg+xml,%3Csvg width='16' height='14' viewBox='0 0 16 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M12.293 8.6189L15.7442 6.00968C16.2325 5.63914 15.9799 4.9135 15.3402 4.88263L10.8957 4.6356C10.6263 4.62016 10.3906 4.46577 10.2896 4.23418L8.65658 0.405277C8.42088 -0.135092 7.59595 -0.135092 7.36026 0.405277L5.72724 4.21874C5.62623 4.45033 5.39053 4.60472 5.12117 4.62016L0.659819 4.86719C0.0200779 4.89806 -0.232451 5.6237 0.255772 5.99424L3.707 8.58802C3.90903 8.74241 4.01004 9.00487 3.9427 9.23646L2.81473 13.2043C2.66322 13.7601 3.31979 14.2079 3.85852 13.8991L7.61279 11.6913C7.84848 11.5523 8.13468 11.5523 8.35354 11.6913L12.1246 13.8991C12.6634 14.2079 13.3199 13.7601 13.1684 13.2043L12.0405 9.2519C11.99 9.02031 12.0741 8.77329 12.293 8.6189Z' fill='%237A29FA'/%3E %3C/svg%3E" alt="별점 아이콘">
-								<span class="ficnic_pay_ficnicStar">${fdto.getFicnic_review_point()}</span>
-								<p class="ficnic_pay_ficnicReview">리뷰 수 : ${fdto.getFicnic_review_count()}</p>
+								
+								<div>
+									<div>
+										<img src="data:image/svg+xml,%3Csvg width='16' height='14' viewBox='0 0 16 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath d='M12.293 8.6189L15.7442 6.00968C16.2325 5.63914 15.9799 4.9135 15.3402 4.88263L10.8957 4.6356C10.6263 4.62016 10.3906 4.46577 10.2896 4.23418L8.65658 0.405277C8.42088 -0.135092 7.59595 -0.135092 7.36026 0.405277L5.72724 4.21874C5.62623 4.45033 5.39053 4.60472 5.12117 4.62016L0.659819 4.86719C0.0200779 4.89806 -0.232451 5.6237 0.255772 5.99424L3.707 8.58802C3.90903 8.74241 4.01004 9.00487 3.9427 9.23646L2.81473 13.2043C2.66322 13.7601 3.31979 14.2079 3.85852 13.8991L7.61279 11.6913C7.84848 11.5523 8.13468 11.5523 8.35354 11.6913L12.1246 13.8991C12.6634 14.2079 13.3199 13.7601 13.1684 13.2043L12.0405 9.2519C11.99 9.02031 12.0741 8.77329 12.293 8.6189Z' fill='%237A29FA'/%3E %3C/svg%3E" alt="별점 아이콘">
+										<span class="ficnic_pay_ficnicStar">${fdto.getFicnic_review_point()}</span>
+										<p class="ficnic_pay_ficnicReview">리뷰 수 : ${fdto.getFicnic_review_count()}</p>
+									</div>
+
+								</div>
 							</div>
 						</div>
 					</div>
 					
-					<div class="d-flex flex-column">
-					<div>옵션정보</div>
-					<div class="ficnic_pay_ficnicOption d-flex flex-column mt-3">
+					<div class="d-flex flex-column justify-content-between mr-3">
 						<div>
-							<c:if test="${!empty dto.getReserv_ficnic_date() }">
-							<span>예약날짜 - ${dto.getReserv_ficnic_date() }</span>
-							</c:if>
-							<c:if test="${empty dto.getReserv_ficnic_date() }">
-							<span>예약날짜 - 이용권</span>
-							</c:if>
-						</div>
-						<div>
-							<span>선택 피크닉 - ${dto.getReserv_ficnic_option_title()}</span>
-						</div>
-						<c:if test="${!empty dto.getReserv_ficnic_select_title() }">
-							<div>
-							<span>${dto.getReserv_ficnic_select_title() }</span>
+							<div>옵션정보</div>
+							<div class="ficnic_pay_ficnicOption d-flex flex-column">
+								<div>
+									<div>
+										<c:if test="${!empty dto.getReserv_ficnic_date() }">
+										<span>예약날짜 - ${dto.getReserv_ficnic_date() }</span>
+										</c:if>
+										<c:if test="${empty dto.getReserv_ficnic_date() }">
+										<span>예약날짜 - 이용권</span>
+										</c:if>
+									</div>
+									<div>
+										<span>선택 피크닉 - ${dto.getReserv_ficnic_option_title()}</span>
+									</div>
+									<c:if test="${!empty dto.getReserv_ficnic_select_title() }">
+										<div>
+										<span>${dto.getReserv_ficnic_select_title() }</span>
+										</div>
+									</c:if>
+								</div>
 							</div>
-						</c:if>
-						
+						</div>
+						<div class="d-flex flex-row justify-content-between align-items-center">
+								<p class="ficnic_pay_ficnicOption TotalPrice__PriceSectionTitle-sc-1e1zxsm-1 jjsTId">피크닉 금액</p>
+								<b class="ficnic_pay_ficnicOption"><span class="fincnic_pay_price dxsibZ" id="orginPirceView"><fmt:formatNumber value="${oprice + sprice }"/></span>원</b>
+							</div>
 					</div>
-				</div>
 				
 			</div>
 		</div>
 		<hr class="Hr-sc-1533uvg-0 cbobBO">
-		<div class=" mt-2 mb-2">
+		<div class="mt-4 mb-2">
 			<p class="ficnic_pay_ficnicTitle jcPaBR">결제수단</p>
 			<div class="form-check mt-2 mb-2">
-			  <input class="ficnic_pay_ficnicPay form-check-input" id="ficnicPay_check" type="radio" name="reserv_payment" id="flexRadioDefault1" value="card" checked>
-			  <label class="ficnic_pay_ficnicPay form-check-label " for="flexRadioDefault1">
-			    신용/체크 카드
+			  <label class="ficnic_pay_ficnicPay">
+			  	<input class="ficnic_pay_ficnicPay mr-2" id="ficnicPay_check" type="radio" name="reserv_payment"  value="card" checked>신용/체크 카드
 			  </label>
 			</div>
 			<div class="form-check mt-2 mb-2">
-			  <input class="ficnic_pay_ficnicPay form-check-input" type="radio"  name="reserv_payment" id="flexRadioDefault2" data-bs-toggle="modal" data-bs-target="#exampleModal" >
-			  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault2">
-			    다른 결제수단
+			  <label class="ficnic_pay_ficnicPay">
+			  	<input class="ficnic_pay_ficnicPay mr-2" type="radio" name="reserv_payment" data-bs-toggle="modal" data-bs-target="#exampleModal" >다른 결제수단
 			  </label>
 			</div>
-			<div class="ficnic_pay_ficnicOtherpay">
+			<div class="ficnic_pay_ficnicOtherpay ml-4">
 			
 			</div>
+			
+					<!-- Modal -->
+		<div class="modal fade center" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">다른 결제수단</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+					<div >
+						  <label class="ficnic_pay_ficnicPay">
+						    <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment" data-bs-dismiss="modal" value="naverpay">네이버 페이
+						  </label>
+					</div>
+					<div >	  
+					  <label class="ficnic_pay_ficnicPay" >
+					    <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment"  data-bs-dismiss="modal" value="kakaopay">카카오페이
+					  </label>
+					</div>
+					<div >
+					 
+					  <label class="ficnic_pay_ficnicPay">
+					     <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment"  data-bs-dismiss="modal" value="sampay">삼성페이
+					  </label>
+					</div>
+					<div >
+					 
+					  <label class="ficnic_pay_ficnicPay">
+					     <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment"  data-bs-dismiss="modal" value="toss">토스
+					  </label>
+					</div>
+					<div >
+					  
+					  <label class="ficnic_pay_ficnicPay">
+					    <input class="ficnic_pay_modal mr-2" type="radio"  name="reserv_payment" data-bs-dismiss="modal" value="bank">무통장입금
+					  </label>
+					</div>
+		      </div>
+		      
+		    </div>
+		   
+		  </div>
 		</div>
+	</div>
 		<hr class="Hr-sc-1533uvg-0 cbobBO">
-		<div class="mt-2 mb-2">
+		<div class="mt-4 mb-2">
 			<div>
 				<div>
 					<p class="ficnic_pay_ficnicTitle SubTitle-eeu9i7-0 gVXCTF mt-2 mb-2">피크닉 할인 쿠폰</p>
@@ -131,11 +190,12 @@
 								<c:forEach items="${mdto.getCoupon_list() }" var="cdto" >							
 									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">
 									
-									<c:set value="disabled" var="chkabled" />		
+									<c:set value="disabled class =\"text-danger\" " var="chkabled" />		
 										
 										<c:if test="${cdto.getCoupon_use_type() ne 'cart' and  cdto.getCoupon_use_type() eq 'category'}" >
 											<c:forTokens items="${cdto.getCoupon_use_value() }" var="val" delims="★">
 													<c:if test="${fdto.getFicnic_category_no() eq val or fdto.getFicnic_category_sub1() eq val or fdto.getFicnic_category_sub2() eq val or fdto.getFicnic_category_sub3() eq val}">
+													
 														<c:set value="" var="chkabled" />
 													</c:if>
 												
@@ -143,6 +203,7 @@
 										</c:if>
 										<c:if test="${cdto.getCoupon_use_type() ne 'cart' and  cdto.getCoupon_use_type() eq 'goods'}" >
 											<c:forTokens items="${cdto.getCoupon_use_value() }" var="val" delims="★">
+												
 													<c:if test="${fdto.getFicnic_no() eq val}">
 														<c:set value="" var="chkabled" />
 													</c:if>
@@ -152,7 +213,8 @@
 										<c:if test="${cdto.getCoupon_use_type() eq 'cart'}" >
 											<c:set value="" var="chkabled" />
 										</c:if>			
-										<option ${chkabled} value="${cdto.getCoupon_no()}" >${cdto.getCoupon_name()}</option>									
+										
+										<option  ${chkabled} value="${cdto.getCoupon_no()}" >${cdto.getCoupon_name()}[${cdto.getCoupon_price()}<c:if test="${cdto.getCoupon_price_type() ne 'price' }"> %할인</c:if><c:if test="${cdto.getCoupon_price_type() eq 'price' }">원할인</c:if> ]</option>									
 									</c:if>	
 									
 								</c:forEach>	
@@ -162,37 +224,39 @@
 					</div>
 					<hr class="Hr-sc-4qqq6q-0 bqjyoQ">
 					<p class="ficnic_pay_ficnicTitle  gVXCTF mt-2 mb-2">적립금 사용</p>
-					<div class="d-flex flex-row justify-content-between">
-						
-							<span class="ficnic_pay_ficnicPay">사용가능 적립금 </span><span><input type="number" min="0" max="${memdto.getMember_point()}" value="0" onpause="NumberInput(this)" name="canUsePoint" ></span>
-							
+					<div class="d-flex flex-column">
+							<div class="d-flex flex-row justify-content-between">
+								<span class="ficnic_pay_ficnicPay">보유한 적립금</span>
+								<span style="color: var(--green)" >${memdto.getMember_point()}<span style="color: var(--dark)">원</span></span>
+							</div>
+							<div class="d-flex flex-row justify-content-between">
+								<span class="ficnic_pay_ficnicPay">사용할 적립금</span>
+								<input type="number" min="0" max="${memdto.getMember_point()}" value="0" step="100" onpause="NumberInput(this)" name="canUsePoint" >
+							</div>
 						
 					</div>
 				</div>
 			</div>
 		</div>
 		<hr class="Hr-sc-1533uvg-0 cbobBO">
-		<div class="TotalPrice__PriceSectionWrapper-sc-1e1zxsm-0 jmdpIX">
-			<div class="d-flex flex-row justify-content-between">
-				<p class="ficnic_pay_ficnicTitle TotalPrice__PriceSectionTitle-sc-1e1zxsm-1 jjsTId">총 결제금액</p>
-				<b class="fincnic_pay_price"><span class="fincnic_pay_price dxsibZ" id="orginPirceView"><fmt:formatNumber value="${oprice + sprice }"/></span>원</b>
-			</div><hr>
+		<div class="mt-4">
+			
 			<div class="d-flex flex-row justify-content-between">
 				<p class="ficnic_pay_ficnicTitle TotalPrice__PriceSectionSubTitle-sc-1e1zxsm-2 eHKVGS">총 피크닉 금액</p>
 				<b class="fincnic_pay_price"><span class="fincnic_pay_price" id="sitePriceView">${oprice + sprice}</span>원</b>
 			</div>
 		</div>
-		<div class="bg-light d-flex flex-column">
+		<div class="bg-light d-flex flex-column mt-4">
 			<div class="d-flex flex-row justify-content-between m-2">
 				<p class="ficnic_pay_ficnicPay">개인정보 제 3자 제공약관</p> <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">보기</button>
 			</div>
 			<div class="collapse" id="collapseExample">
 				  <div class="card card-body">
-				   <span>개인정보 제 3자 제공 동의
+				   <span><pre>개인정보 제 3자 제공 동의
 
 개인정보처리방침
 개인정보 수집 및 이용 안내
-주식회사 프렌트립(이하 “회사”)는 회원님의 개인정보를 보호하기 위해 최선을 다하고 있습니다. 이를 위해서 회사는 개인정보의 보호와 관련하여 ‘정보통신망 이용촉진 및 정보보호 등에 관한 법률’, ‘개인정보 보호법’ 등 개인정보와 관련된 법령을 준수하고 있습니다.
+주식회사 피크닉트립(이하 “회사”)는 회원님의 개인정보를 보호하기 위해 최선을 다하고 있습니다. 이를 위해서 회사는 개인정보의 보호와 관련하여 ‘정보통신망 이용촉진 및 정보보호 등에 관한 법률’, ‘개인정보 보호법’ 등 개인정보와 관련된 법령을 준수하고 있습니다.
 1. 수집하는 개인정보의 항목
 회사는 이름, 이메일, 나이, 성별, 서비스 이용기록, 결제 및 환불 기록, 생년월일, 휴대폰번호, 관심분야 등에 관한 정보를 수집합니다.
 서비스를 이용하는 과정에서 방문일시, 사용이력, 기기정보, 접속로그, IP주소 등이 자동으로 생성·수집 될 수 있습니다.
@@ -208,7 +272,7 @@
 - (선택) 배송지 정보: 수령인, 연락처, 주소지
 - (선택) 탑승자 이름, 동반인정보(성명, 이외 서비스의 유형에 따라, 추가적인 정보가 수집될 수 있습니다. (여행상품)
 4) 모바일 사용 시
-- 프립 앱 버전, OS버전 (iOS, 안드로이드)
+- 피크닉 앱 버전, OS버전 (iOS, 안드로이드)
 - 위치정보 (별도 저장없이 앱에서 사용)
 5) 기타
 - 서비스 이용과정에서 자동 수집 정보 : 회원ID, IP Address, 쿠키, 방문 일시, 서비스 이용 기록, 불량 이용 기록, 기기정보, ADID, IDFA, 위치정보
@@ -310,7 +374,7 @@
 회사는 이용자에게 홈페이지를 통하여 다른 회사의 웹사이트 또는 자료에 대한 링크를 제공할 수 있습니다. 이 경우 회사는 외부사이트 및 자료에 대하여 통제권이 없을 뿐만 아니라 이들이 개인정보를 수집하는 행위에 대하여 회사의 '개인정보처리방침'이 적용되지 않습니다. 따라서, 회사가 포함하고 있는 링크를 클릭하여 타 사이트의 페이지로 이동할 경우에는 새로 방문한 사이트의 개인정보처리방침을 반드시 확인하시기 바랍니다.
 
 13. 시행시기
-본 개인정보처리방침은 2022년 7월 1일부터 시행됩니다.</span>
+본 개인정보처리방침은 2022년 7월 1일부터 시행됩니다.</pre></span>
 				  </div>
 				</div>
 			<div class="d-flex flex-row justify-content-between m-2"> 
@@ -318,13 +382,13 @@
 			</div>
 			<div class="collapse" id="collapseExample2">
 			  <div class="card card-body">
-			    <span>
-			    결제 대행 서비스 이용약관
+			    <span><pre>
+결제 대행 서비스 이용약관
 
 개인정보처리방침
 
 개인정보 수집 및 이용 안내
-주식회사 프렌트립(이하 “회사”)는 회원님의 개인정보를 보호하기 위해 최선을 다하고 있습니다. 이를 위해서 회사는 개인정보의 보호와 관련하여 ‘정보통신망 이용촉진 및 정보보호 등에 관한 법률’, ‘개인정보 보호법’ 등 개인정보와 관련된 법령을 준수하고 있습니다.
+주식회사 피크닉트립(이하 “회사”)는 회원님의 개인정보를 보호하기 위해 최선을 다하고 있습니다. 이를 위해서 회사는 개인정보의 보호와 관련하여 ‘정보통신망 이용촉진 및 정보보호 등에 관한 법률’, ‘개인정보 보호법’ 등 개인정보와 관련된 법령을 준수하고 있습니다.
 
 1. 수집하는 개인정보의 항목
 회사는 이름, 이메일, 나이, 성별, 서비스 이용기록, 결제 및 환불 기록, 생년월일, 휴대폰번호, 관심분야 등에 관한 정보를 수집합니다.
@@ -341,7 +405,7 @@
 - (선택) 배송지 정보: 수령인, 연락처, 주소지
 - (선택) 탑승자 이름, 동반인정보(성명, 이외 서비스의 유형에 따라, 추가적인 정보가 수집될 수 있습니다. (여행상품)
 4) 모바일 사용 시
-- 프립 앱 버전, OS버전 (iOS, 안드로이드)
+- 피크닉 앱 버전, OS버전 (iOS, 안드로이드)
 - 위치정보 (별도 저장없이 앱에서 사용)
 5) 기타
 - 서비스 이용과정에서 자동 수집 정보 : 회원ID, IP Address, 쿠키, 방문 일시, 서비스 이용 기록, 불량 이용 기록, 기기정보, ADID, IDFA, 위치정보
@@ -425,11 +489,11 @@
 
 11. 홈페이지 개인정보 보호책임자
 회사는 이용자의 개인정보에 대한 개인정보 보호책임자를 지정하여 개인정보보호를 위해 최선을 다하겠습니다. 현재 회사의 개인정보 보호책임자는 아래와 같습니다.
-- 성명 : 양사열
+- 성명 : 아무개
 - 소속 : 서비스개발팀
-- 직위 : CTO
-- E-mail : cs@frientrip.com
-- 연락처 : 02-512-3662
+- 직위 : 없음
+- E-mail : aMugae@frientrip.com
+- 연락처 : 0101-1234-1234
 
 개인정보침해에 대한 신고나 상담이 필요하신 경우에는 아래 기관에 문의하시기 바랍니다.
 ▶ 개인정보 침해신고센터
@@ -444,17 +508,18 @@
 
 13. 시행시기
 본 개인정보처리방침은 2022년 7월 1일부터 시행됩니다.
-			    
+			    </pre>
 			    </span>
 			  </div>
 			</div>	
 		</div>
+		<hr>
 		
-		<div class="d-flex flex-column ">
-			<strong class="ficnic_pay_ficnicPay mt-3 mb-3">이번 피크닉은 누구와 하시나요?</strong>
+		<div class="d-flex flex-column mt-4">
+			<strong class="ficnic_pay_ficnicPay mt-2 mb-3">이번 피크닉은 누구와 하시나요?</strong>
 			<span class="ficnic_pay_ficnicPay mt-2 mb-2">다음번 크루님이 좋아할만한 피크닉을 추천해드릴게요.</span>
-			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="radio" id="inlineCheckbox1" value="single" name="reserv_with">
+			<div class="form-check form-check-inline mt-3">
+			  <input class="form-check-input" type="radio" id="inlineCheckbox1" value="single" name="reserv_with" checked>
 			  <label class="ficnic_pay_ficnicPay form-check-label mr-2" for="inlineCheckbox1">혼자</label>
 
 			  <input class="ficnic_pay_ficnicPay form-check-input" type="radio" id="inlineCheckbox2" value="couple" name="reserv_with">
@@ -471,69 +536,19 @@
 			</div>
 		</div>
 		
-		<div class="d-flex flex-row  justify-content-center mt-2 mb-2 ">
+		<div class="d-flex flex-row  justify-content-center mt-5 mb-2 ">
 			<p>위 내용을 모두 확인하였으며, 해당 피크닉을 예약합니다.<p>
 		</div>
 		
 		</div>
-		<div class="d-flex flex-row  justify-content-center mt-2 mb-2 w100">
-			<input class="btn w-100 " type="submit" value="참여하기" style=" background-color : rgb(122, 41, 250);">
+		<div class="d-flex flex-row  justify-content-center mt-3 mb-2 w100">
+			<input class="btn w-100 text-white ty-5" type="submit" value="참여하기" style="background-color: var(--indigo)">
 		</div>
 	
 	</div>
 
-<!-- Modal -->
-<div class="modal fade center" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">다른 결제수단</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-		 <div class="form-check">
-		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3"  data-bs-dismiss="modal" value="naverpay">
-		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
-		    네이버 페이
-		  </label>
-		</div>
-		<div class="form-check">
-		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="kakaopay">
-		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3" >
-		    카카오페이
-		  </label>
-		</div>
-		<div class="form-check">
-		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="sampay">
-		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
-		    삼성페이
-		  </label>
-		</div>
-		<div class="form-check">
-		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="toss">
-		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
-		    토스
-		  </label>
-		</div>
-		<div class="form-check">
-		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="bank">
-		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
-		    무통장입금
-		  </label>
-		</div>
-		<div class="form-check">
-		  <input class="ficnic_pay_modal form-check-input" type="radio" name="reserv_payment" id="flexRadioDefault3" data-bs-dismiss="modal" value="toss">
-		  <label class="ficnic_pay_ficnicPay form-check-label" for="flexRadioDefault3">
-		    토스
-		  </label>
-		</div>
-      </div>
-      
-    </div>
-   
-  </div>
-  
-</div>
+
+
 </form>
 
 </div>

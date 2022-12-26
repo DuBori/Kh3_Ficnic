@@ -12,7 +12,20 @@ $(function(){
 	
 	$(".ficnic_pay_modal").on("click",function(){
 		var ficnic_pay_val = $(this).val();
-		$(".ficnic_pay_ficnicOtherpay").html("<input disabled class =\"mr-2\" value=\""+ficnic_pay_val+"\"/> <input type=\"hidden\" class=\"Form__Input-sc-1quypp7-1 dYnqqW\" value=\""+ficnic_pay_val+"\"> <input type=\"button\" class=\"btn btn-outline-dark\" value=\"변경\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\"/>  ");
+		if(ficnic_pay_val == "kakaopay"){
+			ficnic_pay_val = "카카오 페이";
+		}else if(ficnic_pay_val == "sampay"){
+			ficnic_pay_val = "삼성 페이";
+		}else if(ficnic_pay_val == "toss"){
+			ficnic_pay_val = "토스";
+		}else if(ficnic_pay_val == "bank"){
+			ficnic_pay_val = "무통장 입금";
+		}else if(ficnic_pay_val == "toss"){
+			ficnic_pay_val = "";
+		}else if(ficnic_pay_val == "naverpay"){
+			ficnic_pay_val = "네이버 페이";
+		}
+		$(".ficnic_pay_ficnicOtherpay").html("<span class =\"mr-2\">"+ficnic_pay_val+"</span> <input type=\"hidden\" class=\"Form__Input-sc-1quypp7-1 dYnqqW\" value=\""+ficnic_pay_val+"\"> <input type=\"button\" class=\"btn btn-outline-dark\" value=\"변경\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\"/>  ");
 
 	});
 	
@@ -22,12 +35,12 @@ $(function(){
 
 	var SitePirceOrigin = $("#sitePriceView").html();
 	
-	var couponAfterPrice =0;
+	let couponAfterPrice =0;
 	
 	
 	$("input[name='canUsePoint']").on("blur",function(){
 		
-		var thisvalue = $("input[name='canUsePoint']").val();
+		var thisvalue = parseInt($("input[name='canUsePoint']").val().replace(/,/g , ''),10);
 		
 		if(memberPoint < thisvalue){
 			$("input[name='canUsePoint']").val(memberPoint);
@@ -131,17 +144,18 @@ $(function(){
 						
 						
 						if(canuse){
-						
+
 							if(price_type == "price" ){
-								var priceview= $("#sitePriceView").html();
+								var priceview= parseInt($("#sitePriceView").html().replace(/,/g , ''),10);
 								var saleMax = coupon_price;
+								
 								if(saleMax > price_max){
 									saleMax = price_max;
 								}
-	
+							
 								
 							}else{
-								var priceview= $("#sitePriceView").html();
+								var priceview= parseInt($("#sitePriceView").html().replace(/,/g , ''),10);
 								var saleMax = priceview*(coupon_price/100);
 								if(saleMax > price_max){
 									saleMax = price_max;
@@ -149,8 +163,8 @@ $(function(){
 	
 							}
 													
-							couponAfterPrice = priceview - saleMax - $("input[name='canUsePoint']").val();
-						
+							couponAfterPrice = priceview - saleMax - parseInt($("input[name='canUsePoint']").val());
+	
 							if(couponAfterPrice > price_over){
 								$("#sitePriceView").html(couponAfterPrice );
 								$("input[name='reserv_total_price']").val(couponAfterPrice);
