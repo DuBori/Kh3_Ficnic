@@ -44,8 +44,15 @@
 <input type="hidden" value="${sess_phone}"  name="reserv_phone" />
 <input type="hidden" value="${sess_email}"  name="reserv_email" />
 
+<c:if test="${!empty dto.getReserv_ficnic_select_price()}">
+
+	<c:set var="sprice" value="${dto.getReserv_ficnic_sale_price()}"/>
+</c:if>
+<c:if test="${empty dto.getReserv_ficnic_select_price()}">
+	<c:set var="sprice" value="${dto.getReserv_ficnic_select_price()}"/>
+</c:if>
+
 <c:set var="oprice" value="${dto.getReserv_ficnic_option_price()}"/>
-<c:set var="sprice" value="${dto.getReserv_ficnic_select_price()}"/>
 <input type="hidden" value="${oprice+sprice}" name="reserv_total_price">
 
 <div class="ficnic-pay-main d-flex flex-column ">
@@ -131,7 +138,7 @@
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">다른 결제수단</h5>
+		        <h5 class="modal-title">다른 결제수단</h5>
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
 		      <div class="modal-body">
