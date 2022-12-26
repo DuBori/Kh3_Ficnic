@@ -11,6 +11,10 @@
     <select id="adminWishList" resultType="wishDTO">
     </select>
 
+	<!-- 회원이 가지고 있는 쿠폰 삭제 -->
+	<delete id="adminWishDelete" parameterType="int">
+		delete from member_wish where ficnic_no = #{ficnic_no }
+	</delete>
 
 
 

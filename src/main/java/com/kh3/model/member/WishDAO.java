@@ -20,4 +20,7 @@ public interface WishDAO {
 
     // 위시리스트 삭제
     int wishCancel(Map<String, Object> map);
+    
+    // 피크닉 삭제시 위시리스트 삭제
+	void wishDelete(int no);
 }
