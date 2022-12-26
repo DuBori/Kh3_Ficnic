@@ -44,15 +44,14 @@
 <input type="hidden" value="${sess_phone}"  name="reserv_phone" />
 <input type="hidden" value="${sess_email}"  name="reserv_email" />
 
-<c:if test="${!empty dto.getReserv_ficnic_select_price()}">
-
-	<c:set var="sprice" value="${dto.getReserv_ficnic_sale_price()}"/>
+<c:if test="${dto.getReserv_ficnic_option_price() ne 0}">
+	<c:set var="oprice" value="${dto.getReserv_ficnic_option_price()}"/>
 </c:if>
-<c:if test="${empty dto.getReserv_ficnic_select_price()}">
-	<c:set var="sprice" value="${dto.getReserv_ficnic_select_price()}"/>
+<c:if test="${dto.getReserv_ficnic_option_price() eq 0}">
+	<c:set var="oprice" value="${dto.getReserv_ficnic_sale_price()}"/>
 </c:if>
 
-<c:set var="oprice" value="${dto.getReserv_ficnic_option_price()}"/>
+<c:set var="sprice" value="${dto.getReserv_ficnic_select_price()}"/>
 <input type="hidden" value="${oprice+sprice}" name="reserv_total_price">
 
 <div class="ficnic-pay-main d-flex flex-column ">
@@ -191,7 +190,7 @@
 								<c:forEach items="${mdto.getCoupon_list() }" var="cdto" >							
 									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">
 									
-									<c:set value="disabled" var="chkabled" />		
+									<c:set value="disabled class =\"text-danger\" " var="chkabled" />		
 										
 										<c:if test="${cdto.getCoupon_use_type() ne 'cart' and  cdto.getCoupon_use_type() eq 'category'}" >
 											<c:forTokens items="${cdto.getCoupon_use_value() }" var="val" delims="★">
@@ -215,7 +214,7 @@
 											<c:set value="" var="chkabled" />
 										</c:if>			
 										
-										<option ${chkabled} value="${cdto.getCoupon_no()}" >${cdto.getCoupon_name()}[${cdto.getCoupon_price()}<c:if test="${cdto.getCoupon_price_type() ne 'price' }"> %할인</c:if><c:if test="${cdto.getCoupon_price_type() eq 'price' }">원할인</c:if> ]</option>									
+										<option  ${chkabled} value="${cdto.getCoupon_no()}" >${cdto.getCoupon_name()}[${cdto.getCoupon_price()}<c:if test="${cdto.getCoupon_price_type() ne 'price' }"> %할인</c:if><c:if test="${cdto.getCoupon_price_type() eq 'price' }">원할인</c:if> ]</option>									
 									</c:if>	
 									
 								</c:forEach>	
@@ -232,7 +231,7 @@
 							</div>
 							<div class="d-flex flex-row justify-content-between">
 								<span class="ficnic_pay_ficnicPay">사용할 적립금</span>
-								<input type="number" min="0" max="${memdto.getMember_point()}" value="0" onpause="NumberInput(this)" name="canUsePoint" >
+								<input type="number" min="0" max="${memdto.getMember_point()}" value="0" step="100" onpause="NumberInput(this)" name="canUsePoint" >
 							</div>
 						
 					</div>
