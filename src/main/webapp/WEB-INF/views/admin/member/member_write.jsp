@@ -149,7 +149,7 @@ $(function(){
                             <label for="member_email">이메일</label>
                             <input type="text" name="member_email" id="member_email" class="form-control w-30" onkeydown="EmailInput(this);" placeholder="이메일을 입력해주세요." required />
                         	<div id="mailchk-txt" class="d-inline ml-2"></div>
-							<input type="hidden" name="mailchk" value="false" />
+							<input type="hidden" name="mailchk_join" value="false" />
                         </div>
                         <div class="w-100"></div>
                         <div class="form-group col">
