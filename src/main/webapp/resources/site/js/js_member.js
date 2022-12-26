@@ -26,7 +26,7 @@
                 
                  if($.trim(userId).length < 6){
                      $(".join_id_check").html("<span style=\"color:red\">아이디는 6글자 이상이어야 합니다.</span>");
-                    return false;
+                     return false;
                  } 
                  
                 // 아이디 중복

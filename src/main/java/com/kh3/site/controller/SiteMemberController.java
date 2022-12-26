@@ -328,8 +328,9 @@ public class SiteMemberController {
 
         // 비밀번호 일치 확인
         if (!dto.getMember_pw().equals(dto.getMember_pw_re())) {
-            out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
-        }
+            out.println("<script>alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.'); location.href='member_join.do'; </script>");
+        } 
+        	
 
         // 암호화 설정
         dto.setMember_pw(passwordEncoder.encode(dto.getMember_pw()));
@@ -341,24 +342,24 @@ public class SiteMemberController {
 
             for (ObjectError error : list) {
             	if (error.getDefaultMessage().equals("id")) {
-                    out.println("<script>alert('아이디를 6자 이상 입력해주세요.'); history.back();</script>");
+                    out.println("<script>alert('아이디를 6자 이상 입력해주세요.'); location.href='member_join.do'; </script>");
                     break;
             	 } else if (error.getDefaultMessage().equals("pw")) {
-                     out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>");
+                     out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); location.href='member_join.do'; </script>");
                      break;
                  } else if (error.getDefaultMessage().equals("email")) {
-                     out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>");
+                     out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); location.href='member_join.do'; </script>");
                      break;
                  } else if (error.getDefaultMessage().equals("phone")) {
-                     out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>");
+                     out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); location.href='member_join.do'; </script>");
                      break;
                  } else if (error.getDefaultMessage().equals("idchk_join")) {
-                    out.println("<script>alert('사용할 수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); history.back();</script>");
+                    out.println("<script>alert('사용할 수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); location.href='member_join.do'; </script>");
                     break;
                 } else if (error.getDefaultMessage().equals("mailchk_join")) {
-                    out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.'); history.back();</script>");
+                    out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.'); location.href='member_join.do'; </script>");
                     break;
-                }
+                } 
             }
 
         } else { // 이상 없을 때 실행
@@ -368,9 +369,14 @@ public class SiteMemberController {
                 this.pdao.joinPoint(pdto);
                 out.println("<script>alert('반갑습니다. "+dto.getMember_name()+"님 \\nFicnic 회원가입이 정상적으로 완료되었습니다.'); location.href='../main.do';</script>");
             } else {
-                out.println("<script>alert('회원 가입 중 에러가 발생하였습니다.'); history.back();</script>");
+                out.println("<script>alert('회원 가입 중 에러가 발생하였습니다.'); location.href='member_join.do' </script>");
             }
         }
     }
+  
+
+
 
 }
+
+
