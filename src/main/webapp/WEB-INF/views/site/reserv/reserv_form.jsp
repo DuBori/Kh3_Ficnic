@@ -108,7 +108,7 @@
 							</div>
 						</div>
 						<div class="d-flex flex-row justify-content-between align-items-center">
-								<p class="ficnic_pay_ficnicOption TotalPrice__PriceSectionTitle-sc-1e1zxsm-1 jjsTId">피크닉 금액</p>
+								<p class="ficnic_pay_ficnicOption mr-2">피크닉 금액</p>
 								<b class="ficnic_pay_ficnicOption"><span class="fincnic_pay_price dxsibZ" id="orginPirceView"><fmt:formatNumber value="${oprice + sprice }"/></span>원</b>
 							</div>
 					</div>
@@ -120,61 +120,18 @@
 			<p class="ficnic_pay_ficnicTitle jcPaBR">결제수단</p>
 			<div class="form-check mt-2 mb-2">
 			  <label class="ficnic_pay_ficnicPay">
-			  	<input class="ficnic_pay_ficnicPay mr-2" id="ficnicPay_check" type="radio" name="reserv_payment"  value="card" checked>신용/체크 카드
+			  	<input class="ficnic_pay_ficnicPay mr-2" id="ficnicPay_check" type="radio" name="reserv_payment2"  value="card" checked>신용/체크 카드
 			  </label>
 			</div>
 			<div class="form-check mt-2 mb-2">
 			  <label class="ficnic_pay_ficnicPay">
-			  	<input class="ficnic_pay_ficnicPay mr-2" type="radio" name="reserv_payment" data-bs-toggle="modal" data-bs-target="#exampleModal" >다른 결제수단
+			  	<input class="ficnic_pay_ficnicPay mr-2" type="radio" name="reserv_payment2" data-bs-toggle="modal" data-bs-target="#exampleModal" >다른 결제수단
 			  </label>
 			</div>
 			<div class="ficnic_pay_ficnicOtherpay ml-4">
 			
 			</div>
-			
-					<!-- Modal -->
-		<div class="modal fade center" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title">다른 결제수단</h5>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body">
-					<div >
-						  <label class="ficnic_pay_ficnicPay">
-						    <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment" data-bs-dismiss="modal" value="naverpay">네이버 페이
-						  </label>
-					</div>
-					<div >	  
-					  <label class="ficnic_pay_ficnicPay" >
-					    <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment"  data-bs-dismiss="modal" value="kakaopay">카카오페이
-					  </label>
-					</div>
-					<div >
-					 
-					  <label class="ficnic_pay_ficnicPay">
-					     <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment"  data-bs-dismiss="modal" value="sampay">삼성페이
-					  </label>
-					</div>
-					<div >
-					 
-					  <label class="ficnic_pay_ficnicPay">
-					     <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment"  data-bs-dismiss="modal" value="toss">토스
-					  </label>
-					</div>
-					<div >
-					  
-					  <label class="ficnic_pay_ficnicPay">
-					    <input class="ficnic_pay_modal mr-2" type="radio"  name="reserv_payment" data-bs-dismiss="modal" value="bank">무통장입금
-					  </label>
-					</div>
-		      </div>
-		      
-		    </div>
-		   
-		  </div>
-		</div>
+
 	</div>
 		<hr class="Hr-sc-1533uvg-0 cbobBO">
 		<div class="mt-4 mb-2">
@@ -196,7 +153,7 @@
 											<c:forTokens items="${cdto.getCoupon_use_value() }" var="val" delims="★">
 													<c:if test="${fdto.getFicnic_category_no() eq val or fdto.getFicnic_category_sub1() eq val or fdto.getFicnic_category_sub2() eq val or fdto.getFicnic_category_sub3() eq val}">
 													
-														<c:set value="" var="chkabled" />
+														<c:set value=" class =\"text-success\" " var="chkabled" />
 													</c:if>
 												
 											</c:forTokens>
@@ -205,13 +162,13 @@
 											<c:forTokens items="${cdto.getCoupon_use_value() }" var="val" delims="★">
 												
 													<c:if test="${fdto.getFicnic_no() eq val}">
-														<c:set value="" var="chkabled" />
+														<c:set value=" class =\"text-success\" " var="chkabled" />
 													</c:if>
 												
 											</c:forTokens>
 										</c:if>		
 										<c:if test="${cdto.getCoupon_use_type() eq 'cart'}" >
-											<c:set value="" var="chkabled" />
+											<c:set value=" class =\"text-success\" " var="chkabled" />
 										</c:if>			
 										
 										<option  ${chkabled} value="${cdto.getCoupon_no()}" >${cdto.getCoupon_name()}[${cdto.getCoupon_price()}<c:if test="${cdto.getCoupon_price_type() ne 'price' }"> %할인</c:if><c:if test="${cdto.getCoupon_price_type() eq 'price' }">원할인</c:if> ]</option>									
@@ -546,7 +503,51 @@
 		</div>
 	
 	</div>
-
+			
+	<!-- Modal -->
+		<div class="modal fade center" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">다른 결제수단</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+					<div >
+					 
+					<label class="ficnic_pay_ficnicPay" >
+					<input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment2" id="modalradio2" data-bs-dismiss="modal" value="naverpay">네이버 페이
+					</label>
+					</div>
+					<div >	  
+					  <label class="ficnic_pay_ficnicPay" >
+					    <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment2"  data-bs-dismiss="modal" value="kakaopay">카카오페이
+					  </label>
+					</div>
+					<div >
+					 
+					  <label class="ficnic_pay_ficnicPay">
+					     <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment2"  data-bs-dismiss="modal" value="sampay">삼성페이
+					  </label>
+					</div>
+					<div >
+					 
+					  <label class="ficnic_pay_ficnicPay">
+					     <input class="ficnic_pay_modal mr-2" type="radio" name="reserv_payment2"  data-bs-dismiss="modal" value="toss">토스
+					  </label>
+					</div>
+					<div >
+					  
+					  <label class="ficnic_pay_ficnicPay">
+					    <input class="ficnic_pay_modal mr-2" type="radio"  name="reserv_payment2" data-bs-dismiss="modal" value="bank">무통장입금
+					  </label>
+					</div>
+		      </div>
+		      
+		    </div>
+		   
+		  </div>
+		</div>
 
 
 </form>
