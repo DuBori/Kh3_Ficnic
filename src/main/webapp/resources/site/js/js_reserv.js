@@ -40,7 +40,7 @@ $(function(){
 	
 	$("input[name='canUsePoint']").on("blur",function(){
 		
-		var thisvalue = $("input[name='canUsePoint']").val();
+		var thisvalue = parseInt($("input[name='canUsePoint']").val().replace(/,/g , ''),10);
 		
 		if(memberPoint < thisvalue){
 			$("input[name='canUsePoint']").val(memberPoint);

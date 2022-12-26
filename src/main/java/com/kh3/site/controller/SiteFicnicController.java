@@ -818,7 +818,7 @@ public class SiteFicnicController {
                 
                 memberDAO.updatePoint(pointMap);
             }
-
+            
             out.println("<script>alert('예약 완료');location.href='"+request.getContextPath()+"/mypage/mypage_reserv_list.do';</script>");
         
 	        }else {
