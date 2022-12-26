@@ -191,7 +191,7 @@ public class AdminMemberController {
             List<ObjectError> list = result.getAllErrors();
 
             for (ObjectError error : list) {
-                if (error.getDefaultMessage().equals("idchk")) {
+                if (error.getDefaultMessage().equals("idchk_join")) {
                     out.println("<script>alert('사용 할수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); history.back();</script>");
                     break;
                 } else if (error.getDefaultMessage().equals("id")) {
@@ -206,7 +206,7 @@ public class AdminMemberController {
                 } else if (error.getDefaultMessage().equals("phone")) {
                     out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>");
                     break;
-                } else if (error.getDefaultMessage().equals("mailchk")) {
+                } else if (error.getDefaultMessage().equals("mailchk_join")) {
                     out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력하주세요.'); history.back();</script>");
                     break;
                 }else {
