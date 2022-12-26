@@ -254,13 +254,12 @@ public class SiteMypageController {
     // 마이페이지 - 쿠폰 보관함
     // =====================================================================================
     @RequestMapping("mypage/mypage_coupon_list.do")
-    public String coupon_list(
-    		HttpSession session, Model model) {
-    	
+    public String coupon_list(HttpSession session, Model model) {
     	List<McouponDTO> List =  this.mcouponDAO.getCouponView((String)session.getAttribute("sess_id"));
-    	
+
     	model.addAttribute("List", List);
-        return "site/mypage/mypage_coupon_list";
+
+    	return "site/mypage/mypage_coupon_list";
     }
 
 

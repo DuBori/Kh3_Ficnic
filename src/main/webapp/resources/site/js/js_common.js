@@ -51,7 +51,6 @@ ficnicWish = function(btn, ficnic_no, sess_id, path) {
         },
 
         success : function(data) {
-            alert(data);
             let wish_btn = $(btn);
             let wish_ico = $(btn).find("i.fa");
 

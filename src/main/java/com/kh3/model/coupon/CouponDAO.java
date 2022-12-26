@@ -3,6 +3,8 @@ package com.kh3.model.coupon;
 import java.util.List;
 import java.util.Map;
 
+import com.kh3.model.ficnic.FicnicDTO;
+
 public interface CouponDAO {
 
     int getCouponCount(Map<String, Object> map);
@@ -18,6 +20,11 @@ public interface CouponDAO {
     int couponDelete(int no);
     // 쿠폰번호 재작업
     void updateSeq(int no);
-    
+
+
+
+    /* 다운로드 가능한 쿠폰 정보 가져오기 */
+    CouponDTO getDownloadAbleCoupon(FicnicDTO fdto, String sess_id);
+
 
 }

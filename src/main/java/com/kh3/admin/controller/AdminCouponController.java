@@ -115,7 +115,10 @@ public class AdminCouponController {
 
         // 카테고리 쿠폰일 경우
         if(dto.getCoupon_use_type().equals("category")) {
-            String epd_cate[] = dto.getCoupon_use_value().split("★");
+            String get_cate = dto.getCoupon_use_value();
+                   get_cate = get_cate.substring(0, get_cate.length() - 1);
+                   get_cate = get_cate.substring(1);
+            String epd_cate[] = get_cate.split("★");
 
             for(int i=0; i<epd_cate.length; i++) {
                 CategoryDTO cdto1 = cdao.getCategoryCont(epd_cate[i]);
@@ -127,7 +130,10 @@ public class AdminCouponController {
 
         // 피크닉 쿠폰일 경우
         }else if(dto.getCoupon_use_type().equals("goods")) {
-            String epd_goods[] = dto.getCoupon_use_value().split("★");
+            String get_ficnic = dto.getCoupon_use_value();
+            get_ficnic = get_ficnic.substring(0, get_ficnic.length() - 1);
+            get_ficnic = get_ficnic.substring(1);
+            String epd_goods[] = get_ficnic.split("★");
 
             for(int i=0; i<epd_goods.length; i++) {
                 FicnicDTO fdto = fdao.getFicnicCont(Integer.parseInt(epd_goods[i]));
@@ -194,22 +200,20 @@ public class AdminCouponController {
         // 쿠폰 사용 구분 = 카테고리 일때
         }else if(dto.getCoupon_use_type().equals("category")){
             if(coupon_use_category_value != null) {
-                String done_use_category_value = "";
+                String done_use_category_value = "★";
                 for(int i=0; i<coupon_use_category_value.length; i++) {
                     done_use_category_value += coupon_use_category_value[i] + "★";
                 }
-                done_use_category_value = done_use_category_value.substring(0, done_use_category_value.length() - 1);
                 dto.setCoupon_use_value(done_use_category_value);
             }
 
         // 쿠폰 사용 구분 = 피크닉 일때
         }else if(dto.getCoupon_use_type().equals("goods")){
             if(coupon_use_goods_value != null) {
-                String done_use_goods_value = "";
+                String done_use_goods_value = "★";
                 for(int i=0; i<coupon_use_goods_value.length; i++) {
                     done_use_goods_value += coupon_use_goods_value[i] + "★";
                 }
-                done_use_goods_value = done_use_goods_value.substring(0, done_use_goods_value.length() - 1);
                 dto.setCoupon_use_value(done_use_goods_value);
             }
         }
@@ -261,7 +265,10 @@ public class AdminCouponController {
 
         // 카테고리 쿠폰일 경우
         if(dto.getCoupon_use_type().equals("category")) {
-            String epd_cate[] = dto.getCoupon_use_value().split("★");
+            String get_cate = dto.getCoupon_use_value();
+                   get_cate = get_cate.substring(0, get_cate.length() - 1);
+                   get_cate = get_cate.substring(1);
+            String epd_cate[] = get_cate.split("★");
 
             for(int i=0; i<epd_cate.length; i++) {
                 CategoryDTO cdto = cdao.getCategoryCont(epd_cate[i]);
@@ -273,7 +280,10 @@ public class AdminCouponController {
 
         // 피크닉 쿠폰일 경우
         }else if(dto.getCoupon_use_type().equals("goods")) {
-            String epd_goods[] = dto.getCoupon_use_value().split("★");
+            String get_ficnic = dto.getCoupon_use_value();
+                   get_ficnic = get_ficnic.substring(0, get_ficnic.length() - 1);
+                   get_ficnic = get_ficnic.substring(1);
+            String epd_goods[] = get_ficnic.split("★");
 
             for(int i=0; i<epd_goods.length; i++) {
                 FicnicDTO fdto = fdao.getFicnicCont(Integer.parseInt(epd_goods[i]));
@@ -319,22 +329,20 @@ public class AdminCouponController {
         // 쿠폰 사용 구분 = 카테고리 일때
         }else if(dto.getCoupon_use_type().equals("category")){
             if(coupon_use_category_value != null) {
-                String done_use_category_value = "";
+                String done_use_category_value = "★";
                 for(int i=0; i<coupon_use_category_value.length; i++) {
                     done_use_category_value += coupon_use_category_value[i] + "★";
                 }
-                done_use_category_value = done_use_category_value.substring(0, done_use_category_value.length() - 1);
                 dto.setCoupon_use_value(done_use_category_value);
             }
 
         // 쿠폰 사용 구분 = 피크닉 일때
         }else if(dto.getCoupon_use_type().equals("goods")){
             if(coupon_use_goods_value != null) {
-                String done_use_goods_value = "";
+                String done_use_goods_value = "★";
                 for(int i=0; i<coupon_use_goods_value.length; i++) {
                     done_use_goods_value += coupon_use_goods_value[i] + "★";
                 }
-                done_use_goods_value = done_use_goods_value.substring(0, done_use_goods_value.length() - 1);
                 dto.setCoupon_use_value(done_use_goods_value);
             }
         }

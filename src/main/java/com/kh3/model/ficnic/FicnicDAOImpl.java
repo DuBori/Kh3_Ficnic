@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh3.model.coupon.CouponDTO;
+
 @Repository
 public class FicnicDAOImpl implements FicnicDAO {
 

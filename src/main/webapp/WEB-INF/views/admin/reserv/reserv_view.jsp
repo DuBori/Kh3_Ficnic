@@ -94,9 +94,10 @@
                 <div class="card-body p-4">
                     <h4>피크닉 정보</h4>
                     <div class="row form">
-                        <div class="form-group col d-flex align-items-center">
-                            <label>피크닉</label>
-                            <div class="d-flex align-items-center px-3 py-2">
+                        <div class="form-group join-form">
+                            <label style="padding-top: 35px;">피크닉</label>
+                            <div class="jf-input">
+                            <div class="d-flex align-items-center px-2 pt-1 pb-2">
                                 <div>
                                     <c:choose>
                                         <c:when test="${!empty dto.getReserv_ficnic_photo()}"><img src="${path}${dto.getReserv_ficnic_photo()}" onerror="this.src='${path}/resources/admin/images/noimg.gif'" alt="" width="60" /></c:when>
@@ -104,6 +105,7 @@
                                     </c:choose>
                                 </div>
                                 <div class="ml-2"><b>${dto.getReserv_ficnic_name()}</b></div>
+                            </div>
                             </div>
                         </div>
 
