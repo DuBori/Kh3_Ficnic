@@ -3,6 +3,8 @@ package com.kh3.model.ficnic;
 import java.util.List;
 import java.util.Map;
 
+import com.kh3.model.coupon.CouponDTO;
+
 
 public interface FicnicDAO {
     /* 피크닉 리스트 */
@@ -57,5 +59,4 @@ public interface FicnicDAO {
 
     /* 피크닉 조회수 늘리기 */
     void updateFicnicHit(int ficnic_no);
-
 }

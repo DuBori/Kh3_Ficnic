@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh3.model.ficnic.FicnicDTO;
+
 @Repository
 public class CouponDAOImpl implements CouponDAO {
 
@@ -69,5 +71,19 @@ public class CouponDAOImpl implements CouponDAO {
     public void updateSeq(int no) {
         this.sqlSession.update("adminCouponSequence", no);
     }
+
+
+
+
+    /* 다운로드 가능한 쿠폰 정보 가져오기 */
+    public CouponDTO getDownloadAbleCoupon(FicnicDTO fdto, String sess_id) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("fdto", fdto);
+        map.put("sess_id", sess_id);
+
+        return this.sqlSession.selectOne("siteDownloadAbleCoupon", map);
+    }
+
+
 
 }

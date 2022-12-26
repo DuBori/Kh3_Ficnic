@@ -12,11 +12,13 @@
 		<collection property="coupon_list" column="coupon_no" select="mypageMcouponList" ofType="couponDTO"  javaType="java.util.ArrayList"/>
 	</resultMap>
 
+
     <!-- 보유 쿠폰 목록 -->
     <select id="siteMcouponList" parameterType="string" resultMap="mcouponListMap">
     	select * from member_mcoupon where member_id=#{value}
     </select>
-    
+
+
     <select id="mypageMcouponList" resultType="couponDTO">
     	select * from coupon_list 
     </select>

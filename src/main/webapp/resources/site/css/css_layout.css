@@ -382,11 +382,11 @@ input[type='checkbox'].custom-control-input {
 #container .page-info > h2 > ul {}
 #container .page-info > h2 > ul > li {
     display: inline-block;
-    margin-left: 20px;
+    margin-right: 20px;
     margin-bottom: 10px;
 }
-#container .page-info > h2 > ul > li:first-child {
-    margin-left: 0;
+#container .page-info > h2 > ul > li:last-child {
+    margin-right: 0;
 }
 #container .page-info > h2 > ul > li > a {
     font-weight: 500;
@@ -543,7 +543,7 @@ main .ficnic-list li .fl-info .fli-name {
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     -webkit-transition: all 0.2s ease-out 0s;
     -o-transition: all 0.2s ease-out 0s;
     transition: all 0.2s ease-out 0s;
@@ -571,9 +571,6 @@ main .ficnic-list li .fl-info .fli-review span i {
 }
 
 main .ficnic-list li .fl-info .fli-price {
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px solid #eee;
     font-family: 'Lato';
     letter-spacing: 0;
 }

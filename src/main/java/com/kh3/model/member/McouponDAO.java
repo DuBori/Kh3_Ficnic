@@ -17,4 +17,14 @@ public interface McouponDAO {
 	// 회원 사용 해당 쿠폰 제거 후 번호 정렬
 	void updateMcouponNo(int coupon_no);
 
+
+
+    /* 쿠폰을 이미 가지고 있는지 체크 */
+    int chkCouponHas(int coupon_no, String sess_id);
+
+    /* 쿠폰 발급하기 */
+    int setAddCoupon(Map<String, Object> map);
+
+    /* 쿠폰 발급 후 다운로드 횟수 증가 */
+    void updateAddCoupon(int coupon_no);
 }

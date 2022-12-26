@@ -1,5 +1,6 @@
 package com.kh3.model.member;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,5 +44,24 @@ public class McouponDAOImpl implements McouponDAO {
 
 
 
+    /* 쿠폰을 이미 가지고 있는지 체크 */
+    public int chkCouponHas(int coupon_no, String sess_id) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("coupon_no",coupon_no);
+        map.put("sess_id", sess_id);
 
+        return this.sqlSession.selectOne("siteCheckCouponHas", map);
+    }
+
+
+    /* 쿠폰 발급하기 */
+    public int setAddCoupon(Map<String, Object> map) {
+        return this.sqlSession.insert("siteAddCoupon", map);
+    }
+
+
+    /* 쿠폰 발급 후 다운로드 횟수 증가 */
+    public void updateAddCoupon(int coupon_no) {
+        this.sqlSession.update("siteUpdateAddCoupon", coupon_no);
+    }
 }

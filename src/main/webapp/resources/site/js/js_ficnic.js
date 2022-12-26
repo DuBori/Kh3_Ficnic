@@ -165,6 +165,51 @@ $(document).ready(function(){
 
 
 
+/////////////////////////////////////////////////////
+// 쿠폰 다운로드
+/////////////////////////////////////////////////////
+downloadCoupon = function(path, coupon_no, sess_id) {
+
+    // 회원 체크
+    if(!sess_id || sess_id == null || sess_id == "undefined" || sess_id == ""){
+        alert("회원 로그인 후 사용 하실 수 있습니다.");
+        return false;
+    }
+
+
+    $.ajax({
+        contentType : "application/x-www-form-urlencoded;charset=UTF-8",
+        type : "post",
+        url : path + "/ficnic/download_coupon.do",
+        data : {
+            coupon_no : coupon_no,
+            sess_id : sess_id
+        },
+
+        success : function(data) {
+            if(data == "ok") {
+                if(confirm("쿠폰이 발급되었습니다.\n지금 바로 확인하시겠습니까?")){
+                    location.href = path + '/mypage/mypage_coupon_list.do';
+                }
+
+            }else if(data == "has") {
+                alert("이미 발급 받은 쿠폰입니다.");
+
+            }else if(data == "max") {
+                alert("쿠폰 최대 다운로드 갯수를 초과하였습니다.");
+
+            }else{
+                alert("쿠폰 발급 중 에러가 발생하였습니다.");
+            }
+        },
+
+        error : function(e){
+            alert("Error : " + e.status);
+        }
+    });
+}
+
+
 
 
 
@@ -174,37 +219,35 @@ $(document).ready(function(){
 /////////////////////////////////////////////////////
 // 이미지 오버 시 확대
 /////////////////////////////////////////////////////
+$(document).ready(function() {
+    var xOffset = 10;
+    var yOffset = 30;
+
+    // 마우스 오버 시
+    $(document).on("mouseover",".thumbnail",function(e){
+        //보여줄 이미지를 선언
+        $("body").append("<p id='preview'><img src='"+ $(this).attr("src") +"' width='500px' /></p>");
+
+        //미리보기 화면 설정 셋팅
+        $("#preview").css({
+            "top" : (e.pageY - xOffset) + "px",
+            "left" : (e.pageX + yOffset) + "px"
+        }).fadeIn("fast");
+    });
 
 
-     $(document).ready(function() {
-
-                var xOffset = 10;
-                var yOffset = 30;
-               
-                $(document).on("mouseover",".thumbnail",function(e){ //마우스 오버 시
-					
-					$("body").append("<p id='preview'><img src='"+ $(this).attr("src") +"' width='500px' /></p>"); //보여줄 이미지를 선언						 
-
-					$("#preview")
-						.css("top",(e.pageY - xOffset) + "px")
-						.css("left",(e.pageX + yOffset) + "px")
-						.fadeIn("fast"); //미리보기 화면 설정 셋팅
-				});
-
-				
-				$(document).on("mousemove",".thumbnail",function(e){ //마우스 이동시
-
-					$("#preview")
-						.css("top",(e.pageY - xOffset) + "px")
-						.css("left",(e.pageX + yOffset) + "px");
-				});
+    // 마우스 이동시
+    $(document).on("mousemove",".thumbnail",function(e){
+        $("#preview").css({
+            "top" : (e.pageY - xOffset) + "px",
+            "left" : (e.pageX + yOffset) + "px"
+        });
+    });
 
 
-				$(document).on("mouseout",".thumbnail",function(){ //마우스 아웃시
-					$("#preview").remove();
-				});
-
-            });
-
-
+    // 마우스 아웃시
+    $(document).on("mouseout",".thumbnail",function(){
+        $("#preview").remove();
+    });
+});
 

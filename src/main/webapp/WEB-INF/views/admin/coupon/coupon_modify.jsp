@@ -246,7 +246,7 @@
 
                         <c:if test="${!empty cate.getSub_category()}">
                         <!-- 중 카테고리 반복 -->
-                        <ul class="sort-list">
+                        <ul class="sort-list displaynone">
                             <c:forEach var="subc" items="${cate.getSub_category()}">
                             <c:choose>
                                 <c:when test="${subc.getCategory_show() eq 'N'}">
