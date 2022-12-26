@@ -23,9 +23,7 @@ public class McouponDAOImpl implements McouponDAO {
 	// 사용한 회원 쿠폰 삭제하기
 	@Override
 	public void deleteMemberCoupon(Map<String, Object> couponMap) {
-		
 		this.sqlSession.delete("siteMemberCouponDelete", couponMap);
-		
 	}
 
 	@Override
@@ -35,9 +33,12 @@ public class McouponDAOImpl implements McouponDAO {
 
 	@Override
 	public void updateMcouponNo(int coupon_no) {
-		
 		this.sqlSession.update("siteMCouponNumUpdate", coupon_no);
-		
+	}
+
+	@Override
+	public void mCouponDelete(int coupon_no) {
+		this.sqlSession.delete("adminMCouponDelete", coupon_no);
 	}
 
 

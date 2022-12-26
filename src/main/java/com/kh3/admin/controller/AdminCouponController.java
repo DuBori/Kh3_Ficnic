@@ -29,6 +29,7 @@ import com.kh3.model.ficnic.CategoryDAO;
 import com.kh3.model.ficnic.CategoryDTO;
 import com.kh3.model.ficnic.FicnicDAO;
 import com.kh3.model.ficnic.FicnicDTO;
+import com.kh3.model.member.McouponDAO;
 import com.kh3.util.PageDTO;
 import com.kh3.util.Paging;
 
@@ -43,7 +44,9 @@ public class AdminCouponController {
 
     @Autowired
     private FicnicDAO fdao;
-
+    
+    @Autowired
+    private McouponDAO mdao;
 
     // 한 페이지당 보여질 게시물의 수
     private final int rowsize = 10;
@@ -381,6 +384,7 @@ public class AdminCouponController {
 
         if (check > 0) {
             this.dao.updateSeq(no);
+            this.mdao.mCouponDelete(no);
             out.println("<script> location.href='coupon_list.do';</script>");
 
         } else {
