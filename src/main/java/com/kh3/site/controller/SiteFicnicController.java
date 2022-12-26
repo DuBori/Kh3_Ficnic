@@ -3,10 +3,13 @@ package com.kh3.site.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +37,6 @@ import com.kh3.model.member.McouponDTO;
 import com.kh3.model.member.MemberDAO;
 import com.kh3.model.member.MemberDTO;
 import com.kh3.model.member.PointDAO;
-import com.kh3.model.member.PointDTO;
 import com.kh3.model.member.WishDAO;
 import com.kh3.model.qna.QnaDAO;
 import com.kh3.model.qna.QnaDTO;
@@ -75,6 +77,9 @@ public class SiteFicnicController {
 
     @Inject
     CouponDAO couponDAO;
+
+    @Inject
+    McouponDAO mcouponDAO;
     
     @Inject
     PointDAO pointDAO;
@@ -314,6 +319,12 @@ public class SiteFicnicController {
         @RequestParam(value = "ficnic_no", required = false, defaultValue = "") int ficnic_no,
         HttpSession session, Model model) {
 
+        String sess_id = "";
+        if(session.getAttribute("sess_id") != null) {
+            sess_id = (String) session.getAttribute("sess_id");
+        }
+
+
         FicnicDTO dto = fdao.getFicnicCont(ficnic_no);
 
         // 조회수 늘리기
@@ -332,7 +343,7 @@ public class SiteFicnicController {
         // 위시리스트 체크
         String ficnic_wish = "N";
         if(session.getAttribute("sess_id") != null) {
-            int chkWish = this.wdao.getFicnicInWish(ficnic_no, (String) session.getAttribute("sess_id"));
+            int chkWish = this.wdao.getFicnicInWish(ficnic_no, sess_id);
             if(chkWish > 0) ficnic_wish = "Y";
         }
        
@@ -476,12 +487,17 @@ public class SiteFicnicController {
         }
 
 
+        // 다운받을 수 있는 쿠폰 체크
+        CouponDTO cdto = couponDAO.getDownloadAbleCoupon(dto, sess_id);
+
+
         // 오늘 날짜 넘기
         LocalDate getDate = LocalDate.now();
         String todayDate = getDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
 
         model.addAttribute("dto", dto);
+        model.addAttribute("cdto", cdto);
         model.addAttribute("rList", rList);
 
         model.addAttribute("category_name", category_name);
@@ -843,6 +859,94 @@ public class SiteFicnicController {
     	   return sub;
        }
         
+    }
+
+
+
+
+
+
+    // =====================================================================================
+    // 쿠폰 다운로드
+    // =====================================================================================
+    @RequestMapping("ficnic/download_coupon.do")
+    public void download_coupon(
+            HttpServletResponse response,
+            @RequestParam(value = "coupon_no") int coupon_no,
+            @RequestParam(value = "sess_id") String sess_id) throws IOException {
+        String result = "error";
+
+        // 쿠폰 정보
+        CouponDTO dto = couponDAO.couponView(coupon_no);
+
+
+        // 쿠폰을 이미 가지고 있는지 체크
+        int chkCouponHas = mcouponDAO.chkCouponHas(coupon_no, sess_id);
+
+        // 쿠폰 발급 갯수가 남아있는지 체크
+        int chkCouponCnt = dto.getCoupon_max_ea() - dto.getCoupon_down_ea();
+
+
+        // 쿠폰 발급 처리
+        if(chkCouponHas > 0) {
+            result = "has";
+
+        }else if(chkCouponCnt <= 0) {
+            result = "max";
+
+        }else{
+            String mcoupon_start_date = "";
+            String mcoupon_end_date = "";
+
+            if(dto.getCoupon_date_type().equals("date")) {
+                mcoupon_start_date = dto.getCoupon_start_date();
+                mcoupon_end_date = dto.getCoupon_end_date();
+
+            }else if(dto.getCoupon_date_type().equals("after")) {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat stringFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+                Date set_coupon_start_date = new Date();
+                LocalDate startNowDate = LocalDate.now();
+                String startDay = startNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));        
+                try {
+                    set_coupon_start_date = dateFormat.parse(startDay + " 00:00:00");
+                    mcoupon_start_date = stringFormat.format(set_coupon_start_date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                Date set_coupon_end_date = new Date();
+                LocalDate endNowDate = LocalDate.now().plusDays((long)dto.getCoupon_date_value());
+                String endDay = endNowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                try {
+                    set_coupon_end_date = dateFormat.parse(endDay + " 23:59:59");
+                    mcoupon_end_date = stringFormat.format(set_coupon_end_date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("coupon_no", coupon_no);
+            map.put("member_id", sess_id);
+            map.put("mcoupon_start_date", mcoupon_start_date);
+            map.put("mcoupon_end_date", mcoupon_end_date);
+
+            if(mcouponDAO.setAddCoupon(map) > 0) {
+                mcouponDAO.updateAddCoupon(coupon_no);
+                result = "ok";
+            }else{
+                result = "error";
+            }
+        }
+
+
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        out.print(result);
     }
 
 

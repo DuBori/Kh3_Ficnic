@@ -16,48 +16,39 @@
 
 <div class="contents w1100 mypage-coupon">
 
-<div class="row">
-        <div class="col-lg">
-            <div class="card border-0">
+    <ul class="mc-list">
+        <c:choose>
+            <c:when test="${!empty List}">
+                <c:forEach var="dto" items="${List}">
+                    <c:forEach var="cdto" items="${dto.getCoupon_list()}">
+                        <c:if test="${dto.getCoupon_no() eq cdto.getCoupon_no()}">
+                        <li>
+                            <div class="mcl-name"<c:if test="${empty cdto.getCoupon_start_date()}"> style="margin-top: 20px;"</c:if>>
+                                <strong>
+                                    <c:choose>
+                                        <c:when test="${cdto.getCoupon_price_type() eq 'price'}"><fmt:formatNumber value="${cdto.getCoupon_price()}" />원</c:when>
+                                        <c:otherwise><fmt:formatNumber value="${cdto.getCoupon_price()}" type="percent" pattern="##" />%</c:otherwise>
+                                    </c:choose>
+                                </strong>
+                                <p>${cdto.getCoupon_name()}</p>
+                            </div>
 
-                <div class="card-body p-0">
-                    <table class="table-list mb-2 board-list">
-                        <thead>
-                            <tr>
-                                <th>쿠폰 이름</th>
-                                <th style="width: 80px;" class="table-list-hide-mob">발급 일자</th>
-                                <th style="width: 120px;">쿠폰 유효기간</th> 
-                            </tr>
-                        </thead>
+                            <div class="mcl-info">
+                                <p><fmt:formatNumber value="${cdto.getCoupon_price_over()}" />원 이상 구매시 사용가능</p>
+                                <c:if test="${!empty cdto.getCoupon_start_date()}"><p>${cdto.getCoupon_start_date().substring(0,10)} ~ ${cdto.getCoupon_end_date().substring(0,10)}</p></c:if>
+                            </div>
+                        </li>
+                        </c:if>
+                    </c:forEach>
+                </c:forEach>
+            </c:when>
 
-                        <tbody>
-                            <c:choose>
-                                <c:when test="${!empty List}">
-                                <c:forEach var="dto" items="${List}">
-                                <tr>
-                                	<c:forEach items="${dto.getCoupon_list() }" var="cdto">
-                                		<c:if test="${dto.getMcoupon_no() eq cdto.getCoupon_no() }">
-                                			<td class="text-center eng table-list-mob">${cdto.getCoupon_name()}</td>
-                                		</c:if>
-                                	</c:forEach>
-                                    <td class="text-center eng table-list-mob">${dto.getMcoupon_date().substring(0,10)}</td>
-                                    <td class="text-center eng table-list-mob">${dto.getMcoupon_end_date().substring(0,10)}</td>
-                                </tr>
-                                </c:forEach>
-                                </c:when>
+            <c:otherwise>
+                <li class="nodata">쿠폰 내역이 없습니다.</li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
 
-                                <c:otherwise>
-                                <tr>
-                                    <td colspan="3" class="nodata">쿠폰 내역이 없습니다.</td>
-                                </tr>
-                                </c:otherwise>
-                            </c:choose>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </div>
 

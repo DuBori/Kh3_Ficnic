@@ -41,8 +41,6 @@
     <script language="javascript" src="${path}/resources/site/js/bootstrap.min.js"></script>
     <script language="javascript" src="${path}/resources/site/js/bootstrap.bundle.min.js"></script>
     <script language="javascript" src="${path}/resources/site/js/js_common.js?${time}"></script>
-    
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=05baaf0de0478dc909d89f4fbc30dcd1&libraries=services,clusterer,drawing" ></script>
 </head>
 <body>
     <!-- #preloader //START -->

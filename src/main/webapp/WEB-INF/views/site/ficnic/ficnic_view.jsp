@@ -12,6 +12,8 @@
 <link href="${path}/resources/site/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 </c:if>
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=05baaf0de0478dc909d89f4fbc30dcd1&libraries=services,clusterer,drawing" ></script>
+
 <style>#footer { padding-bottom: 100px; }</style>
 
 
@@ -57,13 +59,23 @@
 		<div class="fvt-cont">
 			<div class="fvtc-basic">
 				<h2>${dto.getFicnic_name()}</h2>
-				<c:if test="${dto.getFicnic_market_price() > 0}"><p class="prev">${dto.getFicnic_market_price()}원</p></c:if>
+				<c:if test="${dto.getFicnic_market_price() > 0}"><p class="prev"><fmt:formatNumber value="${dto.getFicnic_market_price()}" />원</p></c:if>
 				<p class="sale">
 					<c:if test="${dto.getFicnic_market_price() > 0}"><span><fmt:formatNumber value="${dto.getFicnic_sale_price() / dto.getFicnic_market_price() * 100}" type="percent" pattern="##" />%</span></c:if>
 					<b><fmt:formatNumber value="${dto.getFicnic_sale_price()}" /></b>원
                     <button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${ficnic_wish eq 'Y'}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${ficnic_wish ne 'Y'}">-o</c:if>"></i></button>
 				</p>
 			</div>
+
+
+            <c:if test="${!empty cdto}">
+            <div class="fvtc-coupon">
+                <button type="button" onclick="downloadCoupon('${path}', ${cdto.getCoupon_no()}, '${sess_id}');">
+                    <span class="txt">받을 수 있는 <b><fmt:formatNumber value="${cdto.getCoupon_price()}" /><c:choose><c:when test="${cdto.getCoupon_price_type() eq 'price'}">원</c:when><c:otherwise>%</c:otherwise></c:choose> 할인</b>쿠폰이 있어요!</span>
+                    <span class="dwn">쿠폰받기<i class="fa fa-download"></i></span>
+                </button>
+            </div>
+            </c:if>
 
 
 			<div class="fvtc-review">
