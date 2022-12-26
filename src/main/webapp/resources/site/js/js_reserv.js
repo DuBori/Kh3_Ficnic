@@ -11,7 +11,13 @@ $(function(){
 	});
 	
 	$(".ficnic_pay_modal").on("click",function(){
-		var ficnic_pay_val = $(this).val();
+		
+		
+		
+		var ficnic_pay_val = "";
+		ficnic_pay_val  = $(this).val();
+		alert(ficnic_pay_val);
+		
 		if(ficnic_pay_val == "kakaopay"){
 			ficnic_pay_val = "카카오 페이";
 		}else if(ficnic_pay_val == "sampay"){
@@ -25,8 +31,10 @@ $(function(){
 		}else if(ficnic_pay_val == "naverpay"){
 			ficnic_pay_val = "네이버 페이";
 		}
-		$(".ficnic_pay_ficnicOtherpay").html("<span class =\"mr-2\">"+ficnic_pay_val+"</span> <input type=\"hidden\" class=\"Form__Input-sc-1quypp7-1 dYnqqW\" value=\""+ficnic_pay_val+"\"> <input type=\"button\" class=\"btn btn-outline-dark\" value=\"변경\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\"/>  ");
-
+		
+		$(".ficnic_pay_ficnicOtherpay").html("<span class =\"mr-2\">"+ficnic_pay_val+"</span> <input type=\"hidden\" class=\"Form__Input-sc-1quypp7-1 dYnqqW\" value=\""+ficnic_pay_val+"\"> <input type=\"button\" class=\"btn btn-outline-dark\" value=\"변경\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\"/><input type=\"hidden\" value=\""+$(this).val()+"\" name=\"reserv_payment\"/>");
+		
+		
 	});
 	
 	var price_over = 0;
