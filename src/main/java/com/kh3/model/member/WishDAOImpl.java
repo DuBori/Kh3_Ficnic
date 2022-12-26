@@ -51,4 +51,10 @@ public class WishDAOImpl implements WishDAO {
     public int wishCancel(Map<String, Object> map) {
         return this.sqlSession.delete("siteWishCancel", map);
     }
+
+    // 피크닉 삭제시 위시리스트 삭제
+	@Override
+	public void wishDelete(int ficnic_no) {
+        this.sqlSession.delete("adminWishDelete", ficnic_no);
+	}
 }
