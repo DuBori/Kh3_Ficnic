@@ -147,7 +147,7 @@
 								<c:forEach items="${mdto.getCoupon_list() }" var="cdto" >							
 									<c:if test="${mdto.getCoupon_no() eq cdto.getCoupon_no()}">
 									
-									<c:set value="disabled class =\"secondary\" " var="chkabled" />		
+									<c:set value="disabled class =\"coupongray\" " var="chkabled" />		
 										
 										<c:if test="${cdto.getCoupon_use_type() ne 'cart' and  cdto.getCoupon_use_type() eq 'category'}" >
 											<c:forTokens items="${cdto.getCoupon_use_value() }" var="val" delims="★">
@@ -498,7 +498,7 @@
 		
 		</div>
 		<div class="d-flex flex-row  justify-content-center mt-3 mb-2 w100">
-			<input class="btn w-100 text-white ty-5" type="submit" value="참여하기" style="background-color: var(--indigo)">
+			<input class="btn w-100 text-white ty-5" type="submit" value="참여하기" style="background-color: var(--indigo); font-size: 25px;">
 		</div>
 	
 	</div>
