@@ -16,7 +16,6 @@ $(function(){
 		
 		var ficnic_pay_val = "";
 		ficnic_pay_val  = $(this).val();
-		alert(ficnic_pay_val);
 		
 		if(ficnic_pay_val == "kakaopay"){
 			ficnic_pay_val = "카카오 페이";

@@ -680,7 +680,6 @@ public class SiteFicnicController {
     	return list;
     }
     
-    
     @RequestMapping("ficnic/reserv_form.do")
     public String pay(
     		@RequestParam(value = "ficnic_no") int ficnic_no,
@@ -690,6 +689,29 @@ public class SiteFicnicController {
     		Model model) throws ParseException {
     	
     	FicnicDTO fdto= this.fdao.getFicnicCont(ficnic_no);
+    	
+    	//기간 지난 회원 쿠폰 제거 
+    	
+    	List<McouponDTO> list =  mdao.getCouponView((String)session.getAttribute("sess_id"));
+    	
+    	// 현재 날짜/시간
+        Date now = new Date();
+ 		
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+       
+        
+    	for(McouponDTO val : list) {
+    		
+    		Map<String, Object> map = new HashMap<String, Object>();
+    		
+    		if(val.getMcoupon_start_date()!=null && now.compareTo(format.parse(val.getMcoupon_end_date())) > 0) {
+    			map.put("sess_id",(String)session.getAttribute("sess_id"));
+    			map.put("coupon_no",val.getCoupon_no());
+    			mdao.deleteMemberCoupon(map);
+    		}
+    	}
+    	
     	
     	// 회원 쿠폰 보유 여부
     	List<McouponDTO> mlist= mdao.getCouponView((String)session.getAttribute("sess_id"));
