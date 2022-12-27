@@ -70,8 +70,8 @@ public class AdminFicnicController {
             @RequestParam(value = "search_location", required = false, defaultValue = "") String search_location,
             @RequestParam(value = "search_category", required = false, defaultValue = "") String search_category,
             @RequestParam(value = "search_name", required = false, defaultValue = "") String search_name,
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page, Model model,
-            HttpServletRequest request) {
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            Model model, HttpServletRequest request) {
 
         List<CategoryDTO> cList = cdao.getCategoryList();
 

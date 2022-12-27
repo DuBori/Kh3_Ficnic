@@ -68,6 +68,7 @@
     <select id="adminRecentReservList" parameterType="String" resultType="reservDTO">
         select * from reserv_list where
         <![CDATA[reserv_no > 0 and rownum <= 9 and reserv_date >= to_date(#{value})]]>
+        and reserv_status = 'reserv'
         order by reserv_date desc
     </select>
 

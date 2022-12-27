@@ -90,4 +90,15 @@
 
 
 
+
+    <!-- 상단 - 최근 3일간 내역 가져오기 -->
+    <select id="adminRecentMemberList" parameterType="String" resultType="memberDTO">
+        select * from member_list where
+        <![CDATA[member_no > 0 and rownum <= 9 and member_joindate >= to_date(#{value})]]>
+        and member_type = 'user'
+        order by member_joindate desc
+    </select>
+
+
+
 </mapper>

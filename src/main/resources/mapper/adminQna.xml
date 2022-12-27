@@ -55,4 +55,14 @@
 		delete from qna_list where qna_no = #{qna_no}
 	</delete>
 
+
+
+
+    <!-- 상단 - 최근 3일간 내역 가져오기 -->
+    <select id="adminRecentQnaList" parameterType="String" resultType="qnaDTO">
+        select * from qna_list where
+        <![CDATA[qna_no > 0 and rownum <= 9 and qna_date >= to_date(#{value})]]>
+        order by qna_date desc
+    </select>
+
 </mapper>
