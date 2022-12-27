@@ -61,7 +61,7 @@
 				<h2>${dto.getFicnic_name()}</h2>
 				<c:if test="${dto.getFicnic_market_price() > 0}"><p class="prev"><fmt:formatNumber value="${dto.getFicnic_market_price()}" />원</p></c:if>
 				<p class="sale">
-					<c:if test="${dto.getFicnic_market_price() > 0}"><span><fmt:formatNumber value="${dto.getFicnic_sale_price() / dto.getFicnic_market_price() * 100}" type="percent" pattern="##" />%</span></c:if>
+					<c:if test="${dto.getFicnic_market_price() > 0}"><span><fmt:formatNumber value="${1 - dto.getFicnic_sale_price() / dto.getFicnic_market_price()}" type="percent" /></span></c:if>
 					<b><fmt:formatNumber value="${dto.getFicnic_sale_price()}" /></b>원
                     <button type="button" onclick="ficnicWish(this, ${dto.getFicnic_no()}, '${sess_id}', '${path}');"<c:if test="${ficnic_wish eq 'Y'}"> class="on"</c:if>><i class="fa fa-heart<c:if test="${ficnic_wish ne 'Y'}">-o</c:if>"></i></button>
 				</p>
