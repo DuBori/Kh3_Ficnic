@@ -10,6 +10,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 
+
 @Repository
 public class QnaDAOImpl implements QnaDAO {
 
@@ -74,5 +75,13 @@ public class QnaDAOImpl implements QnaDAO {
 	    map.put("img_num", img_num);
 	    this.sqlSession.update("siteDeleteQnaImage", map);
 	}
+
+
+
+    // 관리자 상단 최근 3일 예약내역 가져오기
+	@Override
+    public List<QnaDTO> getRecentQnaList(String chk_date) {
+        return this.sqlSession.selectList("adminRecentQnaList", chk_date);
+    }
 
 }

@@ -20,6 +20,99 @@
 
 
 
+
+$(function(){
+    $.ajax({
+        type : "get",
+        url : "../recent.do",
+        contentType : "application/json; charset=utf-8",
+        dataType : "json",
+        data: { },
+
+        success : function(result) {
+            let recent_reserv_html = "";
+            let recent_qna_html = "";
+            let recent_member_html = "";
+
+            for(var i=0; i<result.length; i++) {
+                let recent_type = result[i].type;
+                let recent_no = result[i].no;
+                let recent_sess = result[i].sess;
+                let recent_name = result[i].name;
+                let recent_title = result[i].title;
+                let recent_date = result[i].date;
+
+                let recent_badge = $("#alarm-btn-"+recent_type+" span.badge");
+
+                if(recent_type == "reserv") {
+                    recent_reserv_html += "<li>\n";
+                    recent_reserv_html += "\t<a href=\"javascript:popWindow('../reserv/reserv_view.do?no="+recent_no+"&sess="+recent_sess+"', '700', '900');\">\n";
+                    recent_reserv_html += "\t\t<div class=\"npl-kind\"><i class=\"fa fa-clipboard\"></i></div>\n";
+                    recent_reserv_html += "\t\t<div class=\"npl-info\">\n";
+                    recent_reserv_html += "\t\t\t<p class=\"subject\">"+recent_title+"</p>\n";
+                    recent_reserv_html += "\t\t\t<p class=\"writer\">"+recent_name+"</p>\n";
+                    recent_reserv_html += "\t\t\t<p class=\"date\">"+recent_date+"</p>\n";
+                    recent_reserv_html += "\t\t</div>\n";
+                    recent_reserv_html += "\t</a>\n";
+                    recent_reserv_html += "</li>\n";
+
+                }else if(recent_type == "qna") {
+                    recent_qna_html += "<li>\n";
+                    recent_qna_html += "\t<a href=\"javascript:popWindow('../qna/qna_view.do?no="+recent_no+"', '700', '900');\">\n";
+                    recent_qna_html += "\t\t<div class=\"npl-kind\"><i class=\"fa fa-comment-o\"></i></div>\n";
+                    recent_qna_html += "\t\t<div class=\"npl-info\">\n";
+                    recent_qna_html += "\t\t\t<p class=\"subject\">"+recent_title+"</p>\n";
+                    recent_qna_html += "\t\t\t<p class=\"writer\">"+recent_name+"</p>\n";
+                    recent_qna_html += "\t\t\t<p class=\"date\">"+recent_date+"</p>\n";
+                    recent_qna_html += "\t\t</div>\n";
+                    recent_qna_html += "\t</a>\n";
+                    recent_qna_html += "</li>\n";
+
+                }else if(recent_type == "member") {
+                    recent_member_html += "<li>\n";
+                    recent_member_html += "\t<a href=\"javascript:popWindow('../member/member_view.do?no="+recent_no+"&id="+recent_sess+"', '700', '900');\">\n";
+                    recent_member_html += "\t\t<div class=\"npl-kind\"><i class=\"fa fa-user\"></i></div>\n";
+                    recent_member_html += "\t\t<div class=\"npl-info\">\n";
+                    recent_member_html += "\t\t\t<p class=\"subject\">"+recent_name+" ("+recent_sess+")</p>\n";
+                    recent_member_html += "\t\t\t<p class=\"date\">"+recent_date+"</p>\n";
+                    recent_member_html += "\t\t</div>\n";
+                    recent_member_html += "\t</a>\n";
+                    recent_member_html += "</li>\n";
+
+                }
+
+                let recent_count = Number(recent_badge.text());
+                recent_badge = recent_badge.text(recent_count + 1);
+            }
+
+            if(Number($("#alarm-btn-reserv span.badge").text()) > 0){
+                $("#header .new-pop.reserv .np-list").html("").append(recent_reserv_html);
+            }else{
+                $("#header .new-pop.reserv .np-list").html("<li class=\"nodata\">최근 3일간 신규 예약 목록이 없습니다.</li>");
+            }
+
+            if(Number($("#alarm-btn-qna span.badge").text()) > 0){
+                $("#header .new-pop.qna .np-list").html("").append(recent_qna_html);
+            }else{
+                $("#header .new-pop.qna .np-list").html("<li class=\"nodata\">최근 3일간 신규 문의 목록이 없습니다.</li>");
+            }
+
+            if(Number($("#alarm-btn-member span.badge").text()) > 0){
+                $("#header .new-pop.member .np-list").html("").append(recent_member_html);
+            }else{
+                $("#header .new-pop.member .np-list").html("<li class=\"nodata\">최근 3일간 신규 회원 목록이 없습니다.</li>");
+            }
+        },
+
+        error : function(e){
+            alert("Error : " + e.status);
+        }
+    });
+});
+
+
+
+
 /////////////////////////////////////////////////////
 // 신규알림 클릭
 /////////////////////////////////////////////////////
