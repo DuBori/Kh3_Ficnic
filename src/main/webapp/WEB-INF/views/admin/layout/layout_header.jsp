@@ -85,7 +85,7 @@
                 <button type="button" class="btn btn-lg px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-toggle="collapse" data-target="#topnav-menu-content"><i class="fa fa-fw fa-bars"></i></button>
             </div>
 
-            <div class="d-name text-center"><c:if test="${!empty sess_name}"><b>${sess_name}</b>님 안녕하세요 😊 asdasd <%=RecentList.showRecent("reserv")%></c:if></div>
+            <div class="d-name text-center"><c:if test="${!empty sess_name}"><b>${sess_name}</b>님 안녕하세요 😊 <%=RecentList.showRecent("reserv")%></c:if></div>
 
             <ul class="d-flex">
                 <!-- 예약 알림창//START -->
