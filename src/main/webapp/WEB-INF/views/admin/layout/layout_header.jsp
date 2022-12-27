@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.kh3.util.RecentList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -85,26 +84,15 @@
                 <button type="button" class="btn btn-lg px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-toggle="collapse" data-target="#topnav-menu-content"><i class="fa fa-fw fa-bars"></i></button>
             </div>
 
-            <div class="d-name text-center"><c:if test="${!empty sess_name}"><b>${sess_name}</b>님 안녕하세요 😊 asdasd <%=RecentList.showRecent("reserv")%></c:if></div>
+            <div class="d-name text-center"><c:if test="${!empty sess_name}"><b>${sess_name}</b>님 안녕하세요 😊</c:if></div>
 
             <ul class="d-flex">
                 <!-- 예약 알림창//START -->
                 <li>
-                    <button type="button" id="alarm-btn-reserv" class="h-ico" title="예약 알림창"><span class="badge bg-primary">2</span><i class="fa fa-clipboard"></i></button>
+                    <button type="button" id="alarm-btn-reserv" class="h-ico" title="예약 알림창"><span class="badge bg-primary">0</span><i class="fa fa-clipboard"></i></button>
                     <div class="new-pop reserv">
                         <div class="np-title">신규 예약 <button type="button"><i class="fa fa-times"></i></button></div>
                         <ul class="np-list">
-                            <li>
-                                <a href="#">
-                                    <div class="npl-kind"><i class="fa fa-laptop"></i></div>
-                                    <div class="npl-info">
-                                        <p class="subject">예쁜언니 KF94 대형 화이트 마스크 50매 외 2개의 상품</p>
-                                        <p class="writer">법인며엉1</p>
-                                        <p class="date">2022.04.17 22:57:17</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nodata">최근 3일간 신규 예약 목록이 없습니다.</li>
                         </ul>
                     </div>
                 </li>
@@ -117,17 +105,6 @@
                     <div class="new-pop qna">
                         <div class="np-title">신규 1:1 문의 <button type="button"><i class="fa fa-times"></i></button></div>
                         <ul class="np-list">
-                            <li>
-                                <a href="#">
-                                    <div class="npl-kind"><i class="fa fa-comment-o"></i></div>
-                                    <div class="npl-info">
-                                        <p class="subject">문의 사항 있습니다.</p>
-                                        <p class="writer">테스트회원1</p>
-                                        <p class="date">2022.04.17 22:57:17</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nodata">최근 3일간 신규 문의 목록이 없습니다.</li>
                         </ul>
                     </div>
                 </li>
@@ -140,16 +117,6 @@
                     <div class="new-pop member">
                         <div class="np-title">회원 알림 <button type="button"><i class="fa fa-times"></i></button></div>
                         <ul class="np-list">
-                            <li>
-                                <a href="#">
-                                    <div class="npl-kind"><i class="fa fa-user"></i></div>
-                                    <div class="npl-info">
-                                        <p class="subject">회원이름 (najwndawd)</p>
-                                        <p class="date">2022.04.17 22:57:17</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nodata">최근 3일간 신규 회원 목록이 없습니다.</li>
                         </ul>
                     </div>
                 </li>

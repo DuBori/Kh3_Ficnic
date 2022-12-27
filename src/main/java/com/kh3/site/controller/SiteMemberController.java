@@ -325,7 +325,7 @@ public class SiteMemberController {
     public void joinOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+ 
         // 비밀번호 일치 확인
         if (!dto.getMember_pw().equals(dto.getMember_pw_re())) {
             out.println("<script>alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.'); location.href='member_join.do'; </script>");

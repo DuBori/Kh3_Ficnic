@@ -74,5 +74,9 @@ public interface MemberDAO {
 
     // 해당 회원 포인트 차감
 	void updatePoint(Map<String, Object> pointMap);
+
+
+    // 관리자 상단 최근 3일간 회원가입 내역 가져오기
+    List<MemberDTO> getRecentMemberList(String chk_date);
     
 }

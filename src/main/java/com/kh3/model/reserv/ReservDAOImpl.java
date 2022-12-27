@@ -125,14 +125,14 @@ public class ReservDAOImpl implements ReservDAO {
 
 	@Override
 	public List<ReservDTO> getReservList(String todayDate) {
-		
 		return this.sqlSession.selectList("siteReservCheckSessList", todayDate);
 	}
 
 
-    // 상단 - 최근 3일간 내역 가져오기
+
+    // 관리자 상단 최근 3일 예약내역 가져오기
 	@Override
-    public List<ReservDTO> getRecentReservList(String chkDate) {
-	    return this.sqlSession.selectList("adminRecentReservList", chkDate);
-	}
+    public List<ReservDTO> getRecentReservList(String chk_date) {
+        return this.sqlSession.selectList("adminRecentReservList", chk_date);
+    }
 }

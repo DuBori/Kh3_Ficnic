@@ -26,4 +26,7 @@ public interface QnaDAO {
 	// 문의글 파일 삭제
 	void deleteQnaImage(int qna_no, int img_num);
 
+
+    // 관리자 상단 최근 3일 예약내역 가져오기
+    List<QnaDTO> getRecentQnaList(String chk_date);
 }
