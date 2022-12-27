@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public class MemberDAOImpl implements MemberDAO {
 
@@ -181,6 +182,13 @@ public class MemberDAOImpl implements MemberDAO {
 		
 	}
 
+
+
+	// 관리자 상단 최근 3일간 회원가입 내역 가져오기
+	@Override
+    public List<MemberDTO> getRecentMemberList(String chk_date) {
+	    return this.sqlSession.selectList("adminRecentMemberList", chk_date);
+	}
 	
 
 }

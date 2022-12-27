@@ -55,7 +55,9 @@
                 });
             });	
 
-
+});
+				 $(function(){
+				  let ajaxTxt_j = "";
                 // 이메일 정규표현식
                 $(".join_email").keyup(function(){
                 let userEmail = $(this).val();
@@ -92,6 +94,7 @@
             });
         });
 
+	
 
         // 비밀번호
         $('.join_pw').keyup(function(){

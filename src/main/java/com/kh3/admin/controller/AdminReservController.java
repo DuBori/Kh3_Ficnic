@@ -70,7 +70,9 @@ public class AdminReservController {
         searchMap.put("search_sess", search_sess);
         searchMap.put("search_ficnic", search_ficnic);
         searchMap.put("search_name", search_name);
-
+System.out.println();
+System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>" + search_ficnic + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+System.out.println();
         // 페이징 처리
         int page; // 현재 페이지 변수
         if (request.getParameter("page") != null && request.getParameter("page") != "") {
@@ -84,7 +86,7 @@ public class AdminReservController {
         PageDTO dto = new PageDTO(page, rowsize, totalRecord, searchMap);
 
         // 페이지 이동 URL
-        String pageUrl = request.getContextPath() + "/admin/reserv/reserv_list.do?search_ficnic=" + search_ficnic + "&search_status=" + search_status + "&search_date_start=" + search_date_start + "&search_date_end=" + search_date_end + "&search_sess=" + search_sess + "&search_ficnic=" + search_ficnic + "&search_name=" + search_name;
+        String pageUrl = request.getContextPath() + "/admin/reserv/reserv_list.do?search_ficnic=" + search_ficnic + "&search_status=" + search_status + "&search_date_start=" + search_date_start + "&search_date_end=" + search_date_end + "&search_sess=" + search_sess + "&search_name=" + search_name;
 
         List<ReservDTO> list = this.dao.getReservList(dto.getStartNo(), dto.getEndNo(), searchMap);
 

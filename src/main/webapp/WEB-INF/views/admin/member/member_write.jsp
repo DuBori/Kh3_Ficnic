@@ -28,17 +28,17 @@ $(function(){
                 let ajaxTxt = "";
                 if(data > 0){
                     ajaxTxt = "<span class=\"text-danger\">* 이미 사용중인 아이디입니다.</span>";
-                    $("input[name='idchk']").val("false");
+                    $("input[name='idchk_join']").val("false");
                 }else{
                     ajaxTxt = "<span class=\"text-primary\">* 사용 할 수 있는 아이디입니다.</span>";
-                    $("input[name='idchk']").val("true");
+                    $("input[name='idchk_join']").val("true");
                 }
                 $("#idchk-txt").html(ajaxTxt);
             },
 
             error : function(e){
                 alert("Error : " + e.status);
-                $("input[name='idchk']").val("N");
+                $("input[name='idchk_join']").val("N");
             }
         });
 	});	
@@ -68,17 +68,17 @@ $(function(){
             success : function(data){
                 if(data > 0){
                 	ajaxTxt = "<span style=\"color:red\">이미 존재하는 이메일 주소입니다.</span>";
-                    $("input[name='mailchk']").val("false");
+                    $("input[name='mailchk_join']").val("false");
                 }else{
                 	 ajaxTxt = "<span style=\"color:blue\">Good.</span>";
-                     $("input[name='mailchk']").val("true");
+                     $("input[name='mailchk_join']").val("true");
                 }
                 $("#mailchk-txt").html(ajaxTxt);
             },
 
             error : function(e){
                 alert("Error : " + e.status);
-                $("input[name='mailchk']").val("N");
+                $("input[name='mailchk_join']").val("N");
             }
         });
 	});
@@ -125,7 +125,7 @@ $(function(){
                             <label for="member_id">아이디</label>
                             <input type="text" name="member_id" id="member_id" class="form-control d-inline w-30" onkeydown="EngNumInput(this);" placeholder="6자 이상을 입력해주세요." required />
                             <div id="idchk-txt" class="d-inline ml-2" ></div>
-                            <input type="hidden" name="idchk" value="false" />
+                            <input type="hidden" name="idchk_join" value="false" />
                         </div>
                         <div class="w-100"></div>
                         <div class="form-group col mb-2">
