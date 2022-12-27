@@ -151,7 +151,7 @@ $(function(){
 						
 						
 						if(canuse){
-
+							
 							if(price_type == "price" ){
 								var priceview= parseInt($("#sitePriceView").html().replace(/,/g , ''),10);
 								var saleMax = coupon_price;
