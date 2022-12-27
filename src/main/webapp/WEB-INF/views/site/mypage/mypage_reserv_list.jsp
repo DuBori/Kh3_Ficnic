@@ -50,7 +50,7 @@
 												    	<c:if test="${dto.getReserv_status() eq 'done'}"> text-success" >체험 완료</c:if> 
 												    	<c:if test="${dto.getReserv_status() eq 'cancel'}"> text-danger" >예약 취소</c:if> 							    
 												    </li>
-												     <li class="card-price"><fmt:setLocale value="ko_kr" /><fmt:formatNumber value="${dto.getReserv_ficnic_sale_price()}" type="currency" /></li>
+												     <li class="card-price"><fmt:setLocale value="ko_kr" /><fmt:formatNumber value="${dto.getReserv_ficnic_total_price()}" type="currency" /></li>
 												 </ul>
 											 </div>
 										<div class="mt-2 mb-2">
