@@ -176,7 +176,6 @@ public class AdminMemberController {
     public void writeOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-
         // 비밀번호 일치 확인
         if (!dto.getMember_pw().equals(dto.getMember_pw_re())) {
             out.println("<script>alert('[비밀번호]가 일치하지 않습니다. 다시 입력해주세요.'); history.back();</script>");
@@ -209,19 +208,19 @@ public class AdminMemberController {
                 } else if (error.getDefaultMessage().equals("mailchk_join")) {
                     out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력하주세요.'); history.back();</script>");
                     break;
-                }else {
-                	// 유효성 검사 이상 없을 때 실행
-                	int check = this.dao.writeOkMember(dto);
-                	if (check > 0) {
-                		// 회원 가입 포인트 적립
-                		this.pdao.joinPoint(pdto);
-                		out.println("<script> location.href='member_list.do';</script>");
-                	} else {
-                		out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
-                	}
-                	break;
                 }
             }
+        }else {
+        	// 유효성 검사 이상 없을 때 실행
+        	int check = this.dao.writeOkMember(dto);
+
+        	if (check > 0) {
+        		// 회원 가입 포인트 적립
+        		this.pdao.joinPoint(pdto);
+        		out.println("<script> location.href='member_list.do';</script>");
+        	} else {
+        		out.println("<script>alert('회원 등록 중 에러가 발생하였습니다.'); history.back();</script>");
+        	}
         } 
     }
 

@@ -325,7 +325,7 @@ public class SiteMemberController {
     public void joinOk(@Valid MemberDTO dto, BindingResult result, PointDTO pdto, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+ 
         // 비밀번호 일치 확인
         if (!dto.getMember_pw().equals(dto.getMember_pw_re())) {
             out.println("<script>alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.'); location.href='member_join.do'; </script>");
@@ -341,26 +341,27 @@ public class SiteMemberController {
             List<ObjectError> list = result.getAllErrors();
 
             for (ObjectError error : list) {
-            	if (error.getDefaultMessage().equals("id")) {
-                    out.println("<script>alert('아이디를 6자 이상 입력해주세요.'); location.href='member_join.do'; </script>");
+                if (error.getDefaultMessage().equals("idchk_join")) {
+                    out.println("<script>alert('사용 할수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); history.back();</script>");
                     break;
-            	 } else if (error.getDefaultMessage().equals("pw")) {
-                     out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); location.href='member_join.do'; </script>");
-                     break;
-                 } else if (error.getDefaultMessage().equals("email")) {
-                     out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); location.href='member_join.do'; </script>");
-                     break;
-                 } else if (error.getDefaultMessage().equals("phone")) {
-                     out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); location.href='member_join.do'; </script>");
-                     break;
-                 } else if (error.getDefaultMessage().equals("idchk_join")) {
-                    out.println("<script>alert('사용할 수 없는 아이디입니다. 다른 아이디를 입력해주세요.'); location.href='member_join.do'; </script>");
+                } else if (error.getDefaultMessage().equals("id")) {
+                    out.println("<script>alert('아이디를 6자 이상 입력해주세요.'); history.back();</script>");
+                    break;
+                } else if (error.getDefaultMessage().equals("pw")) {
+                    out.println("<script>alert('비밀번호는 영문자와 숫자, 특수기호가 적어도 1개 이상 포함된 6자~12자의 비밀번호여야 합니다.'); history.back();</script>");
+                    break;
+                } else if (error.getDefaultMessage().equals("email")) {
+                    out.println("<script>alert('잘못된 이메일 형식입니다. 다시 입력해 주세요.'); history.back();</script>");
+                    break;
+                } else if (error.getDefaultMessage().equals("phone")) {
+                    out.println("<script>alert('잘못된 전화번호 형식입니다. 다시 입력해 주세요.'); history.back();</script>");
                     break;
                 } else if (error.getDefaultMessage().equals("mailchk_join")) {
-                    out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.'); location.href='member_join.do'; </script>");
+                    out.println("<script>alert('이미 존재하는 이메일입니다. 다른 이메일을 입력하주세요.'); history.back();</script>");
                     break;
-                } 
+                }
             }
+      
 
         } else { // 이상 없을 때 실행
             int check = this.dao.joinMember(dto);
