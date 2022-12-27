@@ -184,13 +184,12 @@
 					<div class="d-flex flex-column">
 							<div class="d-flex flex-row justify-content-between">
 								<span class="ficnic_pay_ficnicPay">보유한 적립금</span>
-								<span style="color: var(--green)" >${memdto.getMember_point()}<span style="color: var(--dark)">원</span></span>
+								<span>${memdto.getMember_point()}원</span>
 							</div>
 							<div class="d-flex flex-row justify-content-between">
 								<span class="ficnic_pay_ficnicPay">사용할 적립금</span>
 								<input type="number" min="0" max="${memdto.getMember_point()}" value="0" step="100" onpause="NumberInput(this)" name="canUsePoint" >
 							</div>
-						
 					</div>
 				</div>
 			</div>
