@@ -30,7 +30,7 @@
 	
 	<!-- 회원 포인트 상세내역 -->
 	<select id="pointView" parameterType="String" resultType="pointDTO">
-		select * from member_point where member_id = #{member_id}
+		select * from member_point where member_id = #{member_id} order by point_date desc
 	</select>
 	
 

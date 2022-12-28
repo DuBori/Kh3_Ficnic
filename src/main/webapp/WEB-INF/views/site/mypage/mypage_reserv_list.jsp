@@ -140,7 +140,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <input type="submit" class="btn btn-primary" id="mypage-reserv-subtn" value="작성 하기"/>
+	        <input type="submit" class="btn btn-primary" id="mypage-reserv-subtn" value="작성하기"/>
 	      </div>
 	    </div>
 	  </div>
