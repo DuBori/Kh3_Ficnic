@@ -22,7 +22,7 @@
 
             	<p> 회원님의 아이디는 </p>
             	<p> <strong>${id }</strong> 입니다.</p>
-            	<p class="pBtn"> <a href="${path}/member/member_login.do">로그인</a></p>
+            	<p><button class="pBtn" onclick="location.href='${path}/member/member_login.do'">로그인</button></p>
     
 </div>
 
