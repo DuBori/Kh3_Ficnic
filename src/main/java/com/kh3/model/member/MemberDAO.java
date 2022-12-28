@@ -78,5 +78,8 @@ public interface MemberDAO {
 
     // 관리자 상단 최근 3일간 회원가입 내역 가져오기
     List<MemberDTO> getRecentMemberList(String chk_date);
+
+    // 댓글 작성 시 마일리지 포인트 넣어주기
+	void updatePlusPoint(Map<String, Object> map);
     
 }

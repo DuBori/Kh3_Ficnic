@@ -189,6 +189,12 @@ public class MemberDAOImpl implements MemberDAO {
     public List<MemberDTO> getRecentMemberList(String chk_date) {
 	    return this.sqlSession.selectList("adminRecentMemberList", chk_date);
 	}
+
+	@Override
+	public void updatePlusPoint(Map<String, Object> map) {
+		this.sqlSession.update("reviewMileageUpdate", map);
+		
+	}
 	
 
 }

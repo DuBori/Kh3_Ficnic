@@ -36,7 +36,9 @@
 	</update>
     
 
-
+	<update id="reviewMileageUpdate" parameterType="int">
+		update member_list set member_point = member_point + #{mileage} where member_id = #{sess_id}
+	</update>
 
 
 

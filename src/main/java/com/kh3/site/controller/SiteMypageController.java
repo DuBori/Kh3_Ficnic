@@ -151,11 +151,17 @@ public class SiteMypageController {
     }
     
     @RequestMapping("mypage/mypage_review_write.do")
-    public void myPage_review(MultipartHttpServletRequest mRequest, ReviewDTO dto, HttpServletResponse response) throws IOException {
+    public void myPage_review(MultipartHttpServletRequest mRequest,
+    		HttpSession session,
+    		ReviewDTO dto, HttpServletResponse response) throws IOException {
        
+    	System.out.println(dto);
+    	
+    	
     	response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
     	// 파일저장 이름 >> thisFolder/saveName_일련번호_밀리세컨드.확장자
+        
         List<String> upload_list = UploadFile.fileUpload(mRequest, reviewFolder, reviewSaveName);        
         for(int i=0; i<upload_list.size(); i++){
             switch (i) {
@@ -172,9 +178,24 @@ public class SiteMypageController {
 
         // 리뷰 등록
         int res = this.rdao.writeOkReview(dto);
+        
+        int mileage = 500;
+    	
+        Map<String, Object> map = new HashMap<String, Object>();
+    	
+    	map.put("mileage", mileage);
+    	map.put("sess_id", (String)session.getAttribute("sess_id"));
+        
     	if(res>0) {
     		
-            // 피크닉 평점 수정
+    		
+    		// 피크닉 포인트 주기
+    		this.mdao.updatePlusPoint(map);
+    		
+    		// 피크닉 적립금 내역
+    		this.pdao.plusPoint(map);
+            
+    		// 피크닉 평점 수정
             this.fdao.updateReviewPoint(dto.getFicnic_no());
 
         	// 피크닉 리뷰 갯수 수정

@@ -13,5 +13,14 @@
 		</selectKey>
 		insert into member_point values(#{point_no}+1,'consume',#{reserv_sess},'',#{member_id},'minus',#{point_add},'사용한 적립금',sysdate)
 	</insert>
+	
+	<insert id="plusPoint" parameterType="map">
+		<selectKey resultType="int" keyProperty="point_no" order="BEFORE">
+			select nvl(max(point_no),0) from member_point
+		</selectKey>
+		insert into member_point values(#{point_no}+1,'reviewWrite','','',#{sess_id},'plus',#{mileage},'리뷰 적립',sysdate)
+	</insert>
+	
+	
 
 </mapper>
