@@ -45,6 +45,7 @@ addComment = function(form) {
     }
 
 	let sess = $("input[name='sess']").val();
+	let sess_id = $("input[name='bcomm_id']").val();
 
     $.ajax({
         type : "post",
@@ -68,8 +69,8 @@ addComment = function(form) {
                     addComment += "\t<div class=\"vfcl-body px-3\">"+epd_data[7].replaceAll('\r\n', '<br />')+"</div>\n";
                     addComment += "\t<div class=\"vfcl-date text-center\">\n";
                     addComment += "\t\t<p>"+epd_data[8].substr(0, 10)+"<br />"+epd_data[8].substr(11)+"</p>\n";
-                    
-                    if(sess == 'admin'){
+                   
+                    if(sess == 'admin' || sess_id == epd_data[3] ){
                     	addComment += "\t\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger py-0 mt-2\" onclick=\"delComment('nochk', '"+form_bbs_id.val()+"', "+epd_data[2]+", "+epd_data[1]+");\"><i class=\"icon-close mr-1\"></i> 삭제</button>\n";
                     }else{
                     	addComment += "\t\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger py-0 mt-2\" onclick=\"setCommentDel('"+form_bbs_id.val()+"', "+epd_data[2]+", "+epd_data[1]+");\"><i class=\"icon-close mr-1\"></i> 삭제</button>\n";
@@ -145,6 +146,7 @@ delComment = function(btn_type, bbs_id, bdata_no, bcomm_no) {
                 if(data == "Y"){
                     $("#comment-"+bcomm_no).animate({opacity: "0"}, function(){
                         $("#comment-" + bcomm_no).remove();
+                        
                     });
                 }else if(data == "PW"){
                     alert("댓글 비밀번호가 일치하지 않습니다.");

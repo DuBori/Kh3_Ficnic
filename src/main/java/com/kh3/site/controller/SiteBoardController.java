@@ -865,7 +865,7 @@ public class SiteBoardController {
             this.board_CommDao.updateCommentCount(map);
 
             /* 게시글 삭제 시퀀스 업데이트 */
-            this.board_CommDao.updateCommentNum(map);
+           // this.board_CommDao.updateCommentNum(map);
 
             out.print("Y");
 
