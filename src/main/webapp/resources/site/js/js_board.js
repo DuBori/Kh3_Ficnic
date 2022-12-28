@@ -77,8 +77,6 @@ addComment = function(form) {
                 alert("댓글 등록 중 에러가 발생하였습니다.");
             }
 
-            $(form_write_name).val("");
-            $(form_write_pw).val("");
             $(form_write_cont).val("");
         },
 
