@@ -76,8 +76,15 @@ addComment = function(form) {
             }else{
                 alert("댓글 등록 중 에러가 발생하였습니다.");
             }
-
+           
+           
+           	if($("input[name='bcomm_id']").val() === undefined){
+           		 $(form_write_name).val("");
+           		 $(form_write_pw).val("");
+			}
+            
             $(form_write_cont).val("");
+            
         },
 
         error : function(e) {
