@@ -67,7 +67,7 @@ addComment = function(form) {
                     addComment += "\t<div class=\"vfcl-body px-3\">"+epd_data[7].replaceAll('\r\n', '<br />')+"</div>\n";
                     addComment += "\t<div class=\"vfcl-date text-center\">\n";
                     addComment += "\t\t<p>"+epd_data[8].substr(0, 10)+"<br />"+epd_data[8].substr(11)+"</p>\n";
-                    addComment += "\t\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger py-0 mt-2\" onclick=\"setCommentDel('"+form_bbs_id.val()+"', "+epd_data[2]+", "+epd_data[1]+");\"><i class=\"icon-close mr-1\"></i> 삭제</button>\n";
+                    addComment += "\t\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger py-0 mt-2\" onclick=\"delComment('nochk', "+form_bbs_id.val()+"', "+epd_data[2]+", "+epd_data[1]+");\"><i class=\"icon-close mr-1\"></i> 삭제</button>\n";
                     addComment += "\t</div>\n";
                     addComment += "</li>\n";
 
