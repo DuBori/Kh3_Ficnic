@@ -210,7 +210,7 @@
                     	    	<c:when test="${!empty sess_id}">
         							<input type="hidden" name="bcomm_id" value="${sess_id}" />
         							<input type="hidden" name="bcomm_pw" value="${sess_pw}" />
-        							<input type="hidden" name="bcomm_name" value="${sess_name}" />
+        							<input type="hidden" name="bcomm_name" value="${sess_name}" />	
         							<input type="hidden" name="sess" value="${sess_type}" />
         							${sess_name}
         						</c:when>
