@@ -316,6 +316,7 @@
 	width: 320px;
 	font-weight: 300;
 	transition: background 0.2s ease-in-out;
+	color: #fff;
 }
 
 .pBtn:hover {
@@ -329,5 +330,6 @@
 	width: 320px;
 	font-weight: 300;
 	transition: background 0.2s ease-in-out;
+	color: #fff;
 } 
 
