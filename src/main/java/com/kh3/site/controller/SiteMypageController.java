@@ -207,6 +207,7 @@ public class SiteMypageController {
     	}
     }
     
+	/* 미사용 메서드.. */
     @RequestMapping("mypage/mypage_review_modify.do")
     public void myPage_modify(MultipartHttpServletRequest mRequest, ReviewDTO dto, HttpServletResponse response) throws IOException {
     	response.setContentType("text/html; charset=UTF-8");
@@ -246,7 +247,7 @@ public class SiteMypageController {
             out.println("<script>alert('리뷰글 변경 중 에러가 발생하였습니다.'); history.back();</script>");
         }
     }
-
+    /* 미사용 메서드.. */
 
 
 
