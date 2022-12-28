@@ -55,7 +55,13 @@
                 <tbody>
                     <tr>
                         <th>상태</th>
-                        <td colspan="3"><span class="text-primary">
+                        <td colspan="3"><span class="
+                        <c:if test="${status eq 'reserv'}"> text-warning</c:if>
+                        <c:if test="${status eq 'confirm'}"> text-primary</c:if>
+                        <c:if test="${status eq 'done'}"> text-success</c:if>
+                        <c:if test="${status eq 'cancel'}"> text-danger</c:if>
+                        
+                        ">
 								<c:if test="${status eq 'reserv'}">신청 대기</c:if>
 								<c:if test="${status eq 'confirm'}">신청 확인</c:if>
 								<c:if test="${status eq 'done'}">체험 완료</c:if>
