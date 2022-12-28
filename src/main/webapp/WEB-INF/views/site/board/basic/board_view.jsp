@@ -199,7 +199,6 @@
                 		</c:if>
                     </ul>
 
-
                     <c:if test="${level.comment eq 'Y'}">
                     <form name="comment_form" method="post">
                     <input type="hidden" name="bbs_id" value="${BoardConDto.getBoard_id()}" />
@@ -211,6 +210,7 @@
         							<input type="hidden" name="bcomm_id" value="${sess_id}" />
         							<input type="hidden" name="bcomm_pw" value="${sess_pw}" />
         							<input type="hidden" name="bcomm_name" value="${sess_name}" />
+        							<input type="hidden" name="sess" value="${sess_type}" />
         							${sess_name}
         						</c:when>
         						<c:otherwise>
