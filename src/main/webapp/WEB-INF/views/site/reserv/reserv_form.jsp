@@ -170,7 +170,7 @@
 										<c:if test="${cdto.getCoupon_use_type() eq 'cart'}" >
 											<c:set value="" var="chkabled" />
 										</c:if>			
-										<option  ${chkabled} value="${cdto.getCoupon_no()}" ><c:if test="${chkabled ne '' }">[사용불가]</c:if>${cdto.getCoupon_name()} [${cdto.getCoupon_price()}<c:if test="${cdto.getCoupon_price_type() ne 'price' }">%할인</c:if><c:if test="${cdto.getCoupon_price_type() eq 'price' }">원할인</c:if>]</option>									
+										<option  ${chkabled} value="${cdto.getCoupon_no()}" ><c:if test="${chkabled ne '' }">[사용불가]</c:if>${cdto.getCoupon_name()} [${cdto.getCoupon_price()}<c:if test="${cdto.getCoupon_price_type() ne 'price' }">% 할인</c:if><c:if test="${cdto.getCoupon_price_type() eq 'price' }">원 할인</c:if>]</option>									
 									</c:if>	
 									
 								</c:forEach>	
