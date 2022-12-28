@@ -107,7 +107,7 @@
 
 		    		<c:otherwise>
 		    			<c:choose>
-		    				<c:when test="${BoardConDto.getBdata_writer_pw() eq sess_pw}">
+		    				<c:when test="${BoardConDto.getBdata_writer_pw() eq sess_pw or sess_type eq 'admin'}">
 		    					<a href="board_delete.do?bbs_id=${BoardConDto.getBoard_id()}&bdata_no=${BoardConDto.getBdata_no()}" class="btn btn-danger mx-1" onclick="return confirm('정말 삭제하시겠습니까?\n되돌릴 수 없습니다.');"><i class="icon-trash mr-1"></i> 삭제하기</a>
 		    				</c:when>
 		    				<c:otherwise>
