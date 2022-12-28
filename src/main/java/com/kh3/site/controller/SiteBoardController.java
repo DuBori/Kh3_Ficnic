@@ -388,7 +388,7 @@ public class SiteBoardController {
 
 
         // 게시물 비밀번호 체크
-        if(!bbs_level.get("modify").equals("Y") && (boardCont.getBdata_writer_id() == null && !boardCont.getBdata_writer_pw().equals(sess_pw)) || (boardCont.getBdata_writer_id() != null && !boardCont.getBdata_writer_id().equals(sess_id))) {
+        if(!bbs_level.get("modify").equals("Y") && (boardCont.getBdata_writer_id() == null && !boardCont.getBdata_writer_pw().equals(sess_pw)) || (boardCont.getBdata_writer_id() != null && !boardCont.getBdata_writer_id().equals(sess_id)) && !sess_type.equals("admin") ) {
             response.setContentType("text/html; enctype=utf-8");
             PrintWriter out = response.getWriter();
 
