@@ -184,7 +184,12 @@
             					</tr>
 	            				<tr>	                      
 									<td class="photo px-3">
-					                    <span class="noimg" style="height: 98px; padding-top: 42px;">${rdto.getReview_photo1() }</span>
+										<c:if test="${!empty rdto.getReview_photo1() }">
+											<img alt="" src="${path}/${rdto.getReview_photo1() }" style="height: 98px;">
+										</c:if>
+										<c:if test="${empty rdto.getReview_photo1() }">
+											<span class="noimg" style="height: 98px; padding-top: 42px;"></span>
+										</c:if>	
 									</td>
 									<td class="text-left table-list-hide">${rdto.getReview_point() }</td>
 									<td class="px-2">${rdto.getReview_cont() }</td>	
