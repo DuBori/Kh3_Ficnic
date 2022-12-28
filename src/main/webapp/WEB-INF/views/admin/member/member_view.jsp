@@ -95,7 +95,13 @@
                             <c:forEach items="${cdto}" var="cdto">
                             <tr>
                                 <td class="eng">${cdto.getCoupon_no()}</td>
-                                <td>${cdto.getCoupon_name()}</td>
+                                <td>
+                                	<c:forEach items="${cdto.getCoupon_list()}" var="dto">
+                                		<c:if test="${cdto.getCoupon_no() eq dto.getCoupon_no() }">
+                                			${dto.getCoupon_name() }
+                                		</c:if>
+                                	</c:forEach>
+                                </td>
                                 <td>
                                     <c:choose>
                                         <c:when test="${cdto.getMcoupon_use_date() == null}"><p class="text-primary">미사용</p></c:when>
@@ -146,9 +152,11 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${pdto.getPoint_kind() eq 'join'}">회원가입</c:when>
-                                        <c:when test="${pdto.getPoint_kind() eq 'review'}">리뷰</c:when>
+                                        <c:when test="${pdto.getPoint_kind() eq 'reviewWrite'}">리뷰작성</c:when>
                                         <c:when test="${pdto.getPoint_kind() eq 'admin'}">관리자</c:when>
                                         <c:when test="${pdto.getPoint_kind() eq 'reserv'}">예약하기</c:when>
+                                        <c:when test="${pdto.getPoint_kind() eq 'consume'}">사용금액</c:when>
+                                        
                                     </c:choose>
                                 </td>
                                 <td class="eng">

@@ -123,6 +123,7 @@ public class AdminMemberController {
     @RequestMapping("admin/member/member_view.do")
     public String view(Model model, @RequestParam("no") int no, @RequestParam("id") String id) {
         MemberDTO dto = this.dao.getMemberView(no);
+     
         List<McouponDTO> cdto = this.cdao.getCouponView(id);
         List<PointDTO> pdto = this.pdao.getPointView(id);
 
