@@ -178,7 +178,7 @@
     <!-- 리뷰 수정시 총점 수정 -->
     <update id="adminFIcnicUpdateReview" parameterType="java.util.Map">
         <selectKey resultType="String" keyProperty="set_review_point" order="BEFORE">
-           select avg(nvl(review_point, 1)) from review_list where ficnic_no = #{ficnic_no}
+           select nvl(avg(nvl(review_point, 1)),0) from review_list where ficnic_no = #{ficnic_no}
        </selectKey>
         update ficnic_list set ficnic_review_point = #{set_review_point} where ficnic_no = #{ficnic_no}
     </update>
