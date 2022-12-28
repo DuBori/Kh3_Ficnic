@@ -44,6 +44,7 @@ addComment = function(form) {
         return false;
     }
 
+	let sess = $("input[name='sess']").val();
 
     $.ajax({
         type : "post",
@@ -54,8 +55,8 @@ addComment = function(form) {
 
         success : function(data) {
             let epd_data = data.split("☆");
-
             if(epd_data[0] == "Y"){
+            
                 let addComment = "<li id=\"comment-"+epd_data[1]+"\" class=\"d-flex border-bottom py-3\">\n";
                     addComment += "\t<div class=\"vfcl-writer\">";
                     if(epd_data[5] == "admin"){
@@ -67,7 +68,14 @@ addComment = function(form) {
                     addComment += "\t<div class=\"vfcl-body px-3\">"+epd_data[7].replaceAll('\r\n', '<br />')+"</div>\n";
                     addComment += "\t<div class=\"vfcl-date text-center\">\n";
                     addComment += "\t\t<p>"+epd_data[8].substr(0, 10)+"<br />"+epd_data[8].substr(11)+"</p>\n";
-                    addComment += "\t\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger py-0 mt-2\" onclick=\"delComment('nochk', "+form_bbs_id.val()+"', "+epd_data[2]+", "+epd_data[1]+");\"><i class=\"icon-close mr-1\"></i> 삭제</button>\n";
+                    
+                    if(sess == 'admin'){
+                    	addComment += "\t\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger py-0 mt-2\" onclick=\"delComment('nochk', '"+form_bbs_id.val()+"', "+epd_data[2]+", "+epd_data[1]+");\"><i class=\"icon-close mr-1\"></i> 삭제</button>\n";
+                    }else{
+                    	addComment += "\t\t<button type=\"button\" class=\"btn btn-sm btn-outline-danger py-0 mt-2\" onclick=\"setCommentDel('"+form_bbs_id.val()+"', "+epd_data[2]+", "+epd_data[1]+");\"><i class=\"icon-close mr-1\"></i> 삭제</button>\n";
+                    }
+                    
+                    
                     addComment += "\t</div>\n";
                     addComment += "</li>\n";
 
