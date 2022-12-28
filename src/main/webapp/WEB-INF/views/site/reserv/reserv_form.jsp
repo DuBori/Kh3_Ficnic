@@ -57,7 +57,7 @@
 <div class="ficnic-pay-main d-flex flex-column ">
 	
 	<div class="ficnic-pay-sub">
-		<div class="mb-6">
+		<div class="mb-5">
 			<div class="ficnic_pay_ficnicInfo d-flex flex-row justify-content-between mt-4">
 				
 					<div class="d-flex flex-row">
@@ -117,7 +117,7 @@
 		</div>
 		<hr class="Hr-sc-1533uvg-0 cbobBO">
 		<div class="mt-4 mb-2">
-			<p class="ficnic_pay_ficnicTitle jcPaBR">결제수단</p>
+			<p class="ficnic_pay_ficnicTitle ">결제수단</p>
 			<div class="form-check mt-2 mb-2">
 			  <label class="ficnic_pay_ficnicPay">
 			  	<input class="ficnic_pay_ficnicPay mr-2" id="ficnicPay_check" type="radio" name="reserv_payment2"  value="card" checked>신용/체크 카드
@@ -133,7 +133,7 @@
 			</div>
 
 	</div>
-		<hr class="Hr-sc-1533uvg-0 cbobBO">
+		<hr>
 		<div class="mt-4 mb-2">
 			<div>
 				<div>
@@ -170,8 +170,7 @@
 										<c:if test="${cdto.getCoupon_use_type() eq 'cart'}" >
 											<c:set value="" var="chkabled" />
 										</c:if>			
-										
-										<option  ${chkabled} value="${cdto.getCoupon_no()}" >${cdto.getCoupon_name()}[${cdto.getCoupon_price()}<c:if test="${cdto.getCoupon_price_type() ne 'price' }"> %할인</c:if><c:if test="${cdto.getCoupon_price_type() eq 'price' }">원할인</c:if> ]</option>									
+										<option  ${chkabled} value="${cdto.getCoupon_no()}" ><c:if test="${chkabled ne '' }">[사용불가]</c:if>${cdto.getCoupon_name()} [${cdto.getCoupon_price()}<c:if test="${cdto.getCoupon_price_type() ne 'price' }">%할인</c:if><c:if test="${cdto.getCoupon_price_type() eq 'price' }">원할인</c:if>]</option>									
 									</c:if>	
 									
 								</c:forEach>	
@@ -204,7 +203,7 @@
 		</div>
 		<div class="bg-light d-flex flex-column mt-4">
 			<div class="d-flex flex-row justify-content-between m-2">
-				<p class="ficnic_pay_ficnicPay">개인정보 제 3자 제공약관</p> <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">보기</button>
+				<p class="ficnic_pay_ficnicPay">개인정보 제 3자 제공약관</p> <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">보기</button>
 			</div>
 			<div class="collapse" id="collapseExample">
 				  <div class="card card-body">
@@ -334,7 +333,7 @@
 				  </div>
 				</div>
 			<div class="d-flex flex-row justify-content-between m-2"> 
-				<p class="ficnic_pay_ficnicPay">결제 대행 서비스 이용약관</p> <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2" >보기</button>
+				<p class="ficnic_pay_ficnicPay">결제 대행 서비스 이용약관</p> <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2" >보기</button>
 			</div>
 			<div class="collapse" id="collapseExample2">
 			  <div class="card card-body">
@@ -498,7 +497,7 @@
 		
 		</div>
 		<div class="d-flex flex-row  justify-content-center mt-3 mb-2 w100">
-			<input class="btn w-100 text-white ty-5" type="submit" value="참여하기" style="background-color: var(--indigo); font-size: 25px;">
+			<input class="btn w-100 text-white py-3" type="submit" value="참여하기" style="background-color: var(--indigo);">
 		</div>
 	
 	</div>

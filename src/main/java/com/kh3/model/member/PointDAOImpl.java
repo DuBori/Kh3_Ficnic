@@ -41,6 +41,11 @@ public class PointDAOImpl implements PointDAO {
 		
 	}
 
+	@Override
+	public void plusPoint(Map<String, Object> map) {
+		this.sqlSession.update("plusPoint", map);
+	}
+
 
 
 

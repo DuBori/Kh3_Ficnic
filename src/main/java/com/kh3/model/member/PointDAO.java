@@ -16,6 +16,9 @@ public interface PointDAO {
 
 	// 사용한 적립금 등록하기
 	void MinusPoint(Map<String, Object> pointMap);
+
+	// 리뷰 작성시 적립금 등록
+	void plusPoint(Map<String, Object> map);
 	
 
 }

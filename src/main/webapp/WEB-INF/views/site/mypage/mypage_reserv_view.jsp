@@ -42,32 +42,47 @@
 
     <!-- 내용 //START -->
 					<hr class="fhr">
-    	<p class="mypage-p">피크닉 신청 내용</p>
+		<p class="mypage-p">피크닉 신청 내용</p>
+
             <table class="table">
+                <colgroup>
+                    <col width="17%">
+                    <col width="32%">
+                    <col width="17%">
+                    <col>
+                </colgroup>
 
                 <tbody>
                     <tr>
                         <th>상태</th>
-                        <td colspan="3">
-                            <span class="text-primary">
-								<c:if test="${status eq 'reserv'}">신청대기</c:if>
-								<c:if test="${status eq 'confirm'}">신청확인</c:if>
-								<c:if test="${status eq 'done'}">체험완료</c:if>
-								<c:if test="${status eq 'cancel'}">예약취소</c:if>
-							</span>
-                            
-                        </td>
+                        <td colspan="3"><span class="text-primary">
+								<c:if test="${status eq 'reserv'}">신청 대기</c:if>
+								<c:if test="${status eq 'confirm'}">신청 확인</c:if>
+								<c:if test="${status eq 'done'}">체험 완료</c:if>
+								<c:if test="${status eq 'cancel'}">예약 취소</c:if>
+							</span></td>
                     </tr>
                     <tr>
                         <th>예약번호</th>
                         <td>${reserv_sess}</td>
                         <th>예약일자</th>
-                        <td>${reserv_date}</td>
-
-
+                        <c:choose>
+                        
+                        	<c:when test="${!empty reserv_date}">
+	                        	
+	                       		<td> 
+	                        	${reserv_date}
+	                        	</td>
+                        	</c:when>
+                        	<c:otherwise>
+                        		<td>날짜 지정 불가능 상품</td>
+                        		
+                        	</c:otherwise>
+                       
+                        </c:choose> 
                     </tr>
                 </tbody>
-            </table>
+            </table>					
 	<hr class="fhr">	
     <!-- 내용 //END -->
 
@@ -115,8 +130,28 @@
                     <tr>
                         <th>피크닉 금액</th>
                         <td colspan="3" class="d-flex">
-                            <div class="text-black">피크닉 금액<br><b class="eng"><fmt:formatNumber value="${reservDto.getReserv_total_price()}"/></b>원</div>
-                            <div class="pl-3 text-success">옵션 금액<br><b class="eng">+ 0</b>원</div>
+                            <div class="text-black">피크닉 금액<br><b class="eng">
+                            <c:choose>
+                            	<c:when test="${reservDto.getReserv_ficnic_option_price() ne 0 }">
+                            		 <fmt:formatNumber value="${reservDto.getReserv_ficnic_option_price()}"/>
+                            	</c:when>
+                            	<c:otherwise>
+                            		 <fmt:formatNumber value="${reservDto.getReserv_ficnic_sale_price()}"/>
+                            	</c:otherwise>
+                            </c:choose>
+                           
+                            
+                            </b>원</div>
+                            <div class="pl-3 text-success">옵션 금액<br><b class="eng">+ 
+                            <c:choose>
+                            	<c:when test="${!empty reservDto.getReserv_ficnic_select_price() }">
+                            		${reservDto.getReserv_ficnic_select_price() }
+                            	</c:when>
+                            	<c:otherwise>
+                            	0
+                            	</c:otherwise>
+                            </c:choose>
+                            </b>원</div>
                         </td>
                     </tr>
                     <tr>
@@ -180,7 +215,7 @@
     <div class="d-flex p-1  m-3 justify-content-center">
  
     	<c:if test="${(empty reserv_date and status eq 'reserv') or today < reserv_date  }">
-    		<button type="button" class="btn btn-outline-primary" onclick="if(confirm('정말로 취소하시겠습니까?\n돌이키실 수 없습니다.')){ location.href='${path}/mypage/mypage_reserv_cancel.do?reserv_no=${reservDto.getReserv_no()}&reserv_sess=${reservDto.getReserv_sess()}'; }else{ return false; }">예약취소</button>
+    		<button type="button" class="btn btn-outline-primary" onclick="if(confirm('정말로 취소하시겠습니까?\n돌이키실 수 없습니다.')){ location.href='${path}/mypage/mypage_reserv_cancel.do?reserv_no=${reservDto.getReserv_no()}&reserv_sess=${reservDto.getReserv_sess()}'; }else{ return false; }">예약취소</button>&nbsp;&nbsp;
     	</c:if>
     	
     	<button type="button" class="btn btn-outline-primary" onclick="location.href='${path}/mypage/mypage_reserv_list.do'">목록보기</button>

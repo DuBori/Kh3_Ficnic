@@ -32,10 +32,10 @@
 					<c:forEach items="${List}" var="dto">
 					<div class="mypage-reserv-mainDiv d-flex flex-column w1000 ">
 						<!-- 예약 리스트 출력  -->
-						<div class="mypage-reserv-subDiv d-flex flex-row flex-wrap ">
+						<div class="mypage-reserv-subDiv d-flex flex-row flex-wrap mt-1">
 				    			<c:set var="move_ficnic_info" value="onclick=\"location.href='${path}/ficnic/ficnic_view.do?ficnic_no=${dto.getFicnic_no()}'\""/>
-				    			<div class="mypage-wish w-20 m-1 p-1 d-flex justify-content-start  ">
-									  	<img ${move_ficnic_info } src="${path }${dto.getReserv_ficnic_photo()}" class="card-img-top" style="width:250px" alt="...">
+				    			<div class="mypage-wish w-20 mt-1 pb-3 d-flex justify-content-start  align-items-center">
+									  	<img ${move_ficnic_info } src="${path }${dto.getReserv_ficnic_photo()}" class="card-img-top" style="width:222px;" alt="...">
 									  <div class="mypage-wish d-flex flex-column  ml-3">
 										  	<div ${move_ficnic_info } class="mb-2"> 
 											    <p class="card-sess">${dto.getReserv_sess() }</p>
@@ -45,8 +45,8 @@
 												 <ul ${move_ficnic_info } class="mypage-wish d-flex  flex-column ">
 												    <li class="card-date"> ${dto.getReserv_ficnic_date().substring(0,10)}</li>
 												    <li class="card-text
-												    	<c:if test="${dto.getReserv_status() eq 'reserv'}"> text-warning" >예약 신청</c:if> 
-												    	<c:if test="${dto.getReserv_status() eq 'confirm'}"> text-primary" >예약 확인</c:if> 
+												    	<c:if test="${dto.getReserv_status() eq 'reserv'}"> text-warning" >신청 대기</c:if> 
+												    	<c:if test="${dto.getReserv_status() eq 'confirm'}"> text-primary" >신청 확인</c:if> 
 												    	<c:if test="${dto.getReserv_status() eq 'done'}"> text-success" >체험 완료</c:if> 
 												    	<c:if test="${dto.getReserv_status() eq 'cancel'}"> text-danger" >예약 취소</c:if> 							    
 												    </li>
@@ -58,13 +58,12 @@
 										    <c:forEach items="${sList }" var="sdto">
 										    	<c:if test="${sdto.getFicnic_no() eq dto.getFicnic_no() }">
 										    		<c:set var="revSession" value="t"/>
-										    		<c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and !empty revSession}">
-										    			<a class="modi_btn btn-js" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no()}" data-cont="${sdto.getReview_cont()}" data-modi="m" data-avg="${sdto.getReview_point()}" data-photo1="${sdto.getReview_photo1() }" data-photo2="${sdto.getReview_photo2() }" data-rno="${sdto.getReview_no() }"><i class="fa fa-pencil"></i> 리뷰 수정</a>
-										    		</c:if>
 										    	</c:if>
 										    </c:forEach>
 										    <c:if test="${dto.getReserv_date() < today and dto.getReserv_status() eq 'done' and empty revSession}"> <a class="modbtnreserv btn-js" data-bs-toggle="modal" data-bs-target="#exampleModal" data-name="${dto.getReserv_ficnic_name()}" data-no="${dto.getFicnic_no() }"><i class="fa fa-pencil"></i> 리뷰 작성</a></c:if>
-										    <c:remove var="revSession"/>
+										    <c:if test="${!empty revSession}">
+										    	<c:remove var="revSession"/>
+										    </c:if>
 										    <c:if test="${dto.getReserv_status() eq 'cancel'}"></c:if>
 										</div>
 									  </div>
@@ -131,11 +130,11 @@
 	      	<label>리뷰 내용</label>
 	        <textarea class="form-control form-control-lg" rows="5" name="review_cont" id="review_con"></textarea>      		
 	        <div class="mypage-reserv-img">
-	        	<img alt="이미지 없음" src="" name="ori_review_photo1"  id="ori_review_photo1" style="width: 200px; height: 200px; ">
+	        	<c:if test="${!empty m}"><img alt="이미지 없음" src="" name="ori_review_photo1"  id="ori_review_photo1" style="width: 200px; height: 200px; "></c:if>
 	        </div>
 	        <input type="file" name="file1" class="form-control" accept="image/jpeg, image/png, image/gif">
 	        <div class="mypage-reserv-img">
-	        	<img alt="이미지 없음" src="" name="ori_review_photo2"  id="ori_review_photo2" style="width: 200px; height: 200px; ">
+	        	<c:if test="${!empty m}"><img alt="이미지 없음" src="" name="ori_review_photo2"  id="ori_review_photo2" style="width: 200px; height: 200px; "></c:if>
 	        </div>
 	        <input type="file" name="file2" class="form-control" accept="image/jpeg, image/png, image/gif">
 	      </div>
