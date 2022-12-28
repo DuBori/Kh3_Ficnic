@@ -825,8 +825,7 @@ public class SiteFicnicController {
                 McouponDTO mdto =  this.mdao.getCouponNum(couponMap);
                 
                 this.mdao.deleteMemberCoupon(couponMap);
-                
-                this.mdao.updateMcouponNo(mdto.getCoupon_no());
+                this.mdao.updateMcouponNo(mdto.getMcoupon_no());
             }
             // 사용한 마일리지 제거
             if(canUsePoint!=0) {
