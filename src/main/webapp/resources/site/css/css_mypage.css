@@ -375,10 +375,13 @@
 
 
 .mypage-coupon .mc-list li.nodata {
+	width: 100%;
 	text-align: center;
 	padding: 100px 0;
+	margin: 0;
 	font-size: 14px;
 	color: #aaa;
+	background: none;
 }
 
 
